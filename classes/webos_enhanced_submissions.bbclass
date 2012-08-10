@@ -44,38 +44,38 @@
 # i.e., it includes the submission. If there is no PREFERRED_VERSION_<packagename>
 # setting, '0' will be returned.
 def webos_enhsub_get_pv(pn, d):
-        import bb
+    import bb
 
-        preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
-        return preferred_v.split('_')[0]
+    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    return preferred_v.split('_')[0]
 
 # The component version is PREFERRED_VERSION_<packagename> with the last hyphen-
 # separated field removed; i.e., it does not include the submission. If there is
 # no PREFERRED_VERSION_<packagename> setting, '0' will be returned.
 def webos_enhsub_get_component_version(pn, d):
-        import bb
+    import bb
 
-        preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
-        split_preferred_v = preferred_v.split('-')
-        if len(split_preferred_v) == 1:
-                # If there's no submission, then the component version can't
-                # contain a hyphen
-                return preferred_v.split('_')[0]
-        return "-".join(split_preferred_v[:-1])
+    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    split_preferred_v = preferred_v.split('-')
+    if len(split_preferred_v) == 1:
+        # If there's no submission, then the component version can't
+        # contain a hyphen
+        return preferred_v.split('_')[0]
+    return "-".join(split_preferred_v[:-1])
 
 # The submission is the first underscore-separated field in the enhanced
 # submission field, which is the last hyphen-separated field in
 # PREFERRED_VERSION_<packagename>. If there is no PREFERRED_VERSION_<packagename>
 # setting, '0' will be returned.
 def webos_enhsub_get_submission(pn, d):
-        import bb
+    import bb
 
-        preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
-        split_preferred_v = preferred_v.split('-')
-        if len(split_preferred_v) == 1:
-                # If there no hyphen, that means there's no submission
-                return '0'
-        return split_preferred_v[-1].split('_')[0]
+    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    split_preferred_v = preferred_v.split('-')
+    if len(split_preferred_v) == 1:
+        # If there no hyphen, that means there's no submission
+        return '0'
+    return split_preferred_v[-1].split('_')[0]
 
 
 PV = "${@webos_enhsub_get_pv('${PN}', d)}"

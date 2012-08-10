@@ -70,8 +70,8 @@ do_configure_append() {
 # We set OECMAKE_BUILDPATH to be different from S above, so there's no need to
 # test at run time.
 do_clean_append() {
-        buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
-        if buildpath and os.path.exists(buildpath):
-            bb.note('Removing ' + buildpath)
-            os.system('rm -rf ' + buildpath)
+    buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
+    if buildpath and os.path.exists(buildpath):
+        bb.note('Removing ' + buildpath)
+        os.system('rm -rf ' + buildpath)
 }

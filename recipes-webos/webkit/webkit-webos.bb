@@ -40,15 +40,15 @@ PALM_BUILD_DIR = "${WEBKITOUTPUTDIR}/Release"
 
 # Python code for do_unpack() uses tabs, so we need to as well.
 python do_unpack_prepend () {
-	import os
+    import os
 
-	s = d.getVar('S', True)
-	glob_suffix = d.getVar('WEBOS_ARCHIVE_ROOT_GLOB_SUFFIX', True)
-	os.system("rm -rf " + s + " " + s + glob_suffix)
+    s = d.getVar('S', True)
+    glob_suffix = d.getVar('WEBOS_ARCHIVE_ROOT_GLOB_SUFFIX', True)
+    os.system("rm -rf " + s + " " + s + glob_suffix)
 }
 
 python do_unpack_append () {
-	os.system("mv -v " + s + glob_suffix + " " + s)
+    os.system("mv -v " + s + glob_suffix + " " + s)
 }
 
 

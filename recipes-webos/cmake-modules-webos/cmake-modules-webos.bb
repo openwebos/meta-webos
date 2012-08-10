@@ -40,10 +40,10 @@ do_compile() {
 }
 
 do_clean_append() {
-        buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
-        if buildpath and os.path.exists(buildpath):
-            bb.note('removing ' + buildpath)
-            os.system('rm -rf ' + buildpath)
+    buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
+    if buildpath and os.path.exists(buildpath):
+        bb.note('removing ' + buildpath)
+        os.system('rm -rf ' + buildpath)
 }
 
 BBCLASSEXTEND = "native"

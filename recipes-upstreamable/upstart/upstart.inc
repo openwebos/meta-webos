@@ -2,7 +2,7 @@ SECTION = "base"
 PRIORITY = "optional"
 DEPENDS = ""
 DESCRIPTION = "Event driven system init"
-LICENSE = "GPL"
+LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
 
 inherit autotools pkgconfig update-alternatives

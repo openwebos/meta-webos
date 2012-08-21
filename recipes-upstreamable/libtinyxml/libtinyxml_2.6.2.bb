@@ -2,7 +2,7 @@
 
 DESCRIPTION = "a simple, small, minimal, C++ XML parser"
 HOMEPAGE = "http://www.sourceforge.net/projects/tinyxml"
-LICENSE = "zlib"
+LICENSE = "Zlib"
 LIC_FILES_CHKSUM = "file://readme.txt;md5=f8f366f3370dda889f60faa7db162cf4"
 SECTION = "libs"
 

@@ -6,16 +6,16 @@ LICENSE = "Zlib"
 LIC_FILES_CHKSUM = "file://readme.txt;md5=f8f366f3370dda889f60faa7db162cf4"
 SECTION = "libs"
 
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/tinyxml/tinyxml_2_6_2.tar.gz"
 
 S = "${WORKDIR}/tinyxml"
 
 do_compile() {
-    ${CXX} ${CXXFLAGS} -I${S} -c -o ${S}/tinyxml.o ${S}/tinyxml.cpp
-    ${CXX} ${CXXFLAGS} -I${S} -c -o ${S}/tinyxmlerror.o ${S}/tinyxmlerror.cpp
-    ${CXX} ${CXXFLAGS} -I${S} -c -o ${S}/tinyxmlparser.o ${S}/tinyxmlparser.cpp
+    ${CXX} ${CXXFLAGS} -fPIC -I${S} -c -o ${S}/tinyxml.o ${S}/tinyxml.cpp
+    ${CXX} ${CXXFLAGS} -fPIC -I${S} -c -o ${S}/tinyxmlerror.o ${S}/tinyxmlerror.cpp
+    ${CXX} ${CXXFLAGS} -fPIC -I${S} -c -o ${S}/tinyxmlparser.o ${S}/tinyxmlparser.cpp
     ${CXX} ${CXXFLAGS} \
             -shared \
             -Wl,-soname,libtinyxml.so.${PV} \

@@ -66,6 +66,8 @@ RDEPENDS_${PN} = " \
      dropbear \
      gzip \
      dhcp-client \
+     dhcp-server \
+     dhcp-server-config \
      procps \
      modutils-initscripts \
      bluez4 \

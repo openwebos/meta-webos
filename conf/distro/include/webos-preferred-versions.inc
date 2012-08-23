@@ -2,6 +2,9 @@
 
 PREFERRED_VERSION_db ?= "4.8.30"
 
+# Stick to latest udev version provided by oe-core
+PREFERRED_VERSION_udev ?= "164"
+
 # Components that inherit from either webos_enhanced_submissions or webos_submissions
 # must have a PREFERRED_VERSION with format: <component-version>-<submission>
 PREFERRED_VERSION_adapterbase ?= "3.0.0-0.2"

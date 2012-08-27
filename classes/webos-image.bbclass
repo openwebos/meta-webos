@@ -36,6 +36,13 @@ PACKAGE_GROUP_ssh-server-dropbear = "task-core-ssh-dropbear"
 PACKAGE_GROUP_ssh-server-openssh = "task-core-ssh-openssh"
 PACKAGE_GROUP_package-management = "${ROOTFS_PKGMANAGE}"
 
+# IMAGE_FEATURES_REPLACES_foo = 'bar1 bar2'
+# Including image feature foo would replace the image features bar1 and bar2
+IMAGE_FEATURES_REPLACES_ssh-server-openssh = "ssh-server-dropbear"
+
+# IMAGE_FEATURES_CONFLICTS_foo = 'bar1 bar2'
+# An error exception would be raised if both image features foo and bar1(or bar2) are included
+
 WEBOS_IMAGE_BASE_INSTALL = '\
     task-webos-boot \
     task-webos-extended \
@@ -54,6 +61,8 @@ ROOTFS_POSTPROCESS_COMMAND += "rootfs_update_timestamp ; "
 
 # Zap the root password if debug-tweaks feature is not enabled
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "debug-tweaks", "", "zap_root_password ; ",d)}'
+# Allow openssh accept empty password login if both debug-tweaks and ssh-server-openssh are enabled
+ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "debug-tweaks ssh-server-openssh", "openssh_allow_empty_password; ", "",d)}'
 
 # XXX Workaround for bug in openembedded-core. Remove once we re-pin to a commit of openembedded-core
 # that includes http://cgit.openembedded.org/openembedded-core/commit/?id=28715eff6dff3415b1d7b0be8cbb465c417e307f

@@ -43,6 +43,8 @@ IMAGE_FEATURES_REPLACES_ssh-server-openssh = "ssh-server-dropbear"
 # IMAGE_FEATURES_CONFLICTS_foo = 'bar1 bar2'
 # An error exception would be raised if both image features foo and bar1(or bar2) are included
 
+WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp"
+
 WEBOS_IMAGE_BASE_INSTALL = '\
     task-webos-boot \
     task-webos-extended \

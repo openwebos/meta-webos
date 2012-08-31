@@ -1,0 +1,21 @@
+--- genext2fs-1.4.1/genext2fs.c.orig	2012-08-09 10:43:59.148637070 -0700
++++ genext2fs-1.4.1/genext2fs.c	2012-08-09 10:44:07.368511803 -0700
+#
+# This patch fixes a filesystem corruption problem logged against genext2fs here:
+# https://sourceforge.net/tracker/index.php?func=detail&aid=3218995&group_id=121652&atid=690992
+#
+# Also note this additional comment (fix missing from the patch below):
+# Looks like a corresponding change (from > to >=) needs to be made on (or
+# near) line 1544 to ensure that stats.nblocks counts the block used to store
+# 60-char regular symlinks... though it appears that this only affects
+# stats, and not the validity of the generated filesystem.
+#
+@@ -1917,7 +1917,7 @@
+ 
+ 	inode_pos_init(fs, &ipos, nod, INODE_POS_TRUNCATE, NULL);
+ 	node->i_size = size;
+-	if(size <= 4 * (EXT2_TIND_BLOCK+1))
++	if(size < 4 * (EXT2_TIND_BLOCK+1))
+ 	{
+ 		strncpy((char *)node->i_block, (char *)b, size);
+ 		put_nod(ni);

@@ -1,0 +1,8 @@
+--- orig-sqlite-autoconf-3071300/Makefile.am	2012-08-06 10:09:44.000000000 -0700
++++ sqlite-autoconf-3071300/Makefile.am	2012-08-06 10:10:08.000000000 -0700
+@@ -15,5 +15,3 @@ include_HEADERS = sqlite3.h sqlite3ext.h
+ EXTRA_DIST = sqlite3.pc sqlite3.1 tea
+ pkgconfigdir = ${libdir}/pkgconfig
+ pkgconfig_DATA = sqlite3.pc
+-
+-man_MANS = sqlite3.1

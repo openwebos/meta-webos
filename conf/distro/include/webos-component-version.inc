@@ -1,0 +1,31 @@
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+#
+# Package Versions for specific commit.
+#
+
+WEBOS_COMPONENT_VERSION_pn-luna-service2 ?= "3.0.0"
+WEBOS_COMPONENT_VERSION_pn-powerd ?= "4.0.0--rc1"
+WEBOS_COMPONENT_VERSION_pn-nyx-lib ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-pmloglib ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-cjson ?= "1.8.0"
+WEBOS_COMPONENT_VERSION_pn-sleepd ?= "1.1.0--rc1"
+WEBOS_COMPONENT_VERSION_pn-storaged ?= "2.1.0--rc1"
+WEBOS_COMPONENT_VERSION_pn-librdx-stub ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-luna-sysmgr-ipc ?= "1.0.1"
+WEBOS_COMPONENT_VERSION_pn-luna-sysmgr-ipc-messages ?= "1.0.1"
+WEBOS_COMPONENT_VERSION_pn-luna-webkit-api ?= "1.0.1"
+WEBOS_COMPONENT_VERSION_pn-cmake-modules-webos-native ?= "1.0.0~rc3"
+WEBOS_COMPONENT_VERSION_pn-jemalloc ?= "0.20080828a-0webos9"
+WEBOS_COMPONENT_VERSION_pn-luna-init ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-qt4-palm ?= "1.0.0"
+WEBOS_COMPONENT_VERSION_pn-glibcurl ?= "0.7.3"
+WEBOS_COMPONENT_VERSION_pn-librolegen ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-libsandbox ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-activitymanager ?= "1.0.0"
+WEBOS_COMPONENT_VERSION_pn-pmlogconf ?= "1.0.2"
+WEBOS_COMPONENT_VERSION_pn-pmcertificatemgr ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-luna-prefs ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-luna-universalsearchmgr ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-pmstatemachineengine ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-libpalmsocket ?= "2.0.0"
+

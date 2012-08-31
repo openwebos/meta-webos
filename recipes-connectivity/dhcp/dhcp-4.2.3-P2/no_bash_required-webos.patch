@@ -1,0 +1,8 @@
+--- dhcp/client/scripts/linux.orig	2007-01-26 16:18:21.000000000 -0800
++++ dhcp/client/scripts/linux	2007-01-26 16:17:40.000000000 -0800
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/sh
+ # dhclient-script for Linux. Dan Halbert, March, 1997.
+ # Updated for Linux 2.[12] by Brian J. Murrell, January 1999.
+ # No guarantees about this. I'm a novice at the details of Linux

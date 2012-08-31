@@ -1,0 +1,12 @@
+Index: git/CMakeLists.txt
+===================================================================
+--- git.orig/CMakeLists.txt	2012-07-05 23:50:28.000000000 -0700
++++ git/CMakeLists.txt	2012-07-05 23:51:24.000000000 -0700
+@@ -124,6 +124,7 @@
+ add_linker_flags("-Wl,--no-undefined")
+ # XXX_ The libraries that come with gcc fail when --no-allow-shlib-undefined is specified
+ #add_linker_flags("-Wl,--no-allow-shlib-undefined")
++add_linker_flags("-Wl,-lpthread -Wl,-lrt")
+ 
+ 
+ # Build the sleepd executable

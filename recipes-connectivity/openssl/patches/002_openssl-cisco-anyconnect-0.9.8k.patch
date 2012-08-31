@@ -1,0 +1,363 @@
+diff --git a/crypto/pqueue/pqueue.c b/crypto/pqueue/pqueue.c
+index 5cc1852..6c89f06 100644
+--- a/crypto/pqueue/pqueue.c
++++ b/crypto/pqueue/pqueue.c
+@@ -234,3 +234,17 @@ pqueue_next(pitem **item)
+ 
+ 	return ret;
+ 	}
++
++int
++pqueue_size(pqueue_s *pq)
++{
++	pitem *item = pq->items;
++	int count = 0;
++	
++	while(item != NULL)
++	{
++		count++;
++		item = item->next;
++	}
++	return count;
++}
+diff --git a/crypto/pqueue/pqueue.h b/crypto/pqueue/pqueue.h
+index 02386d1..dcc828d 100644
+--- a/crypto/pqueue/pqueue.h
++++ b/crypto/pqueue/pqueue.h
+@@ -91,5 +91,6 @@ pitem *pqueue_iterator(pqueue pq);
+ pitem *pqueue_next(piterator *iter);
+ 
+ void   pqueue_print(pqueue pq);
++int	   pqueue_size(pqueue pq);
+ 
+ #endif /* ! HEADER_PQUEUE_H */
+ 
+diff --git a/crypto/rsa/rsa_pss.c b/crypto/rsa/rsa_pss.c
+index 9b993ac..84126d5 100644
+--- a/crypto/rsa/rsa_pss.c
++++ b/crypto/rsa/rsa_pss.c
+@@ -66,7 +66,7 @@
+ 
+ static const unsigned char zeroes[] = {0,0,0,0,0,0,0,0};
+ 
+-#if defined(_MSC_VER) && defined(_ARM_)
++#if (_MSC_VER==1200) && defined(_ARM_)
+ #pragma optimize("g", off)
+ #endif
+  
+diff --git a/e_os.h b/e_os.h
+index 9c5c6fd..63573d4 100644
+--- a/e_os.h
++++ b/e_os.h
+@@ -217,6 +217,53 @@ extern "C" {
+ #  define MS_FAR
+ #endif
+ 
++#if defined(WIN32) && defined(DDKBUILD)
++#ifndef _STATIC_ASSERT
++#define _STATIC_ASSERT(expr) typedef char __static_assert_t[ (expr) ]
++#endif
++
++/* VS2005 stat compat code from stat.inl */
++#include <sys/stat.h>
++#ifdef _USE_32BIT_TIME_T
++static __inline int __CRTDECL fstat(int _Desc, struct stat * _Stat)
++{
++    _STATIC_ASSERT( sizeof(struct stat) == sizeof(struct _stat32) );
++    return _fstat32(_Desc,(struct _stat32 *)_Stat);
++}
++static __inline int __CRTDECL stat(const char * _Filename, struct stat * _Stat)
++{
++    _STATIC_ASSERT( sizeof(struct stat) == sizeof(struct _stat32) );
++    return _stat(_Filename,(struct _stat *)_Stat);
++}
++#else
++static __inline int __CRTDECL fstat(int _Desc, struct stat * _Stat)
++{
++    _STATIC_ASSERT( sizeof(struct stat) == sizeof(struct _stat64i32) );
++    return _fstat64i32(_Desc,(struct _stat64i32 *)_Stat);
++}
++static __inline int __CRTDECL stat(const char * _Filename, struct stat * _Stat)
++{
++    _STATIC_ASSERT( sizeof(struct stat) == sizeof(struct _stat64i32) );
++    return _stat64i32(_Filename,(struct _stat64i32 *)_Stat);
++#endif 
++
++// VS2005 ftime compat code
++#include <sys/timeb.h>
++#ifdef _USE_32BIT_TIME_T
++static __inline void __CRTDECL ftime(struct timeb * _Tmb)
++{
++    _STATIC_ASSERT( sizeof(struct timeb) == sizeof(struct __timeb32) );
++    _ftime((struct _timeb *)_Tmb);
++}
++#else
++static __inline void __CRTDECL ftime(struct timeb * _Tmb)
++{
++    _STATIC_ASSERT( sizeof(struct timeb) == sizeof(struct __timeb64) );
++    _ftime64((struct __timeb64 *)_Tmb);
++}
++#endif /* _USE_32BIT_TIME_T */
++#endif
++
+ #ifdef OPENSSL_NO_STDIO
+ #  undef OPENSSL_NO_FP_API
+ #  define OPENSSL_NO_FP_API
+
+diff --git a/ssl/d1_both.c b/ssl/d1_both.c
+index 15a201a..0c86317 100644
+--- a/ssl/d1_both.c
++++ b/ssl/d1_both.c
+@@ -561,7 +561,16 @@ dtls1_process_out_of_seq_message(SSL *s, struct hm_header_st* msg_hdr, int *ok)
+ 	if ((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
+ 		goto err;
+ 
+-	if (msg_hdr->seq <= s->d1->handshake_read_seq)
++	/* Try to find item in queue, to prevent duplicate entries */
++	pq_64bit_init(&seq64);
++	pq_64bit_assign_word(&seq64, msg_hdr->seq);
++	item = pqueue_find(s->d1->buffered_messages, seq64);
++	pq_64bit_free(&seq64);
++	
++	/* Discard the message if sequence number was already there, is
++	 * too far in the future or the fragment is already in the queue */
++	if (msg_hdr->seq <= s->d1->handshake_read_seq ||
++		msg_hdr->seq > s->d1->handshake_read_seq + 10 || item != NULL)
+ 		{
+ 		unsigned char devnull [256];
+ 
+diff --git a/ssl/d1_clnt.c b/ssl/d1_clnt.c
+index 49c6760..a297096 100644
+--- a/ssl/d1_clnt.c
++++ b/ssl/d1_clnt.c
+@@ -214,6 +214,8 @@ int dtls1_connect(SSL *s)
+ 
+ 			/* don't push the buffering BIO quite yet */
+ 
++			ssl3_init_finished_mac(s);
++
+ 			s->state=SSL3_ST_CW_CLNT_HELLO_A;
+ 			s->ctx->stats.sess_connect++;
+ 			s->init_num=0;
+@@ -269,9 +271,14 @@ int dtls1_connect(SSL *s)
+ 			if ( ret <= 0)
+ 				goto end;
+ 			if ( s->d1->send_cookie) /* start again, with a cookie */
++				{
+ 				s->state=SSL3_ST_CW_CLNT_HELLO_A;
++				ssl3_init_finished_mac(s);
++				}
+ 			else
++                        	{
+ 				s->state = SSL3_ST_CR_CERT_A;
++                                }
+ 			s->init_num = 0;
+ 			break;
+ 
+@@ -492,6 +499,8 @@ int dtls1_connect(SSL *s)
+ 
+ 			/* done with handshaking */
+ 			s->d1->handshake_read_seq  = 0;
++			s->d1->handshake_write_seq = 0;
++			s->d1->next_handshake_write_seq = 0;
+ 			goto end;
+ 			/* break; */
+ 			
+diff --git a/ssl/d1_lib.c b/ssl/d1_lib.c
+index 3568e97..c5294fe 100644
+--- a/ssl/d1_lib.c
++++ b/ssl/d1_lib.c
+@@ -100,10 +100,13 @@ int dtls1_new(SSL *s)
+ 	/* d1->handshake_epoch=0; */
+ #if defined(OPENSSL_SYS_VMS) || defined(VMS_TEST)
+ 	d1->bitmap.length=64;
++    d1->next_bitmap.length=64
+ #else
+ 	d1->bitmap.length=sizeof(d1->bitmap.map) * 8;
++	d1->next_bitmap.length=sizeof(d1->bitmap.map) * 8;
+ #endif
+-	pq_64bit_init(&(d1->bitmap.map));
++
++    pq_64bit_init(&(d1->bitmap.map));
+ 	pq_64bit_init(&(d1->bitmap.max_seq_num));
+ 	
+ 	d1->next_bitmap.length = d1->bitmap.length;
+diff --git a/ssl/d1_pkt.c b/ssl/d1_pkt.c
+index eb56cf9..807766c 100644
+--- a/ssl/d1_pkt.c
++++ b/ssl/d1_pkt.c
+@@ -160,13 +160,16 @@ dtls1_copy_record(SSL *s, pitem *item)
+     return(1);
+     }
+ 
+-
+ static int
+ dtls1_buffer_record(SSL *s, record_pqueue *queue, PQ_64BIT priority)
+ {
+     DTLS1_RECORD_DATA *rdata;
+ 	pitem *item;
+ 
++	/* Limit the size of the queue to prevent DOS attacks */
++	if (pqueue_size(queue->q) >= 100)
++		return 0;
++		
+ 	rdata = OPENSSL_malloc(sizeof(DTLS1_RECORD_DATA));
+ 	item = pitem_new(priority, rdata);
+ 	if (rdata == NULL || item == NULL)
+@@ -526,6 +529,7 @@ again:
+ 		version=(ssl_major<<8)|ssl_minor;
+ 
+ 		/* sequence number is 64 bits, with top 2 bytes = epoch */ 
++		memcpy(&(s->s3->read_sequence[0]), p, 2);
+ 		n2s(p,rr->epoch);
+ 
+ 		memcpy(&(s->s3->read_sequence[2]), p, 6);
+@@ -578,6 +582,7 @@ again:
+ 		if ( n != i)
+ 			{
+ 			s->packet_length = 0;
++                        rr->length = 0;
+ 			goto again;
+ 			}
+ 
+@@ -590,6 +595,7 @@ again:
+ 	bitmap = dtls1_get_bitmap(s, rr, &is_next_epoch);
+ 	if ( bitmap == NULL)
+         {
++		rr->length = 0;
+         s->packet_length = 0;  /* dump this record */
+         goto again;   /* get another record */
+ 		}
+@@ -614,6 +620,7 @@ again:
+         dtls1_record_bitmap_update(s, bitmap);
+         dtls1_buffer_record(s, &(s->d1->unprocessed_rcds), rr->seq_num);
+         s->packet_length = 0;
++                rr->length = 0;
+         goto again;
+         }
+ 
+@@ -1020,6 +1027,11 @@ start:
+ 
+ 		goto start;
+ 		}
++		else
++			{
++			rr->length = 0;
++			goto start;
++			}
+ 
+ 	/* Unexpected handshake message (Client Hello, or protocol violation) */
+ 	if ((s->d1->handshake_fragment_len >= DTLS1_HM_HEADER_LENGTH) && 
+@@ -1142,7 +1154,7 @@ int
+ dtls1_write_app_data_bytes(SSL *s, int type, const void *buf_, int len)
+ 	{
+ 	unsigned int n,tot;
+-	int i;
++        int i = 0;
+ 
+ 	if (SSL_in_init(s) && !s->in_handshake)
+ 		{
+@@ -1754,6 +1766,12 @@ dtls1_reset_seq_numbers(SSL *s, int rw)
+ 		memset(&(s->d1->next_bitmap), 0x00, sizeof(DTLS1_BITMAP));
+ 		pq_64bit_init(&(s->d1->next_bitmap.map));
+ 		pq_64bit_init(&(s->d1->next_bitmap.max_seq_num));
++
++#if defined(OPENSSL_SYS_VMS) || defined(VMS_TEST)
++    	s->d1->bitmap.length=64;
++#else
++	    s->d1->bitmap.length=sizeof(s->d1->bitmap.map) * 8;
++#endif
+ 		}
+ 	else
+ 		{
+diff --git a/ssl/dtls1.h b/ssl/dtls1.h
+index f159d37..1f20515 100644
+--- a/ssl/dtls1.h
++++ b/ssl/dtls1.h
+@@ -67,7 +67,11 @@
+ extern "C" {
+ #endif
+ 
++#ifdef USE_ORIGINAL_OPENSSL_CODE
+ #define DTLS1_VERSION			0xFEFF
++#else
++#define DTLS1_VERSION           0x0100
++#endif
+ #define DTLS1_BAD_VER			0x0100
+ 
+ #if 0
+
+
+
+diff --git a/ssl/ssl_lib.c b/ssl/ssl_lib.c
+index 893abff..43a5a4f 100644
+--- a/ssl/ssl_lib.c
++++ b/ssl/ssl_lib.c
+@@ -1399,7 +1399,7 @@ SSL_CTX *SSL_CTX_new(SSL_METHOD *meth)
+ 		}
+ 
+ #ifdef OPENSSL_FIPS
+-	if (FIPS_mode() && (meth->version < TLS1_VERSION))	
++	if (FIPS_mode() && meth->version < TLS1_VERSION && meth->version != DTLS1_VERSION)	
+ 		{
+ 		SSLerr(SSL_F_SSL_CTX_NEW, SSL_R_ONLY_TLS_ALLOWED_IN_FIPS_MODE);
+ 		return NULL;
+
+diff --git a/ssl/t1_enc.c b/ssl/t1_enc.c
+index 7cb3e29..abb95f1 100644
+--- a/ssl/t1_enc.c
++++ b/ssl/t1_enc.c
+@@ -748,6 +748,8 @@ int tls1_mac(SSL *ssl, unsigned char *md, int send)
+ 	md_size=EVP_MD_size(hash);
+ 
+ 	buf[0]=rec->type;
++#ifdef USE_ORIGINAL_OPENSSL_CODE
++    /* Original OpenSSL behavior */
+ 	if (ssl->version == DTLS1_VERSION && ssl->client_version == DTLS1_BAD_VER)
+ 		{
+ 		buf[1]=TLS1_VERSION_MAJOR;
+@@ -757,7 +759,12 @@ int tls1_mac(SSL *ssl, unsigned char *md, int send)
+ 		buf[1]=(unsigned char)(ssl->version>>8);
+ 		buf[2]=(unsigned char)(ssl->version);
+ 		}
+-
++#else
++    /* The AnyConnect client uses BAD_VER, but was previous patched not to use
++       TLS major/minor numbers for the checksum */
++	buf[1]=(unsigned char)(ssl->version>>8);
++	buf[2]=(unsigned char)(ssl->version);
++#endif
+ 	buf[3]=rec->length>>8;
+ 	buf[4]=rec->length&0xff;
+ 
+@@ -765,7 +772,21 @@ int tls1_mac(SSL *ssl, unsigned char *md, int send)
+ 	HMAC_CTX_init(&hmac);
+ 	HMAC_Init_ex(&hmac,mac_sec,EVP_MD_size(hash),hash,NULL);
+ 
++#ifdef USE_ORIGINAL_OPENSSL_CODE
+ 	if (ssl->version == DTLS1_VERSION && ssl->client_version != DTLS1_BAD_VER)
++#else
++    /* 0.9.8f HMACs break anyconnect client unless the fixup code below is used.
++       Stepping through the code shows that the upper two bytes of the seq #
++       do not contain the epoch -- without the explicit copy, the HMAC will be 
++       incorrect, and the first encrypted message from the headend device (the
++       Finished message), will be rejected, failing the connection.  Fix is to
++       always run this fixup code, and explicitly use the epoch as part of the
++       HMAC. Note that in the AnyConnect version of this code, DTLS1_VERSION
++       does NOT refer to the RFC version number, but to the older version 
++       number used in earlier OpenSSL builds.
++    */
++	if (ssl->version == DTLS1_VERSION)
++#endif
+ 		{
+ 		unsigned char dtlsseq[8],*p=dtlsseq;
+ 
+
+
+
+
+
+
+ 
+ 
+ 

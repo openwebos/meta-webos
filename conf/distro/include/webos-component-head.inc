@@ -1,0 +1,31 @@
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+#
+# Package Versions for specific commit.
+#
+
+SRCREV_pn-luna-service2 ?= "${AUTOREV}"
+SRCREV_pn-powerd ?= "${AUTOREV}"
+SRCREV_pn-nyx-lib ?= "${AUTOREV}"
+SRCREV_pn-pmloglib ?= "${AUTOREV}"
+SRCREV_pn-cjson ?= "${AUTOREV}"
+SRCREV_pn-sleepd ?= "${AUTOREV}"
+SRCREV_pn-storaged ?= "${AUTOREV}"
+SRCREV_pn-librdx-stub ?= "${AUTOREV}"
+SRCREV_pn-luna-sysmgr-ipc ?= "${AUTOREV}"
+SRCREV_pn-luna-sysmgr-ipc-messages ?= "${AUTOREV}"
+SRCREV_pn-luna-webkit-api ?= "${AUTOREV}"
+SRCREV_pn-cmake-modules-webos-native ?= "${AUTOREV}"
+SRCREV_pn-jemalloc ?= "${AUTOREV}"
+SRCREV_pn-luna-init ?= "${AUTOREV}"
+SRCREV_pn-qt4-palm ?= "${AUTOREV}"
+SRCREV_pn-glibcurl ?= "${AUTOREV}"
+SRCREV_pn-librolegen ?= "${AUTOREV}"
+SRCREV_pn-libsandbox ?= "${AUTOREV}"
+SRCREV_pn-activitymanager ?= "${AUTOREV}"
+SRCREV_pn-pmlogconf ?= "${AUTOREV}"
+SRCREV_pn-pmcertificatemgr ?= "${AUTOREV}"
+SRCREV_pn-luna-prefs ?= "${AUTOREV}"
+SRCREV_pn-luna-universalsearchmgr ?= "${AUTOREV}"
+SRCREV_pn-pmstatemachineengine ?= "${AUTOREV}"
+SRCREV_pn-libpalmsocket ?= "${AUTOREV}"
+

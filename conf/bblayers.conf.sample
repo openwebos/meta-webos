@@ -1,0 +1,12 @@
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+
+# LAYER_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+LCONF_VERSION = "4"
+
+BBFILES ?= ""
+BBLAYERS ?= " \
+  ##COREBASE##/meta \
+  ##COREBASE##/meta-webos \
+  ##COREBASE##/meta-oe \
+  "

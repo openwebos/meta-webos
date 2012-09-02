@@ -15,7 +15,7 @@ S = "${WORKDIR}/hunspell-${PV}"
 do_install() {
      #oenote installing hunspell
     install -d ${D}/usr/lib
-	oe_libinstall -C ${S}/src/hunspell/.libs -so libhunspell-1.3 ${D}/usr/lib
+    oe_libinstall -C ${S}/src/hunspell/.libs -so libhunspell-1.3 ${D}/usr/lib
 }
 
 SRC_URI[md5sum] = "3121aaf3e13e5d88dfff13fb4a5f1ab8"

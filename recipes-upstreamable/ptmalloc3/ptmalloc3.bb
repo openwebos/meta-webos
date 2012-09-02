@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD;md5=3775480a712fc46a6964767
 # S = "${WORKDIR}/${PR}"
 
 SRC_URI = "http://www.malloc.de/malloc/ptmalloc3-current.tar.gz \
-	   file://ptmalloc3-current-webos.patch "
+           file://ptmalloc3-current-webos.patch "
 
 S = "${WORKDIR}/${PN}"
 

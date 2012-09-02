@@ -17,10 +17,10 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
-	base-files \
-	initscripts \
-	udev  \
-	update-rc.d  \
-	upstart-initscripts \
-        netbase \
+    base-files \
+    initscripts \
+    udev  \
+    update-rc.d  \
+    upstart-initscripts \
+    netbase \
 "

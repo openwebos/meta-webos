@@ -38,7 +38,6 @@ RDEPENDS_${PN} = " \
      icu \
      initscripts \        
      iproute2 \
-     jpeg \
      libgcrypt \
      libgpg-error \
      libpng \

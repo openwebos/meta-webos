@@ -28,4 +28,7 @@ WEBOS_SUBMISSION_pn-luna-prefs ?= "0.90"
 WEBOS_SUBMISSION_pn-luna-universalsearchmgr ?= "0.90"
 WEBOS_SUBMISSION_pn-pmstatemachineengine ?= "13"
 WEBOS_SUBMISSION_pn-libpalmsocket ?= "30"
-
+WEBOS_SUBMISSION_pn-nodejs-webos ?= "34"
+WEBOS_SUBMISSION_pn-nodejs-module-webos-sysbus ?= "25"
+WEBOS_SUBMISSION_pn-nodejs-module-webos-pmlog ?= "10"
+WEBOS_SUBMISSION_pn-nodejs-module-webos-dynaload ?= "11"

@@ -4,9 +4,11 @@ DESCRIPTION = "Packagegroup for OpenWebos - minimal bootable image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
+PR = "r2"
+
+inherit packagegroup
+
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-ALLOW_EMPTY = "1"
-PR = "r1"
 
 RPROVIDES_${PN} = "task-webos-boot"
 RREPLACES_${PN} = "task-webos-boot"
@@ -24,12 +26,6 @@ VIRTUAL-RUNTIME_login_manager ?= "tinylogin"
 VIRTUAL-RUNTIME_init_manager ?= "upstart"
 VIRTUAL-RUNTIME_initscripts ?= "initscripts"
 VIRTUAL-RUNTIME_keymaps ?= "keymaps"
-
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dbg \
-    ${PN}-dev \
-"
 
 RDEPENDS_${PN} = "\
     base-files \

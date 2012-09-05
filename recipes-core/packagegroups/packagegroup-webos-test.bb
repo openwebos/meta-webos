@@ -33,6 +33,10 @@ PYTHON = " \
     python-unittest \
 "
 
+RPROVIDES_${PN} = "task-webos-test"
+RREPLACES_${PN} = "task-webos-test"
+RCONFLICTS_${PN} = "task-webos-test"
+
 RDEPENDS_${PN} = "\
      ltp \
 "

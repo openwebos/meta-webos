@@ -8,6 +8,10 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 PR = "r1"
 
+RPROVIDES_${PN} = "task-webos-boot"
+RREPLACES_${PN} = "task-webos-boot"
+RCONFLICTS_${PN} = "task-webos-boot"
+
 #
 # Set by the machine configuration with packages essential for device bootup
 #

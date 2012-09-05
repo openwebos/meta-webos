@@ -16,5 +16,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 ALLOW_EMPTY = "1"
 
+RPROVIDES_${PN} = "task-webos-internal"
+RREPLACES_${PN} = "task-webos-internal"
+RCONFLICTS_${PN} = "task-webos-internal"
+
 RDEPENDS_${PN} = " \
 "

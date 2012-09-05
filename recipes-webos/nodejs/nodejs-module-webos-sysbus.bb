@@ -8,7 +8,7 @@ inherit webos_public_repo
 inherit webos_submissions
 inherit webos_cmake
 
-DEPENDS = "luna-service2"
+DEPENDS = "nodejs luna-service2"
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"

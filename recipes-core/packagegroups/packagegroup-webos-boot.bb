@@ -8,6 +8,11 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 PR = "r2"
 
+# to replace task-webos-boot by packagegroup-webos-boot during upgrade on target
+RPROVIDES_${PN} = "task-webos-boot"
+RREPLACES_${PN} = "task-webos-boot"
+RCONFLICTS_${PN} = "task-webos-boot"
+
 #
 # Set by the machine configuration with packages essential for device bootup
 #

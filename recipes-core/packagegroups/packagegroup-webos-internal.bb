@@ -16,5 +16,10 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 ALLOW_EMPTY = "1"
 
+# to replace task-webos-internal by packagegroup-webos-internal during upgrade on target
+RPROVIDES_${PN} = "task-webos-internal"
+RREPLACES_${PN} = "task-webos-internal"
+RCONFLICTS_${PN} = "task-webos-internal"
+
 RDEPENDS_${PN} = " \
 "

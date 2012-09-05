@@ -33,6 +33,11 @@ PYTHON = " \
     python-unittest \
 "
 
+# to replace task-webos-test by packagegroup-webos-test during upgrade on target
+RPROVIDES_${PN} = "task-webos-test"
+RREPLACES_${PN} = "task-webos-test"
+RCONFLICTS_${PN} = "task-webos-test"
+
 RDEPENDS_${PN} = "\
      ltp \
 "

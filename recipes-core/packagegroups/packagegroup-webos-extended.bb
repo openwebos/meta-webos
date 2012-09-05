@@ -16,13 +16,23 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 ALLOW_EMPTY = "1"
 
+# to replace task-webos-extended by packagegroup-webos-extended during upgrade on target
+RPROVIDES_${PN} = "task-webos-extended"
+RREPLACES_${PN} = "task-webos-extended"
+RCONFLICTS_${PN} = "task-webos-extended"
+
 # task-webos-core was removed in 
 # https://github.com/openwebos/meta-webos/commit/70b787bcb78db34c6a7d05b19786cb2e48bbece2
-# this makes sure it's removed (replaced) by task-webos-extended on target device
+# this makes sure it's removed (replaced) by packagegroup-webos-extended on target device
 
 RPROVIDES_${PN} += "task-webos-core"
 RREPLACES_${PN} += "task-webos-core"
 RCONFLICTS_${PN} += "task-webos-core"
+
+# and once again for packagegroup-webos-core for those who have installed images with renamed task recipes
+RPROVIDES_${PN} += "packagegroup-webos-core"
+RREPLACES_${PN} += "packagegroup-webos-core"
+RCONFLICTS_${PN} += "packagegroup-webos-core"
 
 RDEPENDS_${PN} = " \
     activitymanager \

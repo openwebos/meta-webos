@@ -4,17 +4,11 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r7"
+PR = "r8"
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dbg \
-    ${PN}-dev \
-"
+inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-
-ALLOW_EMPTY = "1"
 
 # to replace task-webos-extended by packagegroup-webos-extended during upgrade on target
 RPROVIDES_${PN} = "task-webos-extended"

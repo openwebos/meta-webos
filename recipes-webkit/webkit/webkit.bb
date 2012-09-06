@@ -4,7 +4,6 @@ DESCRIPTION = "webOS WebKit"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
 SECTION = "Linux/Multimedia"
-
 DEPENDS = "qt4-palm luna-service2 sqlite3"
 
 inherit autotools
@@ -74,8 +73,7 @@ do_compile() {
 }
 
 do_install() {
-        #oenote Staging QtWebKit
-        install -d ${STAGING_INCDIR}/QtWebKit
+    install -d ${STAGING_INCDIR}/QtWebKit
 
     libqtwebkit_3ver=$(basename ${PALM_BUILD_DIR}/lib/libQtWebKit.so.*.*.*)
     if [ ! -r "${PALM_BUILD_DIR}/lib/$libqtwebkit_3ver" ]; then
@@ -91,17 +89,16 @@ do_install() {
     ln -sf $libqtwebkit_3ver ${STAGING_LIBDIR}/libQtWebKit.so
 
 
-        # WebKit stages header files that include other header files. We can't just
-        # copy their staged header files because the path won't be correct so we
-        # have to copy the actual header file that is referenced.
-        install -m 444 ${PALM_BUILD_DIR}/include/QtWebKit/Q* ${STAGING_INCDIR}/QtWebKit
-        cd ${PALM_BUILD_DIR}/include/QtWebKit && perl -e 'while (<>) {if (m/^#include "([^"]+)"/) {print `install -m 444 $1 ${STAGING_INCDIR}/QtWebKit`;}}' q*.h
-        #oenote Installing QtWebKit
-        install -d ${D}${libdir}
-        oe_libinstall -C ${PALM_BUILD_DIR}/lib -so libQtWebKit ${D}/${libdir}
+    # WebKit stages header files that include other header files. We can't just
+    # copy their staged header files because the path won't be correct so we
+    # have to copy the actual header file that is referenced.
+    install -m 444 ${PALM_BUILD_DIR}/include/QtWebKit/Q* ${STAGING_INCDIR}/QtWebKit
+    cd ${PALM_BUILD_DIR}/include/QtWebKit && perl -e 'while (<>) {if (m/^#include "([^"]+)"/) {print `install -m 444 $1 ${STAGING_INCDIR}/QtWebKit`;}}' q*.h
+    install -d ${D}${libdir}
+    oe_libinstall -C ${PALM_BUILD_DIR}/lib -so libQtWebKit ${D}/${libdir}
 
-        install -d ${D}/usr/plugins/imports/QtWebKit
-        install -m 555 ${PALM_BUILD_DIR}/imports/QtWebKit/* ${D}/usr/plugins/imports/QtWebKit
+    install -d ${D}/usr/plugins/imports/QtWebKit
+    install -m 555 ${PALM_BUILD_DIR}/imports/QtWebKit/* ${D}/usr/plugins/imports/QtWebKit
 }
 
 do_makeclean() {

@@ -28,4 +28,7 @@ WEBOS_COMPONENT_VERSION_pn-luna-prefs ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-luna-universalsearchmgr ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-pmstatemachineengine ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-libpalmsocket ?= "2.0.0"
-
+WEBOS_COMPONENT_VERSION_pn-nodejs-webos ?= "0.4.12-0webos3"
+WEBOS_COMPONENT_VERSION_pn-nodejs-module-webos-pmlog ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-nodejs-module-webos-sysbus ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-nodejs-module-webos-dynaload ?= "2.0.0"

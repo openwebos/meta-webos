@@ -5,15 +5,13 @@ LICENSE = "MPL-1.1"
 SECTION = "WebKit"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MPL-1.1;md5=1d38e87ed8d522c49f04e1efe0fab3ab"
 
-#PR = "${SUBMISSION_${PN}}"
-SRCREV = "${AUTOREV}"
 SRC_URI = "git://github-mirror.palm.com/isis-project/npapi-headers;protocol=git"
 S = "${WORKDIR}/git"
 
-#PACKAGES = "${PN}"
 ALLOW_EMPTY = "1"
 
 do_compile() {
+:
 }
 
 do_install() {

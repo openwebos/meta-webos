@@ -10,16 +10,12 @@ RDEPENDS = ""
 
 inherit autotools 
 
-#PR = "${SUBMISSION_${PN}}"
-SRCREV = "${AUTOREV}"
 SRC_URI = "git://github-mirror.palm.com/isis-project/AdapterBase;protocol=git"
 S = "${WORKDIR}/git"
 
 ALLOW_EMPTY_${PN} = "1"
 
 do_configure() {
-	# remove these from staging to ensure we are picking up
-	# the correct versions during compilation.
 	rm -f ${STAGING_INCDIR}/AdapterBase.h
 	rm -f ${STAGING_LIBDIR}/AdapterBase.a
 }

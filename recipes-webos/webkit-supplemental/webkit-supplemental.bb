@@ -6,13 +6,10 @@ SECTION = "Linux/System"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 DEPENDS = "qt4-palm webkit"
 
-
 inherit autotools 
 
 PALM_CC_OPT = "-O2"
 
-SRCREV = "${AUTOREV}"
-#PR = "${SUBMISSION_${PN}}"
 SRC_URI = "git://github-mirror.palm.com/isis-project/WebKitSupplemental;protocol=git"
 S = "${WORKDIR}/git"
 
@@ -67,7 +64,6 @@ do_compile() {
 }
 
 do_install() {
-
     export CXX_TMP="${CXX}"
     export STAGING_DIR="${STAGING_DIR}"
     export STAGING_INCDIR="${STAGING_INCDIR}"
@@ -85,16 +81,10 @@ do_install() {
         install -d ${D}/usr/share/fonts
         install -m 644 -t ${D}/usr/share/fonts ../qbsplugin/fonts/*
     fi
-
 }
-
-do_populate_staging() {
-}
-
 
 FILES_${PN} += "/usr/plugins/platforms/libqbsplugin.so"
 FILES_${PN} += "/usr/plugins/webkit/libqtwebkitplugin.so"
 FILES_${PN} += "/usr/share/fonts"
 FILES_${PN}-dbg += "/usr/plugins/platforms/.debug"
 FILES_${PN}-dbg += "/usr/plugins/webkit/.debug"
-

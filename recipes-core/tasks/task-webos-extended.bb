@@ -17,23 +17,24 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
-	nyx-lib \
-	cjson \
-	pmloglib \
-	luna-service2 \
-	powerd \
-	sleepd \
-	storaged \
-        luna-init \
-        jemalloc \
-        librdx-stub \
-        qt4-palm \
-        pmcertificatemgr \
-        librolegen \
-        pmstatemachineengine \
-        libpalmsocket \
-        libsandbox \
-        glibcurl \
+    nyx-lib \
+    cjson \
+    pmloglib \
+    luna-service2 \
+    powerd \
+
+    sleepd \
+    storaged \
+    luna-init \
+    jemalloc \
+    librdx-stub \
+    qt4-palm \
+    pmcertificatemgr \
+    librolegen \
+    pmstatemachineengine \
+    libpalmsocket \
+    libsandbox \
+    glibcurl \
 "
 #        luna-prefs ( broken )
 #        luna-universalsearchmgr ( broken )

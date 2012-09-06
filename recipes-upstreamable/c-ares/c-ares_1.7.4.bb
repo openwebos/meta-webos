@@ -17,8 +17,8 @@ PR = "r1"
 EXTRA_OECONF = "--enable-shared"
 
 do_install_append() {
-	install -d ${D}/${includedir}/ares
-	install -m 0644 ares*.h ${D}/${includedir}/ares/
+    install -d ${D}/${includedir}/ares
+    install -m 0644 ares*.h ${D}/${includedir}/ares/
 }
 
 do_configure_append() {

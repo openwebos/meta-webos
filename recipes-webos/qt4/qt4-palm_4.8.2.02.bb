@@ -6,7 +6,7 @@ LICENSE = "LGPLv2.1 | GPLv3"
 LIC_FILES_CHKSUM = \ 
                   " file://LICENSE.LGPL;md5=77718fea3774d90f2f90dfaaba1c3d1b \
                     file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354 \
-		    file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891" 
+                    file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891" 
 # TODO: Change GPL-3.0 license to LICENSE.GPL3 once it gets in Qt Github repository
 
 SECTION = "libs"

@@ -26,7 +26,7 @@ RDEPENDS_${PN} = " \
      bzip2 \
      c-ares \
      db \
-     e2fsprogs \	  		
+     e2fsprogs \
      freetype \
      giflib \
      glib-2.0 \

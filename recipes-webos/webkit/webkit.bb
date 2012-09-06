@@ -8,8 +8,7 @@ DEPENDS = "qt4-palm luna-service2 sqlite3"
 
 inherit autotools
 
-SRCREV = "${AUTOREV}"
-SRC_URI = " git://github-mirror.palm.com/isis-project/WebKit;protocol=git \
+SRC_URI = "git://github-mirror.palm.com/isis-project/WebKit;protocol=git \
            file://webkit-lunasysmanager-unistd.patch"
 S = "${WORKDIR}/git"
 
@@ -45,6 +44,7 @@ export LD_TMP="${LD}"
 export QTDIR = "${WORKDIR}/../qt4-palm-*/git"
 
 do_configure() {
+:
 }
 
 do_compile() {
@@ -102,6 +102,7 @@ do_install() {
 }
 
 do_makeclean() {
+:
 }
 
 do_clean() {

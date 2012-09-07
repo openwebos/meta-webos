@@ -34,6 +34,7 @@ RDEPENDS_${PN} = " \
     libpalmsocket \
     libsandbox \
     glibcurl \
+    luna-sysmgr-ipc \
 "
 #        luna-prefs ( broken )
 #        luna-universalsearchmgr ( broken )

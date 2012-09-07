@@ -22,7 +22,7 @@ def qt4_machine_config_arch_lite(bb, d):
         if this_machine == "qemux86":
             return "-embedded x86"
         elif this_machine == "qemuarm":
-	    return "-arch arm -embedded"
+            return "-arch arm -embedded"
         else:
             return "-arch arm -qpa"
     else:

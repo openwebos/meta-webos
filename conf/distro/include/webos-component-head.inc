@@ -28,4 +28,8 @@ SRCREV_pn-luna-prefs ?= "${AUTOREV}"
 SRCREV_pn-luna-universalsearchmgr ?= "${AUTOREV}"
 SRCREV_pn-pmstatemachineengine ?= "${AUTOREV}"
 SRCREV_pn-libpalmsocket ?= "${AUTOREV}"
+SRCREV_pn-webkit ?= "${AUTOREV}"
+SRCREV_pn-webkit-supplemental ?= "${AUTOREV}"
+SRCREV_pn-serviceinstaller ?= "${AUTOREV}"
+SRCREV_pn-libpbnjson ?= "${AUTOREV}"
 

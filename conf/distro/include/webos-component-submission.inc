@@ -28,4 +28,7 @@ WEBOS_SUBMISSION_pn-luna-prefs ?= "0.90"
 WEBOS_SUBMISSION_pn-luna-universalsearchmgr ?= "0.90"
 WEBOS_SUBMISSION_pn-pmstatemachineengine ?= "13"
 WEBOS_SUBMISSION_pn-libpalmsocket ?= "30"
-
+WEBOS_SUBMISSION_pn-webkit ?= "00"
+WEBOS_SUBMISSION_pn-webkit-supplemental ?= "00"
+WEBOS_SUBMISSION_pn-serviceinstaller ?= "0.90"
+WEBOS_SUBMISSION_pn-libpbnjson ?= "2"

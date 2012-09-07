@@ -28,4 +28,7 @@ WEBOS_COMPONENT_VERSION_pn-luna-prefs ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-luna-universalsearchmgr ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-pmstatemachineengine ?= "2.0.0"
 WEBOS_COMPONENT_VERSION_pn-libpalmsocket ?= "2.0.0"
-
+WEBOS_COMPONENT_VERSION_pn-webkit ?= "0.0.0"
+WEBOS_COMPONENT_VERSION_pn-webkit-supplemental ?= "0.0.0"
+WEBOS_COMPONENT_VERSION_pn-serviceinstaller ?= "2.0.0"
+WEBOS_COMPONENT_VERSION_pn-libpbnjson ?= "1.1.0"

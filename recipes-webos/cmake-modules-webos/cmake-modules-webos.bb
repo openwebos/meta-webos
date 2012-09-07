@@ -37,12 +37,6 @@ do_compile() {
      :
 }
 
-#do_install() {
-#	# Do not specify DESTDIR here. The install file uses absolute paths
-#	# to find the cmake installation in use.
-#	oe_runmake install
-#}
-
 do_clean_append() {
         buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
         if buildpath and os.path.exists(buildpath):

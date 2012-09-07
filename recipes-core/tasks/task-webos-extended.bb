@@ -35,6 +35,8 @@ RDEPENDS_${PN} = " \
     libsandbox \
     glibcurl \
     luna-sysmgr-ipc \
+    luna-sysmgr-ipc-messages \
+    luna-webkit-api \
 "
 #        luna-prefs ( broken )
 #        luna-universalsearchmgr ( broken )

@@ -22,7 +22,6 @@ RDEPENDS_${PN} = " \
     pmloglib \
     luna-service2 \
     powerd \
-
     sleepd \
     storaged \
     luna-init \

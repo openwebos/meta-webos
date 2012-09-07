@@ -1,3 +1,9 @@
 *~
 TAGS
 tmp
+
+
+# Common Eclipse project files
+.project
+.cproject
+

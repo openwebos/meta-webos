@@ -1,18 +1,17 @@
 # Copyright 2012  Palm, Inc.  All rights reserved.
 
-DESCRIPTION = "webOS WebKit"
+DESCRIPTION = "webOS WebKit is an open source web rendering engine."
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
-SECTION = "Linux/Multimedia"
+#SECTION = "Linux/Multimedia"
 DEPENDS = "qt4-palm luna-service2 sqlite3"
 
 inherit autotools
-
-SRC_URI = "git://github-mirror.palm.com/isis-project/WebKit;protocol=git \
+SRC_URI = "${ISIS-PROJECTI_GIT_REPO}/WebKit;protocol=git \
            file://webkit-lunasysmanager-unistd.patch"
 S = "${WORKDIR}/git"
 
-EXTRA_OEMAKE = "MACHINE=${MACHINE} DISTRO_TYPE=${DISTRO_TYPE} TARGET_ARCH=${TARGET_ARCH}"
+#EXTRA_OEMAKE = "MACHINE=${MACHINE} DISTRO_TYPE=${DISTRO_TYPE} TARGET_ARCH=${TARGET_ARCH}"
 PALM_CC_OPT = "-O2"
 OBJDIR = "${MACHINE}-${TARGET_ARCH}"
 
@@ -50,13 +49,13 @@ do_configure() {
 do_compile() {
     export STAGING_INCDIR="${STAGING_INCDIR}"
     export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    export MACHINE=${MACHINE}
+#    export MACHINE=${MACHINE}
 
     QMAKE_LINK_ARGS=""
 
-    if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
-        QMAKE_LINK_ARGS='--qmakearg="QMAKE_LINK=\"${CXX} -B ${STAGING_BINDIR_NATIVE}/../libexec/gcc/arm-none-linux-gnueabi/4.5.1/gold -Wl,-debug\""'
-    fi
+#    if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
+#        QMAKE_LINK_ARGS='--qmakearg="QMAKE_LINK=\"${CXX} -B ${STAGING_BINDIR_NATIVE}/../libexec/gcc/arm-none-linux-gnueabi/4.5.1/gold -Wl,-debug\""'
+#    fi
 
         WEBKITOUTPUTDIR=${WEBKITOUTPUTDIR} ${S}/Tools/Scripts/build-webkit --qt \
         --release \
@@ -116,9 +115,9 @@ do_clean() {
     fi
 }
 
-FILES_${PN} += "/usr/lib/libQtWebKit.so*"
+FILES_${PN} += "${libdir}/libQtWebKit.so*"
 FILES_${PN} += "/usr/plugins/imports/QtWebKit/qmldir"
 FILES_${PN} += "/usr/plugins/imports/QtWebKit/libqmlwebkitplugin.so"
-FILES_${PN}-dbg += "/usr/lib/.debug"
+FILES_${PN}-dbg += "${libdir}/.debug"
 FILES_${PN}-dbg += "/usr/plugins/imports/QtWebKit/.debug"
 

@@ -41,6 +41,10 @@ RDEPENDS_${PN} = " \
 #        filecache ( missing dependency mojodb )
 #        activitymanager ( missing dependency mojodb )
 #        pmlogconf ( needed in runtime for pmloglib )	
+#        webkit (todo)
+#        webkit-supplemental (todo)
+#        serviceinstaller (todo)
+#        libpbnjson (todo)
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

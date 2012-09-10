@@ -3,15 +3,14 @@
 DESCRIPTION = "Qt is a versatile cross-platform application framework"
 # TODO: Change GPLv3 license to LICENSE.GPL3 once it gets in Qt Github repository
 LICENSE = "LGPLv2.1 | GPLv3"
-LIC_FILES_CHKSUM = \ 
+LIC_FILES_CHKSUM = \
                   " file://LICENSE.LGPL;md5=77718fea3774d90f2f90dfaaba1c3d1b \
                     file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354 \
-                    file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891" 
-SECTION = "libs"
+                    file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891"
+SECTION = "webos/libs"
+DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-DEPENDS += "freetype jpeg libpng zlib glib-2.0 nyx-lib"
-
-PR = "r2"
+PR = "r3"
 
 inherit autotools
 inherit webos_submissions
@@ -122,11 +121,15 @@ do_configure_prepend() {
     unset LD
 }
 
+# Turn off PostgreSQL and MySQL.
+# QT is a combination of native and target (cross) build and the "unset"
+# statements above and calling QT_CONFIG_FLAGS using _NATIVE and _HOST dirs
+# below enables it to find the SQL headers on the host.
 QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite_qpa(bb, d)} -little-endian \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \
-                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite\
+                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite -no-sql-psql -no-sql-mysql\
                    -no-libtiff -no-libmng -no-gstreamer -no-audio-backend -no-gtkstyle \
                    -reduce-relocations -reduce-exports -force-pkg-config -glib -qt-zlib -system-freetype -qt-kbd-linuxinput \
                    --bindir=${STAGING_BINDIR_NATIVE} --prefix=${STAGING_DIR_HOST} \
@@ -174,7 +177,6 @@ do_install() {
 do_install_append() {
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtDeclarative ${D}/usr/lib
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtScript ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtSql ${D}/usr/lib
 
     if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
         oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqpalm ${D}/usr/lib

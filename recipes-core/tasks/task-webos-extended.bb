@@ -37,14 +37,14 @@ RDEPENDS_${PN} = " \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
+    webkit \
+    webkit-supplemental \
 "
 #        luna-prefs ( broken )
 #        luna-universalsearchmgr ( broken )
 #        filecache ( missing dependency mojodb )
 #        activitymanager ( missing dependency mojodb )
 #        pmlogconf ( needed in runtime for pmloglib )	
-#        webkit (todo)
-#        webkit-supplemental (todo)
 #        serviceinstaller (todo)
 #        libpbnjson (todo)
 

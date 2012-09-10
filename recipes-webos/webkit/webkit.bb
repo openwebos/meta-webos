@@ -3,13 +3,22 @@
 DESCRIPTION = "webOS WebKit is an open source web rendering engine."
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
-#SECTION = "Linux/Multimedia"
 DEPENDS = "qt4-palm luna-service2 sqlite3"
 
 inherit autotools
-SRC_URI = "${ISIS-PROJECTI_GIT_REPO}/WebKit;protocol=git \
+
+#
+# Webkit source is identified WEBOS_SUBMISSION and SRCREV defined in
+# webos-component-submission.inc & webos-component-head.inc. Those 
+# values needs adjustment for future updates. 
+#
+SRC_URI = "${ISIS-PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip \
            file://webkit-lunasysmanager-unistd.patch"
-S = "${WORKDIR}/git"
+S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
+
+SRC_URI[md5sum] = "2ccc10a11c6e940b20b3b3b0cd30e9bc"
+SRC_URI[sha256sum] = "c60a8d2748b4c36accb46ed9479c6ee4995bd367ba06759eb499a05f984d63ab"
+
 
 #EXTRA_OEMAKE = "MACHINE=${MACHINE} DISTRO_TYPE=${DISTRO_TYPE} TARGET_ARCH=${TARGET_ARCH}"
 PALM_CC_OPT = "-O2"

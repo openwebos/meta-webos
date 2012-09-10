@@ -38,7 +38,6 @@ RDEPENDS_${PN} = " \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
     webkit \
-    webkit-supplemental \
 "
 #        luna-prefs ( broken )
 #        luna-universalsearchmgr ( broken )
@@ -47,6 +46,10 @@ RDEPENDS_${PN} = " \
 #        pmlogconf ( needed in runtime for pmloglib )	
 #        serviceinstaller (todo)
 #        libpbnjson (todo)
+#        webkit-supplemental (todo)
+#        adapterbase  (todo)
+#        npapi-headers  (todo)
+
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

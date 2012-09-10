@@ -1,6 +1,7 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 
 PREFERRED_VERSION_db ?= "4.8.30"
+PREFERRED_VERSION_linux-yocto ?= "3.4%"
 
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "164"

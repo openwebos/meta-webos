@@ -26,55 +26,53 @@ RDEPENDS_${PN} = " \
      bzip2 \
      c-ares \
      db \
+     dhcp-client \
+     dropbear \
      e2fsprogs \
      freetype \
      giflib \
      glib-2.0 \
      glibmm \
+     gzip \
+     hunspell \
      icu \
      initscripts \        
+     iproute2 \
      jpeg \
      libgcrypt \
      libgpg-error \
      libpng \
+     libtinyxml \
      libtool \
      libxml2 \
      libxslt \
+     ltp \
      makedevs \
      mjson \
      module-init-tools \
+     modutils-initscripts \
      ncurses \
+     netbase \
      openssl \
+     opkg \
      orc \
      parted \
+     procps \
+     psmisc \
+     ptmalloc3 \
      readline \
      sqlite3 \
      sysvinit \
      sysvinit-pidof \
+     tzdata \
      udev \
      update-modules \
      update-rc.d \
      upstart \
      upstart-sysvcompat \
+     uriparser \
      yajl \
      zlib \
-     psmisc \
-     tzdata \
-     hunspell \
-     iproute2 \
-     netbase \
-     dropbear \
-     gzip \
-     dhcp-client \
-     procps \
-     modutils-initscripts \
-     bluez4 \
-     connman \
-     ltp \
-     uriparser \
-     libtinyxml \
-     opkg \
-     ptmalloc3 \
 "
 
 DEPENDS_${PN} = " \

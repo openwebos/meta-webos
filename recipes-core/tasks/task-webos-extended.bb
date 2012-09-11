@@ -17,28 +17,28 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
-    nyx-lib \
     cjson \
-    pmloglib \
-    luna-service2 \
-    powerd \
-    sleepd \
-    storaged \
-    luna-init \
-    jemalloc \
-    librdx-stub \
-    qt4-palm \
-    pmcertificatemgr \
-    librolegen \
-    pmstatemachineengine \
-    libpalmsocket \
-    libsandbox \
     glibcurl \
+    jemalloc \
+    libpalmsocket \
+    librdx-stub \
+    librolegen \
+    libsandbox \
+    luna-init \
+    luna-prefs \
+    luna-service2 \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
+    nyx-lib \
+    pmcertificatemgr \
+    pmloglib \
+    pmstatemachineengine \
+    powerd \
+    qt4-palm \
+    sleepd \
+    storaged \
     webkit \
-    luna-prefs \
 "
 #        luna-universalsearchmgr ( broken )
 #        filecache ( missing dependency mojodb )

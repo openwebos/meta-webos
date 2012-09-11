@@ -39,13 +39,13 @@ RDEPENDS_${PN} = " \
     luna-webkit-api \
     webkit \
     luna-prefs \
+    libpbnjson \
 "
 #        luna-universalsearchmgr ( broken )
 #        filecache ( missing dependency mojodb )
 #        activitymanager ( missing dependency mojodb )
 #        pmlogconf ( needed in runtime for pmloglib )	
 #        serviceinstaller (todo)
-#        libpbnjson (todo)
 #        webkit-supplemental (todo)
 #        adapterbase  (todo)
 #        npapi-headers  (todo)
@@ -54,4 +54,3 @@ RDEPENDS_${PN} = " \
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \
 "
-

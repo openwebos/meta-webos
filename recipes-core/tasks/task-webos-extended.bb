@@ -21,6 +21,7 @@ RDEPENDS_${PN} = " \
     glibcurl \
     jemalloc \
     libpalmsocket \
+    libpbnjson \
     librdx-stub \
     librolegen \
     libsandbox \
@@ -45,7 +46,6 @@ RDEPENDS_${PN} = " \
 #        activitymanager ( missing dependency mojodb )
 #        pmlogconf ( needed in runtime for pmloglib )	
 #        serviceinstaller (todo)
-#        libpbnjson (todo)
 #        webkit-supplemental (todo)
 #        adapterbase  (todo)
 #        npapi-headers  (todo)
@@ -54,4 +54,3 @@ RDEPENDS_${PN} = " \
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \
 "
-

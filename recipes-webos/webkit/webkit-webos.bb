@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abba
 
 DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3"
 
-PR = "r6"
+PR = "r7"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -32,7 +32,7 @@ S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
 
 
 PALM_CC_OPT = "-O2"
-OBJDIR = "${MACHINE}-${TARGET_ARCH}"
+OBJDIR = "${TARGET_ARCH}"
 export WEBKITOUTPUTDIR = "${S}/WebKitBuild/${OBJDIR}"
 PALM_BUILD_DIR = "${WEBKITOUTPUTDIR}/Release"
 

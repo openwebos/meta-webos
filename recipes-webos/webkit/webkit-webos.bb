@@ -8,14 +8,14 @@ DEPENDS = "qt4-webos luna-service2 sqlite3"
 inherit autotools
 inherit webos_submissions
 
-PR = "r3"
+PR = "r4"
 
 #
 # Webkit source is identified WEBOS_SUBMISSION and SRCREV defined in
 # webos-component-submission.inc & webos-component-head.inc. Those 
 # values needs adjustment for future updates. 
 #
-SRC_URI = "${ISIS-PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip"
+SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip"
 S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
 
 SRC_URI[md5sum] = "ed3995d6dd54a81c4db5d9ea92f30ef4"

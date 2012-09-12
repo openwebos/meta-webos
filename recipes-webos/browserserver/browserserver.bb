@@ -9,7 +9,7 @@ DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcer
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
 RDEPENDS_${PN} = "ptmalloc3"
 
-PR = "r3"
+PR = "r4"
 
 inherit autotools
 inherit pkgconfig
@@ -17,7 +17,7 @@ inherit webos_public_repo
 inherit webos_submissions
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS-PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 PARALLEL_MAKE = ""

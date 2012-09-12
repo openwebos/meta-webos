@@ -6,7 +6,7 @@ SECTION = "webos/libs"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "adapterbase browserserver libpng npapi-headers glib-2.0 qt4-webos"
-PR="r2"
+PR = "r3"
 
 inherit autotools
 inherit pkgconfig
@@ -14,7 +14,7 @@ inherit webos_public_repo
 inherit webos_submissions
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS-PROJECT_GIT_REPO}/BrowserAdapter;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserAdapter;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 FILES_${PN} += "${libdir}/BrowserPlugins/BrowserAdapter.so ${libdir}/BrowserPlugins/BrowserAdapterData/*.png"

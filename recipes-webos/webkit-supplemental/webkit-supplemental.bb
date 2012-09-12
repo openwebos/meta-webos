@@ -5,14 +5,14 @@ LICENSE = "Apache-2.0"
 SECTION = "webos/libs"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 DEPENDS = "qt4-webos webkit-webos"
-PR = "r0"
+PR = "r1"
 
 inherit autotools
 inherit webos_public_repo
 inherit webos_submissions
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS-PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 PALM_CC_OPT = "-O2"

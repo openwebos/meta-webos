@@ -6,13 +6,13 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 SECTION = "webos/apps"
 
 #require enyo-app-common.inc
-PR = "r0"
+PR = "r1"
 
 inherit webos_submissions
 inherit webos_arch_indep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS-PROJECT_GIT_REPO}/isis-browser;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/isis-browser;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {

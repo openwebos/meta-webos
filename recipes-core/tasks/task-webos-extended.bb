@@ -49,6 +49,7 @@ RDEPENDS_${PN} = " \
 #        webkit-supplemental (todo)
 #        adapterbase  (todo)
 #        npapi-headers  (todo)
+#        db8  (todo)
 
 
 DEPENDS_${PN} = " \

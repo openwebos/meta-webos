@@ -32,4 +32,5 @@ SRCREV_pn-webkit ?= "97bd388"
 SRCREV_pn-webkit-supplemental ?= "${AUTOREV}"
 SRCREV_pn-serviceinstaller ?= "${AUTOREV}"
 SRCREV_pn-libpbnjson ?= "${AUTOREV}"
+SRCREV_pn-db8 ?= "${AUTOREV}"
 

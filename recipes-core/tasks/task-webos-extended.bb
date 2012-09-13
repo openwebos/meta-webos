@@ -51,6 +51,13 @@ RDEPENDS_${PN} = " \
 #        npapi-headers  (todo)
 #        db8  (todo)
 
+#    mojoloader (ready)
+#    mojoservicelauncher (todo)
+#    mojoservice-frameworks (ready)
+#    foundation-frameworks (ready)
+#    loadable-frameworks (ready)
+#    underscore (ready)
+#    enyo-1.0 (ready)
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

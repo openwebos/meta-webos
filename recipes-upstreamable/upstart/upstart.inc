@@ -109,6 +109,7 @@ EOF
 	mv ${D}${base_sbindir}/reboot ${D}${base_sbindir}/reboot.${PN}
         mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
 	mv ${D}${base_sbindir}/poweroff ${D}${base_sbindir}/poweroff.${PN}
+  mv ${D}${base_sbindir}/telinit ${D}${base_sbindir}/telinit.${PN}
 }
 
 pkg_postinst_${PN}-sysvcompat () {
@@ -117,6 +118,7 @@ update-alternatives --install ${base_sbindir}/reboot reboot reboot.${PN} 200
 update-alternatives --install ${base_sbindir}/halt halt halt.${PN} 200
 update-alternatives --install ${base_sbindir}/poweroff poweroff poweroff.${PN} 200
 update-alternatives --install ${base_sbindir}/shutdown shutdown shutdown.${PN} 200
+update-alternatives --install ${base_sbindir}/telinit telinit telinit.${PN} 200
 }
 
 pkg_prerm_${PN}-sysvcompat () {

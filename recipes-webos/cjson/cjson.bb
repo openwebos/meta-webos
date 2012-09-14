@@ -7,17 +7,16 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 inherit autotools
 inherit pkgconfig
+inherit webos_enhanced_submissions
 
-PR = "r0"
+PR = "r1"
 
-SRC_URI = "${OPENWEBOS_GIT_REPO}/cjson.git;protocol=git"
-
+WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
+SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 EXTRA_OECONF += "--disable-static"
 EXTRA_OEMAKE += "all"
-
-PV = "1.8.0"
 
 do_configure_prepend() {
         # Force a configure to happen

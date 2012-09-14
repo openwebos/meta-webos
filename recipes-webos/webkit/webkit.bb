@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abba
 DEPENDS = "qt4-palm luna-service2 sqlite3"
 
 inherit autotools
+inherit webos_submissions
 
 #
 # Webkit source is identified WEBOS_SUBMISSION and SRCREV defined in

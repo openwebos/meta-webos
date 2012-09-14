@@ -1,31 +1,29 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 
-require qt4-palm.inc
-
+DESCRIPTION = "Qt is a versatile cross-platform application framework"
+# TODO: Change GPLv3 license to LICENSE.GPL3 once it gets in Qt Github repository
 LICENSE = "LGPLv2.1 | GPLv3"
 LIC_FILES_CHKSUM = \ 
                   " file://LICENSE.LGPL;md5=77718fea3774d90f2f90dfaaba1c3d1b \
                     file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354 \
                     file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891" 
-# TODO: Change GPL-3.0 license to LICENSE.GPL3 once it gets in Qt Github repository
-
 SECTION = "libs"
+
 DEPENDS += "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-inherit autotools
+PR = "r1"
 
-PR = "0.33"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${PR};protocol=git \
+inherit autotools
+inherit webos_submissions
+
+require qt4-palm.inc
+
+WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git \
            file://qpixmapatlascpp.patch"
 S = "${WORKDIR}/git"
 
 PALM_BUILD_DIR = "${S}/../qt-build-${MACHINE}"
-
-# temporary workaround for https://jira.palm.com/browse/NOV-129865
-#CMP_IGNORES += "${WORKDIR}*/palm/submissions/qt-build*/*/Makefile"
-
-# staging is nondeterministic
-#CMP_IGNORES += "${T}/log.do_stage"
 
 export STRIP_TMP="${STRIP}"
 export F77_TMP="${F77}"

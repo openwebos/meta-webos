@@ -3,13 +3,14 @@
 # webos_submissions
 #
 # Supply the "enhanced submissions" interface so that either can be used by
-# recipes.
+# recipes. Not applicable to Open webOS where all components have their 
+# submissions appended to PV. Instead, explicitly inheriting from this bbclass
+# implies that the component does not use the Open webOS convention for
+# submission tags, i.e., they are not of the form:
+#    submissions/<integer>
+#       or
+#    submissions/<integer>.<integer>
 #
 
-# These two are intended for use in the recipes that inherit this file:
-WEBOS_COMPONENT_VERSION = "${PV}"
-
-WEBOS_SUBMISSION = "${@bb.data.getVar('SUBMISSION_${PN}', d, 1) or '0'}"
-
-PR = "${WEBOS_SUBMISSION}"
+inherit webos_enhanced_submissions
 

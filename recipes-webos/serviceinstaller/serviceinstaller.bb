@@ -9,6 +9,8 @@ PROVIDES = "serviceinstaller"
 
 DEPENDS += "glib-2.0 libpbnjson"
 
+PR = "r1"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_submissions

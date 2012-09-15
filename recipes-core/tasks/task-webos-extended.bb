@@ -18,6 +18,8 @@ ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
     cjson \
+    enyo-1.0 \
+    foundation-frameworks \
     glibcurl \
     jemalloc \
     libpalmsocket \
@@ -25,12 +27,16 @@ RDEPENDS_${PN} = " \
     librdx-stub \
     librolegen \
     libsandbox \
+    loadable-frameworks \
     luna-init \
     luna-prefs \
     luna-service2 \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
+    mojoloader \
+    mojoservicelauncher \
+    mojoservice-frameworks \
     nodejs \
     nodejs-module-webos-dynaload \
     nodejs-module-webos-pmlog \
@@ -43,6 +49,7 @@ RDEPENDS_${PN} = " \
     qt4-webos \
     sleepd \
     storaged \
+    underscore \
     webkit \
 "
 #        luna-universalsearchmgr ( broken )
@@ -54,14 +61,6 @@ RDEPENDS_${PN} = " \
 #        adapterbase  (todo)
 #        npapi-headers  (todo)
 #        db8  (todo)
-
-#    mojoloader (ready)
-#    mojoservicelauncher (todo)
-#    mojoservice-frameworks (ready)
-#    foundation-frameworks (ready)
-#    loadable-frameworks (ready)
-#    underscore (ready)
-#    enyo-1.0 (ready)
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

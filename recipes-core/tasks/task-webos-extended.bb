@@ -32,6 +32,9 @@ RDEPENDS_${PN} = " \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
     nodejs \
+    nodejs-module-webos-dynaload \
+    nodejs-module-webos-pmlog \
+    nodejs-module-webos-sysbus \
     nyx-lib \
     pmcertificatemgr \
     pmloglib \

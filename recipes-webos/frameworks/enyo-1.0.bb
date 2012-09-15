@@ -7,11 +7,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PR = "r2"
+PR = "r3"
 
 #inherit webos_component
 #inherit webos_public_repo
-inherit webos_submissions
+inherit webos_enhanced_submissions
 #inherit webos_cmake
 
 # TODO: should define in meta-webos/conf/distro/webos.conf:

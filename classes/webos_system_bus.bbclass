@@ -10,6 +10,12 @@
 
 RDEPENDS += "luna-service2"
 
+# XXX Should be global -- see [OWEBOS-2424]
+webos_sysbus_pubservicesdir = "${datadir}/dbus-1/services"
+webos_sysbus_prvservicesdir = "${datadir}/dbus-1/system-services"
+webos_sysbus_pubrolesdir = "${datadir}/ls2/roles/pub"
+webos_sysbus_prvrolesdir = "${datadir}/ls2/roles/prv"
+
 FILES_${PN} += "${webos_sysbus_prvservicesdir} ${webos_sysbus_pubservicesdir}"
 FILES_${PN} += "${webos_sysbus_prvrolesdir} ${webos_sysbus_pubrolesdir}"
 

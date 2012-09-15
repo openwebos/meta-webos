@@ -31,6 +31,7 @@ RDEPENDS_${PN} = " \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-webkit-api \
+    nodejs \
     nyx-lib \
     pmcertificatemgr \
     pmloglib \

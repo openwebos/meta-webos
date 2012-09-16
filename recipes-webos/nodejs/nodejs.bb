@@ -9,8 +9,9 @@ SECTION = "devel"
 # We want node_crypto support
 DEPENDS = "openssl"
 
-PR = "r0"
+PR = "r1"
 
+inherit pythonnative
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake

@@ -11,6 +11,7 @@ DEPENDS = "openssl python-native"
 
 PR = "r3"
 
+inherit pythonnative
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake

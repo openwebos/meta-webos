@@ -83,7 +83,7 @@ do_configure_prepend() {
     unset LD
 }
 
-QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite(bb, d)} -little-endian \
+QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite_qpa(bb, d)} -little-endian \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \

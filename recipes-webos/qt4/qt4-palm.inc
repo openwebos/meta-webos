@@ -27,3 +27,16 @@ def qt4_machine_config_arch_lite(bb, d):
             return "-arch arm -qpa"
     else:
         return ""
+
+def qt4_machine_config_arch_lite_qpa(bb, d):
+    if bb.data.getVar('MACHINE', d, True):
+        this_machine = bb.data.getVar('MACHINE', d, 1)
+
+        if this_machine == "qemux86":
+            return "-qpa"
+        elif this_machine == "qemuarm":
+            return "-arch arm -qpa"
+        else:
+            return "-arch arm -qpa"
+    else:
+        return ""

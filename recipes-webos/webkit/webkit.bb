@@ -3,10 +3,12 @@
 DESCRIPTION = "webOS WebKit is an open source web rendering engine."
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
-DEPENDS = "qt4-palm luna-service2 sqlite3"
+DEPENDS = "qt4-webos luna-service2 sqlite3"
 
 inherit autotools
 inherit webos_submissions
+
+PR = "r1"
 
 #
 # Webkit source is identified WEBOS_SUBMISSION and SRCREV defined in
@@ -50,7 +52,7 @@ export TARGET_CPPFLAGS_TMP="${TARGET_CPPFLAGS}"
 export CXXFLAGS_TMP="${CXXFLAGS}"
 export OBJDUMP_TMP="${OBJDUMP}"
 export LD_TMP="${LD}"
-export QTDIR = "${WORKDIR}/../qt4-palm-*/git"
+export QTDIR = "${WORKDIR}/../qt4-webos-*/git"
 
 do_configure() {
 :

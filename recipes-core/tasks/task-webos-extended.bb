@@ -40,7 +40,7 @@ RDEPENDS_${PN} = " \
     pmloglib \
     pmstatemachineengine \
     powerd \
-    qt4-palm \
+    qt4-webos \
     sleepd \
     storaged \
     webkit \

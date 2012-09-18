@@ -4,13 +4,14 @@ PREFERRED_VERSION_db ?= "4.8.30"
 
 # Components that inherit from either webos_enhanced_submissions or webos_submissions
 # must have a PREFERRED_VERSION with format: <component-version>-<submission>
-PREFERRED_VERSION_activitymanager ?= "1.0.0-108"
+PREFERRED_VERSION_activitymanager ?= "2.0.0-108"
 PREFERRED_VERSION_app-services ?= "3.0.0-1"
 PREFERRED_VERSION_cjson ?= "1.8.0-35"
 PREFERRED_VERSION_core-apps ?= "3.0.0-1"
 PREFERRED_VERSION_cmake-modules-webos-native ?= "1.0.0~rc3-10"
 PREFERRED_VERSION_db8 ?= "2.0.0-56"
 PREFERRED_VERSION_enyo-1.0 ?= "1.0-128.2"
+PREFERRED_VERSION_filecache ?= "2.0.0-54"
 PREFERRED_VERSION_foundation-frameworks ?= "1.0-1.0"
 PREFERRED_VERSION_glibcurl ?= "0.7.3-5"
 PREFERRED_VERSION_jemalloc ?= "0.20080828a-0webos9-11"
@@ -47,3 +48,5 @@ PREFERRED_VERSION_storaged ?= "2.1.0~rc1-4"
 PREFERRED_VERSION_underscore ?= "0.6.0-8"
 PREFERRED_VERSION_webkit ?= "1.3-0.53"
 PREFERRED_VERSION_webkit-supplemental ?= "1.1.0-0.4"
+
+PREFERRED_VERSION_yajl ?= "1.0.12"

@@ -13,14 +13,14 @@ LIC_FILES_CHKSUM = \
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "r11"
+PR = "r12"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
 inherit webos_submissions
 inherit webos_library
-# XXX Wait until usage of our WORKDIR by webkit-supplemental is gone.
-#inherit webos_machine_dep
+
+inherit webos_machine_dep
 
 def qt4_machine_config_flags(bb, d):
     if bb.data.getVar('MACHINE', d, True):

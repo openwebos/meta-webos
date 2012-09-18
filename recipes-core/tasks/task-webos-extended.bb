@@ -50,7 +50,7 @@ RDEPENDS_${PN} = " \
     sleepd \
     storaged \
     underscore \
-    webkit \
+    webkit-webos \
 "
 #        luna-universalsearchmgr ( broken )
 #        filecache ( missing dependency mojodb )

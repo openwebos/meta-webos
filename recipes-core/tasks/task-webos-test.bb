@@ -17,6 +17,5 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = "\
-     bash \
      ltp \
     "

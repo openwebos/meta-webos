@@ -2,10 +2,10 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 #
 
-DESCRIPTION = "Reference Open WebOS image."
+DESCRIPTION = "Reference Open WebOS image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-IMAGE_FEATURES += " webos-core webos-extended webos-test"
+IMAGE_FEATURES += " webos-core webos-extended"
 
 inherit webos-image

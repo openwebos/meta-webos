@@ -46,7 +46,6 @@ RDEPENDS_${PN} = " \
      libtool \
      libxml2 \
      libxslt \
-     ltp \
      makedevs \
      mjson \
      module-init-tools \

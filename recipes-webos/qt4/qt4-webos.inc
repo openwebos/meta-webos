@@ -15,7 +15,9 @@ inherit webos_submissions
 inherit webos_library
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git \
+           file://0002-webkit2-set-OUTPUT_DIR-value-if-empty.patch \
+"
 S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"

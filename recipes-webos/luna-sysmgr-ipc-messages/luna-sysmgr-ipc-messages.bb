@@ -7,6 +7,8 @@ SECTION = "None"
 PROVIDES = "luna-sysmgr-ipc-messages"
 DEPENDS = "luna-sysmgr-ipc luna-webkit-api"
 
+PR = "r0"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_submissions

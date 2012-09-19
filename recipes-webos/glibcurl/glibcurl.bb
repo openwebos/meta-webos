@@ -9,6 +9,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS = "glib-2.0 curl"
 
+PR = "r0"
+
 inherit webos_upstream_from_repo
 inherit webos_public_repo
 inherit webos_enhanced_submissions

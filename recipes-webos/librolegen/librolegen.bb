@@ -7,6 +7,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 PROVIDES = "rolegen"
 
+PR = "r0"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions 

@@ -8,6 +8,8 @@ SECTION = "webos/libs"
 # TODO : temporary disable this runtime dependency
 # RDEPENDS = "logd-conf"
 
+PR = "r0"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions

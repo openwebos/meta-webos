@@ -9,6 +9,8 @@ PROVIDES = "luna-prefs"
 
 DEPENDS += "luna-service2 cjson sqlite3 glib-2.0"
 
+PR = "r0"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_submissions

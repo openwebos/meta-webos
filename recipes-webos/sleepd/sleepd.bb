@@ -8,6 +8,8 @@ SECTION = "webos/dameons"
 
 DEPENDS = "nyx-lib luna-service2 cjson libxml2 sqlite3 glib-2.0 powerd"
 
+PR = "r0"
+
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions

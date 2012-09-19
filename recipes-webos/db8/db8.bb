@@ -18,4 +18,4 @@ WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S="${WORKDIR}/git"
 
-FILES_${PN} += "${bindir} ${libdir} ${sysconfdir}"
+FILES_${PN} += "${bindir} ${libdir} ${sysconfdir} {datadir}"

@@ -6,7 +6,7 @@ LICENSE = "Apache 2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # db8 is also the provider for mojodb
-PROVIDES = "mojodb"
+PROVIDES += "mojodb"
 
 DEPENDS = "db luna-service2 luna-prefs jemalloc icu pmloglib curl"
 

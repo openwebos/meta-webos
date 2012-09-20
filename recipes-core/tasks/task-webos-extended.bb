@@ -18,6 +18,7 @@ ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
     cjson \
+    db8 \
     enyo-1.0 \
     foundation-frameworks \
     glibcurl \
@@ -60,7 +61,6 @@ RDEPENDS_${PN} = " \
 #        webkit-supplemental (todo)
 #        adapterbase  (todo)
 #        npapi-headers  (todo)
-#        db8  (todo)
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

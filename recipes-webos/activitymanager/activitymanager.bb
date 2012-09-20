@@ -5,9 +5,8 @@ LICENSE = "Apache-2.0"
 SECTION = "webos/dameons"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "luna-service mojodb boost openssl glib-2.0"
-
-PR = "r0"
+DEPENDS = "luna-service2 db8 boost openssl glib-2.0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

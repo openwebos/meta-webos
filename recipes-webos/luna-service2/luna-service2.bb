@@ -28,7 +28,6 @@ do_install_append() {
         ln -snf ${PN}/lunaservice.h ${STAGING_INCDIR}
         ln -snf ${PN}/lunaservice-errors.h ${STAGING_INCDIR}
         ln -snf lib${PN}.so ${STAGING_LIBDIR}/liblunaservice.so
-        mv ${D}/"${prefix}/${sysconfdir}" ${D}
 }
 
 # The following is only needed until ls2 is upgraded to use cmake-modules-webos

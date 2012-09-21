@@ -19,9 +19,14 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
+    activitymanager \
+    app-services \
     cjson \
+    configurator \
+    core-apps \
     db8 \
     enyo-1.0 \
+    fbprogress \
     filecache \
     foundation-frameworks \
     glibcurl \

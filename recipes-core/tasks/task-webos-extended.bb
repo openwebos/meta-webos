@@ -19,9 +19,13 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
+    adapterbase \
+    browser-adapter \
+    browserserver \
     activitymanager \
     app-services \
     cjson \
+    com.palm.app.browser \
     configurator \
     core-apps \
     db8 \
@@ -52,6 +56,7 @@ RDEPENDS_${PN} = " \
     nodejs-module-webos-dynaload \
     nodejs-module-webos-pmlog \
     nodejs-module-webos-sysbus \
+    npapi-headers \
     nyx-lib \
     pmcertificatemgr \
     pmklogd \
@@ -65,13 +70,11 @@ RDEPENDS_${PN} = " \
     sleepd \
     storaged \
     underscore \
+    webkit-supplemental \
     webkit-webos \
 "
 #        luna-universalsearchmgr ( broken -- note: fixed, needs to be moved up)
 #        serviceinstaller (todo)
-#        webkit-supplemental (todo)
-#        adapterbase  (todo)
-#        npapi-headers  (todo)
 
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \

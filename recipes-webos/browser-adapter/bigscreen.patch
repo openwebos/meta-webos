@@ -1,0 +1,19 @@
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+
+diff --git a/BrowserAdapter.cpp b/BrowserAdapter.cpp
+index ba4b81d..8a1e6c1 100644
+--- a/BrowserAdapter.cpp
++++ b/BrowserAdapter.cpp
+@@ -57,8 +57,8 @@ extern "C" {
+
+ const int ESC_KEY = 27;
+
+-static const int32_t kScreenWidth   = 320;
+-static const int32_t kScreenHeight  = 480;
++// 1024x1024 is incorrect for qemuarm
++// Shouldn't it be 1024x768 for qemux86?
++static const int32_t kScreenWidth   = 1024;
++static const int32_t kScreenHeight  = 1024;
+
+ static const float kFrozenSurfaceScale = 0.5f;
+

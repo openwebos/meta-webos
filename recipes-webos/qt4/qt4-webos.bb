@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = \
                     file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891"
 SECTION = "webos/libs"
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
-
+# Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
 PR = "r3"
 
 inherit autotools

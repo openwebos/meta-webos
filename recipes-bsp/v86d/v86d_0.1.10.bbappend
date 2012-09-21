@@ -4,4 +4,5 @@ PR_append = "webos1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
+# Override default fbsetup script with our own script which sets the screen resolution
 SRC_URI += "file://fbsetup"

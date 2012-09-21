@@ -37,11 +37,13 @@ RDEPENDS_${PN} = " \
     librolegen \
     libsandbox \
     loadable-frameworks \
+    luna-applauncher \
     luna-init \
     luna-prefs \
     luna-service2 \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
+    luna-systemui \
     luna-webkit-api \
     mojoloader \
     mojoservicelauncher \
@@ -61,7 +63,7 @@ RDEPENDS_${PN} = " \
     underscore \
     webkit-webos \
 "
-#        luna-universalsearchmgr ( broken )
+#        luna-universalsearchmgr ( broken -- note: fixed, needs to be moved up)
 #        activitymanager ( ready to add to image )
 #        fbprogress ( ready to add to image )
 #        pmlogconf ( needed in runtime for pmloglib )	

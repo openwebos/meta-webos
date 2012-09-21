@@ -47,3 +47,5 @@ SRCREV_pn-nodejs-module-webos-pmlog ?= "${AUTOREV}"
 SRCREV_pn-nodejs-module-webos-sysbus ?= "${AUTOREV}"
 SRCREV_pn-mojoservicelauncher ?= "${AUTOREV}"
 SRCREV_pn-db8 ?= "${AUTOREV}"
+SRCREV_pn-fbprogress ?= "${AUTOREV}"
+

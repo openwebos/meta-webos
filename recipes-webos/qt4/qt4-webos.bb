@@ -82,6 +82,9 @@ export TARGET_CPPFLAGS_TMP="${TARGET_CPPFLAGS}"
 export CXXFLAGS_TMP="${CXXFLAGS}"
 export OBJDUMP_TMP="${OBJDUMP}"
 export LD_TMP="${LD}"
+# Export the current configuration out so that Qt .pro files can utilize these during
+# their configuration
+export WEBOS_CONFIG="webos ${MACHINE}"
 
 do_configure_prepend() {
     # clear out the staging folder
@@ -178,16 +181,14 @@ do_install_append() {
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtDeclarative ${D}/usr/lib
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtScript ${D}/usr/lib
 
+    oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqpalm ${D}/usr/lib
+
+    install -d ${D}/usr/plugins/platforms
+    install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/*.so ${D}/usr/plugins/platforms/
+
+    install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqpalm.so ${STAGING_LIBDIR}/libqpalm.so
+
     if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
-        oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqpalm ${D}/usr/lib
-#        oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqwebos ${D}/usr/lib
-
-        install -d ${D}/usr/plugins/platforms
-        install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/*.so ${D}/usr/plugins/platforms/
-
-        install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqpalm.so ${STAGING_LIBDIR}/libqpalm.so
-#        install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqwebos.so ${STAGING_LIBDIR}/libqwebos.so
-
         install -d ${D}/usr/plugins/imports/Qt/labs/shaders
         install -m 555 ${PALM_BUILD_DIR}/imports/Qt/labs/shaders/* ${D}/usr/plugins/imports/Qt/labs/shaders/
     fi

@@ -22,6 +22,7 @@ RDEPENDS_${PN} = " \
     cjson \
     db8 \
     enyo-1.0 \
+    filecache \
     foundation-frameworks \
     glibcurl \
     jemalloc \
@@ -56,7 +57,6 @@ RDEPENDS_${PN} = " \
     webkit-webos \
 "
 #        luna-universalsearchmgr ( broken )
-#        filecache ( missing dependency mojodb )
 #        activitymanager ( missing dependency mojodb )
 #        pmlogconf ( needed in runtime for pmloglib )	
 #        serviceinstaller (todo)

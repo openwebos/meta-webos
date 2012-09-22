@@ -8,7 +8,7 @@
 # The do_install() addition is skipped if WEBOS_SYSTEM_BUS_SKIP_DO_TASKS is "1".
 #
 
-RDEPENDS += "luna-service2"
+RDEPENDS_${PN} += "luna-service2"
 
 # XXX Should be global -- see [OWEBOS-2424]
 webos_sysbus_pubservicesdir = "${datadir}/dbus-1/services"

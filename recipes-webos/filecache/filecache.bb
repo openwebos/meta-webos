@@ -7,7 +7,7 @@ SECTION = "webos/base"
 
 DEPENDS = "jemalloc luna-service2 db8 glibmm boost libsandbox glib-2.0 libsigc++-2.0"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo

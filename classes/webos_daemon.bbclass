@@ -7,4 +7,4 @@
 #
 
 # Currently, we use Upstart
-RDEPENDS += "upstart"
+RDEPENDS_${PN} += "upstart"

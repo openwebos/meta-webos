@@ -54,6 +54,7 @@ WEBOS_IMAGE_BASE_INSTALL = '\
     task-core-boot \
     \
     ${WEBOS_IMAGE_EXTRA_INSTALL} \
+    webkit-webos-dev \
     '
 #     task-base \
 

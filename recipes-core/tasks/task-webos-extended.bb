@@ -54,7 +54,11 @@ RDEPENDS_${PN} = " \
     nodejs-module-webos-sysbus \
     nyx-lib \
     pmcertificatemgr \
+    pmklogd \
+    pmlogconf \
+    pmlogdaemon \
     pmloglib \
+    pmlogctl \
     pmstatemachineengine \
     powerd \
     qt4-webos \
@@ -64,12 +68,6 @@ RDEPENDS_${PN} = " \
     webkit-webos \
 "
 #        luna-universalsearchmgr ( broken -- note: fixed, needs to be moved up)
-#        activitymanager ( ready to add to image )
-#        fbprogress ( ready to add to image )
-#        pmlogconf ( needed in runtime for pmloglib )	
-#        pmlogdaemon ( ready to add to image )
-#        pmklogd ( ready to add to image )
-#        pmlogctl ( ready to add to image )
 #        serviceinstaller (todo)
 #        webkit-supplemental (todo)
 #        adapterbase  (todo)

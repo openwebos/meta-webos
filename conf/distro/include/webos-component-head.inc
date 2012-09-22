@@ -6,6 +6,7 @@
 SRCREV_pn-luna-service2 ?= "${AUTOREV}"
 SRCREV_pn-powerd ?= "${AUTOREV}"
 SRCREV_pn-nyx-lib ?= "${AUTOREV}"
+SRCREV_pn-nyx-modules ?= "${AUTOREV}"
 SRCREV_pn-pmloglib ?= "${AUTOREV}"
 SRCREV_pn-cjson ?= "${AUTOREV}"
 SRCREV_pn-sleepd ?= "${AUTOREV}"

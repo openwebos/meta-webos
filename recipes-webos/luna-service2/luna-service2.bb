@@ -8,7 +8,7 @@ SECTION = "webos/base"
 DEPENDS = "pmloglib cjson glib-2.0"
 RDEPENDS = "upstart"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo
@@ -21,13 +21,11 @@ inherit webos_core_os_dep
 # This fix-up will be removed shortly. luna-service2 headers must be included
 # using '#include <luna-service/*.h>'
 do_install_append() {
-        #autotools_stage_all
-
         # XXX Temporarily, create links from the old locations until all users of
         # luna-service2 convert to using pkg-config
-        ln -snf ${PN}/lunaservice.h ${STAGING_INCDIR}
-        ln -snf ${PN}/lunaservice-errors.h ${STAGING_INCDIR}
-        ln -snf lib${PN}.so ${STAGING_LIBDIR}/liblunaservice.so
+        ln -snf ${PN}/lunaservice.h ${D}/${includedir}
+        ln -snf ${PN}/lunaservice-errors.h ${D}/${includedir}
+        ln -snf lib${PN}.so ${D}/${libdir}/liblunaservice.so
 }
 
 # The following is only needed until ls2 is upgraded to use cmake-modules-webos

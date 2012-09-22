@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos qmake-webos-native"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -25,14 +25,16 @@ export TARGET_ARCH
 
 EXTRA_OEMAKE += "-C ${WEBOS_BUILD_DIR} -f Makefile.WebKitSupplemental"
 
-# XXX QTDIR needs to be changed everytime qt4-webos recipe revision number (PR) changes.
-# Also, it's known to cause problems when the shared state for qt4-webos is used instead of a fresh build.
-export QTDIR = "${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r9/qt-build-${MACHINE}"
-
+export QTDIR = "${WORKDIR}/qt4-webos"
 
 do_configure() {
     # Don't trust incremental configures
     rm -rf ${WEBOS_BUILD_DIR}
+    
+    # .qmake.cache is not part of qt4-webos checkout, so let's try to create fake one, pointing to your stored stuff
+    mkdir -p "${QTDIR}"
+    echo "QT_SOURCE_TREE = \$\$quote(${STAGING_DIR_HOST}/usr/src/qt4-webos/git)" > ${QTDIR}/.qmake.cache
+    echo "QT_BUILD_TREE = \$\$quote(${STAGING_DIR_HOST}/usr/src/qt4-webos/build)" >> ${QTDIR}/.qmake.cache
 
     mkdir -p ${WEBOS_BUILD_DIR}
     cd ${WEBOS_BUILD_DIR}

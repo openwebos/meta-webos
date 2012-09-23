@@ -51,6 +51,10 @@ RDEPENDS_${PN} = " \
     luna-systemui \
     luna-webkit-api \
     mojoloader \
+    mojomail-common \
+    mojomail-imap \
+    mojomail-pop \
+    mojomail-smtp \
     mojoservicelauncher \
     mojoservice-frameworks \
     nodejs \

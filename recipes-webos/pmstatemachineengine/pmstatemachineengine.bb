@@ -9,7 +9,7 @@ DESCRIPTION = "PmStateMachineEngine"
 
 DEPENDS = "pmloglib"
 
-PR = "r1"
+PR = "r2"
 
 inherit webos_component
 inherit webos_public_repo
@@ -17,7 +17,6 @@ inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_library
 
-PR = "${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${PR};protocol=git"
-S="${WORKDIR}/git"
-
+WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
+S = "${WORKDIR}/git"

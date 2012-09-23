@@ -72,6 +72,7 @@ RDEPENDS_${PN} = " \
     underscore \
     webkit-supplemental \
     webkit-webos \
+    webos-initscripts \
     webos-shutdownscripts \
 "
 #        luna-universalsearchmgr ( broken -- note: fixed, needs to be moved up)

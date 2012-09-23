@@ -8,9 +8,9 @@ SECTION = "webos/base"
 DEPENDS = "pmloglib zlib glib-2.0 librdx"
 # show_disk_usage.sh script uses mktemp, find, xargs, and du, all of which are
 # provided by busybox.
-RDEPENDS = "busybox pmlogconf"
+RDEPENDS_${PN} = "busybox pmlogconf"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

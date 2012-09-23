@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 SECTION = "webos/applications"
 
 DEPENDS = "pmloglib"
-RDEPENDS = "pmlogconf"
+RDEPENDS_${PN} = "pmlogconf"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

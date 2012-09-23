@@ -8,7 +8,8 @@ SECTION = "webos/libs"
 DESCRIPTION = "PmStateMachineEngine"
 
 DEPENDS = "pmloglib"
-RDEPENDS = "pmloglib"
+
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

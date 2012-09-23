@@ -7,8 +7,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcertificatemgr webkit-supplemental luna-sysmgr-ipc-messages"
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
-RDEPENDS = "ptmalloc3"
-PR = "r0"
+RDEPENDS_${PN} = "ptmalloc3"
+
+PR = "r1"
 
 inherit autotools
 inherit pkgconfig

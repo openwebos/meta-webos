@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = \
 SECTION = "webos/libs"
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 # Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
-PR = "r3"
+PR = "r4"
 
 inherit autotools
 inherit webos_submissions
@@ -56,9 +56,8 @@ def qt4_machine_config_arch_lite_qpa(bb, d):
     else:
         return ""
 
-WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git \
-           file://qpixmapatlascpp.patch"
+WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
+SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 PALM_BUILD_DIR = "${S}/../qt-build-${MACHINE}"

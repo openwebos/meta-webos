@@ -177,6 +177,7 @@ do_install() {
 }
 
 do_install_append() {
+    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtSql ${D}/usr/lib
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtDeclarative ${D}/usr/lib
     oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtScript ${D}/usr/lib
 

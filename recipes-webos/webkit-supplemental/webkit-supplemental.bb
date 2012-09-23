@@ -39,7 +39,7 @@ export LD_TMP="${LD}"
 export QMAKE="${STAGING_BINDIR_NATIVE}/qmake-palm"
 # The QTDIR needs to be changed everytime qt4-webos recipe revision number(PR) changes
 # Also, it's known to cause problems when shared state for qt4-webos is used instead of a fresh build
-export QTDIR="${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r3/qt-build-${MACHINE}"
+export QTDIR="${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r4/qt-build-${MACHINE}"
 
 do_configure() {
     export STAGING_DIR="${STAGING_DIR}"

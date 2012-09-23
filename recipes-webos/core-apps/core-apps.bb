@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PR = "r2"
+PR = "r3"
 
 #inherit webos_component
 #inherit webos_public_repo
@@ -29,6 +29,8 @@ do_install() {
         install -d ${D}/etc/palm/db/kinds
         #INSTALL DB/PERSMISSIONS
         install -d ${D}/etc/palm/db/permissions
+        #INSTALL ACTIVITIES
+        install -d ${D}/etc/palm/activities
 
         for COREAPPS in `ls -d1 ${S}/com.palm.app*` ; do
             COREAPPS_DIR=`basename ${COREAPPS}`
@@ -42,10 +44,12 @@ do_install() {
             if [ -d ${COREAPPS}/configuration/db/permissions ]; then
                 install -m 644 ${COREAPPS}/configuration/db/permissions/* ${D}/etc/palm/db/permissions
             fi
-            
+
+            if [ -d ${COREAPPS}/configuration/activities ]; then
+                cp -rf ${COREAPPS}/configuration/activities/* ${D}/etc/palm/activities/
+            fi
+
        done
-
-
 }
 
-FILES_${PN} += "/usr/palm/applications"
+FILES_${PN} += "/usr/palm/applications /etc/palm"

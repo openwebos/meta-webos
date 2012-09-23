@@ -7,14 +7,13 @@ SECTION = "webos/services"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PR = "r2"
+PR = "r3"
 
 #inherit webos_component
 #inherit webos_public_repo
 inherit webos_enhanced_submissions
 #inherit webos_cmake
 inherit webos_arch_indep
-inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
@@ -28,8 +27,8 @@ do_install() {
         install -d ${D}/etc/palm/db/kinds
         install -d ${D}/etc/palm/db/permissions
         install -d ${D}/etc/palm/activities
-        install -d ${D}/usr/share/ls2/services
-        install -d ${D}/usr/share/ls2/system-services
+        install -d ${D}/usr/share/dbus-1/services
+        install -d ${D}/usr/share/dbus-1/system-services
         install -d ${D}/usr/share/ls2/roles/prv
 
         for SERVICE in `ls -d1 ${S}/com.palm.service.*` ; do
@@ -42,11 +41,11 @@ do_install() {
            cp -rf ${SERVICE}/activities/* ${D}/etc/palm/activities/ 2> /dev/null || true
     # Copy services and roles files
            cp -rf ${SERVICE}/files/sysbus/*.json ${D}/usr/share/ls2/roles/prv 2> /dev/null || true
-           cp -rf ${SERVICE}/desktop-support/*.service ${D}/usr/share/ls2/system-services 2> /dev/null || true
+           cp -rf ${SERVICE}/files/sysbus/*.service ${D}/usr/share/dbus-1/system-services 2> /dev/null || true
         done
 
 # install account services files in public service directory.
-        cp -rf ${S}/com.palm.service.accounts/desktop-support/*.service ${D}/usr/share/ls2/services 2> /dev/null || true
+        cp -rf ${S}/com.palm.service.accounts/files/sysbus/*.service ${D}/usr/share/dbus-1/services 2> /dev/null || true
 
 # install account service desktop credentials db kind 
        cp -rf ${S}/com.palm.service.accounts/desktop/com.palm.account.credentails ${D}/etc/palm/db/kinds 2> /dev/null || true
@@ -60,8 +59,10 @@ do_install() {
         install -d ${D}/etc/palm/tempdb/permissions 2> /dev/null || true
         cp -rf com.palm.service.accounts/tempdb/kinds/* ${D}/etc/palm/tempdb/kinds/ 2> /dev/null || true
         cp -rf com.palm.service.accounts/tempdb/permissions/* ${D}/etc/palm/tempdb/permissions/ 2> /dev/null || true
+
+# install account service upstart file
+        install -d ${D}/etc/event.d 2> /dev/null || true
+        install -m 644 ${S}/com.palm.service.accounts/files/etc/event.d/createLocalAccount ${D}/etc/event.d/ 
 }
 
-FILES_${PN} += "/usr/palm/services /etc/palm/ /usr/share/ls2 /usr/palm/public"
-
-
+FILES_${PN} += "/usr/palm/services /etc/palm/ /etc/event.d /usr/share/ /usr/palm/public"

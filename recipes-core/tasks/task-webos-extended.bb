@@ -28,6 +28,7 @@ RDEPENDS_${PN} = " \
     com.palm.app.browser \
     configurator \
     core-apps \
+    cpushareholder-stub \
     db8 \
     enyo-1.0 \
     fbprogress \
@@ -66,6 +67,7 @@ RDEPENDS_${PN} = " \
     pmlogctl \
     pmstatemachineengine \
     powerd \
+    rdx-utils-stub \
     qt4-webos \
     sleepd \
     storaged \

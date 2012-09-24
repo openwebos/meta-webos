@@ -13,8 +13,7 @@ LIC_FILES_CHKSUM = \
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-# Whenever this changes, you must update the setting of QTDIR in webkit-supplemental.bb to match.
-PR = "r9"
+PR = "r11"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -56,6 +55,7 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 PALM_BUILD_DIR = "${S}/../qt-build-${MACHINE}"
+QT4_STAGING_BUILD_DIR = "/usr/src/qt4-webos"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"
 
@@ -179,6 +179,21 @@ do_install() {
         echo "Removing  _location settings from $pc"
         sed -i -e '/^[^_]*_location=/ d' $pc
     done
+    
+    # work around for building webkit-supplemental without qt4-webos BUILDDIR
+    install -d ${D}${QT4_STAGING_BUILD_DIR}/git/src
+    cp -ra ${S}/src/gui ${D}${QT4_STAGING_BUILD_DIR}/git/src
+    cp -ra ${S}/src/corelib ${D}${QT4_STAGING_BUILD_DIR}/git/src
+
+    install -d ${D}${QT4_STAGING_BUILD_DIR}/git/src/3rdparty
+    cp -ra ${S}/src/3rdparty/harfbuzz ${D}${QT4_STAGING_BUILD_DIR}/git/src/3rdparty
+    install -d ${D}${QT4_STAGING_BUILD_DIR}/git/src/3rdparty/webkit/
+    cp -ra ${S}/src/3rdparty/webkit/include ${D}${QT4_STAGING_BUILD_DIR}/git/src/3rdparty/webkit/
+
+    install -d ${D}${QT4_STAGING_BUILD_DIR}/build
+    install -d ${D}${QT4_STAGING_BUILD_DIR}/build/src
+    cp -ra ${PALM_BUILD_DIR}/include/ ${D}${QT4_STAGING_BUILD_DIR}/build
+    cp -ra ${PALM_BUILD_DIR}/src/corelib ${D}${QT4_STAGING_BUILD_DIR}/build/src
 
     # XXX Nova-Main has libqpalm.so under ${libdir} as well as /usr/plugins because that's
     # where the link of luna-sysmgr expects to find it. luna-sysmgr will be changed by
@@ -204,9 +219,15 @@ do_install() {
     set +x
 }
 
+sysroot_stage_all_append() {
+        sysroot_stage_dir ${D}${QT4_STAGING_BUILD_DIR} ${SYSROOT_DESTDIR}${QT4_STAGING_BUILD_DIR}
+}
+
+PACKAGES += "${PN}-buildsrc"
 
 FILES_${PN} += "/usr/plugins"
 # Yes, qmake-webos IS correct: mkspecs are dependent on the target.
 FILES_${PN}-dev += "${libdir}/qmake-webos"
 FILES_${PN}-dbg += "/usr/plugins/*/.debug"
 FILES_${PN}-dbg += "/usr/plugins/imports/Qt/labs/shaders/.debug"
+FILES_${PN}-buildsrc += "${QT4_STAGING_BUILD_DIR}"

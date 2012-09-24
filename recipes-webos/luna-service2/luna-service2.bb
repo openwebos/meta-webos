@@ -8,7 +8,7 @@ SECTION = "webos/base"
 DEPENDS = "pmloglib cjson glib-2.0"
 RDEPENDS_${PN} = "upstart"
 
-PR = "r4"
+PR = "r5"
 
 inherit webos_component
 inherit webos_public_repo

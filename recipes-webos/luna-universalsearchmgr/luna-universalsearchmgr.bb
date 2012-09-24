@@ -9,7 +9,7 @@ DEPENDS = "libxml2 luna-service2"
 
 PROVIDES = "luna-universalsearchmanager"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

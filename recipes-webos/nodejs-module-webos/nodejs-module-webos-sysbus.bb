@@ -7,7 +7,7 @@ SECTION = "webos/nodejs/module"
 
 DEPENDS = "nodejs luna-service2"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

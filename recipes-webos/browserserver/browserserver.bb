@@ -5,11 +5,11 @@ LICENSE = "Apache-2.0"
 SECTION = "webos/devel"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcertificatemgr webkit-supplemental luna-sysmgr-ipc-messages"
+DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcertificatemgr webkit-supplemental luna-sysmgr-ipc-messages"
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
 RDEPENDS_${PN} = "ptmalloc3"
 
-PR = "r1"
+PR = "r2"
 
 inherit autotools
 inherit pkgconfig

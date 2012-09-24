@@ -5,7 +5,7 @@ PREFERRED_VERSION_db ?= "4.8.30"
 # Components that inherit from either webos_enhanced_submissions or webos_submissions
 # must have a PREFERRED_VERSION with format: <component-version>-<submission>
 PREFERRED_VERSION_adapterbase ?= "3.0.0-0.2"
-PREFERRED_VERSION_activitymanager ?= "2.0.0-109"
+PREFERRED_VERSION_activitymanager ?= "2.0.0-110"
 PREFERRED_VERSION_app-services ?= "3.0.0-1"
 PREFERRED_VERSION_browser-adapter ?= "3.0.0-0.4"
 PREFERRED_VERSION_browserserver ?= "3.0.0-0.6"

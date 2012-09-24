@@ -12,7 +12,7 @@ inherit pkgconfig
 SRC_URI = "http://c-ares.haxx.se/download/c-ares-${PV}.tar.gz"
                  
 S = "${WORKDIR}/c-ares-${PV}"
-PR = "r1"
+PR = "r0"
 
 EXTRA_OECONF = "--enable-shared"
 
@@ -27,6 +27,6 @@ do_configure_append() {
 
 FILES_${PN}-dev += "${includedir}/ares/*.h"
 
-SRC_URI[md5sum] = "dd71e8f07d9f3c837e12a5416d1b7f73"
-SRC_URI[sha256sum] = "6b8a7c4ecd67240cca50a345bc955ffbe2d6d1f43982defc77a8e76031a6cb06"
+SRC_URI[md5sum] = "389db4917a3b58c4ce4ebfe961fd84c4"
+SRC_URI[sha256sum] = "023f28001f2f839645c8700187391a011198950c73ddd91510c7549d87373936"
 

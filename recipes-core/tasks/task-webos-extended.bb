@@ -47,6 +47,7 @@ RDEPENDS_${PN} = " \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-systemui \
+    luna-universalsearchmgr \
     luna-webkit-api \
     mojoloader \
     mojomail-common \
@@ -79,7 +80,6 @@ RDEPENDS_${PN} = " \
     webos-initscripts \
     webos-shutdownscripts \
 "
-#        luna-universalsearchmgr ( broken -- note: fixed, needs to be moved up)
 #        serviceinstaller (todo)
 
 DEPENDS_${PN} = " \

@@ -4,7 +4,7 @@ DESCRIPTION = "openembedded-core and meta-oe components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r1"
+PR = "r2"
 
 PACKAGES = "\
     ${PN} \
@@ -36,7 +36,6 @@ RDEPENDS_${PN} = " \
      gzip \
      hunspell \
      icu \
-     initscripts \        
      iproute2 \
      jpeg \
      libgcrypt \
@@ -61,13 +60,10 @@ RDEPENDS_${PN} = " \
      ptmalloc3 \
      readline \
      sqlite3 \
-     sysvinit \
      sysvinit-pidof \
      tzdata \
-     udev \
      update-modules \
      update-rc.d \
-     upstart \
      upstart-sysvcompat \
      uriparser \
      yajl \
@@ -79,4 +75,3 @@ DEPENDS_${PN} = " \
      genext2fs-native \
      pkgconfig-native \
 "
-

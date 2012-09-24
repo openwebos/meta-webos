@@ -33,13 +33,8 @@ PACKAGE_GROUP_apps-console-core = "task-core-apps-console"
 PACKAGE_GROUP_webos-core = "task-webos-core"
 PACKAGE_GROUP_webos-extended = "task-webos-extended"
 PACKAGE_GROUP_webos-internal = "task-webos-internal"
-PACKAGE_GROUP_webos-custom = "task-webos-custom"
-PACKAGE_GROUP_webos-engineering = "task-webos-engineering"
-PACKAGE_GROUP_webos-fulcrum = "task-webos-fulcrum"
-PACKAGE_GROUP_webos-rockhopper = "task-webos-rockhopper"
-PACKAGE_GROUP_webos-terra = "task-webos-terra"
 PACKAGE_GROUP_webos-test = "task-webos-test"
-
+PACKAGE_GROUP_webos-temp = "task-webos-temp"
 PACKAGE_GROUP_tools-debug = "task-core-tools-debug"
 PACKAGE_GROUP_tools-profile = "task-core-tools-profile"
 PACKAGE_GROUP_tools-testapps = "task-core-tools-testapps"
@@ -54,9 +49,7 @@ WEBOS_IMAGE_BASE_INSTALL = '\
     task-core-boot \
     \
     ${WEBOS_IMAGE_EXTRA_INSTALL} \
-    qt4-webos-dev \
     '
-#     task-base \
 
 WEBOS_IMAGE_EXTRA_INSTALL ?= ""
 

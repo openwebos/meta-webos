@@ -8,9 +8,10 @@ SECTION = "webos/base"
 DEPENDS = "pmloglib cjson glib-2.0"
 RDEPENDS_${PN} = "upstart"
 
-PR = "r6"
+PR = "r7"
 
-inherit webos_component
+# Don't uncomment until CMakeLists.txt installs the role files
+#inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake

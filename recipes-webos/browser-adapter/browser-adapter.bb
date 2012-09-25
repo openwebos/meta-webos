@@ -6,7 +6,7 @@ SECTION = "webos/libs"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "adapterbase browserserver libpng npapi-headers glib-2.0 qt4-webos"
-PR="r1"
+PR="r2"
 
 inherit autotools
 inherit pkgconfig
@@ -19,6 +19,8 @@ S = "${WORKDIR}/git"
 
 FILES_${PN} += "${libdir}/BrowserPlugins/BrowserAdapter.so ${libdir}/BrowserPlugins/BrowserAdapterData/*.png"
 FILES_${PN}-dbg += "${libdir}/BrowserPlugins/.debug/BrowserAdapter.so"
+
+PARALLEL_MAKE = ""
 
 do_compile_prepend() {
         export TARGET_ARCH="${TARGET_ARCH}"

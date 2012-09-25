@@ -13,6 +13,7 @@ DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 PR = "r4"
 
 inherit autotools
+inherit pkgconfig
 inherit webos_submissions
 
 def qt4_machine_config_flags(bb, d):
@@ -174,6 +175,10 @@ do_install() {
 
     oe_runmake install
     install -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${STAGING_INCDIR}/QtOpenGL
+
+    # install qtlib pkgconfigs
+    install -d ${D}/usr/lib/pkgconfig
+    install -m 644 ${PALM_BUILD_DIR}/lib/pkgconfig/*.pc ${D}/usr/lib/pkgconfig
 }
 
 do_install_append() {

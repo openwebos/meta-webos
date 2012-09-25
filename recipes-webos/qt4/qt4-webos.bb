@@ -8,9 +8,11 @@ LIC_FILES_CHKSUM = \
                     file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354 \
                     file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891"
 SECTION = "webos/libs"
+
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
+
 # Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
-PR = "r4"
+PR = "r5"
 
 inherit autotools
 inherit pkgconfig
@@ -143,6 +145,9 @@ do_configure() {
     mkdir -p ${PALM_BUILD_DIR}
     cd ${PALM_BUILD_DIR}
     ${S}/configure -v ${QT_CONFIG_FLAGS}
+    # We want the shared libraries to have an SONAME records => remove the empty -Wl,-soname,
+    # argument that qmake adds (why is it doing this?).
+    find . -name Makefile | xargs sed -i -e 's/-Wl,-soname, //' -e 's/-Wl,-soname,$//'
 }
 
 do_compile_prepend() {

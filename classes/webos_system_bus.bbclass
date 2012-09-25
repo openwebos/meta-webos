@@ -29,18 +29,19 @@ webos_system_bus_install_files () {
     install -d $_LS_PRV_DIR
     install -d $_LS_PUB_DIR
 
-    _LS_PUB=`find service -name "$_LS_PUB_FILE"`
-    _LS_PRV=`find service -name "$_LS_PRV_FILE"`
+    # Can't assume our current directory is still ${S}
+    _LS_PUB=`find ${S}/service -name "$_LS_PUB_FILE"`
+    _LS_PRV=`find ${S}/service -name "$_LS_PRV_FILE"`
 
     for i in $_LS_PUB; do
         _LS_PUB_DEST=`basename $i .pub`
-        oenote "PUBLIC: $_LS_PUB_DIR/$_LS_PUB_DEST"
+        bbnote "PUBLIC: $_LS_PUB_DIR/$_LS_PUB_DEST"
         install -m 0644 $i $_LS_PUB_DIR/$_LS_PUB_DEST
     done
 
     for i in $_LS_PRV; do
         _LS_PRV_DEST=`basename $i .prv`
-        oenote "PRIVATE: $_LS_PRV_DIR/$_LS_PRV_DEST"
+        bbnote "PRIVATE: $_LS_PRV_DIR/$_LS_PRV_DEST"
         install -m 0644 $i $_LS_PRV_DIR/$_LS_PRV_DEST
     done
 }

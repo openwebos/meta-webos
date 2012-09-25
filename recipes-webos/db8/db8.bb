@@ -8,9 +8,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # db8 is also the provider for mojodb
 PROVIDES += "mojodb"
 
-DEPENDS = "db luna-service2 luna-prefs jemalloc icu pmloglib curl"
+DEPENDS = "db luna-service2 luna-prefs jemalloc icu pmloglib curl glib-2.0"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo

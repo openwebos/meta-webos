@@ -8,7 +8,7 @@ SECTION = "webos/base"
 DEPENDS = "pmloglib cjson glib-2.0"
 RDEPENDS_${PN} = "upstart"
 
-PR = "r5"
+PR = "r6"
 
 inherit webos_component
 inherit webos_public_repo
@@ -28,6 +28,11 @@ do_install_append() {
         ln -snf luna-service2/lunaservice.h ${D}${includedir}/lunaservice.h
         ln -snf luna-service2/lunaservice-errors.h ${D}${includedir}/lunaservice-errors.h
         ln -snf lib${PN}.so ${D}${libdir}/liblunaservice.so
+
+        install -d ${D}/var/palm/system-services ${D}/var/mft/palm/system-services
+        install -d ${D}/var/palm/ls2/roles/pub ${D}/var/palm/ls2/roles/prv
+        install -d ${D}/var/mft/palm/ls2/roles/pub ${D}/var/mft/palm/ls2/roles/prv
+        install -d ${D}/var/palm/ls2/services/pub ${D}/var/palm/ls2/services/prv
 }
 
 # The following is only needed until ls2 is upgraded to use cmake-modules-webos

@@ -50,6 +50,7 @@ RDEPENDS_${PN} = " \
     luna-universalsearchmgr \
     luna-webkit-api \
     mojoloader \
+    mojolocation-stub \
     mojomail-common \
     mojomail-imap \
     mojomail-pop \
@@ -68,6 +69,7 @@ RDEPENDS_${PN} = " \
     pmlogdaemon \
     pmloglib \
     pmlogctl \
+    pmnetconfigmanager-stub \
     pmstatemachineengine \
     powerd \
     rdx-utils-stub \

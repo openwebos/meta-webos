@@ -25,6 +25,7 @@ RDEPENDS_${PN} = " \
      busybox \
      bzip2 \
      c-ares \
+     curl \
      db \
      dhcp-client \
      dropbear \

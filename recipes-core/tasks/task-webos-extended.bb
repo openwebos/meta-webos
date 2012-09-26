@@ -63,6 +63,7 @@ RDEPENDS_${PN} = " \
     nodejs-module-webos-sysbus \
     npapi-headers \
     nyx-lib \
+    nyx-modules \
     pmcertificatemgr \
     pmklogd \
     pmlogconf \

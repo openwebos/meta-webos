@@ -7,14 +7,15 @@ SECTION = "webOS/base"
 
 DEPENDS = "luna-service2 libpbnjson qt4-webos uriparser"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo
-inherit webos_submissions
+inherit webos_enhanced_submissions
 inherit webos_cmake
-inherit webos_system_bus
 
-WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
+
+FILES_${PN} += "/etc/palm/"

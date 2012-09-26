@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
 
 DESCRIPTION = "c-ares is a C library that resolves names asynchronously."
 HOMEPAGE = "http://daniel.haxx.se/projects/c-ares/"
@@ -10,19 +10,15 @@ inherit autotools
 inherit pkgconfig
 
 SRC_URI = "http://c-ares.haxx.se/download/c-ares-${PV}.tar.gz"
-                 
+
 S = "${WORKDIR}/c-ares-${PV}"
-PR = "r0"
+PR = "r1"
 
 EXTRA_OECONF = "--enable-shared"
 
 do_install_append() {
     install -d ${D}/${includedir}/ares
     install -m 0644 ares*.h ${D}/${includedir}/ares/
-}
-
-do_configure_append() {
-    sed -i s:#define\ HAVE_CLOCK_GETTIME_MONOTONIC\ 1:/*\ #undef\ HAVE_CLOCK_GETTIME_MONOTONIC\ */:g ares_config.h
 }
 
 FILES_${PN}-dev += "${includedir}/ares/*.h"

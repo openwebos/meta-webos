@@ -5,9 +5,8 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
-DEPENDS = "virtual/kernel"
 ALLOW_EMPTY = "1"
-PR = "r0"
+PR = "r1"
 
 #
 # Set by the machine configuration with packages essential for device bootup

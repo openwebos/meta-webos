@@ -23,12 +23,12 @@ VIRTUAL-RUNTIME_initscripts ?= "initscripts"
 VIRTUAL-RUNTIME_keymaps ?= "keymaps"
 
 PACKAGES = "\
-    task-webos-boot \
-    task-webos-boot-dbg \
-    task-webos-boot-dev \
+    ${PN} \
+    ${PN}-dbg \
+    ${PN}-dev \
 "
 
-RDEPENDS_task-webos-boot = "\
+RDEPENDS_${PN} = "\
     base-files \
     base-passwd \
     busybox \
@@ -42,5 +42,5 @@ RDEPENDS_task-webos-boot = "\
     ${VIRTUAL-RUNTIME_update-alternatives} \
     ${MACHINE_ESSENTIAL_EXTRA_RDEPENDS}"
 
-RRECOMMENDS_task-webos-boot = "\
+RRECOMMENDS_${PN} = "\
     ${MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS}"

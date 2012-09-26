@@ -44,6 +44,7 @@ RDEPENDS_${PN} = " \
     luna-init \
     luna-prefs \
     luna-service2 \
+    luna-sysmgr \
     luna-sysmgr-ipc \
     luna-sysmgr-ipc-messages \
     luna-systemui \

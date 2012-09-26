@@ -1,16 +1,16 @@
-# Copyright 2011, 2012  Palm, Inc.  All rights reserved.
+# (c) Copyright 2010 - 2012  Hewlett-Packard Development Company, L.P.
 
 SECTION = "webos/base"
 DESCRIPTION = "LunaSysManager"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype"
+DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype nyx-modules"
 #DEPENDS += "${@ '' if '${MACHINE}' == 'qemux86' else 'luna-keymaps libaffinity jemalloc memchute libnrwindow hidlib media-api '}"
 #DEPENDS += "localization serviceinstaller" #TODO
 RDEPENDS = "ptmalloc3"
 #RDEPENDS = "libmemcpy jail" #TODO
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo

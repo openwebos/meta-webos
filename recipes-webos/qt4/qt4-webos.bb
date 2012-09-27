@@ -12,7 +12,7 @@ SECTION = "webos/libs"
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
 # Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
-PR = "r5"
+PR = "r6"
 
 inherit autotools
 inherit pkgconfig
@@ -169,9 +169,9 @@ do_install() {
 
     install -d ${D}/usr/plugins
     install -d ${D}/usr/plugins/imageformats
-    install -m 555 ${PALM_BUILD_DIR}/plugins/imageformats/*.so ${D}/usr/plugins/imageformats
+    install -v -m 555 ${PALM_BUILD_DIR}/plugins/imageformats/*.so ${D}/usr/plugins/imageformats
 
-    if [ "${MACHINE}" != "qemux86" || "${MACHINE}" != "qemuarm"]; then
+    if [ "${MACHINE}" != "qemux86" -o "${MACHINE}" != "qemuarm"]; then
         oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtOpenGL ${D}/usr/lib
     fi
     export STAGING_INCDIR="${STAGING_INCDIR}"
@@ -179,11 +179,26 @@ do_install() {
     cd ${PALM_BUILD_DIR}
 
     oe_runmake install
-    install -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${STAGING_INCDIR}/QtOpenGL
+    install -v -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${STAGING_INCDIR}/QtOpenGL
 
-    # install qtlib pkgconfigs
+    # Install the pkgconfigs for the Qt libraries in the correct place.
     install -d ${D}/usr/lib/pkgconfig
-    install -m 644 ${PALM_BUILD_DIR}/lib/pkgconfig/*.pc ${D}/usr/lib/pkgconfig
+
+    # Fix up the generated .pc files so that they have the sysroot-relative 
+    # settings that OE-core expects. Note that qmake configures the Makefiles
+    # to install files under the root of the sysroot instead of under the more
+    # usual /usr -- hence the corrected prefix is empty and includedir is /include.
+    # However, in order for pkg-config to find the files, they have to be under
+    # /usr, so that's where the modified ones are written.
+    for pc in ${STAGING_DIR_HOST}/lib/pkgconfig/Qt*.pc; do
+        outf=${D}/usr/lib/pkgconfig/$(basename $pc)
+        echo "Fix up $pc -> $outf"
+        sed -e 's:^prefix=.*$:prefix=:' \
+               -e 's:^includedir=.*:includedir=/include:' \
+               -e '/^Libs\.private:/ s: -L/[^ ]* : -L@{libdir} :g' \
+               -e '/^Cflags:/ s: -I/[^ ]* : :g' $pc \
+           | tr @ '$' > $outf
+    done
 }
 
 do_install_append() {
@@ -194,13 +209,13 @@ do_install_append() {
     oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqpalm ${D}/usr/lib
 
     install -d ${D}/usr/plugins/platforms
-    install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/*.so ${D}/usr/plugins/platforms/
+    install -v -m 555 ${PALM_BUILD_DIR}/plugins/platforms/*.so ${D}/usr/plugins/platforms/
 
-    install -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqpalm.so ${STAGING_LIBDIR}/libqpalm.so
+    install -v -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqpalm.so ${STAGING_LIBDIR}/libqpalm.so
 
     if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
         install -d ${D}/usr/plugins/imports/Qt/labs/shaders
-        install -m 555 ${PALM_BUILD_DIR}/imports/Qt/labs/shaders/* ${D}/usr/plugins/imports/Qt/labs/shaders/
+        install -v -m 555 ${PALM_BUILD_DIR}/imports/Qt/labs/shaders/* ${D}/usr/plugins/imports/Qt/labs/shaders/
     fi
 }
 

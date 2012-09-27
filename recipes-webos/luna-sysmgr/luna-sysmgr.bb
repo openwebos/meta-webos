@@ -1,26 +1,35 @@
 # (c) Copyright 2010 - 2012  Hewlett-Packard Development Company, L.P.
 
-SECTION = "webos/base"
-DESCRIPTION = "LunaSysManager"
+DESCRIPTION = "Open webOS System Manager"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype nyx-modules"
-#DEPENDS += "${@ '' if '${MACHINE}' == 'qemux86' else 'luna-keymaps libaffinity jemalloc memchute libnrwindow hidlib media-api '}"
+SECTION = "webos/base"
+
+DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype"
 #DEPENDS += "localization serviceinstaller" #TODO
+
+# luna-sysmgr's upstart conf expects to be able to LD_PRELOAD ptmalloc3
 RDEPENDS = "ptmalloc3"
-#RDEPENDS = "libmemcpy jail" #TODO
+# luna-sysmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
+RDEPENDS += "util-linux"
+#RDEPENDS += "jail" #TODO
 
-PR = "r1"
+PR = "r2"
 
-inherit webos_component
+# Don't uncomment until all of the do_*() tasks have been moved out of the recipe
+#inherit webos_component
 inherit webos_public_repo
 inherit webos_submissions
+inherit webos_system_bus
+# Uncomment once installing into /usr/sbin instead of /usr/bin
+#inherit webos_daemon
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
-EXTRA_OEMAKE = ' MAKEFLAGS= '
+
+EXTRA_OEMAKE = " MAKEFLAGS= "
 
 export STRIP_TMP="${STRIP}"
 export F77_TMP="${F77}"
@@ -97,12 +106,12 @@ install_launcher3_support() {
 
 do_install() {
         oe_runmake install
-#	bb.note('Installing luna-sysmgr')
+#	bbnote "Installing luna-sysmgr"
 	install -d ${D}${bindir}
 	install -m 750 release-${MACHINE}/LunaSysMgr ${D}${bindir}
 
 	# install images & low-memory files
-#	bb.note('install images and low-memory files')
+#	bbnote "install images and low-memory files"
 	install -d ${D}/usr/palm/sysmgr
 	cd ${S} && tar --exclude=.svn -cf - images | tar xf - -C ${D}/usr/palm/sysmgr
 	cd ${S} && tar --exclude=.svn -cf - uiComponents | tar xf - -C ${D}/usr/palm/sysmgr
@@ -111,13 +120,13 @@ do_install() {
 
 	if [ -d bin ]
 	then
-#		bb.note('install ime bin files')
+#		bbnote "install ime bin files"
 		install -d ${D}/usr/palm/sysmgr/bin
 		install -m 644 bin/* ${D}/usr/palm/sysmgr/bin
 	fi
 	
 	# install sysmgr builtins apps
-#	bb.note('install sysmgr builtins apps')
+#	bbnote "install sysmgr builtins apps"
 	if [ -d sysapps ]
 	then
 		
@@ -144,12 +153,12 @@ do_install() {
 	fi
 	
 	# Install launcher things
-#	bb.note('Install launcher things')
+#	bbnote "Install launcher things"
 	
 	install_launcher3_support
 	
 	# install sysmgr builtins apps
-#	bb.note('install sysmgr builtins apps')
+#	bbnote "install sysmgr builtins apps"
 	cd ${S}
 	if [ -d sysapps ]
 	then
@@ -190,7 +199,7 @@ do_install() {
 	fi
 
 	# install the platform luna.conf file
-#	bb.note('install the platform luna.conf file')
+#	bbnote "install the platform luna.conf file"
 	if [ -f conf/luna-${MACHINE}.conf ]
 	then
 		install	-m 644 conf/luna-${MACHINE}.conf ${D}${sysconfdir}/palm/luna-platform.conf
@@ -203,7 +212,7 @@ do_install() {
 	fi
 
 	# install the platform defaultPreferences.txt file
-#	bb.note('install the platform defaultPreferences.txt file')
+#	bbnote "install the platform defaultPreferences.txt file"
 	if [ -f conf/defaultPreferences-${MACHINE}.txt ]
 	then
 		install	-m 644 conf/defaultPreferences-${MACHINE}.txt ${D}${sysconfdir}/palm/defaultPreferences-platform.txt
@@ -260,7 +269,7 @@ do_install() {
 }
 
 do_clean_prepend() {
-	os.system('cd ' + bb.data.expand('${S}', d) + ' && make distclean')
+	os.system('cd ' + bb.data.expand('${S}', d) + ' && [ -f Makefile ] && make distclean')
 }
 
 FILES_${PN} += "/usr/palm/  /etc/palm/  /usr/share/"

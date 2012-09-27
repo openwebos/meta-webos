@@ -3,11 +3,12 @@
 DESCRIPTION = "webOS portability layer - library"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-SECTION = "platform"
+SECTION = "webos/libs"
 
 DEPENDS = "glib-2.0"
+RDEPENDS = "nyx-modules"
 
-PR = "r1"
+PR = "r2"
 
 inherit cmake
 inherit pkgconfig

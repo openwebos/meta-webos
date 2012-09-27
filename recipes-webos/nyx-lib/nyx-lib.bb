@@ -6,9 +6,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 SECTION = "webos/libs"
 
 DEPENDS = "glib-2.0"
-RDEPENDS = "nyx-modules"
+RDEPENDS_${PN} = "nyx-modules"
 
-PR = "r2"
+PR = "r3"
 
 inherit cmake
 inherit pkgconfig

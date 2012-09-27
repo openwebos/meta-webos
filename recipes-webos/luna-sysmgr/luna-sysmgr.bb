@@ -9,12 +9,12 @@ DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages 
 #DEPENDS += "localization serviceinstaller" #TODO
 
 # luna-sysmgr's upstart conf expects to be able to LD_PRELOAD ptmalloc3
-RDEPENDS = "ptmalloc3"
+RDEPENDS_${PN} = "ptmalloc3"
 # luna-sysmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
-RDEPENDS += "util-linux"
-#RDEPENDS += "jail" #TODO
+RDEPENDS_${PN} += "util-linux"
+#RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r2"
+PR = "r3"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

@@ -1,3 +1,4 @@
+# Copyright 2012  Palm, Inc.  All rights reserved.
 diff --git a/Source/WebCore/platform/webos/LunaServiceMgr.cpp b/Source/WebCore/platform/webos/LunaServiceMgr.cpp
 index 0452a65..11b8267 100644
 --- a/Source/WebCore/platform/webos/LunaServiceMgr.cpp

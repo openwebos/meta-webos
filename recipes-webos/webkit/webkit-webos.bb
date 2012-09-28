@@ -8,7 +8,7 @@ DEPENDS = "qt4-webos luna-service2 sqlite3"
 inherit autotools
 inherit webos_submissions
 
-PR = "r1"
+PR = "r2"
 
 #
 # Webkit source is identified WEBOS_SUBMISSION and SRCREV defined in
@@ -22,6 +22,10 @@ S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
 SRC_URI[md5sum] = "2ccc10a11c6e940b20b3b3b0cd30e9bc"
 SRC_URI[sha256sum] = "c60a8d2748b4c36accb46ed9479c6ee4995bd367ba06759eb499a05f984d63ab"
 
+# XXX Expediently patch Tools/Scripts/webkitdirs.pm to remove the
+# extraneous empty "-W1,-soname," that qmake adds to link command lines.
+# Eventually, arrange for qmake to do the right thing.
+SRC_URI += "file://remove-empty-soname-arg.patch"
 
 #EXTRA_OEMAKE = "MACHINE=${MACHINE} DISTRO_TYPE=${DISTRO_TYPE} TARGET_ARCH=${TARGET_ARCH}"
 PALM_CC_OPT = "-O2"

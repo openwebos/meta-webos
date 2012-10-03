@@ -7,7 +7,7 @@ SECTION = "webos/base"
 
 INHIBIT_DEFAULT_DEPS = "1"
 
-PR = "r5"
+PR = "r6"
 
 inherit webos_enhanced_submissions
 inherit webos_arch_indep
@@ -21,6 +21,10 @@ do_install() {
         #COPY ENTIRE APP
         install -d ${D}/usr/lib/luna/system/luna-systemui
         cp -rf ${S}/* ${D}/usr/lib/luna/system/luna-systemui
+        if [ -e ${S}/images/wallpaper.tar ]; then
+            install -d ${D}/usr/lib/luna/system/luna-systemui/images
+            tar xf ${S}/images/wallpaper.tar --directory=${D}/usr/lib/luna/system/luna-systemui/images
+        fi
 }
 
 FILES_${PN} += "${prefix}/lib/luna/system"

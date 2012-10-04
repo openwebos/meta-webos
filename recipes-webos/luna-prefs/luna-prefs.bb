@@ -21,10 +21,6 @@ S = "${WORKDIR}/git"
 FILES_${PN} += "${bindir} ${libdir} ${sysconfdir} ${datadir}"
 
 do_install_append() {
-        install -d ${D}${libdir}
-
-        install -d ${D}${bindir}
-
         # CFISH-930: remove "other" perms granted by pmmakefiles (aka palmmake):
         chmod o-rwx ${D}/usr/bin/luna-prefs-service
         chmod o-rwx ${D}/usr/bin/lunaprop

@@ -7,7 +7,7 @@ SECTION = "webos/base"
 
 DEPENDS += "luna-service2 cjson sqlite3 glib-2.0"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo

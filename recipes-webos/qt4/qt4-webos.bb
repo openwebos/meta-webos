@@ -12,7 +12,7 @@ SECTION = "webos/libs"
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
 # Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
-PR = "r6"
+PR = "r7"
 
 inherit autotools
 inherit pkgconfig
@@ -27,7 +27,7 @@ def qt4_machine_config_flags(bb, d):
         elif this_machine == "qemux86":
             return "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
         elif this_machine == "qemuarm":
-            return "-xplatform qws/linux-armv6-g++ -no-opengl -DQT_QWS_CLIENTBLIT -no-neon -DPALM_DEVICE -qconfig palm"
+            return "-xplatform qws/linux-armv6-g++ -no-opengl -DQT_QWS_CLIENTBLIT -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
         else:
             return "-xplatform qws/linux-armv6-g++ -DQT_QWS_CLIENTBLIT -no-neon -DPALM_DEVICE -qconfig palm"
     else:

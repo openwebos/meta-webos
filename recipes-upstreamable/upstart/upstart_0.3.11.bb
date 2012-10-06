@@ -9,7 +9,7 @@ SRC_URI = "http://upstart.ubuntu.com/download/0.3/upstart-${PV}.tar.bz2;name=ups
 
 RRECOMMENDS_${PN} = "libupstart upstart-sysvcompat"
 
-PR = "r3"
+PR = "r4"
 
 USE_VT ?= "1"
 SYSVINIT_ENABLED_GETTYS ?= "1"

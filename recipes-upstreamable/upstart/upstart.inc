@@ -104,10 +104,10 @@ EOF
 	    done
 	fi
 
-	mv ${D}${base_sbindir}/init	${D}${base_sbindir}/init.${PN}
-        mv ${D}${base_sbindir}/halt ${D}${base_sbindir}/halt.${PN}
+	mv ${D}${base_sbindir}/init ${D}${base_sbindir}/init.${PN}
+	mv ${D}${base_sbindir}/halt ${D}${base_sbindir}/halt.${PN}
 	mv ${D}${base_sbindir}/reboot ${D}${base_sbindir}/reboot.${PN}
-        mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
+	mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
 	mv ${D}${base_sbindir}/poweroff ${D}${base_sbindir}/poweroff.${PN}
 	mv ${D}${base_sbindir}/telinit ${D}${base_sbindir}/telinit.${PN}
 }

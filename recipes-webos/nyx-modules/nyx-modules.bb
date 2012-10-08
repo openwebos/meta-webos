@@ -21,5 +21,5 @@ WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
-FILES_${PN} += "/lib/*/nyx/modules/*.module"
-FILES_${PN}-dbg += "/lib/*/nyx/modules/.debug/*.module"
+FILES_${PN} += "${libdir}/nyx/modules/*"
+FILES_${PN}-dbg += "${libdir}/nyx/modules/.debug/*"

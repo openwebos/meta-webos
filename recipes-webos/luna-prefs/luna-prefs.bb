@@ -7,7 +7,7 @@ SECTION = "webos/base"
 
 DEPENDS += "luna-service2 cjson sqlite3 glib-2.0"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo
@@ -19,6 +19,16 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 FILES_${PN} += "${bindir} ${libdir} ${sysconfdir} ${datadir}"
+
+PRODUCT_DEVICE_NAME ?= "Open webOS Device"
+PRODUCT_DEVICE_NAME_BRANDED ?= "HP Open webOS Device"
+PRODUCT_DEVICE_NAME_SHORT ?= "webOS Device"
+PRODUCT_DEVICE_NAME_SHORT_BRANDED ?= "HP Open webOS Device"
+PRODUCT_DEVICE_NAME_PRODUCT_LINE_NAME ?= "Open webOS Device"
+PRODUCT_DEVICE_NAME_PRODUCT_LINE_VERSION ?= "3.5.0"
+PRODUCT_DEVICE_NAME_PRODUCT_CLASS ?= "Tablet"
+PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME ?= "Open webOS"
+PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION ?= "3.5.0"
 
 do_install_append() {
         # CFISH-930: remove "other" perms granted by pmmakefiles (aka palmmake):

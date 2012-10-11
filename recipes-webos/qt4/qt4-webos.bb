@@ -1,22 +1,27 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 
-DESCRIPTION = "Qt is a versatile cross-platform application framework"
+SUMMARY = "Open webOS edition of the Qt4 cross-platform application framework"
+SECTION = "libs"
 # TODO: Change GPLv3 license to LICENSE.GPL3 once it gets in Qt Github repository
 LICENSE = "LGPLv2.1 | GPLv3"
 LIC_FILES_CHKSUM = \
                   " file://LICENSE.LGPL;md5=77718fea3774d90f2f90dfaaba1c3d1b \
                     file://LGPL_EXCEPTION.txt;md5=411080a56ff917a5a1aa08c98acae354 \
                     file://${COMMON_LICENSE_DIR}/GPL-3.0;md5=c79ff39f19dfec6d293b95dea7b07891"
-SECTION = "webos/libs"
 
+# XXX We don't depend on qmake-webos-native because we continue to build qmake-palm during
+# do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-# Please update QTDIR in webkit-supplemental.bb file with the below value(r<n>), when ever it changes
-PR = "r7"
+# Whenever this changes, you must update the setting of QTDIR in webkit-supplemental.bb to match.
+PR = "r8"
 
-inherit autotools
-inherit pkgconfig
+inherit webos_public_repo
+inherit webos_oe_runmake_no_env_override
 inherit webos_submissions
+inherit webos_library
+# XXX Wait until usage of our WORKDIR by webkit-supplemental is gone.
+#inherit webos_machine_dep
 
 def qt4_machine_config_flags(bb, d):
     if bb.data.getVar('MACHINE', d, True):
@@ -65,7 +70,13 @@ S = "${WORKDIR}/git"
 
 PALM_BUILD_DIR = "${S}/../qt-build-${MACHINE}"
 
-export STRIP_TMP="${STRIP}"
+EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"
+
+# Exporting these variables since they appear in our qmake.conf
+export STAGING_INCDIR
+export STAGING_LIBDIR
+
+# Our qmake.conf files for the target builds use these variables to set QMAKE_*
 export F77_TMP="${F77}"
 export QMAKE_MKSPEC_PATH_TMP="${QMAKE_MKSPEC_PATH}"
 export CC_TMP="${CC}"
@@ -84,28 +95,16 @@ export TARGET_CPPFLAGS_TMP="${TARGET_CPPFLAGS}"
 export CXXFLAGS_TMP="${CXXFLAGS}"
 export OBJDUMP_TMP="${OBJDUMP}"
 export LD_TMP="${LD}"
+# The -separate-debug-info configure option doesn't appear to work, so make strip into a NOP
+export STRIP_TMP=":"
+
 # Export the current configuration out so that Qt .pro files can utilize these during
 # their configuration
 export WEBOS_CONFIG="webos ${MACHINE}"
 
-do_configure_prepend() {
-    # clear out the staging folder
-    rm -fr ${STAGING_INCDIR}/Qt
-    rm -fr ${STAGING_INCDIR}/QtCore
-    rm -fr ${STAGING_INCDIR}/QtGui
-    rm -fr ${STAGING_INCDIR}/QtNetwork
-    rm -fr ${STAGING_INCDIR}/QtOpenGL
-    rm -fr ${STAGING_INCDIR}/QtSql
-    rm -fr ${STAGING_INCDIR}/QtTest
-    rm -fr ${STAGING_INCDIR}/QtXml
 
-    rm -f ${STAGING_LIBDIR}/libQt*
-
-    # Exporting these variables here so that ./configure knows about them when parsing qmake.conf
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-
-    unset STRIP
+# Unset these so that when ./configure-webos builds qmake, it's a native build.
+use_native_toolchain () {
     unset F77
     unset QMAKE_MKSPEC_PATH
     unset CC
@@ -124,104 +123,103 @@ do_configure_prepend() {
     unset CXXFLAGS
     unset OBJDUMP
     unset LD
+    unset STRIP
 }
 
 # Turn off PostgreSQL and MySQL.
 # QT is a combination of native and target (cross) build and the "unset"
-# statements above and calling QT_CONFIG_FLAGS using _NATIVE and _HOST dirs
-# below enables it to find the SQL headers on the host.
+# statements above enables it to find the SQL headers on the host.
+#
+# Need to specify --datadir because its default is the --prefix setting. Also, it must be under
+# ${libdir} since mkspecs is MACHINE-dependent.
 QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite_qpa(bb, d)} -little-endian \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \
-                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite -no-sql-psql -no-sql-mysql\
+                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite -no-sql-psql -no-sql-mysql \
                    -no-libtiff -no-libmng -no-gstreamer -no-audio-backend -no-gtkstyle \
                    -reduce-relocations -reduce-exports -force-pkg-config -glib -qt-zlib -system-freetype -qt-kbd-linuxinput \
-                   --bindir=${STAGING_BINDIR_NATIVE} --prefix=${STAGING_DIR_HOST} \
+                   -prefix ${prefix} -datadir ${libdir}/qmake-webos \
                    -make 'libs' \
                    ${@qt4_machine_config_flags(bb, d)}"
 
 do_configure() {
+    # Since configure builds qmake, we have to modify it to generate the src/corelib/global/qconfig.cpp we want (instead of
+    # modifying it after configure has run, which would have been cleaner). Also, configure assumes that it resides in the
+    # root of the source tree, so the modified one can't be placed in PALM_BUILDDIR (=> XXX need to add configure-webos.sh
+    # to .gitignore).
+    sed -e '/QT_CONFIGURE_LICENSEE/ s/^/#include <stdlib.h>\n/' \
+        -e '/QT_CONFIGURE_[^_]*_PATH/ {; s/\(QT_CONFIGURE_[^_]*_PATH\)/\1 (getenv("\1") ? getenv("\1") : (/; s/;/ ));/; }' \
+            configure > configure-webos.sh
+
+    # Don't trust incremental configures
+    rm -rf ${PALM_BUILD_DIR}
+
     mkdir -p ${PALM_BUILD_DIR}
     cd ${PALM_BUILD_DIR}
-    ${S}/configure -v ${QT_CONFIG_FLAGS}
+    use_native_toolchain
+    sh ${S}/configure-webos.sh -v ${QT_CONFIG_FLAGS}
+
     # We want the shared libraries to have an SONAME records => remove the empty -Wl,-soname,
     # argument that qmake adds (why is it doing this?).
     find . -name Makefile | xargs sed -i -e 's/-Wl,-soname, //' -e 's/-Wl,-soname,$//'
 }
 
-do_compile_prepend() {
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    cd ${PALM_BUILD_DIR}
-}
 
 do_install() {
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    cd ${PALM_BUILD_DIR}
+    # Don't install directly into the sysroot
+    export STAGING_INCDIR=${D}${includedir}
+    export STAGING_LIBDIR=${D}${libdir}
 
-    install -d ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtCore ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtGui ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtNetwork ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtXml ${D}/usr/lib
+    # Don't install qmake (already done by qmake-webos-native), but do install mkspecs,
+    # since it contains a MACHINE-dependent qconfig.pri (this is because QT_CONFIG_FLAGS
+    # is MACHINE-dependent). It's also target-dependent, since configure tries to
+    # auto-config many of the settings.
+    oe_runmake -C ${PALM_BUILD_DIR} INSTALL_ROOT=${D} install_mkspecs install_subtargets
 
-    install -d ${D}/usr/plugins
-    install -d ${D}/usr/plugins/imageformats
-    install -v -m 555 ${PALM_BUILD_DIR}/plugins/imageformats/*.so ${D}/usr/plugins/imageformats
-
-    if [ "${MACHINE}" != "qemux86" -o "${MACHINE}" != "qemuarm"]; then
-        oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtOpenGL ${D}/usr/lib
+    # Nova-Main has these additional files installed
+    install -v -d ${D}${includedir}/QtOpenGL
+    install -v -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${D}${includedir}/QtOpenGL
+    if [ -d ${D}/usr/imports/Qt/labs/shaders ]; then
+        install -v -d ${D}/usr/plugins/imports/Qt/labs
+	    mv -v ${D}/usr/imports/Qt/labs/shaders ${D}/usr/plugins/imports/Qt/labs
     fi
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    cd ${PALM_BUILD_DIR}
 
-    oe_runmake install
-    install -v -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${STAGING_INCDIR}/QtOpenGL
-
-    # Install the pkgconfigs for the Qt libraries in the correct place.
-    install -d ${D}/usr/lib/pkgconfig
-
-    # Fix up the generated .pc files so that they have the sysroot-relative 
-    # settings that OE-core expects. Note that qmake configures the Makefiles
-    # to install files under the root of the sysroot instead of under the more
-    # usual /usr -- hence the corrected prefix is empty and includedir is /include.
-    # However, in order for pkg-config to find the files, they have to be under
-    # /usr, so that's where the modified ones are written.
-    for pc in ${STAGING_DIR_HOST}/lib/pkgconfig/Qt*.pc; do
+    # The *_location settings in the Qt*.pc files don't make any sense since they
+    # refer to native utilities => remove them.
+    for pc in ${D}${libdir}/pkgconfig/Qt*.pc; do
         outf=${D}/usr/lib/pkgconfig/$(basename $pc)
-        echo "Fix up $pc -> $outf"
-        sed -e 's:^prefix=.*$:prefix=:' \
-               -e 's:^includedir=.*:includedir=/include:' \
-               -e '/^Libs\.private:/ s: -L/[^ ]* : -L@{libdir} :g' \
-               -e '/^Cflags:/ s: -I/[^ ]* : :g' $pc \
-           | tr @ '$' > $outf
+        echo "Removing  _location settings from $pc"
+        sed -i -e '/^[^_]*_location=/ d' $pc
     done
+
+    # XXX Nova-Main has libqpalm.so under ${libdir} as well as /usr/plugins because that's
+    # where the link of luna-sysmgr expects to find it. luna-sysmgr will be changed by
+    # [OWEBOS-2617] to look for it under /usr/plugins so that we don't have to install
+    # libqpalm.so in two places. (It's a problem for it to need to be in ${libdir} because
+    # the default FILES_${PN}-dev pick will pick it up from there.)
+
+    # XXX Remove files not installed by Nova-Main. Eventually, figure out how to configure
+    # so that they're not installed.
+    # WARNING: This assumes that ${D} has a per-component value
+    set -x
+    rm -rf ${D}${datadir}
+    rm -rf ${D}${bindir}
+    rm -rf ${D}${libdir}/fonts
+    rm -rf ${D}${prefix}/plugins/bearer
+    rm -rf ${D}${prefix}/plugins/generic
+    rm -rf ${D}${prefix}/plugins/inputmethods
+
+    # XXX Can we get away with not staging /usr/lib/*.prl and ignoring the imports tree
+    # (it seems as though we copy what we want from imports into plugins/imports)?
+    rm -f ${D}${libdir}/*.prl
+    rm -rf ${D}${prefix}/imports
+    set +x
 }
 
-do_install_append() {
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtSql ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtDeclarative ${D}/usr/lib
-    oe_libinstall -C ${PALM_BUILD_DIR}/lib/ -so libQtScript ${D}/usr/lib
-
-    oe_libinstall -C ${PALM_BUILD_DIR}/plugins/platforms -so libqpalm ${D}/usr/lib
-
-    install -d ${D}/usr/plugins/platforms
-    install -v -m 555 ${PALM_BUILD_DIR}/plugins/platforms/*.so ${D}/usr/plugins/platforms/
-
-    install -v -m 555 ${PALM_BUILD_DIR}/plugins/platforms/libqpalm.so ${STAGING_LIBDIR}/libqpalm.so
-
-    if [ "${MACHINE}" = "opal" -o "${MACHINE}" = "topaz" ]; then
-        install -d ${D}/usr/plugins/imports/Qt/labs/shaders
-        install -v -m 555 ${PALM_BUILD_DIR}/imports/Qt/labs/shaders/* ${D}/usr/plugins/imports/Qt/labs/shaders/
-    fi
-}
 
 FILES_${PN} += "/usr/plugins"
-FILES_${PN}-dbg += "/usr/plugins/gfxdrivers/.debug"
-FILES_${PN}-dbg += "/usr/plugins/imageformats/.debug"
-FILES_${PN}-dbg += "/usr/plugins/platforms/.debug"
-FILES_${PN}-dbg += "/usr/plugins/imageformats/.debug"
+# Yes, qmake-webos IS correct: mkspecs are dependent on the target.
+FILES_${PN}-dev += "${libdir}/qmake-webos"
+FILES_${PN}-dbg += "/usr/plugins/*/.debug"
 FILES_${PN}-dbg += "/usr/plugins/imports/Qt/labs/shaders/.debug"

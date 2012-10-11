@@ -1,85 +1,61 @@
-# Copyright 2012  Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
 
-DESCRIPTION = "webOS webkit additional features. This is a supplemental component to webkit"
-LICENSE = "Apache-2.0"
+SUMMARY = "WebKit supplemental features for Open webOS"
 SECTION = "webos/libs"
+LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-DEPENDS = "qt4-webos webkit-webos"
-PR = "r1"
 
-inherit autotools
+DEPENDS = "qt4-webos webkit-webos qmake-webos-native"
+
+PR = "r2"
+
 inherit webos_public_repo
+inherit webos_qmake
 inherit webos_submissions
+inherit webos_library
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 PALM_CC_OPT = "-O2"
+WEBOS_BUILD_DIR = "build-${MACHINE}"
+export STAGING_DIR
+export TARGET_ARCH
 
-export STRIP_TMP="${STRIP}"
-export F77_TMP="${F77}"
-export QMAKE_MKSPEC_PATH_TMP="${QMAKE_MKSPEC_PATH}"
-export CC_TMP="${CC}"
-export CPPFLAGS_TMP="${CPPFLAGS}"
-export RANLIB_TMP="${RANLIB}"
-export CXX_TMP="${CXX}"
-export OBJCOPY_TMP="${OBJCOPY}"
-export CCLD_TMP="${CCLD}"
-export CFLAGS_TMP="${CFLAGS}"
-export TARGET_LDFLAGS_TMP="${TARGET_LDFLAGS}"
-export LDFLAGS_TMP="${LDFLAGS}"
-export AS_TMP="${AS}"
-export AR_TMP="${AR} r"
-export CPP_TMP="${CPP}"
-export TARGET_CPPFLAGS_TMP="${TARGET_CPPFLAGS}"
-export CXXFLAGS_TMP="${CXXFLAGS}"
-export OBJDUMP_TMP="${OBJDUMP}"
-export LD_TMP="${LD}"
-export QMAKE="${STAGING_BINDIR_NATIVE}/qmake-palm"
-# The QTDIR needs to be changed everytime qt4-webos recipe revision number(PR) changes
-# Also, it's known to cause problems when shared state for qt4-webos is used instead of a fresh build
-export QTDIR="${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r7/qt-build-${MACHINE}"
+EXTRA_OEMAKE += "-C ${WEBOS_BUILD_DIR} -f Makefile.WebKitSupplemental"
+
+# XXX QTDIR needs to be changed everytime qt4-webos recipe revision number (PR) changes.
+# Also, it's known to cause problems when the shared state for qt4-webos is used instead of a fresh build.
+export QTDIR = "${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r8/qt-build-${MACHINE}"
+
 
 do_configure() {
-    export STAGING_DIR="${STAGING_DIR}"
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    export TARGET_ARCH=${TARGET_ARCH}
+    # Don't trust incremental configures
+    rm -rf ${WEBOS_BUILD_DIR}
+
+    mkdir -p ${WEBOS_BUILD_DIR}
+    cd ${WEBOS_BUILD_DIR}
+    ${QMAKE} ../WebKitSupplemental.pro -o Makefile.WebKitSupplemental
 }
 
-do_compile() {
-    export CXX_TMP="${CXX}"
-    export STAGING_DIR="${STAGING_DIR}"
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    export TARGET_ARCH=${TARGET_ARCH}
-    export MOC="${STAGING_BINDIR_NATIVE}/moc-palm"
-    mkdir -p build-${MACHINE}
-    cd build-${MACHINE}
-    $QMAKE ../WebKitSupplemental.pro -o Makefile.WebKitSupplemental
-    make -f Makefile.WebKitSupplemental
-}
 
 do_install() {
-    export CXX_TMP="${CXX}"
-    export STAGING_DIR="${STAGING_DIR}"
-    export STAGING_INCDIR="${STAGING_INCDIR}"
-    export STAGING_LIBDIR="${STAGING_LIBDIR}"
-    export TARGET_ARCH=${TARGET_ARCH}
-    export MOC="${STAGING_BINDIR_NATIVE}/moc-palm"
-    cd build-${MACHINE}
-    make -f Makefile.WebKitSupplemental install
+    # Don't install directly into the sysroot
+    export STAGING_INCDIR=${D}${includedir}
+    export STAGING_LIBDIR=${D}${libdir}
+    oe_runmake install
 
     install -d 766 ${D}${prefix}/plugins/platforms
-    install -m 555 qbsplugin/libqbsplugin.so ${D}${prefix}/plugins/platforms/
+    install -v -m 555 ${WEBOS_BUILD_DIR}/qbsplugin/libqbsplugin.so ${D}${prefix}/plugins/platforms/
     install -d 766 ${D}${prefix}/plugins/webkit/
-    install -m 555 qtwebkitplugin/libqtwebkitplugin.so ${D}${prefix}/plugins/webkit/
-    if [ -d ../qbsplugin/fonts ]; then
+    install -v -m 555 ${WEBOS_BUILD_DIR}/qtwebkitplugin/libqtwebkitplugin.so ${D}${prefix}/plugins/webkit/
+    if [ -d qbsplugin/fonts ]; then
         install -d ${D}${datadir}/fonts
-        install -m 644 -t ${D}${datadir}/fonts ../qbsplugin/fonts/*
+        install -v -m 644 -t ${D}${datadir}/fonts qbsplugin/fonts/*
     fi
 }
+
 
 FILES_${PN} += "${prefix}/plugins/platforms/libqbsplugin.so"
 FILES_${PN} += "${prefix}/plugins/webkit/libqtwebkitplugin.so"

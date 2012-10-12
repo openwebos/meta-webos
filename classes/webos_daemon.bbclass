@@ -6,5 +6,8 @@
 # a daemon.
 #
 
+# We expect all daemons will use pkgconfig when building.
+inherit webos_pkgconfig
+
 # Currently, we use Upstart
 RDEPENDS_${PN} += "upstart"

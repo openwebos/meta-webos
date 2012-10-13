@@ -1,13 +1,15 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 
-DESCRIPTION = "Task for OpenWebos - minimal bootable image"
+DESCRIPTION = "Packages for OpenWebos - minimal bootable image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 DEPENDS = "virtual/kernel"
 ALLOW_EMPTY = "1"
-PR = "r0"
+PR = "r1"
+
+inherit packagegroup
 
 #
 # Set by the machine configuration with packages essential for device bootup
@@ -22,16 +24,11 @@ VIRTUAL-RUNTIME_init_manager ?= "upstart"
 VIRTUAL-RUNTIME_initscripts ?= "initscripts"
 VIRTUAL-RUNTIME_keymaps ?= "keymaps"
 
-PACKAGES = "\
-    task-webos-boot \
-    task-webos-boot-dbg \
-    task-webos-boot-dev \
-"
-
-RDEPENDS_task-webos-boot = "\
+RDEPENDS_${PN} = "\
     base-files \
     base-passwd \
     busybox \
+    ${@base_contains("MACHINE_FEATURES", "rtc", "busybox-hwclock", "", d)} \
     ${VIRTUAL-RUNTIME_initscripts} \
     ${@base_contains("MACHINE_FEATURES", "keyboard", "${VIRTUAL-RUNTIME_keymaps}", "", d)} \
     modutils-initscripts \
@@ -42,5 +39,12 @@ RDEPENDS_task-webos-boot = "\
     ${VIRTUAL-RUNTIME_update-alternatives} \
     ${MACHINE_ESSENTIAL_EXTRA_RDEPENDS}"
 
-RRECOMMENDS_task-webos-boot = "\
+RRECOMMENDS_${PN} = "\
     ${MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS}"
+
+# For backwards compatibility after rename
+# I don't think these are needed
+RPROVIDES_${PN} = "task-webos-boot"
+RREPLACES_${PN} = "task-webos-boot"
+RCONFLICTS_${PN} = "task-webos-boot"
+

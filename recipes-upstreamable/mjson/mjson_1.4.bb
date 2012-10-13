@@ -2,13 +2,13 @@
 
 SECTION = "libs"
 DESCRIPTION = "mjson"
-LICENSE = "GNUv2"
-LIC_FILES_CHKSUM = "file://COPYING;md5=fbc093901857fcd118f065f900982c24"
+LICENSE = "LGPL-2.1"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
 PR = "r0"
 
 SRCREV = "HEAD"
-SRC_URI = "svn://mjson.svn.sourceforge.net/svnroot/mjson/tag/;module=${PV};proto=http"
+SRC_URI = "svn://mjson.svn.sourceforge.net/svnroot/mjson/tag/;module=${PV};protocol=http"
 S = "${WORKDIR}/${PV}"
 
 inherit autotools

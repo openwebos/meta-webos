@@ -40,38 +40,38 @@ EXTRA_OECMAKE += "-Wdev"
 # Fixup in case CMake files don't recognize the new value i586 for
 # CMAKE_SYSTEM_PROCESSOR (e.g. nodejs)
 do_generate_toolchain_file_append() {
-	sed '/CMAKE_SYSTEM_PROCESSOR/ s/i586/i686/' -i ${WORKDIR}/toolchain.cmake
+    sed '/CMAKE_SYSTEM_PROCESSOR/ s/i586/i686/' -i ${WORKDIR}/toolchain.cmake
 }
 
 
 # Always invoke CMake from an empty build directory. Our CMakeLists.txt-s have
 # not been written to handle incremental updates.
 do_configure_prepend() {
-	if [ $(readlink -f ${OECMAKE_SOURCEPATH}) != $(readlink -f ${OECMAKE_BUILDPATH}) ]; then
-		bbnote "Removing ${OECMAKE_BUILDPATH}"
-		rm -rf ${OECMAKE_BUILDPATH}
-	fi
+    if [ $(readlink -f ${OECMAKE_SOURCEPATH}) != $(readlink -f ${OECMAKE_BUILDPATH}) ]; then
+        bbnote "Removing ${OECMAKE_BUILDPATH}"
+        rm -rf ${OECMAKE_BUILDPATH}
+    fi
 }
 
 # Record how cmake was invoked
 do_configure_append() {
-	# Keep in sync with how cmake_do_configure() invokes cmake
-	echo $(which cmake) \
-	  ${OECMAKE_SITEFILE} \
-	  ${OECMAKE_SOURCEPATH} \
-	  -DCMAKE_INSTALL_PREFIX:PATH=${prefix} \
-	  -DCMAKE_INSTALL_SO_NO_EXE=0 \
-	  -DCMAKE_TOOLCHAIN_FILE=${WORKDIR}/toolchain.cmake \
-	  -DCMAKE_VERBOSE_MAKEFILE=1 \
-	  ${EXTRA_OECMAKE} \
-	  -Wno-dev > ${WORKDIR}/cmake.status
+    # Keep in sync with how cmake_do_configure() invokes cmake
+    echo $(which cmake) \
+      ${OECMAKE_SITEFILE} \
+      ${OECMAKE_SOURCEPATH} \
+      -DCMAKE_INSTALL_PREFIX:PATH=${prefix} \
+      -DCMAKE_INSTALL_SO_NO_EXE=0 \
+      -DCMAKE_TOOLCHAIN_FILE=${WORKDIR}/toolchain.cmake \
+      -DCMAKE_VERBOSE_MAKEFILE=1 \
+      ${EXTRA_OECMAKE} \
+      -Wno-dev > ${WORKDIR}/cmake.status
 }
 
 # We set OECMAKE_BUILDPATH to be different from S above, so there's no need to
 # test at run time.
 do_clean_append() {
-        buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
-        if buildpath and os.path.exists(buildpath):
-            bb.note('Removing ' + buildpath)
-            os.system('rm -rf ' + buildpath)
+    buildpath = bb.data.getVar('OECMAKE_BUILDPATH', d, 1)
+    if buildpath and os.path.exists(buildpath):
+        bb.note('Removing ' + buildpath)
+        os.system('rm -rf ' + buildpath)
 }

@@ -2,8 +2,8 @@ SECTION = "base"
 PRIORITY = "optional"
 DEPENDS = ""
 DESCRIPTION = "Event driven system init"
-LICENSE = "GPL"
-LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
+LICENSE = "GPL-2.0"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext
@@ -14,8 +14,8 @@ EXTRA_OECONF += "--enable-compat"
 # libupstart can be used for upstart event generation from other programs.
 # However it is not used by upstart itself, so package it seperately.
 PACKAGES =+ "libupstart libupstart-dev"
-FILES_libupstart += "${libdir}/libupstart.so.*"
-FILES_libupstart-dev += "${libdir}/libupstart.* ${includedir}/upstart/"
+FILES_libupstart += "${libdir}/libupstart.so.* ${libdir}/libupstart.la"
+FILES_libupstart-dev += "${libdir}/libupstart.so ${includedir}/upstart/"
 
 # upstart-sysvcompat provides Sys V Init compatible tools: halt, reboot,
 # shutdown, telinit. These might be needed by other scripts.
@@ -34,9 +34,9 @@ FILES_upstart-sysvcompat-doc += " \
      ${mandir}/*/shutdown.* ${mandir}/*/telinit.* ${mandir}/*/runlevel.* \
 "
 
-ALTERNATIVE_NAME = "init"
-ALTERNATIVE_LINK = "${base_sbindir}/init"
-ALTERNATIVE_PATH = "${base_sbindir}/init.${PN}"
+ALTERNATIVE_${PN} = "init"
+ALTERNATIVE_TARGET[init] = "${base_sbindir}/init.${PN}"
+ALTERNATIVE_LINK_NAME[init] = "${base_sbindir}/init"
 ALTERNATIVE_PRIORITY = "60"
 
 EXTRA_OEMAKE += "'bindir=${base_bindir}' \

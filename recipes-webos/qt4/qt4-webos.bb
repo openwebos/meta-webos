@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "r14"
+PR = "r15"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -29,10 +29,6 @@ QT4_STAGING_BUILD_DIR = "/usr/src/qt4-webos"
 export WEBOS_CONFIG="webos ${MACHINE}"
 
 do_install() {
-    # Don't install directly into the sysroot
-    export STAGING_INCDIR=${D}${includedir}
-    export STAGING_LIBDIR=${D}${libdir}
-
     # Don't install qmake (already done by qmake-webos-native), but do install mkspecs,
     # since it contains a MACHINE-dependent qconfig.pri (this is because QT_CONFIG_FLAGS
     # is MACHINE-dependent). It's also target-dependent, since configure tries to

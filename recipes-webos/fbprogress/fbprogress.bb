@@ -1,20 +1,20 @@
 # Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
-DESCRIPTION = "Utility for drawing progress to the frame buffer"
+SUMMARY = "Utility for drawing progress to the frame buffer"
+SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-SECTION = "webos/base"
 
 RDEPENDS_${PN} = "tar"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo
+inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_program
 inherit webos_machine_dep
-inherit webos_enhanced_submissions
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"

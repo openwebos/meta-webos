@@ -1,13 +1,13 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
 
-DESCRIPTION = "enyo Browser application"
+SUMMARY = "Enyo 1.0 Browser application"
+SECTION = "webos/apps"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
-SECTION = "webos/apps"
 
-#require enyo-app-common.inc
-PR = "r1"
+PR = "r2"
 
+inherit webos_public_repo
 inherit webos_submissions
 inherit webos_arch_indep
 
@@ -23,17 +23,17 @@ do_install() {
     #INSTALL DB/PERSMISSIONS
     install -d ${D}${sysconfdir}/palm/db/permissions
 
-    cp -rf ${S}/* ${D}${prefix}/palm/applications/${PN}
+    cp -vrf ${S}/* ${D}${prefix}/palm/applications/${PN}
 
     if [ -d db/kinds ]; then
-        install -m 644 db/kinds/* ${D}${sysconfdir}/palm/db/kinds
+        install -v -m 644 db/kinds/* ${D}${sysconfdir}/palm/db/kinds
     fi
-    rm -rf ${D}${prefix}/palm/applications/${PN}/db/kinds
+    rm -vrf ${D}${prefix}/palm/applications/${PN}/db/kinds
 
     if [ -d db/permissions ]; then
-        install -m 644 db/permissions/* ${D}${sysconfdir}/palm/db/permissions
+        install -v -m 644 db/permissions/* ${D}${sysconfdir}/palm/db/permissions
     fi
-    rm -rf ${D}${prefix}/palm/applications/${PN}/db/permissions
+    rm -vrf ${D}${prefix}/palm/applications/${PN}/db/permissions
 }
 
 FILES_${PN} += "${prefix}/palm/applications"

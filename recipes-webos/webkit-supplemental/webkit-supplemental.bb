@@ -27,7 +27,7 @@ EXTRA_OEMAKE += "-C ${WEBOS_BUILD_DIR} -f Makefile.WebKitSupplemental"
 
 # XXX QTDIR needs to be changed everytime qt4-webos recipe revision number (PR) changes.
 # Also, it's known to cause problems when the shared state for qt4-webos is used instead of a fresh build.
-export QTDIR = "${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r8/qt-build-${MACHINE}"
+export QTDIR = "${WORKDIR}/../qt4-webos-${PREFERRED_VERSION_qt4-webos}-r9/qt-build-${MACHINE}"
 
 
 do_configure() {

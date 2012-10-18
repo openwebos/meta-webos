@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = \
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
 # Whenever this changes, you must update the setting of QTDIR in webkit-supplemental.bb to match.
-PR = "r8"
+PR = "r9"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -27,27 +27,14 @@ def qt4_machine_config_flags(bb, d):
     if bb.data.getVar('MACHINE', d, True):
         this_machine = bb.data.getVar('MACHINE', d, 1)
 
-        if this_machine == "opal" or this_machine == "topaz":
-            return "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DQT_QWS_CLIENTBLIT -DPALM_DEVICE -qconfig palm"
-        elif this_machine == "qemux86":
-            return "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
-        elif this_machine == "qemuarm":
-            return "-xplatform qws/linux-armv6-g++ -no-opengl -DQT_QWS_CLIENTBLIT -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
-        else:
-            return "-xplatform qws/linux-armv6-g++ -DQT_QWS_CLIENTBLIT -no-neon -DPALM_DEVICE -qconfig palm"
-    else:
-        return ""
-
-def qt4_machine_config_arch_lite(bb, d):
-    if bb.data.getVar('MACHINE', d, True):
-        this_machine = bb.data.getVar('MACHINE', d, 1)
-
         if this_machine == "qemux86":
-            return "-embedded x86"
-        elif this_machine == "qemuarm":
-            return "-arch arm -embedded"
+            return "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
+        elif this_machine.startswith("qemuarm"):
+            # XXX Despite the mkspec name referring to armv6 it is used on other arm architectures as well.
+            return "-xplatform qws/linux-armv6-g++ -no-opengl -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
         else:
-            return "-arch arm -qpa"
+            # Currently boldly assume that the device will have opengl/egl support
+            return "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DPALM_DEVICE -qconfig palm"
     else:
         return ""
 
@@ -57,7 +44,7 @@ def qt4_machine_config_arch_lite_qpa(bb, d):
 
         if this_machine == "qemux86":
             return "-qpa"
-        elif this_machine == "qemuarm":
+        elif this_machine.startswith("qemuarm"):
             return "-arch arm -qpa"
         else:
             return "-arch arm -qpa"

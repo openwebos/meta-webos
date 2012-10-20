@@ -24,13 +24,19 @@ SECTION = "devel/tools"
 # We pass configure -glib, so it needs to be present
 DEPENDS = "glib-2.0-native"
 
-PR_append = ".0"
+PR_append = ".1"
 
 PACKAGES = "${PN}-dbg ${PN}"
 # Undo what the inherit webos_machine_dep will do (once it's there)
 PACKAGE_ARCH = "${BUILD_ARCH}"
 
 PALM_BUILD_DIR = "${S}/../qt-build-native-${BUILD_ARCH}"
+
+# remove dependency on MACHINE in native recipe
+QT4_MACHINE_CONFIG_ARCH_LITE_QPA = "-qpa"
+QT4_MACHINE_CONFIG_FLAGS = "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
+# this is wrong but better then depending on MACHINE variable
+export WEBOS_CONFIG="webos qemux86"
 
 # Only qmake-palm is compiled during do_configure, so build the rest in
 # do_compile().

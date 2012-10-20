@@ -13,7 +13,7 @@ LIC_FILES_CHKSUM = \
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "r12"
+PR = "r13"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -22,33 +22,11 @@ inherit webos_library
 
 inherit webos_machine_dep
 
-def qt4_machine_config_flags(bb, d):
-    if bb.data.getVar('MACHINE', d, True):
-        this_machine = bb.data.getVar('MACHINE', d, 1)
-
-        if this_machine == "qemux86":
-            return "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
-        elif this_machine.startswith("qemuarm"):
-            # XXX Despite the mkspec name referring to armv6 it is used on other arm architectures as well.
-            return "-xplatform qws/linux-armv6-g++ -no-opengl -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
-        else:
-            # Currently boldly assume that the device will have opengl/egl support
-            return "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DPALM_DEVICE -qconfig palm"
-    else:
-        return ""
-
-def qt4_machine_config_arch_lite_qpa(bb, d):
-    if bb.data.getVar('MACHINE', d, True):
-        this_machine = bb.data.getVar('MACHINE', d, 1)
-
-        if this_machine == "qemux86":
-            return "-qpa"
-        elif this_machine.startswith("qemuarm"):
-            return "-arch arm -qpa"
-        else:
-            return "-arch arm -qpa"
-    else:
-        return ""
+QT4_MACHINE_CONFIG_ARCH_LITE_QPA = "-qpa"
+QT4_MACHINE_CONFIG_ARCH_LITE_QPA_arm = "-arch arm -qpa"
+QT4_MACHINE_CONFIG_FLAGS = "-xplatform qws/linux-armv6-g++ -no-opengl -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
+QT4_MACHINE_CONFIG_FLAGS_x86 = "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
+QT4_MACHINE_CONFIG_FLAGS_armv7a = "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DPALM_DEVICE -qconfig palm"
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git"
@@ -119,7 +97,7 @@ use_native_toolchain () {
 #
 # Need to specify --datadir because its default is the --prefix setting. Also, it must be under
 # ${libdir} since mkspecs is MACHINE-dependent.
-QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite_qpa(bb, d)} -little-endian \
+QT_CONFIG_FLAGS = "${QT4_MACHINE_CONFIG_ARCH_LITE_QPA} -little-endian \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \
@@ -128,7 +106,7 @@ QT_CONFIG_FLAGS = "${@qt4_machine_config_arch_lite_qpa(bb, d)} -little-endian \
                    -reduce-relocations -reduce-exports -force-pkg-config -glib -qt-zlib -system-freetype -qt-kbd-linuxinput \
                    -prefix ${prefix} -datadir ${libdir}/qmake-webos \
                    -make 'libs' \
-                   ${@qt4_machine_config_flags(bb, d)}"
+                   ${QT4_MACHINE_CONFIG_FLAGS}"
 
 do_configure() {
     # Since configure builds qmake, we have to modify it to generate the src/corelib/global/qconfig.cpp we want (instead of

@@ -1,0 +1,38 @@
+From 3c9de06d2b034664284c53754ed7e4cd1a1cc6f0 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Tue, 16 Oct 2012 14:54:24 +0200
+Subject: [PATCH] configure: revert palm change to force i386 HOST on x86_64
+
+* otherwise build for qemux86-64 fails with:
+| make[1]: *** Waiting for unfinished jobs....
+| ../../include/QtCore/../../../git/src/corelib/arch/qatomic_i386.h: Assembler messages:
+| ../../include/QtCore/../../../git/src/corelib/arch/qatomic_i386.h:177: Error: incorrect register `%rbp' used with `l' suffix
+| ../../include/QtCore/../../../git/src/corelib/arch/qatomic_i386.h:177: Error: incorrect register `%rbp' used with `l' suffix
+| ../../include/QtCore/../../../git/src/corelib/arch/qatomic_i386.h: Assembler messages:
+| ../../include/QtCore/../../../git/src/corelib/arch/qatomic_i386.h:177: Error: incorrect register `%rbp' used with `l' suffix
+| make[1]: *** [.obj/release-shared/qglobal.o] Error 1
+
+Open-webOS-DCO-1.0-Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ configure | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/configure b/configure
+index 1dadc12..c4bd2e4 100755
+--- a/configure
++++ b/configure
+@@ -3167,9 +3167,9 @@ if [ -z "${CFG_HOST_ARCH}" ]; then
+             CFG_HOST_ARCH=i386
+         else
+             if [ "$OPT_VERBOSE" = "yes" ]; then
+-                echo "    64-bit AMD 80x86 (x86_64) (But using 32 bit build)"
++                echo "    64-bit AMD 80x86 (x86_64)"
+             fi
+-            CFG_HOST_ARCH=i386
++            CFG_HOST_ARCH=x86_64
+         fi
+         ;;
+     *:*:ppc)
+-- 
+1.7.12.4
+

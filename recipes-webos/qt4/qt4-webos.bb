@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "r16"
+PR = "r17"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override

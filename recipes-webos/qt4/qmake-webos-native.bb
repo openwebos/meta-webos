@@ -24,7 +24,7 @@ SECTION = "devel/tools"
 # We pass configure -glib, so it needs to be present
 DEPENDS = "glib-2.0-native"
 
-PR = "r15"
+PR = "r16"
 
 PALM_BUILD_DIR = "${S}/../qt-build-native-${BUILD_ARCH}"
 

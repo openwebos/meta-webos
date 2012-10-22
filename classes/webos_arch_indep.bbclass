@@ -6,8 +6,4 @@
 # architecture independent.
 #
 
-PACKAGE_ARCH = "all"
-
-# The toolchain isn't needed
-INHIBIT_DEFAULT_DEPS = "1"
-
+inherit allarch

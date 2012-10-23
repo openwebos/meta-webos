@@ -6,7 +6,7 @@
 # on MACHINE at build time.
 # 
 
-PACKAGE_ARCH = "${MACHINE}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 # Uncomment to allow all PACKAGE_ARCH-s variants to be built in the same tree.
 # (Note that the OE 2011.03 bitbake.conf defines WORKDIR to effectively prepend 

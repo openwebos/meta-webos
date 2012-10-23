@@ -50,7 +50,7 @@ do_compile() {
 
     # Use gold to link if it's available
     gold=${STAGING_BINDIR_NATIVE}/../libexec/gcc/arm-none-linux-gnueabi/4.5.1/gold
-    if [-e $gold ]; then
+    if [ -e $gold ]; then
         QMAKE_LINK_ARGS='--qmakearg="QMAKE_LINK=\"${CXX} -B $gold -Wl,-debug\""'
     else
         QMAKE_LINK_ARGS=

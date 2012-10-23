@@ -14,7 +14,9 @@ LIC_FILES_CHKSUM = \
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
 # Whenever this changes, you must update the setting of QTDIR in webkit-supplemental.bb to match.
-PR = "r9"
+PR = "r10"
+
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override

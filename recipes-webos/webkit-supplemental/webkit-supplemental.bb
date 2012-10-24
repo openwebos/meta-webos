@@ -7,12 +7,13 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos qmake-webos-native"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_public_repo
 inherit webos_qmake
 inherit webos_submissions
 inherit webos_library
+inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG};protocol=git"

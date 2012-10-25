@@ -78,7 +78,7 @@ use_native_toolchain () {
 #
 # Need to specify --datadir because its default is the --prefix setting. Also, it must be under
 # ${libdir} since mkspecs is MACHINE-dependent.
-QT_CONFIG_FLAGS = "${QT4_MACHINE_CONFIG_ARCH_LITE_QPA} -little-endian \
+QT_CONFIG_FLAGS = "${QT4_MACHINE_CONFIG_ARCH_LITE_QPA} \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \

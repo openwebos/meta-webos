@@ -16,6 +16,23 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 ALLOW_EMPTY = "1"
 
+# A group of Python 2 packages to develop and exercise tests for
+# Open webOS processes.
+# Will not be included in test image until the list name is added
+# to the RDEPENDS list for this image.
+PYTHON = " \
+    python \
+    python-datetime \
+    python-debugger \
+    python-difflib \
+    python-json \
+    python-netclient \
+    python-pkgutil \
+    python-pydoc \
+    python-subprocess \
+    python-unittest \
+"
+
 RDEPENDS_${PN} = "\
      ltp \
 "

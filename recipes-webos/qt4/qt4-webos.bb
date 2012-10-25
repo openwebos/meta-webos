@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "r17"
+PR = "r18"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -16,7 +16,6 @@ inherit webos_library
 inherit webos_machine_dep
 
 QT4_MACHINE_CONFIG_ARCH_LITE_QPA = "-qpa"
-QT4_MACHINE_CONFIG_ARCH_LITE_QPA_arm = "-arch arm -qpa"
 QT4_MACHINE_CONFIG_FLAGS = "-xplatform qws/linux-armv6-g++ -no-opengl -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
 QT4_MACHINE_CONFIG_FLAGS_x86 = "-xplatform qws/linux-qemux86-g++ -no-neon -no-rpath -DPALM_DEVICE -qconfig palm"
 QT4_MACHINE_CONFIG_FLAGS_armv7a = "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DPALM_DEVICE -qconfig palm"
@@ -27,6 +26,17 @@ QT4_STAGING_BUILD_DIR = "/usr/src/qt4-webos"
 # Export the current configuration out so that Qt .pro files can utilize these during
 # their configuration
 export WEBOS_CONFIG="webos ${MACHINE}"
+
+require recipes-qt/qt4/qt4_arch.inc
+do_configure_prepend() {
+    set_arch
+    set_endian
+}
+SRC_URI += "file://0013-configure-add-crossarch-option.patch"
+QT_CONFIG_FLAGS += " \
+  ${QT_ENDIAN} \
+  -crossarch ${QT_ARCH} \
+"
 
 do_install() {
     # Don't install qmake (already done by qmake-webos-native), but do install mkspecs,

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "adapterbase browserserver libpng npapi-headers glib-2.0 qt4-webos"
 
-PR = "r5"
+PR = "r7"
 
 inherit webos_public_repo
 inherit webos_submissions
@@ -21,15 +21,15 @@ S = "${WORKDIR}/git"
 PARALLEL_MAKE = ""
 
 EXTRA_OEMAKE += "TARGET_ARCH=${TARGET_ARCH}"
-EXTRA_OEMAKE += "STAGING_INCDIR=${STAGING_INCDIR}"
-EXTRA_OEMAKE += "STAGING_LIBDIR=${STAGING_LIBDIR}"
+EXTRA_OEMAKE += "STAGING_INC_DIR=${STAGING_INCDIR}"
+EXTRA_OEMAKE += "STAGING_LIB_DIR=${STAGING_LIBDIR}"
 # The Qt headers are expected to be found under QT_INSTALL_PREFIX/include
-EXTRA_OEMAKE += "QT_INSTALL_PREFIX="${STAGING_INCDIR}/.."
+EXTRA_OEMAKE += "QT_INSTALL_PREFIX=${STAGING_INCDIR}/.."
 
 
 do_install() {
     # This target only installs BrowserAdapter.so
-    oe_runmake INSTALL_DIR=${D} install
+    oe_runmake INSTALL_DIR=${D}${prefix} install
 
     install -d ${D}${libdir}/BrowserPlugins/BrowserAdapterData
     install -v -m 644 -p ${S}/data/launcher-bookmark-alpha.png ${D}${libdir}/BrowserPlugins/BrowserAdapterData

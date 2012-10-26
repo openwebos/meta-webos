@@ -48,14 +48,6 @@ do_compile() {
     # QTDIR needs to be defined, but its value doesn't matter.
     export QTDIR=unused
 
-    # Use gold to link if it's available
-    gold=${STAGING_BINDIR_NATIVE}/../libexec/gcc/arm-none-linux-gnueabi/4.5.1/gold
-    if [-e $gold ]; then
-        QMAKE_LINK_ARGS='--qmakearg="QMAKE_LINK=\"${CXX} -B $gold -Wl,-debug\""'
-    else
-        QMAKE_LINK_ARGS=
-    fi
-
     # Must define QT_SHARED; otherwise the routines in qt/Api aren't exported.
     # (How did we get away with not having this before qmake was a separate component?)
     ${S}/Tools/Scripts/build-webkit --qt \

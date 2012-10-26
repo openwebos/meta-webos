@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos qmake-webos-native"
 
-PR = "r4"
+PR = "r5"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -21,11 +21,15 @@ S = "${WORKDIR}/git"
 
 PALM_CC_OPT = "-O2"
 WEBOS_BUILD_DIR = "build-${MACHINE}"
-export STAGING_DIR
-export TARGET_ARCH
 
 EXTRA_OEMAKE += "-C ${WEBOS_BUILD_DIR} -f Makefile.WebKitSupplemental"
 
+# Make strip into a NOP to eliminate the
+#   "File 'xxx' from <component> was already stripped, this will prevent future debugging!"
+# warnings.
+export STRIP_TMP = ":"
+
+export TARGET_ARCH
 export QTDIR = "${WORKDIR}/qt4-webos"
 
 do_configure() {
@@ -38,21 +42,38 @@ do_configure() {
     echo "QT_BUILD_TREE = \$\$quote(${STAGING_DIR_HOST}/usr/src/qt4-webos/build)" >> ${QTDIR}/.qmake.cache
 
     mkdir -p ${WEBOS_BUILD_DIR}
-    cd ${WEBOS_BUILD_DIR}
-    ${QMAKE} ../WebKitSupplemental.pro -o Makefile.WebKitSupplemental
+    # Can't use ${S}/Makefile as we want to do an out-of-tree builds which it 
+    # doesn't support.
+    (cd ${WEBOS_BUILD_DIR}; ${QMAKE} ${S}/WebKitSupplemental.pro -o Makefile.WebKitSupplemental)
+
+    # Now generate the Makefile.WebKitSupplemental-s in the subdirectories. The
+    # *.pro-s arrange for have them to install into STAGING_INCDIR and
+    # STAGING_LIBDIR under INSTALL_ROOT.
+    export STAGING_INCDIR=${includedir}
+    export STAGING_LIBDIR=${libdir}
+    oe_runmake qmake_all
+
+    # XXX misc.pro uses the value of STAGING_INCDIR (/usr/include) to generate
+    # -I arguments for the INCPATH make variable. Remove them here until misc.pro
+    # is fixed.
+    sed -i -e 's:-I/usr/include/*[^ ]* ::g' -e 's:-I/usr/include/*[^ ]*$::g' ${WEBOS_BUILD_DIR}/misc/Makefile.WebKitSupplemental
 }
 
 
 do_install() {
-    # Don't install directly into the sysroot
-    export STAGING_INCDIR=${D}${includedir}
-    export STAGING_LIBDIR=${D}${libdir}
-    oe_runmake install
+    oe_runmake INSTALL_ROOT=${D} install
 
-    install -d 766 ${D}${prefix}/plugins/platforms
-    install -v -m 555 ${WEBOS_BUILD_DIR}/qbsplugin/libqbsplugin.so ${D}${prefix}/plugins/platforms/
-    install -d 766 ${D}${prefix}/plugins/webkit/
-    install -v -m 555 ${WEBOS_BUILD_DIR}/qtwebkitplugin/libqtwebkitplugin.so ${D}${prefix}/plugins/webkit/
+    # XXX Move libqbsplugin.so to its expected location here until qbsplugin.pro
+    # is fixed
+    install -d ${D}${prefix}/plugins/platforms/
+    mv -v ${D}/plugins/platforms/libqbsplugin.so ${D}${prefix}/plugins/platforms/
+    (cd ${D}; rmdir -vp plugins/platforms)
+
+    # XXX Move libqtwebkitplugin.so to its expected location here until
+    # qtwebkitplugin.pro is fixed
+    install -d ${D}${prefix}/plugins/webkit/
+    mv -v ${D}${libdir}/libqtwebkitplugin.so ${D}${prefix}/plugins/webkit/
+
     if [ -d qbsplugin/fonts ]; then
         install -d ${D}${datadir}/fonts
         install -v -m 644 -t ${D}${datadir}/fonts qbsplugin/fonts/*

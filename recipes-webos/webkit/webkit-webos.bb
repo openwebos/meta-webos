@@ -33,7 +33,7 @@ S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
 
 
 PALM_CC_OPT = "-O2"
-OBJDIR = "${MACHINE}-${TARGET_ARCH}"
+OBJDIR = "${TARGET_ARCH}"
 export WEBKITOUTPUTDIR = "${S}/WebKitBuild/${OBJDIR}"
 PALM_BUILD_DIR = "${WEBKITOUTPUTDIR}/Release"
 

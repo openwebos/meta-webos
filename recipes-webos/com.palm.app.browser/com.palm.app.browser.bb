@@ -9,7 +9,7 @@ PR = "r2"
 
 inherit webos_public_repo
 inherit webos_submissions
-inherit webos_arch_indep
+inherit allarch
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO}/isis-browser;tag=${WEBOS_GIT_TAG};protocol=git"

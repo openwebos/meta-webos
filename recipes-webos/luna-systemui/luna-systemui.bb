@@ -10,7 +10,7 @@ INHIBIT_DEFAULT_DEPS = "1"
 PR = "r6"
 
 inherit webos_enhanced_submissions
-inherit webos_arch_indep
+inherit allarch
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"

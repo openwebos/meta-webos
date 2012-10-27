@@ -9,7 +9,7 @@ DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcer
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
 RDEPENDS_${PN} = "ptmalloc3"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_public_repo
 inherit webos_submissions
@@ -18,7 +18,9 @@ inherit webos_system_bus
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git \
+  file://0001-BrowserPage-work-around-for-int-to-pointer-cast-on-6.patch \
+"
 S = "${WORKDIR}/git"
 
 PARALLEL_MAKE = ""

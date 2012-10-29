@@ -16,6 +16,11 @@ inherit packagegroup
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS ?= ""
 MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS ?= ""
 
+# For backwards compatibility after rename
+RPROVIDES_${PN} = "task-webos-boot"
+RREPLACES_${PN} = "task-webos-boot"
+RCONFLICTS_${PN} = "task-webos-boot"
+
 # Distro can override the following VIRTUAL-RUNTIME providers:
 VIRTUAL-RUNTIME_dev_manager ?= "udev"
 VIRTUAL-RUNTIME_login_manager ?= "tinylogin"
@@ -40,10 +45,3 @@ RDEPENDS_${PN} = "\
 
 RRECOMMENDS_${PN} = "\
     ${MACHINE_ESSENTIAL_EXTRA_RRECOMMENDS}"
-
-# For backwards compatibility after rename
-# I don't think these are needed
-RPROVIDES_${PN} = "task-webos-boot"
-RREPLACES_${PN} = "task-webos-boot"
-RCONFLICTS_${PN} = "task-webos-boot"
-

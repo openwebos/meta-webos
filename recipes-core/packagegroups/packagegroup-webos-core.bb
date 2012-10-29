@@ -10,6 +10,11 @@ inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+# For backwards compatibility after rename
+RPROVIDES_${PN} = "task-webos-core"
+RREPLACES_${PN} = "task-webos-core"
+RCONFLICTS_${PN} = "task-webos-core"
+
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
@@ -71,10 +76,3 @@ DEPENDS_${PN} = " \
      genext2fs-native \
      pkgconfig-native \
 "
-
-# For backwards compatibility after rename
-# I don't think these are needed
-RPROVIDES_${PN} = "task-webos-core"
-RREPLACES_${PN} = "task-webos-core"
-RCONFLICTS_${PN} = "task-webos-core"
-

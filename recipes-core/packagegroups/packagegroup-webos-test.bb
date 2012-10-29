@@ -10,14 +10,13 @@ inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+# For backwards compatibility after rename
+RPROVIDES_${PN} = "task-webos-test"
+RREPLACES_${PN} = "task-webos-test"
+RCONFLICTS_${PN} = "task-webos-test"
+
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = "\
      ltp \
 "
-
-# For backwards compatibility after rename
-# I don't think these are needed
-RPROVIDES_${PN} = "task-webos-test"
-RREPLACES_${PN} = "task-webos-test"
-RCONFLICTS_${PN} = "task-webos-test"

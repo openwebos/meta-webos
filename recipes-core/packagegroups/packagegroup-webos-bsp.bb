@@ -10,6 +10,11 @@ inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+# For backwards compatibility after rename
+RPROVIDES_${PN} = "task-webos-bsp"
+RREPLACES_${PN} = "task-webos-bsp"
+RCONFLICTS_${PN} = "task-webos-bsp"
+
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
@@ -20,9 +25,3 @@ RDEPENDS_${PN} = " \
     upstart-initscripts \
     netbase \
 "
-# For backwards compatibility after rename
-# I don't think these are needed
-RPROVIDES_${PN} = "task-webos-boot"
-RREPLACES_${PN} = "task-webos-boot"
-RCONFLICTS_${PN} = "task-webos-boot"
-

@@ -10,6 +10,11 @@ inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+# For backwards compatibility after rename
+RPROVIDES_${PN} = "task-webos-extended"
+RREPLACES_${PN} = "task-webos-extended"
+RCONFLICTS_${PN} = "task-webos-extended"
+
 ALLOW_EMPTY = "1"
 
 RDEPENDS_${PN} = " \
@@ -86,10 +91,3 @@ RDEPENDS_${PN} = " \
 DEPENDS_${PN} = " \
      cmake-modules-webos-native \
 "
-
-# For backwards compatibility after rename
-# I don't think these are needed
-RPROVIDES_${PN} = "task-webos-extended"
-RREPLACES_${PN} = "task-webos-extended"
-RCONFLICTS_${PN} = "task-webos-extended"
-

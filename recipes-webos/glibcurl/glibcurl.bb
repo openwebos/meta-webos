@@ -1,7 +1,7 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
 
-SECTION = "webos/libs"
-DESCRIPTION = "Open-source edition of the glibcurl library used by Open webOS"
+SUMMARY = "Open webOS edition of the open-source glibcurl library"
+SECTION = "libs"
 LICENSE = "MIT BSD"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302 \
                     file://${COMMON_LICENSE_DIR}/BSD;md5=3775480a712fc46a69647678acb234cb \
@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS = "glib-2.0 curl"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_upstream_from_repo
 inherit webos_public_repo

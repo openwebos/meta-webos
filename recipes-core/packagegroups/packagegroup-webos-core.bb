@@ -43,7 +43,6 @@ RDEPENDS_${PN} = " \
      libxml2 \
      libxslt \
      makedevs \
-     mjson \
      module-init-tools \
      modutils-initscripts \
      ncurses \

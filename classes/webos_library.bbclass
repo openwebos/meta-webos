@@ -2,9 +2,10 @@
 #
 # webos_library
 #
-# This class is to be inherited by the recipe for every component that stages a
+# This class is to be inherited by the recipe for every component that installs a
 # library.
 #
 
-# We want all libraries to stage pkgconfig (.pc) files
+# We expect all libraries will use pkgconfig when building and will install
+# pkgconfig (.pc) files.
 inherit webos_pkgconfig

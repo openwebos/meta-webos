@@ -2,6 +2,13 @@
 
 PREFERRED_VERSION_db ?= "4.8.30"
 
+# Stick to latest udev version provided by oe-core
+PREFERRED_VERSION_udev ?= "164"
+
+# Newer upstream meta-oe already has 2.0.3 version which isn't compatible with our libpbnjson yet
+# https://github.com/openwebos/libpbnjson/pull/2
+PREFERRED_VERSION_yajl ?= "1.0.12"
+
 # Components that inherit from either webos_enhanced_submissions or webos_submissions
 # must have a PREFERRED_VERSION with format: <component-version>-<submission>
 PREFERRED_VERSION_adapterbase ?= "3.0.0-0.2"
@@ -32,9 +39,9 @@ PREFERRED_VERSION_luna-applauncher ?= "3.0.0-0.90"
 PREFERRED_VERSION_luna-init ?= "2.0.0-1.03"
 PREFERRED_VERSION_luna-prefs ?= "2.0.0-0.95"
 PREFERRED_VERSION_luna-service2 ?= "3.0.0-143"
-PREFERRED_VERSION_luna-sysmgr ?= "2.0.4-0.912"
+PREFERRED_VERSION_luna-sysmgr ?= "2.0.4-0.930"
 PREFERRED_VERSION_luna-sysmgr-ipc ?= "2.0.0-0.92"
-PREFERRED_VERSION_luna-sysmgr-ipc-messages ?= "2.0.0-0.92"
+PREFERRED_VERSION_luna-sysmgr-ipc-messages ?= "2.0.0-1.00"
 PREFERRED_VERSION_luna-sysservice ?= "2.0.1-1.02"
 PREFERRED_VERSION_luna-systemui ?= "2.0.0-1.01"
 PREFERRED_VERSION_luna-universalsearchmgr ?= "2.0.0-1.00"
@@ -53,7 +60,7 @@ PREFERRED_VERSION_nodejs-module-webos-pmlog ?= "2.0.0-10"
 PREFERRED_VERSION_nodejs-module-webos-sysbus ?= "2.0.0-25"
 PREFERRED_VERSION_npapi-headers ?= "3.0.0-0.4"
 PREFERRED_VERSION_nyx-lib ?= "2.0.0-60"
-PREFERRED_VERSION_nyx-modules ?= "2.0.0-71"
+PREFERRED_VERSION_nyx-modules ?= "2.0.0-73"
 PREFERRED_VERSION_pmcertificatemgr ?= "2.0.0-27"
 PREFERRED_VERSION_pmklogd ?= "2.0.0-10"
 PREFERRED_VERSION_pmlogconf ?= "2.0.0-16"
@@ -64,7 +71,8 @@ PREFERRED_VERSION_pmnetconfigmanager-stub ?= "2.0.0-3"
 PREFERRED_VERSION_pmstatemachineengine ?= "2.0.0-13"
 PREFERRED_VERSION_powerd ?= "4.0.0-19"
 PREFERRED_VERSION_rdx-utils-stub ?= "2.0.0-1"
-PREFERRED_VERSION_qt4-webos ?= "4.8.2.03-1.00"
+PREFERRED_VERSION_qmake-webos-native ?= "${PREFERRED_VERSION_qt4-webos}"
+PREFERRED_VERSION_qt4-webos ?= "4.8.2.03-1.01"
 PREFERRED_VERSION_serviceinstaller ?= "2.0.0-0.90"
 PREFERRED_VERSION_sleepd ?= "1.1.0-12"
 PREFERRED_VERSION_storaged ?= "2.1.0-5"

@@ -6,10 +6,7 @@ HOMEPAGE = "http://www.malloc.de/en/"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD;md5=3775480a712fc46a69647678acb234cb"
 
-# PR = ${SUBMISSION_ptmalloc3}
-# SRCREV=HEAD
-# SRC_URI = "svn://subversion.palm.com/main/nova/foss/ptmalloc3/submissions;module=${PR};proto=http"
-# S = "${WORKDIR}/${PR}"
+PR = "r1"
 
 SRC_URI = "http://www.malloc.de/malloc/ptmalloc3-current.tar.gz \
            file://ptmalloc3-current-webos.patch "

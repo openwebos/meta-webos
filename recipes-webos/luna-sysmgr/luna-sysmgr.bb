@@ -15,19 +15,19 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r5"
+PR = "r6"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
 inherit webos_public_repo
-inherit webos_submissions
+inherit webos_enhanced_submissions
 inherit webos_qmake
 inherit webos_system_bus
 # Uncomment once installing into /usr/sbin instead of /usr/bin
 #inherit webos_daemon
 inherit webos_machine_dep
 
-WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 

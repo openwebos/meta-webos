@@ -25,7 +25,6 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 #
 
 PACKAGE_GROUP_webos-boot = "task-webos-boot"
-PACKAGE_GROUP_webos-core = "task-webos-core"
 PACKAGE_GROUP_webos-extended = "task-webos-extended"
 PACKAGE_GROUP_webos-internal = "task-webos-internal"
 PACKAGE_GROUP_webos-test = "task-webos-test"
@@ -41,7 +40,6 @@ PACKAGE_GROUP_package-management = "${ROOTFS_PKGMANAGE}"
 
 WEBOS_IMAGE_BASE_INSTALL = '\
     task-webos-boot \
-    task-webos-core \
     task-webos-extended \
     \
     ${WEBOS_IMAGE_EXTRA_INSTALL} \

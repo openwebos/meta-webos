@@ -10,7 +10,7 @@ PR = "r0"
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions
-inherit webos_arch_indep
+inherit allarch
 inherit native
 # Can't inherit from webos_cmake as it introduces a circular dependency
 inherit cmake

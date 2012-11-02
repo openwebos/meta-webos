@@ -13,7 +13,7 @@ inherit webos_enhanced_submissions
 #inherit webos_cmake
 # XXX Uncomment should webos_system_bus ever look in ${S}/files/sysbus as well as ${S}/service
 #inherit webos_system_bus
-inherit webos_arch_indep
+inherit allarch
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"

@@ -9,7 +9,7 @@ PR = "r5"
 
 inherit webos_public_repo
 inherit webos_enhanced_submissions
-inherit webos_arch_indep
+inherit allarch
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"

@@ -5,9 +5,9 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r5"
+PR = "r6"
 
-#inherit webos_component
+#inherit webos_component #todo
 inherit webos_arch_indep
 inherit webos_public_repo
 inherit webos_enhanced_submissions
@@ -20,10 +20,9 @@ S = "${WORKDIR}/git"
 do_install_append() {
     # Expand fonts tarball
     if [ -e ${S}/files/conf/fonts/fonts.tgz ]; then
-        install -d ${D}/usr/share/fonts
-        tar xvzf ${S}/files/conf/fonts/fonts.tgz --directory=${D}/usr/share/fonts
+        install -d ${D}${datadir}/fonts
+        tar xvzf ${S}/files/conf/fonts/fonts.tgz --directory=${D}${datadir}/fonts
     fi
 }
 
-FILES_${PN} += "/usr/palm/ /etc/palm/ /usr/share/fonts/"
-
+FILES_${PN} += "${prefix}/palm ${sysconfdir}/palm ${datadir}/fonts"

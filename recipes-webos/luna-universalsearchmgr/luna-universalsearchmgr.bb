@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "libxml2 luna-service2 glib-2.0 cjson sqlite3 "
 
-PR = "r4"
+PR = "r5"
 
 inherit webos_component
 inherit webos_public_repo
@@ -23,9 +23,9 @@ S = "${WORKDIR}/git"
 do_install_append() {
         # Create directories and install files into target rootfs
         #  TODO:  Remove with localization
-        install -d ${D}/usr/palm/universalsearchmgr/resources/en_us
-        install -v -m 0644 ${S}/desktop-support/UniversalSearchList.json ${D}/usr/palm/universalsearchmgr/resources/en_us
+        install -d ${D}${prefix}/palm/universalsearchmgr/resources/en_us
+        install -v -m 0644 ${S}/desktop-support/UniversalSearchList.json ${D}${prefix}/palm/universalsearchmgr/resources/en_us
 }
 
 
-FILES_${PN} += "${sysconfdir} ${prefix}/palm"
+FILES_${PN} += "${prefix}/palm"

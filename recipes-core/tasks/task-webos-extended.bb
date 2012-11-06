@@ -16,6 +16,14 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 ALLOW_EMPTY = "1"
 
+# task-webos-core was removed in 
+# https://github.com/openwebos/meta-webos/commit/70b787bcb78db34c6a7d05b19786cb2e48bbece2
+# this makes sure it's removed (replaced) by task-webos-extended on target device
+
+RPROVIDES_${PN} += "task-webos-core"
+RREPLACES_${PN} += "task-webos-core"
+RCONFLICTS_${PN} += "task-webos-core"
+
 RDEPENDS_${PN} = " \
     activitymanager \
     app-services \

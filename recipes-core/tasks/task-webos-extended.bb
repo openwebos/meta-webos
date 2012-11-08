@@ -4,7 +4,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r7"
+PR = "r8"
 
 PACKAGES = "\
     ${PN} \
@@ -78,7 +78,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     bzip2 \
     curl \
     dhcp-client \
-    dropbear \
     e2fsprogs \
     gzip \
     hunspell \

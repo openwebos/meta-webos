@@ -1,13 +1,13 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
 
-DESCRIPTION = "Reference Open WebOS image."
+DESCRIPTION = "Reference Open webOS image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # IMAGE_FEATURES control content of the webos reference images
 # 
-# By default we install task-webos-boot and core and extended packages - this gives full
-# working Open WebOS image.
+# By default we install task-webos-boot and extended packages - this gives a full
+# working Open webOS image.
 #
 # Available IMAGE_FEATURES:
 #
@@ -21,12 +21,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # - ssh-server-dropbear - SSH server (dropbear)
 # - ssh-server-openssh  - SSH server (openssh)
 # - debug-tweaks        - makes an image suitable for development
-# - webos-internal      - Internal use only
 #
 
 PACKAGE_GROUP_webos-boot = "task-webos-boot"
 PACKAGE_GROUP_webos-extended = "task-webos-extended"
-PACKAGE_GROUP_webos-internal = "task-webos-internal"
 PACKAGE_GROUP_webos-test = "task-webos-test"
 PACKAGE_GROUP_webos-temp = "task-webos-temp"
 PACKAGE_GROUP_tools-debug = "task-core-tools-debug"

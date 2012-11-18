@@ -7,10 +7,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "pmloglib cjson glib-2.0"
 
-PR = "r8"
+PR = "r9"
 
-# Don't uncomment until CMakeLists.txt installs the role files
-#inherit webos_component
+inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake
@@ -19,13 +18,11 @@ inherit webos_daemon
 inherit webos_program
 inherit webos_system_bus
 inherit webos_core_os_dep
+inherit webos_machine_impl_dep
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
-
-# The following is only needed until luna-service2 is upgraded to use cmake-modules-webos
-EXTRA_OECMAKE += "-DTARGET_CORE_OS:STRING=${WEBOS_TARGET_CORE_OS}"
 
 # This fix-up will be removed shortly. luna-service2 headers must be included
 # using '#include <luna-service2/*.h>'
@@ -35,10 +32,4 @@ do_install_append() {
         ln -svnf luna-service2/lunaservice.h ${D}${includedir}/lunaservice.h
         ln -svnf luna-service2/lunaservice-errors.h ${D}${includedir}/lunaservice-errors.h
         ln -svnf lib${PN}.so ${D}${libdir}/liblunaservice.so
-
-        # XXX Move to CMakeLists.txt
-        install -d ${D}/var/palm/system-services ${D}/var/mft/palm/system-services
-        install -d ${D}/var/palm/ls2/roles/pub ${D}/var/palm/ls2/roles/prv
-        install -d ${D}/var/mft/palm/ls2/roles/pub ${D}/var/mft/palm/ls2/roles/prv
-        install -d ${D}/var/palm/ls2/services/pub ${D}/var/palm/ls2/services/prv
 }

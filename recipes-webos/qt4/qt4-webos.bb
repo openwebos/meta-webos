@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "${INC_PR}.0"
+PR = "${INC_PR}.1"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -29,10 +29,22 @@ export WEBOS_CONFIG="webos ${MACHINE}"
 
 require recipes-qt/qt4/qt4_arch.inc
 do_configure_prepend() {
+    # The headers that get installed under QT4_STAGING_BUILD_DIR/build/include are not
+    # fixed up to reference the headers under QT4_STAGING_BUILD_DIR/git/src correctly if
+    # S doesn't end with "/git". This can happen when building from a local source tree
+    # whose root is something else, e.g. "qt" (the repo name). NOTE: The directory must
+    # be renamed; adding a symlink git -> qt doesn't work.
+    if [ $(basename ${S}) != git ]; then
+        bberror 'The value of S (${S}) must end with "/git"'
+        return 1
+    fi
+
     set_arch
     set_endian
 }
+
 SRC_URI += "file://0013-configure-add-crossarch-option.patch"
+
 QT_CONFIG_FLAGS += " \
   ${QT_ENDIAN} \
   -crossarch ${QT_ARCH} \

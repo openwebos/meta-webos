@@ -35,11 +35,6 @@ FILES_upstart-sysvcompat-doc += " \
      ${mandir}/*/shutdown.* ${mandir}/*/telinit.* ${mandir}/*/runlevel.* \
 "
 
-ALTERNATIVE_NAME = "init"
-ALTERNATIVE_LINK = "${base_sbindir}/init"
-ALTERNATIVE_PATH = "${base_sbindir}/init.${PN}"
-ALTERNATIVE_PRIORITY = "60"
-
 EXTRA_OEMAKE += "'bindir=${base_bindir}' \
 		 'sbindir=${base_sbindir}' \
 		 'usrbindir=${bindir}' \
@@ -104,28 +99,21 @@ exec ${base_sbindir}/getty 38400 tty$n
 EOF
 	    done
 	fi
-
-	mv ${D}${base_sbindir}/init ${D}${base_sbindir}/init.${PN}
-	mv ${D}${base_sbindir}/halt ${D}${base_sbindir}/halt.${PN}
-	mv ${D}${base_sbindir}/reboot ${D}${base_sbindir}/reboot.${PN}
-	mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
-	mv ${D}${base_sbindir}/poweroff ${D}${base_sbindir}/poweroff.${PN}
-	mv ${D}${base_sbindir}/telinit ${D}${base_sbindir}/telinit.${PN}
 }
 
-pkg_postinst_${PN}-sysvcompat () {
-#!/bin/sh
-update-alternatives --install ${base_sbindir}/reboot reboot reboot.${PN} 200
-update-alternatives --install ${base_sbindir}/halt halt halt.${PN} 200
-update-alternatives --install ${base_sbindir}/poweroff poweroff poweroff.${PN} 200
-update-alternatives --install ${base_sbindir}/shutdown shutdown shutdown.${PN} 200
-update-alternatives --install ${base_sbindir}/telinit telinit telinit.${PN} 200
-}
+ALTERNATIVE_${PN}  = "init"
+ALTERNATIVE_${PN}-sysvcompat  = "reboot halt poweroff shutdown telinit"
 
-pkg_prerm_${PN}-sysvcompat () {
-#!/bin/sh
-update-alternatives --remove reboot reboot.${PN}
-update-alternatives --remove halt halt.${PN}
-update-alternatives --remove poweroff reboot.${PN}
-update-alternatives --remove shutdown shutdown.${PN}
-}
+ALTERNATIVE_LINK_NAME[init] = "${base_sbindir}/init"
+ALTERNATIVE_LINK_NAME[reboot] = "${base_sbindir}/reboot"
+ALTERNATIVE_LINK_NAME[halt] = "${base_sbindir}/halt"
+ALTERNATIVE_LINK_NAME[poweroff] = "${base_sbindir}/poweroff"
+ALTERNATIVE_LINK_NAME[shutdown] = "${base_sbindir}/shutdown"
+ALTERNATIVE_LINK_NAME[telinit] = "${base_sbindir}/telinit"
+
+ALTERNATIVE_PRIORITY[init] = "60"
+ALTERNATIVE_PRIORITY[reboot] = "200"
+ALTERNATIVE_PRIORITY[halt] = "200"
+ALTERNATIVE_PRIORITY[poweroff] = "200"
+ALTERNATIVE_PRIORITY[shutdown] = "200"
+ALTERNATIVE_PRIORITY[telinit] = "200"

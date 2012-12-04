@@ -15,7 +15,8 @@ EXTRA_OECONF += "--enable-compat"
 # However it is not used by upstart itself, so package it seperately.
 PACKAGES =+ "libupstart libupstart-dev"
 FILES_libupstart += "${libdir}/libupstart.so.*"
-FILES_libupstart-dev += "${libdir}/libupstart.* ${includedir}/upstart/"
+FILES_libupstart-dev += "${libdir}/libupstart.la ${libdir}/libupstart.so ${includedir}/upstart/"
+FILES_staticdev += "${libdir}/libupstart.a ${includedir}/upstart/"
 
 # upstart-sysvcompat provides Sys V Init compatible tools: halt, reboot,
 # shutdown, telinit. These might be needed by other scripts.

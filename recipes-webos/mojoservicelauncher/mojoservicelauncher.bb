@@ -9,7 +9,7 @@ DEPENDS = "boost libpbnjson"
 # fork_server.js wants to load these:
 RDEPENDS_${PN} = "nodejs-module-webos-dynaload nodejs-module-webos-pmlog nodejs-module-webos-sysbus mojoloader"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo
@@ -20,11 +20,6 @@ inherit webos_daemon
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
-
-# XXX Should be global -- see [OWEBOS-2424]
-webos_prefix = "${prefix}/palm"
-webos_servicesdir = "${prefix}/palm/services"
-webos_frameworksdir = "${prefix}/palm/frameworks"
 
 FILES_${PN} += "${webos_prefix}/nodejs ${webos_servicesdir} ${webos_frameworksdir}"
 FILES_${PN}-dbg += "${webos_prefix}/nodejs/.debug/*"

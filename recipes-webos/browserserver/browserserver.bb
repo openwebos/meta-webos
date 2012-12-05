@@ -9,7 +9,7 @@ DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcer
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
 RDEPENDS_${PN} = "ptmalloc3"
 
-PR = "r6"
+PR = "r7"
 
 inherit webos_public_repo
 inherit webos_submissions
@@ -70,20 +70,20 @@ do_install() {
         install -d ${D}${libdir}
         install -v -m 444 release-${TARGET_ARCH}/libYap.a ${D}${libdir}/libYap.a
 
-        install -d ${D}${sysconfdir}/event.d
-        install -v -m 555 -p ${S}/browserserver ${D}${sysconfdir}/event.d/browserserver
+        install -d ${D}${webos_upstartconfdir}
+        install -v -m 555 -p ${S}/browserserver ${D}${webos_upstartconfdir}/browserserver
 
-        install -d ${D}${sysconfdir}/palm
+        install -d ${D}${webos_sysconfdir}
 
         if [ -f BrowserServer.conf ]
         then
-                install -v -m 755 -p ${S}/BrowserServer.conf ${D}${sysconfdir}/palm/BrowserServer.conf
+                install -v -m 755 -p ${S}/BrowserServer.conf ${D}${webos_sysconfdir}/BrowserServer.conf
         fi
 
-        install -d ${D}${sysconfdir}/palm/browser
-        install -v -m 644 ${S}/schema/*.schema ${D}${sysconfdir}/palm/browser
+        install -d ${D}${webos_sysconfdir}/browser
+        install -v -m 644 ${S}/schema/*.schema ${D}${webos_sysconfdir}/browser
 
         #static backup registration
-        install -d ${D}${sysconfdir}/palm/backup
-        install -v -m 644 backup/com.palm.browserServer ${D}${sysconfdir}/palm/backup/com.palm.browserServer
+        install -d ${D}${webos_sysconfdir}/backup
+        install -v -m 644 backup/com.palm.browserServer ${D}${webos_sysconfdir}/backup/com.palm.browserServer
 }

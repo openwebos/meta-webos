@@ -5,7 +5,7 @@ SECTION = "webos/apps"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_public_repo
 inherit webos_submissions
@@ -17,23 +17,23 @@ S = "${WORKDIR}/git"
 
 do_install() {
     # WEBOS_INSTALL_WEBOS_COREAPPSDIR
-    install -d ${D}${prefix}/palm/applications/${PN}
+    install -d ${D}${webos_applicationsdir}/${PN}
     #INSTALL DB/KINDS
-    install -d ${D}${sysconfdir}/palm/db/kinds
+    install -d ${D}${webos_sysconfdir}/db/kinds
     #INSTALL DB/PERSMISSIONS
-    install -d ${D}${sysconfdir}/palm/db/permissions
+    install -d ${D}${webos_sysconfdir}/db/permissions
 
-    cp -vrf ${S}/* ${D}${prefix}/palm/applications/${PN}
+    cp -vrf ${S}/* ${D}${webos_applicationsdir}/${PN}
 
     if [ -d db/kinds ]; then
-        install -v -m 644 db/kinds/* ${D}${sysconfdir}/palm/db/kinds
+        install -v -m 644 db/kinds/* ${D}${webos_sysconfdir}/db/kinds
     fi
-    rm -vrf ${D}${prefix}/palm/applications/${PN}/db/kinds
+    rm -vrf ${D}${webos_applicationsdir}/${PN}/db/kinds
 
     if [ -d db/permissions ]; then
-        install -v -m 644 db/permissions/* ${D}${sysconfdir}/palm/db/permissions
+        install -v -m 644 db/permissions/* ${D}${webos_sysconfdir}/db/permissions
     fi
-    rm -vrf ${D}${prefix}/palm/applications/${PN}/db/permissions
+    rm -vrf ${D}${webos_applicationsdir}/${PN}/db/permissions
 }
 
-FILES_${PN} += "${prefix}/palm/applications"
+FILES_${PN} += "${webos_applicationsdir}"

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abba
 
 DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -84,8 +84,9 @@ do_install() {
     install -d ${D}${libdir}
     oe_libinstall -C ${PALM_BUILD_DIR}/lib -so libQtWebKit ${D}${libdir}
 
-    install -d ${D}${prefix}/plugins/imports/QtWebKit
-    install -v -m 555 ${PALM_BUILD_DIR}/imports/QtWebKit/* ${D}${prefix}/plugins/imports/QtWebKit
+    # NB. QT_CONFIGURE_IMPORTS_PATH is set in webos_qmake.bbclass
+    install -d ${D}${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit
+    install -v -m 555 ${PALM_BUILD_DIR}/imports/QtWebKit/* ${D}${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit
 }
 
 
@@ -104,7 +105,7 @@ do_makeclean() {
 
 
 FILES_${PN} += "${libdir}/libQtWebKit.so*"
-FILES_${PN} += "${prefix}/plugins/imports/QtWebKit/qmldir"
-FILES_${PN} += "${prefix}/plugins/imports/QtWebKit/libqmlwebkitplugin.so"
+FILES_${PN} += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/qmldir"
+FILES_${PN} += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/libqmlwebkitplugin.so"
 FILES_${PN}-dbg += "${libdir}/.debug"
-FILES_${PN}-dbg += "${prefix}/plugins/imports/QtWebKit/.debug"
+FILES_${PN}-dbg += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/.debug"

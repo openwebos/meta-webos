@@ -15,7 +15,7 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r6"
+PR = "r7"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
@@ -46,33 +46,29 @@ do_configure() {
 #		mv -f *.xliff ${STAGING_DIR}/xliffs/new
 #	fi
 
-#	tar --exclude=.svn -cf - localization | tar xf - -C ${D}/usr/palm/sysmgr
-#	#ln -s en_gb ${D}/usr/palm/sysmgr/localization/en_ie
-#	if [ -d ${D}/usr/palm/sysmgr/localization/es_mx ]
+#	tar --exclude=.svn -cf - localization | tar xf - -C ${D}${webos_sysmgrdir}
+#	#ln -s en_gb ${D}${webos_sysmgrdir}/localization/en_ie
+#	if [ -d ${D}${webos_sysmgrdir}/localization/es_mx ]
 #	then
-#		rm -rf ${D}/usr/palm/sysmgr/localization/es_mx
+#		rm -rf ${D}${webos_sysmgrdir}/localization/es_mx
 #	fi
-#	ln -sf es_us ${D}/usr/palm/sysmgr/localization/es_mx
+#	ln -sf es_us ${D}${webos_sysmgrdir}/localization/es_mx
 #}
 
 install_launcher3_support() {
 
-	install -d ${D}${sysconfdir}/palm/launcher3/
+	install -d ${D}${webos_sysconfdir}/launcher3/
 	# install all the base conf files
 	cd ${S}
 	if [ -d conf/launcher3 ]
 	then
-	  find conf/launcher3/ -maxdepth 1 -name "*.conf" -not -name "*[-]*.conf" -print0 | xargs -0 -I file install -v -m 644 file ${D}${sysconfdir}/palm/launcher3/
+	  find conf/launcher3/ -maxdepth 1 -name "*.conf" -not -name "*[-]*.conf" -print0 | xargs -0 -I file install -v -m 644 file ${D}${webos_sysconfdir}/launcher3/
 	fi
 	
-	# and all the platform specific conf files
-	# (no good way to do this with find/xargs, given the <base>-<machine>.conf -> <base>-platform.conf name change needed on the install copy)
-	# (do them all individually)
-	
-	#install the default designator mapping and tab/page definition - default is in /etc/palm/launcher3/app-keywords-to-designator-map.txt
+	#install the default designator mapping and tab/page definition - default is in ${webos_sysconfdir}/launcher3/app-keywords-to-designator-map.txt
 	if [ -f conf/launcher3/app-keywords-to-designator-map.txt ]
 	then
-		install -v -m 644 conf/launcher3/app-keywords-to-designator-map.txt ${D}${sysconfdir}/palm/launcher3/
+		install -v -m 644 conf/launcher3/app-keywords-to-designator-map.txt ${D}${webos_sysconfdir}/launcher3/
 	fi
 	
 }
@@ -85,17 +81,17 @@ do_install() {
 
 	# install images & low-memory files
 #	bbnote "install images and low-memory files"
-	install -d ${D}/usr/palm/sysmgr
-	cd ${S} && tar --exclude=.svn -cf - images | tar xf - -C ${D}/usr/palm/sysmgr
-	cd ${S} && tar --exclude=.svn -cf - uiComponents | tar xf - -C ${D}/usr/palm/sysmgr
-	install -d ${D}/usr/palm/sysmgr/low-memory
-	install -v -m 644 low-memory/* ${D}/usr/palm/sysmgr/low-memory
+	install -d ${D}${webos_sysmgrdir}
+	cd ${S} && tar --exclude=.svn -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
+	cd ${S} && tar --exclude=.svn -cf - uiComponents | tar xf - -C ${D}${webos_sysmgrdir}
+	install -d ${D}${webos_sysmgrdir}/low-memory
+	install -v -m 644 low-memory/* ${D}${webos_sysmgrdir}/low-memory
 
 	if [ -d bin ]
 	then
 #		bbnote "install ime bin files"
-		install -d ${D}/usr/palm/sysmgr/bin
-		install -v -m 644 bin/* ${D}/usr/palm/sysmgr/bin
+		install -d ${D}${webos_sysmgrdir}/bin
+		install -v -m 644 bin/* ${D}${webos_sysmgrdir}/bin
 	fi
 	
 	# install sysmgr builtins apps
@@ -119,8 +115,8 @@ do_install() {
 	#	done
 
 		
-		install -d ${D}/usr/palm/applications
-		cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}/usr/palm/applications
+		install -d ${D}${webos_applicationsdir}
+		cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}${webos_applicationsdir}
 		cd ${S}
 		
 	fi
@@ -135,8 +131,8 @@ do_install() {
 	cd ${S}
 	if [ -d sysapps ]
 	then
-		install -d ${D}/usr/palm/applications
-		cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}/usr/palm/applications
+		install -d ${D}${webos_applicationsdir}
+		cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}${webos_applicationsdir}
 		cd ${S}
 	fi
 
@@ -144,51 +140,55 @@ do_install() {
 	#install_loc
 
 	# install the schema files
-	install -d ${D}${sysconfdir}/palm/schemas/
-	#install -v -m 644 conf/localization.schema ${D}${sysconfdir}/palm/schemas/
-	install -v -m 644 conf/launcher-conf.schema ${D}${sysconfdir}/palm/schemas/
+	install -d ${D}${webos_sysconfdir}/schemas/
+	#install -v -m 644 conf/localization.schema ${D}${webos_sysconfdir}/schemas/
+	install -v -m 644 conf/launcher-conf.schema ${D}${webos_sysconfdir}/schemas/
 
 	# install temporary sounds
-	install -d ${D}/usr/palm/sounds
-	install -v -m 644 sounds/* ${D}/usr/palm/sounds
+	install -d ${D}${webos_soundsdir}
+	install -v -m 644 sounds/* ${D}${webos_soundsdir}
 
 	# install into event.d so we run.
-	install -d ${D}${sysconfdir}/event.d
-	install -v -m 644 LunaSysMgr.upstart ${D}${sysconfdir}/event.d/LunaSysMgr
-	install -v -m 644 LunaReady.upstart ${D}${sysconfdir}/event.d/LunaReady
+	install -d ${D}${webos_upstartconfdir}
+	install -v -m 644 LunaSysMgr.upstart ${D}${webos_upstartconfdir}/LunaSysMgr
+	install -v -m 644 LunaReady.upstart ${D}${webos_upstartconfdir}/LunaReady
 
 	# install the luna.conf file if it exists in the source
 	if [ -f conf/luna.conf ]
 	then
-		install -d ${D}${sysconfdir}/palm
-		install -v -m 644 conf/luna.conf ${D}${sysconfdir}/palm
-		install -v -m 644 conf/lunaAnimations.conf ${D}${sysconfdir}/palm
-		install -v -m 644 conf/timezone.txt ${D}${sysconfdir}/palm
-		install -v -m 644 conf/locale.txt ${D}${sysconfdir}/palm
-		install -v -m 644 conf/defaultPreferences.txt ${D}${sysconfdir}/palm
-		install -v -m 644 conf/notificationPolicy.conf ${D}${sysconfdir}/palm
-		install -v -m 644 conf/persistentWindows.conf ${D}${sysconfdir}/palm
-		install -v -m 644 conf/default-launcher-page-layout.json ${D}${sysconfdir}/palm
+		install -d ${D}${webos_sysconfdir}
+		install -v -m 644 conf/luna.conf ${D}${webos_sysconfdir}
+		install -v -m 644 conf/lunaAnimations.conf ${D}${webos_sysconfdir}
+		install -v -m 644 conf/timezone.txt ${D}${webos_sysconfdir}
+		install -v -m 644 conf/locale.txt ${D}${webos_sysconfdir}
+		install -v -m 644 conf/defaultPreferences.txt ${D}${webos_sysconfdir}
+		install -v -m 644 conf/notificationPolicy.conf ${D}${webos_sysconfdir}
+		install -v -m 644 conf/persistentWindows.conf ${D}${webos_sysconfdir}
+		install -v -m 644 conf/default-launcher-page-layout.json ${D}${webos_sysconfdir}
 	fi
+
+	# install all the platform specific conf files
+	# (no good way to do this with find/xargs, given the <base>-<machine>.conf -> <base>-platform.conf
+        # name change needed on the install copy => do them all individually)
 
 	# install the platform luna.conf file
 #	bbnote "install the platform luna.conf file"
 	if [ -f conf/luna-${MACHINE}.conf ]
 	then
-		install	-v -m 644 conf/luna-${MACHINE}.conf ${D}${sysconfdir}/palm/luna-platform.conf
+		install	-v -m 644 conf/luna-${MACHINE}.conf ${D}${webos_sysconfdir}/luna-platform.conf
 	fi
 
 	# install the platform lunaAnimations.conf file
 	if [ -f conf/lunaAnimations-${MACHINE}.conf ]
 	then
-		install	-v -m 644 conf/lunaAnimations-${MACHINE}.conf ${D}${sysconfdir}/palm/lunaAnimations-platform.conf
+		install	-v -m 644 conf/lunaAnimations-${MACHINE}.conf ${D}${webos_sysconfdir}/lunaAnimations-platform.conf
 	fi
 
 	# install the platform defaultPreferences.txt file
 #	bbnote "install the platform defaultPreferences.txt file"
 	if [ -f conf/defaultPreferences-${MACHINE}.txt ]
 	then
-		install	-v -m 644 conf/defaultPreferences-${MACHINE}.txt ${D}${sysconfdir}/palm/defaultPreferences-platform.txt
+		install	-v -m 644 conf/defaultPreferences-${MACHINE}.txt ${D}${webos_sysconfdir}/defaultPreferences-platform.txt
 	fi
 
 	if [ -d platform/${MACHINE} ]
@@ -196,48 +196,48 @@ do_install() {
 		# copy over platform specific images
 		if [ -d platform/${MACHINE}/images ]
 		then
-			cd ${S}/platform/${MACHINE} && tar --exclude=.svn -cf - images | tar xf - -C ${D}/usr/palm/sysmgr
+			cd ${S}/platform/${MACHINE} && tar --exclude=.svn -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
 			cd ${S}
 		fi
 	fi
 
 	# install the mojodb file to register schema for different security policies
-	install -d ${D}${sysconfdir}/palm/db_kinds
+	install -d ${D}${webos_sysconfdir}/db_kinds
 	if [ -f mojodb/com.palm.securitypolicy ]
 	then
-		install	-v -m 644 mojodb/com.palm.securitypolicy ${D}${sysconfdir}/palm/db_kinds/com.palm.securitypolicy
+		install	-v -m 644 mojodb/com.palm.securitypolicy ${D}${webos_sysconfdir}/db_kinds/com.palm.securitypolicy
 	fi
 
 	# install the mojodb file for the device security policy
 	if [ -f mojodb/com.palm.securitypolicy.device ]
 	then
-		install	-v -m 644 mojodb/com.palm.securitypolicy.device ${D}${sysconfdir}/palm/db_kinds/com.palm.securitypolicy.device
+		install	-v -m 644 mojodb/com.palm.securitypolicy.device ${D}${webos_sysconfdir}/db_kinds/com.palm.securitypolicy.device
 	fi
 
 	# install the mojodb file to set permissions on security policies
-	install -d ${D}${sysconfdir}/palm/db/permissions
+	install -d ${D}${webos_sysconfdir}/db/permissions
 	if [ -f mojodb/com.palm.securitypolicy.permissions ]
 	then
-		install	-v -m 644 mojodb/com.palm.securitypolicy.permissions ${D}${sysconfdir}/palm/db/permissions/com.palm.securitypolicy
+		install	-v -m 644 mojodb/com.palm.securitypolicy.permissions ${D}${webos_sysconfdir}/db/permissions/com.palm.securitypolicy
 	fi
 
 	# install the mojodb file to register for backup
-	install -d ${D}${sysconfdir}/palm/backup
+	install -d ${D}${webos_sysconfdir}/backup
 	if [ -f mojodb/com.palm.appDataBackup ]
 	then
-		install	-v -m 644 mojodb/com.palm.appDataBackup ${D}${sysconfdir}/palm/backup/com.palm.appDataBackup
+		install	-v -m 644 mojodb/com.palm.appDataBackup ${D}${webos_sysconfdir}/backup/com.palm.appDataBackup
 	fi
 
 	if [ -f conf/default-exhibition-apps.json ]
 	then
-		install -v -m 644 conf/default-exhibition-apps.json ${D}${sysconfdir}/palm
+		install -v -m 644 conf/default-exhibition-apps.json ${D}${webos_sysconfdir}
 	fi
 
 	# install the pubsub definition file for revokations
 	if [ -f service/com.palm.appinstaller.pubsub ]
 	then
-		install -d ${D}${sysconfdir}/palm/pubsub_handlers
-		install -v -m 0644 service/com.palm.appinstaller.pubsub ${D}${sysconfdir}/palm/pubsub_handlers/com.palm.appinstaller 
+		install -d ${D}${webos_sysconfdir}/pubsub_handlers
+		install -v -m 0644 service/com.palm.appinstaller.pubsub ${D}${webos_sysconfdir}/pubsub_handlers/com.palm.appinstaller
 	fi
 }
 
@@ -245,4 +245,4 @@ do_clean_prepend() {
 	os.system('cd ' + bb.data.expand('${S}', d) + ' && [ -f Makefile ] && make distclean')
 }
 
-FILES_${PN} += "/usr/palm /etc/palm"
+FILES_${PN} += "${webos_sysmgrdir} ${webos_sysconfdir} ${webos_applicationsdir} ${webos_soundsdir}"

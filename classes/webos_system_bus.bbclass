@@ -10,14 +10,8 @@
 
 RDEPENDS_${PN} += "luna-service2"
 
-# XXX Should be global -- see [OWEBOS-2424]
-webos_sysbus_pubservicesdir = "${datadir}/dbus-1/services"
-webos_sysbus_prvservicesdir = "${datadir}/dbus-1/system-services"
-webos_sysbus_pubrolesdir = "${datadir}/ls2/roles/pub"
-webos_sysbus_prvrolesdir = "${datadir}/ls2/roles/prv"
-
 FILES_${PN} += "${webos_sysbus_prvservicesdir} ${webos_sysbus_pubservicesdir}"
-FILES_${PN} += "${webos_sysbus_prvrolesdir} ${webos_sysbus_pubrolesdir}"
+FILES_${PN} += "${webos_sysbus_prvrolesdir}    ${webos_sysbus_pubrolesdir}"
 
 webos_system_bus_install_files () {
     local _LS_PRV_DIR="${D}$1"    # destination directory for private hub files
@@ -36,13 +30,13 @@ webos_system_bus_install_files () {
     for i in $_LS_PUB; do
         _LS_PUB_DEST=`basename $i .pub`
         bbnote "PUBLIC: $_LS_PUB_DIR/$_LS_PUB_DEST"
-        install -m 0644 $i $_LS_PUB_DIR/$_LS_PUB_DEST
+        install -v -m 0644 $i $_LS_PUB_DIR/$_LS_PUB_DEST
     done
 
     for i in $_LS_PRV; do
         _LS_PRV_DEST=`basename $i .prv`
         bbnote "PRIVATE: $_LS_PRV_DIR/$_LS_PRV_DEST"
-        install -m 0644 $i $_LS_PRV_DIR/$_LS_PRV_DEST
+        install -v -m 0644 $i $_LS_PRV_DIR/$_LS_PRV_DEST
     done
 }
 

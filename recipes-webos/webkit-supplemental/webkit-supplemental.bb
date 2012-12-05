@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos qmake-webos-native"
 
-PR = "r5"
+PR = "r6"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -38,8 +38,8 @@ do_configure() {
     
     # .qmake.cache is not part of qt4-webos checkout, so let's try to create fake one, pointing to your stored stuff
     mkdir -p "${QTDIR}"
-    echo "QT_SOURCE_TREE = \$\$quote(${STAGING_DIR_HOST}/usr/src/qt4-webos/git)" > ${QTDIR}/.qmake.cache
-    echo "QT_BUILD_TREE = \$\$quote(${STAGING_DIR_HOST}/usr/src/qt4-webos/build)" >> ${QTDIR}/.qmake.cache
+    echo "QT_SOURCE_TREE = \$\$quote(${STAGING_DIR_HOST}${webos_srcdir}/qt4-webos/git)" > ${QTDIR}/.qmake.cache
+    echo "QT_BUILD_TREE = \$\$quote(${STAGING_DIR_HOST}${webos_srcdir}/qt4-webos/build)" >> ${QTDIR}/.qmake.cache
 
     mkdir -p ${WEBOS_BUILD_DIR}
     # Can't use ${S}/Makefile as we want to do an out-of-tree builds which it 
@@ -65,14 +65,14 @@ do_install() {
 
     # XXX Move libqbsplugin.so to its expected location here until qbsplugin.pro
     # is fixed
-    install -d ${D}${prefix}/plugins/platforms/
-    mv -v ${D}/plugins/platforms/libqbsplugin.so ${D}${prefix}/plugins/platforms/
+    install -d ${D}${webos_qtpluginsdir}/platforms/
+    mv -v ${D}/plugins/platforms/libqbsplugin.so ${D}${webos_qtpluginsdir}/platforms/
     (cd ${D}; rmdir -vp plugins/platforms)
 
     # XXX Move libqtwebkitplugin.so to its expected location here until
     # qtwebkitplugin.pro is fixed
-    install -d ${D}${prefix}/plugins/webkit/
-    mv -v ${D}${libdir}/libqtwebkitplugin.so ${D}${prefix}/plugins/webkit/
+    install -d ${D}${webos_qtpluginsdir}/webkit/
+    mv -v ${D}${libdir}/libqtwebkitplugin.so ${D}${webos_qtpluginsdir}/webkit/
 
     if [ -d qbsplugin/fonts ]; then
         install -d ${D}${datadir}/fonts
@@ -81,8 +81,8 @@ do_install() {
 }
 
 
-FILES_${PN} += "${prefix}/plugins/platforms/libqbsplugin.so"
-FILES_${PN} += "${prefix}/plugins/webkit/libqtwebkitplugin.so"
+FILES_${PN} += "${webos_qtpluginsdir}/platforms/libqbsplugin.so"
+FILES_${PN} += "${webos_qtpluginsdir}/webkit/libqtwebkitplugin.so"
 FILES_${PN} += "${datadir}/fonts"
-FILES_${PN}-dbg += "${prefix}/plugins/platforms/.debug"
-FILES_${PN}-dbg += "${prefix}/plugins/webkit/.debug"
+FILES_${PN}-dbg += "${webos_qtpluginsdir}/platforms/.debug"
+FILES_${PN}-dbg += "${webos_qtpluginsdir}/webkit/.debug"

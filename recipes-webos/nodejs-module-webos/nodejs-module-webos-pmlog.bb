@@ -9,7 +9,7 @@ DEPENDS = "nodejs pmloglib"
 # XXX Add to ASSUME_PROVIDED -- it's part of vim
 # DEPENDS += "xxd-native"
 
-PR = "r1"
+PR = "r2"
 
 inherit webos_component
 inherit webos_public_repo
@@ -21,10 +21,7 @@ WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
-# XXX Should be global -- see [OWEBOS-2424]
-webos_prefix = "${prefix}/palm"
-
-# XXX Temporarily add symlink to old location until users of it are changed
+# XXX Temporarily add symlink to old location until all users of it are changed
 FILES_${PN} += "${webos_prefix}/nodejs"
 do_install_append() {
 	install -d ${D}${webos_prefix}/nodejs

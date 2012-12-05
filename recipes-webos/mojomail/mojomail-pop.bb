@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "jemalloc db8 mojomail-common boost icu libpalmsocket libsandbox pmloglib glib-2.0 cjson luna-service2 c-ares"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo
@@ -21,4 +21,4 @@ WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/mojomail;tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git/pop"
 
-FILES_${PN} += "/usr/palm/public/accounts"
+FILES_${PN} += "${webos_accttemplatesdir}"

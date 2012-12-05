@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
 
-PR = "${INC_PR}.1"
+PR = "${INC_PR}.2"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
@@ -21,7 +21,7 @@ QT4_MACHINE_CONFIG_FLAGS_x86 = "-xplatform qws/linux-qemux86-g++ -no-neon -no-rp
 QT4_MACHINE_CONFIG_FLAGS_armv7a = "-xplatform qws/linux-armv6-g++ -opengl -plugin-gfx-egl -DPALM_DEVICE -qconfig palm"
 
 PALM_BUILD_DIR = "${S}/../qt-build-${MACHINE}"
-QT4_STAGING_BUILD_DIR = "/usr/src/qt4-webos"
+QT4_STAGING_BUILD_DIR = "${webos_srcdir}/qt4-webos"
 
 # Export the current configuration out so that Qt .pro files can utilize these during
 # their configuration
@@ -60,15 +60,16 @@ do_install() {
     # Nova-Main has these additional files installed
     install -v -d ${D}${includedir}/QtOpenGL
     install -v -m 644 ${S}/src/opengl/gl2paintengineex/qglcustomshaderstage_p.h ${D}${includedir}/QtOpenGL
-    if [ -d ${D}/usr/imports/Qt/labs/shaders ]; then
-        install -v -d ${D}/usr/plugins/imports/Qt/labs
-	    mv -v ${D}/usr/imports/Qt/labs/shaders ${D}/usr/plugins/imports/Qt/labs
+    if [ -d ${D}${prefix}/imports/Qt/labs/shaders ]; then
+        # NB. QT_CONFIGURE_IMPORTS_PATH is set in webos_qmake.bbclass
+        install -v -d ${D}${QT_CONFIGURE_IMPORTS_PATH}/Qt/labs
+        mv -v ${D}${prefix}/imports/Qt/labs/shaders ${D}${QT_CONFIGURE_IMPORTS_PATH}/Qt/labs
     fi
 
     # The *_location settings in the Qt*.pc files don't make any sense since they
     # refer to native utilities => remove them.
     for pc in ${D}${libdir}/pkgconfig/Qt*.pc; do
-        outf=${D}/usr/lib/pkgconfig/$(basename $pc)
+        outf=${D}${webos_pkgconfigdir}/$(basename $pc)
         echo "Removing  _location settings from $pc"
         sed -i -e '/^[^_]*_location=/ d' $pc
     done
@@ -91,7 +92,7 @@ do_install() {
     # XXX Nova-Main has libqpalm.so under ${libdir} as well as /usr/plugins because that's
     # where the link of luna-sysmgr expects to find it. luna-sysmgr will be changed by
     # [OWEBOS-2617] to look for it under /usr/plugins so that we don't have to install
-    # libqpalm.so in two places. (It's a problem for it to need to be in ${libdir} because
+    # libqpalm.so in two places. (It's a problem if it has to be in ${libdir} because
     # the default FILES_${PN}-dev pick will pick it up from there.)
 
     # XXX Remove files not installed by Nova-Main. Eventually, figure out how to configure
@@ -101,9 +102,9 @@ do_install() {
     rm -rf ${D}${datadir}
     rm -rf ${D}${bindir}
     rm -rf ${D}${libdir}/fonts
-    rm -rf ${D}${prefix}/plugins/bearer
-    rm -rf ${D}${prefix}/plugins/generic
-    rm -rf ${D}${prefix}/plugins/inputmethods
+    rm -rf ${D}${webos_qtpluginsdir}/bearer
+    rm -rf ${D}${webos_qtpluginsdir}/generic
+    rm -rf ${D}${webos_qtpluginsdir}/inputmethods
 
     # XXX Can we get away with not staging /usr/lib/*.prl and ignoring the imports tree
     # (it seems as though we copy what we want from imports into plugins/imports)?
@@ -118,9 +119,12 @@ sysroot_stage_all_append() {
 
 PACKAGES += "${PN}-buildsrc"
 
-FILES_${PN} += "/usr/plugins"
+FILES_${PN} += "${webos_qtpluginsdir}"
 # Yes, qmake-webos IS correct: mkspecs are dependent on the target.
 FILES_${PN}-dev += "${libdir}/qmake-webos"
-FILES_${PN}-dbg += "/usr/plugins/*/.debug"
-FILES_${PN}-dbg += "/usr/plugins/imports/Qt/labs/shaders/.debug"
+FILES_${PN}-dbg += "${webos_qtpluginsdir}/*/.debug"
+# XXX Keep in sync with setting in webos_qmake.bbclass until this recipe is
+# modified to inherit from it:
+QT_CONFIGURE_IMPORTS_PATH = "${webos_qtpluginsdir}/imports"
+FILES_${PN}-dbg += "${QT_CONFIGURE_IMPORTS_PATH}/Qt/labs/shaders/.debug"
 FILES_${PN}-buildsrc += "${QT4_STAGING_BUILD_DIR}"

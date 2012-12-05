@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=d6237f3a840aef5b7880fb4e49eecfe5"
 # We want node_crypto support
 DEPENDS = "openssl"
 
-PR = "r1"
+PR = "r2"
 
 inherit webos_public_repo
 inherit webos_enhanced_submissions
@@ -30,10 +30,10 @@ OECMAKE_CXX_FLAGS += "-fsigned-char"
 
 # XXX Temporarily add symlinks from the old locations until everything else is changed:
 do_install_append() {
-    install -d ${D}/usr/palm/nodejs
-    ln -svfn ${bindir}/node ${D}/usr/palm/nodejs/node
+    install -d ${D}${webos_prefix}/nodejs
+    ln -svfn ${bindir}/node ${D}${webos_prefix}/nodejs/node
     # /bin/node is only needed by a handful of test scripts, which aren't (yet) part of Open webOS
-    # install -d ${D}/bin
+    # install -d ${D}${base_bindir}
     # ln -svfn ${bindir}/node ${D}${base_bindir}/node
 
     # XXX pmnetproxyservice isn't part of Open webOS (yet) => don't stage things only used by it:
@@ -45,4 +45,4 @@ do_install_append() {
     # oe_libinstall -a -C ${OECMAKE_BUILDPATH}/deps/v8 libv8 ${D}${libdir}
 }
 
-FILES_${PN} += "/usr/palm/nodejs/*"
+FILES_${PN} += "${webos_prefix}/nodejs/*"

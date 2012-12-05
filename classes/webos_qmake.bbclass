@@ -24,9 +24,10 @@ export QT_CONFIGURE_BINARIES_PATH = "${STAGING_BINDIR_NATIVE}"
 # mkspecs are MACHINE-specific
 export QT_CONFIGURE_DATA_PATH = "${STAGING_LIBDIR}/qmake-webos"
 
-# XXX Should be under ${libdir}/${PN}
-export QT_CONFIGURE_PLUGINS_PATH = "${prefix}/plugins"
-export QT_CONFIGURE_IMPORTS_PATH = "${QT_CONFIGURE_PLUGINS_PATH}/imports"
+export QT_CONFIGURE_PLUGINS_PATH = "${webos_qtpluginsdir}"
+# XXX Keep in sync with setting in qt4-webos.bb until it is modified to inherit
+# from this file:
+export QT_CONFIGURE_IMPORTS_PATH = "${webos_qtpluginsdir}/imports"
 export QT_CONFIGURE_TRANSLATIONS_PATH = "${datadir}/${PN}/translations"
 # XXX Is this used?
 export QT_CONFIGURE_SETTINGS_PATH = "${localstatedir}/${PN}/settings"

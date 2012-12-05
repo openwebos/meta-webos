@@ -5,7 +5,7 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_enhanced_submissions
 inherit webos_arch_indep
@@ -18,12 +18,12 @@ S = "${WORKDIR}/git"
 
 do_install() {
         #COPY ENTIRE APP
-        install -d ${D}/usr/lib/luna/system/luna-systemui
-        cp -vrf ${S}/* ${D}/usr/lib/luna/system/luna-systemui
+        install -d ${D}${webos_sysmgr_datadir}/system/luna-systemui
+        cp -vrf ${S}/* ${D}${webos_sysmgr_datadir}/system/luna-systemui
         if [ -e ${S}/images/wallpaper.tar ]; then
-            install -d ${D}/usr/lib/luna/system/luna-systemui/images
-            tar xvf ${S}/images/wallpaper.tar --directory=${D}/usr/lib/luna/system/luna-systemui/images
+            install -d ${D}${webos_sysmgr_datadir}/system/luna-systemui/images
+            tar xvf ${S}/images/wallpaper.tar --directory=${D}${webos_sysmgr_datadir}/system/luna-systemui/images
         fi
 }
 
-FILES_${PN} += "${prefix}/lib/luna/system"
+FILES_${PN} += "${webos_sysmgr_datadir}/system"

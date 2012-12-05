@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "nodejs boost"
 
-PR = "r1"
+PR = "r2"
 
 inherit webos_component
 inherit webos_public_repo
@@ -19,10 +19,7 @@ WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
-# XXX Should be global -- see [OWEBOS-2424]
-webos_prefix = "${prefix}/palm"
-
-# XXX Temporarily add symlink to old location until users of it are changed
+# XXX Temporarily add symlink to old location until all users of it are changed
 FILES_${PN} += "${webos_prefix}/nodejs"
 do_install_append() {
 	install -d ${D}${webos_prefix}/nodejs

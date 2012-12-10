@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abba
 
 DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3"
 
-PR = "r8"
+PR = "r9"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -15,10 +15,7 @@ inherit webos_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-#
-# Webkit source is identified by WEBOS_SUBMISSION and SRCREV defined in
-# webos-component-submission.inc and webos-component-head.inc.
-#
+# Webkit source is identified by WEBOS_SUBMISSION extracted from PREFERRED_VERSION_${PN}.
 SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip"
 
 # XXX Expediently patch Tools/Scripts/webkitdirs.pm to remove the
@@ -29,13 +26,30 @@ SRC_URI += "file://remove-empty-soname-arg.patch"
 SRC_URI[md5sum] = "ed3995d6dd54a81c4db5d9ea92f30ef4"
 SRC_URI[sha256sum] = "7835d2cb953724f67670e421a614022767865fa9bfc52f8bdccbc95605be8b4e"
 
-S = "${WORKDIR}/isis-project-WebKit-${SRCREV}"
-
+S = "${WORKDIR}/isis-project-WebKit"
+# The archive downloaded has the source in a subdirectory named "isis-project-WebKit-<commitID>".
+# Appending WEBOS_ARCHIVE_ROOT_GLOB_SUFFIX to S and globbing it will expand to the actual
+# extraction path -- see do_unpack_{prepend,append} below.
+WEBOS_ARCHIVE_ROOT_GLOB_SUFFIX = "-*"
 
 PALM_CC_OPT = "-O2"
 OBJDIR = "${MACHINE}-${TARGET_ARCH}"
 export WEBKITOUTPUTDIR = "${S}/WebKitBuild/${OBJDIR}"
 PALM_BUILD_DIR = "${WEBKITOUTPUTDIR}/Release"
+
+
+# Python code for do_unpack() uses tabs, so we need to as well.
+python do_unpack_prepend () {
+	import os
+
+	s = d.getVar('S', True)
+	glob_suffix = d.getVar('WEBOS_ARCHIVE_ROOT_GLOB_SUFFIX', True)
+	os.system("rm -rf " + s + " " + s + glob_suffix)
+}
+
+python do_unpack_append () {
+	os.system("mv -v " + s + glob_suffix + " " + s)
+}
 
 
 # Unfortunately, build-webkit does the configure and compile steps indivisibly.

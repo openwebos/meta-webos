@@ -7,9 +7,9 @@ LICENSE = "MIT & Zlib"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=d6237f3a840aef5b7880fb4e49eecfe5"
 
 # We want node_crypto support
-DEPENDS = "openssl"
+DEPENDS = "openssl python-native"
 
-PR = "r2"
+PR = "r3"
 
 inherit webos_public_repo
 inherit webos_enhanced_submissions

@@ -14,8 +14,10 @@ RDEPENDS_${PN} = "ptmalloc3"
 # luna-sysmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
+# luna-sysmgr seg faults at startup if keyboard-efigs is missing
+RDEPENDS_${PN} += "keyboard-efigs"
 
-PR = "r7"
+PR = "r8"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

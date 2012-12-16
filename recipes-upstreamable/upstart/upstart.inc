@@ -43,11 +43,11 @@ ALTERNATIVE_PATH = "${base_sbindir}/init.${PN}"
 ALTERNATIVE_PRIORITY = "60"
 
 EXTRA_OEMAKE += "'bindir=${base_bindir}' \
-		 'sbindir=${base_sbindir}' \
-		 'usrbindir=${bindir}' \
-		 'usrsbindir=${sbindir}' \
-		 'includedir=${includedir}' \
-		 'mandir=${mandir}'"
+                 'sbindir=${base_sbindir}' \
+                 'usrbindir=${bindir}' \
+                 'usrsbindir=${sbindir}' \
+                 'includedir=${includedir}' \
+                 'mandir=${mandir}'"
 
 do_install () {
 	oe_runmake 'DESTDIR=${D}' install

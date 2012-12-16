@@ -3,5 +3,5 @@
 PR_append = "webos1"
 
 EXTRA_OECONF += "--disable-selinux \
-	--with-cluster=none \
-	"
+                 --with-cluster=none \
+                "

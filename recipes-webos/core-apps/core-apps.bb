@@ -19,33 +19,32 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        # WEBOS_INSTALL_WEBOS_COREAPPSDIR
-        install -d ${D}${webos_applicationsdir}
-        #INSTALL DB/KINDS
-        install -d ${D}${webos_sysconfdir}/db/kinds
-        #INSTALL DB/PERSMISSIONS
-        install -d ${D}${webos_sysconfdir}/db/permissions
-        #INSTALL ACTIVITIES
-        install -d ${D}${webos_sysconfdir}/activities
+    # WEBOS_INSTALL_WEBOS_COREAPPSDIR
+    install -d ${D}${webos_applicationsdir}
+    #INSTALL DB/KINDS
+    install -d ${D}${webos_sysconfdir}/db/kinds
+    #INSTALL DB/PERSMISSIONS
+    install -d ${D}${webos_sysconfdir}/db/permissions
+    #INSTALL ACTIVITIES
+    install -d ${D}${webos_sysconfdir}/activities
 
-        for COREAPPS in `ls -d1 ${S}/com.palm.app*` ; do
-            COREAPPS_DIR=`basename $COREAPPS`
-            install -d ${D}${webos_applicationsdir}/$COREAPPS_DIR/
-            cp -vrf $COREAPPS/* ${D}${webos_applicationsdir}/$COREAPPS_DIR/
+    for COREAPPS in `ls -d1 ${S}/com.palm.app*` ; do
+        COREAPPS_DIR=`basename $COREAPPS`
+        install -d ${D}${webos_applicationsdir}/$COREAPPS_DIR/
+        cp -vrf $COREAPPS/* ${D}${webos_applicationsdir}/$COREAPPS_DIR/
 
-            if [ -d $COREAPPS/configuration/db/kinds ]; then
-                install -v -m 644 $COREAPPS/configuration/db/kinds/* ${D}${webos_sysconfdir}/db/kinds
-            fi
+        if [ -d $COREAPPS/configuration/db/kinds ]; then
+            install -v -m 644 $COREAPPS/configuration/db/kinds/* ${D}${webos_sysconfdir}/db/kinds
+        fi
 
-            if [ -d $COREAPPS/configuration/db/permissions ]; then
-                install -v -m 644 $COREAPPS/configuration/db/permissions/* ${D}${webos_sysconfdir}/db/permissions
-            fi
+        if [ -d $COREAPPS/configuration/db/permissions ]; then
+            install -v -m 644 $COREAPPS/configuration/db/permissions/* ${D}${webos_sysconfdir}/db/permissions
+        fi
 
-            if [ -d $COREAPPS/configuration/activities ]; then
-                cp -vrf $COREAPPS/configuration/activities/* ${D}${webos_sysconfdir}/activities/
-            fi
-
-       done
+        if [ -d $COREAPPS/configuration/activities ]; then
+            cp -vrf $COREAPPS/configuration/activities/* ${D}${webos_sysconfdir}/activities/
+        fi
+    done
 }
 
 FILES_${PN} += "${webos_applicationsdir} ${webos_sysconfdir}"

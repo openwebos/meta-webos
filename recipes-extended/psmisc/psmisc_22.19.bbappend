@@ -8,7 +8,7 @@ PACKAGES = "fuser killall pstree \
 "
 
 do_configure_prepend() {
-        sed -i '/^SUBDIRS/s/=.*$/= src/' Makefile.am
-        sed -i '/^oldfuser_/s/^/#/' src/Makefile.am
-        sed -i '/^bin_PROGRAMS/s/ oldfuser//' src/Makefile.am
+    sed -i '/^SUBDIRS/s/=.*$/= src/' Makefile.am
+    sed -i '/^oldfuser_/s/^/#/' src/Makefile.am
+    sed -i '/^bin_PROGRAMS/s/ oldfuser//' src/Makefile.am
 }

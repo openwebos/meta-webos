@@ -20,7 +20,7 @@ EXTRA_OECONF += "--disable-static"
 EXTRA_OEMAKE += "all"
 
 do_configure_prepend() {
-        # Force a configure to happen
-        rm -f ${S}/config.status
-        sh autogen.sh
+    # Force a configure to happen
+    rm -f ${S}/config.status
+    sh autogen.sh
 }

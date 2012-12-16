@@ -32,30 +32,30 @@ PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME ?= "Open webOS"
 PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION ?= "3.5.0"
 
 do_install_append() {
-        # CFISH-930: remove "other" perms granted by pmmakefiles (aka palmmake):
-        chmod o-rwx ${D}${bindir}/luna-prefs-service
-        chmod o-rwx ${D}${bindir}/lunaprop
+    # CFISH-930: remove "other" perms granted by pmmakefiles (aka palmmake):
+    chmod o-rwx ${D}${bindir}/luna-prefs-service
+    chmod o-rwx ${D}${bindir}/lunaprop
 
-        install -d ${D}${sysconfdir}/prefs/properties
+    install -d ${D}${sysconfdir}/prefs/properties
 
-        # Let's not require a submission process to add to the whitelist
-        cat > ${D}${sysconfdir}/prefs/public_properties <<EOF
+    # Let's not require a submission process to add to the whitelist
+    cat > ${D}${sysconfdir}/prefs/public_properties <<EOF
 com.palm.properties.nduid
 EOF
-        chmod 644 ${D}${sysconfdir}/prefs/public_properties
+    chmod 644 ${D}${sysconfdir}/prefs/public_properties
 
-        echo -n "${PRODUCT_DEVICE_NAME}"               > ${D}${sysconfdir}/prefs/properties/deviceName
-        echo -n "${PRODUCT_DEVICE_NAME_BRANDED}"       > ${D}${sysconfdir}/prefs/properties/deviceNameBranded
-        echo -n "${PRODUCT_DEVICE_NAME_SHORT}"         > ${D}${sysconfdir}/prefs/properties/deviceNameShort
-        echo -n "${PRODUCT_DEVICE_NAME_SHORT_BRANDED}" > ${D}${sysconfdir}/prefs/properties/deviceNameShortBranded
-        echo -n ${MACHINE} > ${D}${sysconfdir}/prefs/properties/machineName
-        echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_LINE_NAME} > ${D}${sysconfdir}/prefs/properties/productLineName
-        echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_LINE_VERSION} > ${D}${sysconfdir}/prefs/properties/productLineVersion
-        echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_CLASS} > ${D}${sysconfdir}/prefs/properties/productClass
-        echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME} > ${D}${sysconfdir}/prefs/properties/browserOsName
-        if [ ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME} == "webOS" ]
-        then
-                echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION} > ${D}${sysconfdir}/prefs/properties/browserOsVersion
-        fi
+    echo -n "${PRODUCT_DEVICE_NAME}"               > ${D}${sysconfdir}/prefs/properties/deviceName
+    echo -n "${PRODUCT_DEVICE_NAME_BRANDED}"       > ${D}${sysconfdir}/prefs/properties/deviceNameBranded
+    echo -n "${PRODUCT_DEVICE_NAME_SHORT}"         > ${D}${sysconfdir}/prefs/properties/deviceNameShort
+    echo -n "${PRODUCT_DEVICE_NAME_SHORT_BRANDED}" > ${D}${sysconfdir}/prefs/properties/deviceNameShortBranded
+    echo -n ${MACHINE} > ${D}${sysconfdir}/prefs/properties/machineName
+    echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_LINE_NAME} > ${D}${sysconfdir}/prefs/properties/productLineName
+    echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_LINE_VERSION} > ${D}${sysconfdir}/prefs/properties/productLineVersion
+    echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_CLASS} > ${D}${sysconfdir}/prefs/properties/productClass
+    echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME} > ${D}${sysconfdir}/prefs/properties/browserOsName
+    if [ ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME} == "webOS" ]
+    then
+        echo -n ${PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION} > ${D}${sysconfdir}/prefs/properties/browserOsVersion
+    fi
 }
 

@@ -22,8 +22,8 @@ S = "${WORKDIR}/git"
 
 # TODO: Remove once there's localization support
 do_install_append() {
-        install -d ${D}${webos_prefix}/universalsearchmgr/resources/en_us
-        install -v -m 0644 ${S}/desktop-support/UniversalSearchList.json ${D}${webos_prefix}/universalsearchmgr/resources/en_us
+    install -d ${D}${webos_prefix}/universalsearchmgr/resources/en_us
+    install -v -m 0644 ${S}/desktop-support/UniversalSearchList.json ${D}${webos_prefix}/universalsearchmgr/resources/en_us
 }
 
 

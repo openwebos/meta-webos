@@ -34,7 +34,7 @@ FILES_upstart-sysvcompat += " \
 "
 FILES_upstart-sysvcompat-doc += " \
     ${mandir}/*/reboot.* ${mandir}/*/halt.* ${mandir}/*/poweroff.* \
-     ${mandir}/*/shutdown.* ${mandir}/*/telinit.* ${mandir}/*/runlevel.* \
+    ${mandir}/*/shutdown.* ${mandir}/*/telinit.* ${mandir}/*/runlevel.* \
 "
 
 ALTERNATIVE_NAME = "init"

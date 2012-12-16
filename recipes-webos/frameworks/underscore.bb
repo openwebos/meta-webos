@@ -18,8 +18,8 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        install -d ${D}${webos_frameworksdir}/underscore/version/1.0/
-        cp -vrf ${S}/* ${D}${webos_frameworksdir}/underscore/version/1.0/
+    install -d ${D}${webos_frameworksdir}/underscore/version/1.0/
+    cp -vrf ${S}/* ${D}${webos_frameworksdir}/underscore/version/1.0/
 }
 
 FILES_${PN} += "${webos_frameworksdir}"

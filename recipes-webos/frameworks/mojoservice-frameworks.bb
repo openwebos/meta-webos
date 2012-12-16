@@ -18,15 +18,15 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        install -d ${D}${webos_frameworksdir}
+    install -d ${D}${webos_frameworksdir}
 
-        for FRAMEWORK in `ls -d1 ${S}/mojoservice*` ; do
-            FRAMEWORK_DIR=`basename $FRAMEWORK`
-            install -d ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/
-            cp -vrf $FRAMEWORK/* ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/
-            # remove test and jasminetest dirs
-            rm -vrf ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/*test
-        done
+    for FRAMEWORK in `ls -d1 ${S}/mojoservice*` ; do
+        FRAMEWORK_DIR=`basename $FRAMEWORK`
+        install -d ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/
+        cp -vrf $FRAMEWORK/* ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/
+        # remove test and jasminetest dirs
+        rm -vrf ${D}${webos_frameworksdir}/$FRAMEWORK_DIR/version/1.0/*test
+    done
 }
 
 FILES_${PN} += "${webos_frameworksdir}"

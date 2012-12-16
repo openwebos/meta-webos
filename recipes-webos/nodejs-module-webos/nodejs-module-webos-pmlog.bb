@@ -24,8 +24,8 @@ S = "${WORKDIR}/git"
 # XXX Temporarily add symlink to old location until all users of it are changed
 FILES_${PN} += "${webos_prefix}/nodejs"
 do_install_append() {
-	install -d ${D}${webos_prefix}/nodejs
-	ln -svnf ${libdir}/nodejs/pmloglib.node ${D}${webos_prefix}/nodejs/
+    install -d ${D}${webos_prefix}/nodejs
+    ln -svnf ${libdir}/nodejs/pmloglib.node ${D}${webos_prefix}/nodejs/
 }
 
 FILES_${PN} += "${libdir}/nodejs"

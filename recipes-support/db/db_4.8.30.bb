@@ -56,13 +56,13 @@ FILES_SOLIBSDEV = "${libdir}/libdb.so"
 EXTRA_OECONF = "--disable-largefile --disable-cryptography --disable-hash --disable-queue --disable-replication --enable-o_direct --disable-static"
 
 do_configure() {
-	export STRIP="true"
-	oe_runconf
+    export STRIP="true"
+    oe_runconf
 }
 
 do_configure_append() {
-	# skip docs to eliminate warnings about installed but unpackaged files.
-	sed -i '/^library_install:/s/ install_docs//' ${B}/Makefile
+    # skip docs to eliminate warnings about installed but unpackaged files.
+    sed -i '/^library_install:/s/ install_docs//' ${B}/Makefile
 }
 
 INSANE_SKIP_${PN} = "dev-so"

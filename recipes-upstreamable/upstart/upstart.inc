@@ -50,21 +50,21 @@ EXTRA_OEMAKE += "'bindir=${base_bindir}' \
                  'mandir=${mandir}'"
 
 do_install () {
-	oe_runmake 'DESTDIR=${D}' install
-	install -d ${D}${sysconfdir}
-	install -d ${D}${sysconfdir}/default
-	install -d ${D}${sysconfdir}/init.d
-	install -d ${D}${sysconfdir}/event.d
+    oe_runmake 'DESTDIR=${D}' install
+    install -d ${D}${sysconfdir}
+    install -d ${D}${sysconfdir}/default
+    install -d ${D}${sysconfdir}/init.d
+    install -d ${D}${sysconfdir}/event.d
 
-	install -m 0644	${WORKDIR}/init/rcS-default	${D}${sysconfdir}/default/rcS
-	install -m 0755 ${WORKDIR}/init/rc		${D}${sysconfdir}/init.d
-	install -m 0755 ${WORKDIR}/init/rcS		${D}${sysconfdir}/init.d
-	install -m 0644 ${WORKDIR}/rc*			${D}${sysconfdir}/event.d
-	install -m 0644 ${WORKDIR}/control-alt-delete	${D}${sysconfdir}/event.d
-	install -m 0644 ${WORKDIR}/sulogin		${D}${sysconfdir}/event.d
+    install -m 0644 ${WORKDIR}/init/rcS-default   ${D}${sysconfdir}/default/rcS
+    install -m 0755 ${WORKDIR}/init/rc            ${D}${sysconfdir}/init.d
+    install -m 0755 ${WORKDIR}/init/rcS           ${D}${sysconfdir}/init.d
+    install -m 0644 ${WORKDIR}/rc*                ${D}${sysconfdir}/event.d
+    install -m 0644 ${WORKDIR}/control-alt-delete ${D}${sysconfdir}/event.d
+    install -m 0644 ${WORKDIR}/sulogin            ${D}${sysconfdir}/event.d
 
-	if [ ! -z "${SERIAL_CONSOLE}" ]; then
-	     cat <<EOF >> ${D}${sysconfdir}/event.d/tty-serial
+    if [ ! -z "${SERIAL_CONSOLE}" ]; then
+        cat <<EOF >> ${D}${sysconfdir}/event.d/tty-serial
 # tty-serial - getty
 #
 # This service maintains a getty on tty-serial from the point the system is
@@ -82,11 +82,11 @@ stop on runlevel 6
 respawn
 exec ${base_sbindir}/getty ${SERIAL_CONSOLE}
 EOF
-	fi
-	if [ "${USE_VT}" = "1" ]; then
-	    for n in ${SYSVINIT_ENABLED_GETTYS}
-	    do
-	     cat <<EOF >> ${D}${sysconfdir}/event.d/tty$n
+    fi
+    if [ "${USE_VT}" = "1" ]; then
+        for n in ${SYSVINIT_ENABLED_GETTYS}
+        do
+            cat <<EOF >> ${D}${sysconfdir}/event.d/tty$n
 # tty$n - getty
 #
 # This service maintains a getty on tty$n from the point the system is
@@ -104,15 +104,15 @@ stop on runlevel 6
 respawn
 exec ${base_sbindir}/getty 38400 tty$n
 EOF
-	    done
-	fi
+        done
+    fi
 
-	mv ${D}${base_sbindir}/init ${D}${base_sbindir}/init.${PN}
-	mv ${D}${base_sbindir}/halt ${D}${base_sbindir}/halt.${PN}
-	mv ${D}${base_sbindir}/reboot ${D}${base_sbindir}/reboot.${PN}
-	mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
-	mv ${D}${base_sbindir}/poweroff ${D}${base_sbindir}/poweroff.${PN}
-	mv ${D}${base_sbindir}/telinit ${D}${base_sbindir}/telinit.${PN}
+    mv ${D}${base_sbindir}/init ${D}${base_sbindir}/init.${PN}
+    mv ${D}${base_sbindir}/halt ${D}${base_sbindir}/halt.${PN}
+    mv ${D}${base_sbindir}/reboot ${D}${base_sbindir}/reboot.${PN}
+    mv ${D}${base_sbindir}/shutdown ${D}${base_sbindir}/shutdown.${PN}
+    mv ${D}${base_sbindir}/poweroff ${D}${base_sbindir}/poweroff.${PN}
+    mv ${D}${base_sbindir}/telinit ${D}${base_sbindir}/telinit.${PN}
 }
 
 pkg_postinst_${PN}-sysvcompat () {

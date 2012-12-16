@@ -65,18 +65,3 @@ ROOTFS_POSTPROCESS_COMMAND += "rootfs_update_timestamp ; "
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "debug-tweaks", "", "zap_root_password ; ",d)}'
 # Allow openssh accept empty password login if both debug-tweaks and ssh-server-openssh are enabled
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "debug-tweaks ssh-server-openssh", "openssh_allow_empty_password; ", "",d)}'
-
-# XXX Workaround for bug in openembedded-core. Remove once we re-pin to a commit of openembedded-core
-# that includes http://cgit.openembedded.org/openembedded-core/commit/?id=28715eff6dff3415b1d7b0be8cbb465c417e307f
-build_boot_dd_prepend () {
-    # Create a symlink from where boot_dd_append() expects to find the kernel to where it actually is
-    mkdir -p ${STAGING_DIR_HOST}/kernel
-    ln -snf ${STAGING_KERNEL_DIR}/bzImage ${STAGING_DIR_HOST}/kernel
-}
-
-build_boot_dd_append () {
-    # Remove the symlink and the directory so there's no trace of our workaround
-    rm -f ${STAGING_DIR_HOST}/kernel/bzImage
-    rmdir --ignore-fail-on-non-empty ${STAGING_DIR_HOST}/kernel
-}
-

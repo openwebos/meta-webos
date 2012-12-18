@@ -4,7 +4,7 @@ DESCRIPTION = "Reference Open webOS image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-# IMAGE_FEATURES control content of the webos reference images
+# IMAGE_FEATURES control content of the webOS reference images
 # 
 # By default we install task-webos-boot and extended packages - this gives a full
 # working Open webOS image.

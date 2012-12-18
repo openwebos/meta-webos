@@ -1,5 +1,4 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
-
 # 
 # webos_enhanced_submissions
 #

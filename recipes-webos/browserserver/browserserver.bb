@@ -7,9 +7,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcertificatemgr webkit-supplemental luna-sysmgr-ipc-messages libpbnjson luna-service2 luna-webkit-api"
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
-RDEPENDS_${PN} = "ptmalloc3"
+RDEPENDS_${PN} = "ptmalloc3 isis-fonts"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_public_repo
 inherit webos_submissions

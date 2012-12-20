@@ -5,6 +5,8 @@ DESCRIPTION = "Event driven system init"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
 
+INC_PR = "r5"
+
 inherit autotools pkgconfig update-alternatives
 inherit gettext
 

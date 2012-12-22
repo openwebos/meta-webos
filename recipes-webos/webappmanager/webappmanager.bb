@@ -5,14 +5,14 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-common luna-sysmgr-ipc luna-sysmgr-ipc-messages qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype"
+DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-common luna-sysmgr-ipc luna-sysmgr-ipc-messages qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype serviceinstaller"
 
 # webappmgr's upstart conf expects to be able to LD_PRELOAD ptmalloc3
 RDEPENDS_${PN} = "ptmalloc3"
 # webappmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
 RDEPENDS_${PN} += "util-linux"
 
-PR = "r2"
+PR = "r3"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

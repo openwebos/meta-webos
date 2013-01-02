@@ -7,9 +7,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcertificatemgr webkit-supplemental luna-sysmgr-ipc-messages libpbnjson luna-service2 luna-webkit-api"
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
-RDEPENDS_${PN} = "ptmalloc3"
+RDEPENDS_${PN} = "ptmalloc3 isis-fonts"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_public_repo
 inherit webos_submissions
@@ -38,52 +38,52 @@ EXTRA_OEMAKE += "STAGING_LIBDIR=${STAGING_LIBDIR}"
 EXTRA_OEMAKE += "INCLUDE_DIR=${STAGING_INCDIR}"
 
 do_install() {
-        # This target only installs BrowserServer
-        oe_runmake INSTALL_DIR=${D} install
-        # XXX The install target in the Makefile installs BrowserServer with the wrong permissions [CFISH-930]
-        chmod 750 ${D}${bindir}/BrowserServer
+    # This target only installs BrowserServer
+    oe_runmake INSTALL_DIR=${D} install
+    # XXX The install target in the Makefile installs BrowserServer with the wrong permissions [CFISH-930]
+    chmod 750 ${D}${bindir}/BrowserServer
 
-        # Install the headers and the static library (need to override the settings for
-        # STAGING_INCDIR and STAGING_LIBDIR).
-        # XXX Can't use "make stage" because Makefile doesn't install the BrowserServer
-        # headers into a subdirectory.
-        # oe_runmake STAGING_INCDIR=${D}${includedir} STAGING_LIBDIR=${D}${libdir} stage
+    # Install the headers and the static library (need to override the settings for
+    # STAGING_INCDIR and STAGING_LIBDIR).
+    # XXX Can't use "make stage" because Makefile doesn't install the BrowserServer
+    # headers into a subdirectory.
+    # oe_runmake STAGING_INCDIR=${D}${includedir} STAGING_LIBDIR=${D}${libdir} stage
 
-        install -d ${D}${includedir}/Yap
-        install -d ${D}${includedir}/BrowserServer
+    install -d ${D}${includedir}/Yap
+    install -d ${D}${includedir}/BrowserServer
 
-        # stage the headers
-        install -v -m 444 Yap/YapDefs.h   ${D}${includedir}/Yap
-        install -v -m 444 Yap/YapClient.h ${D}${includedir}/Yap
-        install -v -m 444 Yap/YapPacket.h ${D}${includedir}/Yap
-        install -v -m 444 Yap/YapProxy.h  ${D}${includedir}/Yap
-        install -v -m 444 Yap/YapServer.h ${D}${includedir}/Yap
-        install -v -m 444 Yap/ProcessMutex.h ${D}${includedir}/Yap
-        install -v -m 444 Yap/OffscreenBuffer.h ${D}${includedir}/Yap
-        install -v -m 444 Yap/BufferLock.h ${D}${includedir}/Yap
-        install -v -m 444 Src/BrowserOffscreenInfo.h ${D}${includedir}/BrowserServer/BrowserOffscreenInfo.h
-        install -v -m 444 Src/BrowserOffscreenCalculations.h ${D}${includedir}/BrowserServer/BrowserOffscreenCalculations.h
-        install -v -m 444 Src/BrowserRect.h ${D}${includedir}/BrowserServer/BrowserRect.h
-        install -v -m 444 Src/IpcBuffer.h ${D}${includedir}/BrowserServer/IpcBuffer.h
+    # stage the headers
+    install -v -m 444 Yap/YapDefs.h   ${D}${includedir}/Yap
+    install -v -m 444 Yap/YapClient.h ${D}${includedir}/Yap
+    install -v -m 444 Yap/YapPacket.h ${D}${includedir}/Yap
+    install -v -m 444 Yap/YapProxy.h  ${D}${includedir}/Yap
+    install -v -m 444 Yap/YapServer.h ${D}${includedir}/Yap
+    install -v -m 444 Yap/ProcessMutex.h ${D}${includedir}/Yap
+    install -v -m 444 Yap/OffscreenBuffer.h ${D}${includedir}/Yap
+    install -v -m 444 Yap/BufferLock.h ${D}${includedir}/Yap
+    install -v -m 444 Src/BrowserOffscreenInfo.h ${D}${includedir}/BrowserServer/BrowserOffscreenInfo.h
+    install -v -m 444 Src/BrowserOffscreenCalculations.h ${D}${includedir}/BrowserServer/BrowserOffscreenCalculations.h
+    install -v -m 444 Src/BrowserRect.h ${D}${includedir}/BrowserServer/BrowserRect.h
+    install -v -m 444 Src/IpcBuffer.h ${D}${includedir}/BrowserServer/IpcBuffer.h
 
-        # stage the static library
-        install -d ${D}${libdir}
-        install -v -m 444 release-${TARGET_ARCH}/libYap.a ${D}${libdir}/libYap.a
+    # stage the static library
+    install -d ${D}${libdir}
+    install -v -m 444 release-${TARGET_ARCH}/libYap.a ${D}${libdir}/libYap.a
 
-        install -d ${D}${webos_upstartconfdir}
-        install -v -m 555 -p ${S}/browserserver ${D}${webos_upstartconfdir}/browserserver
+    install -d ${D}${webos_upstartconfdir}
+    install -v -m 555 -p ${S}/browserserver ${D}${webos_upstartconfdir}/browserserver
 
-        install -d ${D}${webos_sysconfdir}
+    install -d ${D}${webos_sysconfdir}
 
-        if [ -f BrowserServer.conf ]
-        then
-                install -v -m 755 -p ${S}/BrowserServer.conf ${D}${webos_sysconfdir}/BrowserServer.conf
-        fi
+    if [ -f BrowserServer.conf ]
+    then
+        install -v -m 755 -p ${S}/BrowserServer.conf ${D}${webos_sysconfdir}/BrowserServer.conf
+    fi
 
-        install -d ${D}${webos_sysconfdir}/browser
-        install -v -m 644 ${S}/schema/*.schema ${D}${webos_sysconfdir}/browser
+    install -d ${D}${webos_sysconfdir}/browser
+    install -v -m 644 ${S}/schema/*.schema ${D}${webos_sysconfdir}/browser
 
-        #static backup registration
-        install -d ${D}${webos_sysconfdir}/backup
-        install -v -m 644 backup/com.palm.browserServer ${D}${webos_sysconfdir}/backup/com.palm.browserServer
+    #static backup registration
+    install -d ${D}${webos_sysconfdir}/backup
+    install -v -m 644 backup/com.palm.browserServer ${D}${webos_sysconfdir}/backup/com.palm.browserServer
 }

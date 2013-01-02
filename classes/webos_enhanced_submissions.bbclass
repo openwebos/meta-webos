@@ -33,9 +33,10 @@
 # Explicitly inheriting from this bbclass also implies that the component uses
 # the Open webOS convention for submission tags, i.e., they are of the form:
 #    submissions/<integer>
-#       or
+# or, when the component has been branched:
 #    submissions/<integer>.<integer>
-# If they are different, inherit from webos_submissions instead.
+# where <integer> does not contain leading zeros. If they are different, inherit
+# from webos_submissions instead.
 #
 
 

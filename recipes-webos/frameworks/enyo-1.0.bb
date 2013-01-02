@@ -18,11 +18,11 @@ SRC_URI = "${ENYOJS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        install -d ${D}${webos_frameworksdir}/enyo/0.10/framework
-        cp -vrf ${S}/framework/* ${D}${webos_frameworksdir}/enyo/0.10/framework
+    install -d ${D}${webos_frameworksdir}/enyo/0.10/framework
+    cp -vrf ${S}/framework/* ${D}${webos_frameworksdir}/enyo/0.10/framework
 
-        # Create symlink for enyo/1.0 (points to enyo/0.10)
-        ln -vs 0.10 ${D}${webos_frameworksdir}/enyo/1.0
+    # Create symlink for enyo/1.0 (points to enyo/0.10)
+    ln -vs 0.10 ${D}${webos_frameworksdir}/enyo/1.0
 }
 
 FILES_${PN} += "${webos_frameworksdir}"

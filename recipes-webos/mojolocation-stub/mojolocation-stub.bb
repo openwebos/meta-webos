@@ -20,22 +20,22 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        install -d ${D}${webos_servicesdir}
-        install -d ${D}${webos_sysbus_pubservicesdir}
-        install -d ${D}${webos_sysbus_prvservicesdir}
-        install -d ${D}${webos_sysbus_pubrolesdir}
-        install -d ${D}${webos_sysbus_prvrolesdir}
+    install -d ${D}${webos_servicesdir}
+    install -d ${D}${webos_sysbus_pubservicesdir}
+    install -d ${D}${webos_sysbus_prvservicesdir}
+    install -d ${D}${webos_sysbus_pubrolesdir}
+    install -d ${D}${webos_sysbus_prvrolesdir}
 
-        # NOTE: Name of service directory must match contents (and name) of .service file
-        SERVICE_DIR="com.palm.location"
-        install -d ${D}${webos_servicesdir}/$SERVICE_DIR/
-        cp -vf ${S}/*.js* ${D}${webos_servicesdir}/$SERVICE_DIR/
+    # NOTE: Name of service directory must match contents (and name) of .service file
+    SERVICE_DIR="com.palm.location"
+    install -d ${D}${webos_servicesdir}/$SERVICE_DIR/
+    cp -vf ${S}/*.js* ${D}${webos_servicesdir}/$SERVICE_DIR/
 
-        # Copy (public and private) service and role files
-        cp -vf ${S}/files/sysbus/*.service ${D}${webos_sysbus_pubservicesdir}
-        cp -vf ${S}/files/sysbus/*.service ${D}${webos_sysbus_prvservicesdir}
-        cp -vf ${S}/files/sysbus/*.json    ${D}${webos_sysbus_pubrolesdir}
-        cp -vf ${S}/files/sysbus/*.json    ${D}${webos_sysbus_prvrolesdir}
+    # Copy (public and private) service and role files
+    cp -vf ${S}/files/sysbus/*.service ${D}${webos_sysbus_pubservicesdir}
+    cp -vf ${S}/files/sysbus/*.service ${D}${webos_sysbus_prvservicesdir}
+    cp -vf ${S}/files/sysbus/*.json    ${D}${webos_sysbus_pubrolesdir}
+    cp -vf ${S}/files/sysbus/*.json    ${D}${webos_sysbus_prvrolesdir}
 }
 
 FILES_${PN} += "${webos_servicesdir}"

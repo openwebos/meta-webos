@@ -17,9 +17,9 @@ SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
 
 do_install() {
-        #COPY ENTIRE APP
-        install -d ${D}${webos_sysmgr_datadir}/system/luna-applauncher
-        cp -vrf ${S}/* ${D}${webos_sysmgr_datadir}/system/luna-applauncher
+    #COPY ENTIRE APP
+    install -d ${D}${webos_sysmgr_datadir}/system/luna-applauncher
+    cp -vrf ${S}/* ${D}${webos_sysmgr_datadir}/system/luna-applauncher
 }
 
 FILES_${PN} += "${webos_sysmgr_datadir}/system"

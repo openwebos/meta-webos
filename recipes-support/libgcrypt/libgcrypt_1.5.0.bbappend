@@ -5,6 +5,6 @@ PR_append = "webos2"
 EXTRA_OECONF =+ " --disable-static"
 
 do_configure_append() {
-        sed -i '/^SUBDIRS/s/ doc tests//' Makefile
+    sed -i '/^SUBDIRS/s/ doc tests//' Makefile
 }
 

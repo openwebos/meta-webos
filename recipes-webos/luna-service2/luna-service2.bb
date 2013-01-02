@@ -27,9 +27,9 @@ S = "${WORKDIR}/git"
 # This fix-up will be removed shortly. luna-service2 headers must be included
 # using '#include <luna-service2/*.h>'
 do_install_append() {
-        # XXX Temporarily, create links from the old locations until all users of
-        # luna-service2 convert to using pkg-config
-        ln -svnf luna-service2/lunaservice.h ${D}${includedir}/lunaservice.h
-        ln -svnf luna-service2/lunaservice-errors.h ${D}${includedir}/lunaservice-errors.h
-        ln -svnf lib${PN}.so ${D}${libdir}/liblunaservice.so
+    # XXX Temporarily, create links from the old locations until all users of
+    # luna-service2 convert to using pkg-config
+    ln -svnf luna-service2/lunaservice.h ${D}${includedir}/lunaservice.h
+    ln -svnf luna-service2/lunaservice-errors.h ${D}${includedir}/lunaservice-errors.h
+    ln -svnf lib${PN}.so ${D}${libdir}/liblunaservice.so
 }

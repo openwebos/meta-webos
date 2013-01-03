@@ -18,7 +18,9 @@ inherit webos_system_bus
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/BrowserServer;tag=${WEBOS_GIT_TAG};protocol=git \
+  file://0001-BrowserPage-work-around-for-int-to-pointer-cast-on-6.patch \
+"
 S = "${WORKDIR}/git"
 
 PARALLEL_MAKE = ""

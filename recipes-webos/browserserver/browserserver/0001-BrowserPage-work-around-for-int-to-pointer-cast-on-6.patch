@@ -1,0 +1,32 @@
+From ba0b33bc3a16dbdfd312d5c95bb5834cf3e070f3 Mon Sep 17 00:00:00 2001
+From: Martin Jansa <Martin.Jansa@gmail.com>
+Date: Sat, 27 Oct 2012 19:21:10 +0200
+Subject: [PATCH] BrowserPage: work around for int-to-pointer-cast on 64bit
+ target
+
+* Src/BrowserPage.cpp:2860:64: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  cc1plus: all warnings being treated as errors
+
+Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
+---
+ Src/BrowserPage.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Src/BrowserPage.cpp b/Src/BrowserPage.cpp
+index c72a78b..ceb7c7f 100644
+--- a/Src/BrowserPage.cpp
++++ b/Src/BrowserPage.cpp
+@@ -2856,8 +2856,9 @@ bool BrowserPage::smartKeySearch(int requestId, const char* query)
+     if (!jValueToJsonString(argsStr, args)) {
+         BERR("Error generating JSON");
+     } else {
++        void *user_data = (void *) (unsigned long long) requestId;
+         bool succeeded = LSCall(m_lsHandle, "palm://com.palm.smartKey/search", argsStr.c_str(),
+-                                smartKeySearchCallback, (void*)requestId, NULL, &error);
++                                smartKeySearchCallback, user_data, NULL, &error);
+         if (succeeded) {
+             return true;
+         } else {
+-- 
+1.7.12.4
+

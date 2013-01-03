@@ -9,11 +9,16 @@ inherit webos_public_repo
 inherit webos_submissions
 inherit webos_arch_indep
 
-PR = "r2"
+PR = "r3"
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
+
+do_compile() {
+    # otherwise make is executed and headers staged in ${HOME}/ISIS_OUT/
+    true
+}
 
 do_install() {
     # new location

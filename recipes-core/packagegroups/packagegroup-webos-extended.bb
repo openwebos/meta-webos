@@ -4,17 +4,28 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r5"
+PR = "r7"
 
-PACKAGES = "\
-    ${PN} \
-    ${PN}-dbg \
-    ${PN}-dev \
-"
+inherit packagegroup
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-ALLOW_EMPTY = "1"
+RPROVIDES_${PN} = "task-webos-extended"
+RREPLACES_${PN} = "task-webos-extended"
+RCONFLICTS_${PN} = "task-webos-extended"
+
+# task-webos-core was removed in 
+# https://github.com/openwebos/meta-webos/commit/70b787bcb78db34c6a7d05b19786cb2e48bbece2
+# this makes sure it's removed (replaced) by packagegroup-webos-extended on target device
+
+RPROVIDES_${PN} += "task-webos-core"
+RREPLACES_${PN} += "task-webos-core"
+RCONFLICTS_${PN} += "task-webos-core"
+
+# and once again for packagegroup-webos-core for those who have installed images with renamed task recipes
+RPROVIDES_${PN} += "packagegroup-webos-core"
+RREPLACES_${PN} += "packagegroup-webos-core"
+RCONFLICTS_${PN} += "packagegroup-webos-core"
 
 RDEPENDS_${PN} = " \
     activitymanager \
@@ -76,7 +87,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     bzip2 \
     curl \
     dhcp-client \
-    dropbear \
     e2fsprogs \
     gzip \
     hunspell \

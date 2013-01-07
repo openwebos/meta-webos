@@ -16,11 +16,10 @@ inherit webos_library
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/qt;tag=${WEBOS_GIT_TAG};protocol=git \
-           file://0001-configure-revert-palm-change-to-force-i386-HOST-on-x.patch \
            file://0002-webkit2-set-OUTPUT_DIR-value-if-empty.patch \
 "
 S = "${WORKDIR}/git"
-INC_PR = "r19"
+INC_PR = "r20"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"
 

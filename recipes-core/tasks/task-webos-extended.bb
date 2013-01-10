@@ -4,7 +4,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r6"
+PR = "r7"
 
 PACKAGES = "\
     ${PN} \
@@ -25,6 +25,7 @@ RDEPENDS_${PN} = " \
     core-apps \
     enyo-1.0 \
     filecache \
+    keyboard-efigs \
     librdx-stub \
     luna-applauncher \
     luna-init \
@@ -42,6 +43,7 @@ RDEPENDS_${PN} = " \
     pmlogdaemon \
     sleepd \
     storaged \
+    webappmanager \
     webos-connman-adapter \
     webos-initscripts \
     webos-shutdownscripts \

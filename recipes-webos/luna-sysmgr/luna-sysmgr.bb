@@ -5,7 +5,7 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api webkit-webos luna-prefs libpbnjson npapi-headers freetype"
+DEPENDS = "cjson luna-service2 sqlite3 luna-sysmgr-ipc luna-sysmgr-ipc-messages pmloglib qt4-webos librolegen nyx-lib openssl luna-webkit-api luna-prefs libpbnjson freetype"
 DEPENDS += "serviceinstaller"
 #DEPENDS += "localization" #TODO
 
@@ -14,12 +14,8 @@ RDEPENDS_${PN} = "ptmalloc3"
 # luna-sysmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
-# luna-sysmgr seg faults at startup if keyboard-efigs is missing
-RDEPENDS_${PN} += "keyboard-efigs"
-# luna-sysmgr will run without webappmanager, but it's not very useful
-RDEPENDS_${PN} += "webappmanager"
 
-PR = "r9"
+PR = "r10"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

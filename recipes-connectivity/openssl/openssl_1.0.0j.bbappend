@@ -1,4 +1,9 @@
-PRINC := "${@int(PRINC) + 1}"
+PRINC := "${@int(PRINC) + 2}"
+
+inherit update-alternatives
+ALTERNATIVE_${PN} = "openssl-cnf"
+ALTERNATIVE_LINK_NAME[openssl-cnf] = "${libdir}/ssl/openssl.cnf"
+ALTERNATIVE_PRIORITY[openssl-cnf] ?= "1"
 
 # Perl is needed for the c_rehash script
 RDEPENDS_${PN} += "perl"

@@ -79,6 +79,7 @@ def webos_enhsub_get_submission(pn, d):
 
 
 PV = "${@webos_enhsub_get_pv('${PN}', d)}"
+PV[vardeps] += "PREFERRED_VERSION_${PN}"
 
 # These two are intended for use in the recipes that inherit this file:
 WEBOS_COMPONENT_VERSION = "${@webos_enhsub_get_component_version('${PN}', d)}"

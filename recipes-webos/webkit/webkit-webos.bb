@@ -5,9 +5,9 @@ SECTION = "libs"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
 
-DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3"
+DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3 gperf-native"
 
-PR = "r9"
+PR = "r10"
 
 inherit webos_public_repo
 inherit webos_qmake

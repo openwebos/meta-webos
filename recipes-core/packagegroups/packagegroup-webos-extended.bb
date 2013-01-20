@@ -54,7 +54,6 @@ RDEPENDS_${PN} = " \
     pmlogctl \
     pmlogdaemon \
     sleepd \
-    storaged \
     webappmanager \
     webos-connman-adapter \
     webos-initscripts \

@@ -5,9 +5,9 @@ SECTION = "webos/libs"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 cjson nyx-lib libpbnjson luna-webkit-api luna-sysmgr-ipc luna-sysmgr-ipc-messages sqlite3 pmloglib librolegen"
+DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 cjson nyx-lib libpbnjson luna-webkit-api luna-sysmgr-ipc luna-sysmgr-ipc-messages sqlite3 pmloglib librolegen serviceinstaller"
 
-PR = "r0"
+PR = "r1"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

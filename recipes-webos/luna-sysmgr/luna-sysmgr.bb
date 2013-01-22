@@ -1,4 +1,4 @@
-# (c) Copyright 2010 - 2012  Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2010 - 2013  Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Open webOS System Manager"
 SECTION = "webos/base"
@@ -15,7 +15,7 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r11"
+PR = "r12"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
@@ -46,7 +46,7 @@ do_configure() {
 #        mv -f *.xliff ${STAGING_DIR}/xliffs/new
 #    fi
 
-#    tar --exclude=.svn -cf - localization | tar xf - -C ${D}${webos_sysmgrdir}
+#    tar --exclude-vcs --exclude-backups -cf - localization | tar xf - -C ${D}${webos_sysmgrdir}
 #    #ln -s en_gb ${D}${webos_sysmgrdir}/localization/en_ie
 #    if [ -d ${D}${webos_sysmgrdir}/localization/es_mx ]
 #    then
@@ -81,8 +81,8 @@ do_install() {
     # install images & low-memory files
 #    bbnote "install images and low-memory files"
     install -d ${D}${webos_sysmgrdir}
-    cd ${S} && tar --exclude=.svn -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
-    cd ${S} && tar --exclude=.svn -cf - uiComponents | tar xf - -C ${D}${webos_sysmgrdir}
+    cd ${S} && tar --exclude-vcs --exclude-backups -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
+    cd ${S} && tar --exclude-vcs --exclude-backups -cf - uiComponents | tar xf - -C ${D}${webos_sysmgrdir}
     install -d ${D}${webos_sysmgrdir}/low-memory
     install -v -m 644 low-memory/* ${D}${webos_sysmgrdir}/low-memory
 
@@ -115,7 +115,7 @@ do_install() {
 
         
         install -d ${D}${webos_applicationsdir}
-        cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}${webos_applicationsdir}
+        cd ${S}/sysapps && tar --exclude-vcs --exclude-backups -cf - * | tar xf - -C ${D}${webos_applicationsdir}
         cd ${S}
         
     fi
@@ -131,7 +131,7 @@ do_install() {
     if [ -d sysapps ]
     then
         install -d ${D}${webos_applicationsdir}
-        cd ${S}/sysapps && tar --exclude=.svn -cf - * | tar xf - -C ${D}${webos_applicationsdir}
+        cd ${S}/sysapps && tar --exclude-vcs --exclude-backups -cf - * | tar xf - -C ${D}${webos_applicationsdir}
         cd ${S}
     fi
 
@@ -195,7 +195,7 @@ do_install() {
         # copy over platform specific images
         if [ -d platform/${MACHINE}/images ]
         then
-            cd ${S}/platform/${MACHINE} && tar --exclude=.svn -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
+            cd ${S}/platform/${MACHINE} && tar --exclude-vcs --exclude-backups -cf - images | tar xf - -C ${D}${webos_sysmgrdir}
             cd ${S}
         fi
     fi

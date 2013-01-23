@@ -1,13 +1,13 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013  Hewlett-Packard Development Company, L.P. 
 
 SUMMARY = "webOS portability layer - device-specific modules"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "nyx-lib glib-2.0 luna-service2"
+DEPENDS = "nyx-lib glib-2.0 luna-service2 openssl"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo

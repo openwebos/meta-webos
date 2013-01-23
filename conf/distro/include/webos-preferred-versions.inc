@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013  Hewlett-Packard Development Company, L.P. 
 
 PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
@@ -63,8 +63,8 @@ PREFERRED_VERSION_nodejs-module-webos-dynaload ?= "2.0.0-11"
 PREFERRED_VERSION_nodejs-module-webos-pmlog ?= "2.0.0-10"
 PREFERRED_VERSION_nodejs-module-webos-sysbus ?= "2.0.0-25"
 PREFERRED_VERSION_npapi-headers ?= "3.0.0-0.4"
-PREFERRED_VERSION_nyx-lib ?= "2.0.0-60"
-PREFERRED_VERSION_nyx-modules ?= "2.0.0-73"
+PREFERRED_VERSION_nyx-lib ?= "4.0.0~rc1-63"
+PREFERRED_VERSION_nyx-modules ?= "4.0.0-78"
 PREFERRED_VERSION_pmcertificatemgr ?= "2.0.0-27"
 PREFERRED_VERSION_pmklogd ?= "2.0.0-10"
 PREFERRED_VERSION_pmlogconf ?= "2.0.0-16"

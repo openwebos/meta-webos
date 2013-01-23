@@ -2,6 +2,7 @@
 
 PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
+PREFERRED_VERSION_vboxguestdrivers ?= "4.2.6"
 
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "164"

@@ -173,7 +173,7 @@ function checkVmState {
 
 # Make sure we're in a build-webos style directory
 function checkInBuildWebos {
-    if [ -d meta-webos -a -d meta-openembedded -a -x mcf -a -d bitbake ]
+    if [ -d meta-webos -a -e Makefile.in -a -x mcf -a -d bitbake ]
     then
         # Highly probable we're in the right place. Use a null-if
         # to avoid negating all those tests above

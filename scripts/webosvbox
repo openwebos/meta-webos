@@ -20,7 +20,7 @@ DESCRIPTION:
     correctly. As a side benefit, it avoids everyone having to learn the
     somewhat arcane CLI for VBoxManage.
 
-    It allows VM's to be created, deleted, updated, launched, and stopped.
+    It allows VM's to be created, deleted, updated, started, and stopped.
 
 OPTIONS:
     -c count        Assign <count> CPU's to the VM.
@@ -70,14 +70,14 @@ COMMANDS:
 
 EXAMPLES:
 
-    Perform a build, create a VM, attach the most recent output and then launch it:
+    Perform a build, create a VM, attach the most recent output and then start it:
 
         $ make
-        $ ./webosvbox create launch
+        $ ./webosvbox create start
 
-    Attach the latest image to an existing machine, launch it, then ssh in
+    Attach the latest image to an existing machine, start it, then ssh in
 
-        $ ./webosvbox attach launch ssh
+        $ ./webosvbox attach start ssh
 
     Create a virtual machine, with a different name and ssh port
 
@@ -309,7 +309,7 @@ function deletevm {
 
 # Launch an existing VM
 
-function launchvm {
+function startvm {
     $VBM startvm $VMNAME
 }
 
@@ -381,7 +381,7 @@ else
                     sshIntoVm ;;
 
             start)  vmMustExist; vmMustNotBeRunning;
-                    launchvm ;;
+                    startvm ;;
 
             stop)   vmMustExist; vmMustBeRunning;
                     stopvm ;;

@@ -5,11 +5,13 @@
 # TODO: Maybe change this to use "_remove" when it's introduced in bitbake
 
 # Split some features to separate variables
+# Remove argp (not used in OE anymore) and x11 (not needed for Open webOS)
 WEBOS_DISTRO_FEATURES_DEFAULT = "\
-  alsa argp ext2 irda largefile xattr \
+  alsa ext2 irda largefile xattr \
 "
 WEBOS_DISTRO_FEATURES_OPENGL = "opengl"
-WEBOS_DISTRO_FEATURES_WINDOW_SYSTEM = "x11"
+# Remove x11
+WEBOS_DISTRO_FEATURES_WINDOW_SYSTEM = ""
 WEBOS_DISTRO_FEATURES_BUSES = "pci pcmcia"
 WEBOS_DISTRO_FEATURES_USB = "usbhost usbgadget"
 WEBOS_DISTRO_FEATURES_CONNECTIVITY = "bluetooth 3g wifi"

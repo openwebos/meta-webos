@@ -1,12 +1,12 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
 require qt4-webos.inc
 
 # XXX We don't depend on qmake-webos-native because we continue to build qmake-palm during
 # do_configure() -- see commentary in qmake-webos-native.bb
-DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib"
+DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib icu"
 
-PR = "${INC_PR}.2"
+PR = "${INC_PR}.3"
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override

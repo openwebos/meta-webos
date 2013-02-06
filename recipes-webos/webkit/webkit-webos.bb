@@ -16,7 +16,8 @@ inherit webos_library
 inherit webos_machine_dep
 
 # Webkit source is identified by WEBOS_SUBMISSION extracted from PREFERRED_VERSION_${PN}.
-SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip"
+SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip \
+  file://0001-Build-fix-with-newer-bison-2.6.patch"
 
 # XXX Expediently patch Tools/Scripts/webkitdirs.pm to remove the
 # extraneous empty "-W1,-soname," that qmake adds to link command lines.

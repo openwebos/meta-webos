@@ -1,6 +1,6 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
-PR_append = "webos1"
+PR_append = "webos2"
 
-SRC_URI += "file://removedoc-webos.patch;patch=1"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${P}:"
+SRC_URI += "file://removedoc-webos.patch"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"

@@ -11,7 +11,7 @@ PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_libnih-native ?= "1.0.3"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
 # Stick to latest udev version provided by oe-core
-PREFERRED_VERSION_udev ?= "164"
+PREFERRED_VERSION_udev ?= "182"
 PREFERRED_VERSION_upstart ?= "0.3.11"
 # valgrind v3.7.0 is not fully supporting arm
 PREFERRED_VERSION_valgrind ?= "3.8.1"

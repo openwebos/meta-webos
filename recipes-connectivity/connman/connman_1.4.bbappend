@@ -1,11 +1,5 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
-PR_append = "webos1"
+PR_append = "webos2"
 
-SRC_URI += "file://connman"
-
-# Replace connman init.d script
-
-do_install_append () {
-        install -m 0755 ${WORKDIR}/connman ${D}${sysconfdir}/init.d/connman
-}
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"

@@ -1,12 +1,12 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
 DESCRIPTION = "Reference Open webOS image"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # IMAGE_FEATURES control content of the webOS reference images
-# 
-# By default we install packagegroup-webos-boot and -extended packages - this gives 
+#
+# By default we install packagegroup-webos-boot and -extended packages - this gives
 # full working Open webOS image.
 #
 # Available IMAGE_FEATURES:
@@ -21,6 +21,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # - ssh-server-dropbear - SSH server (dropbear)
 # - ssh-server-openssh  - SSH server (openssh)
 # - debug-tweaks        - makes an image suitable for development
+# - package-management  - installs package management tools and preserves the package manager database
 #
 
 PACKAGE_GROUP_webos-boot = "packagegroup-webos-boot"
@@ -43,7 +44,7 @@ IMAGE_FEATURES_REPLACES_ssh-server-openssh = "ssh-server-dropbear"
 # IMAGE_FEATURES_CONFLICTS_foo = 'bar1 bar2'
 # An error exception would be raised if both image features foo and bar1(or bar2) are included
 
-WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp ssh-server-dropbear"
+WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp ssh-server-dropbear package-management"
 
 WEBOS_IMAGE_BASE_INSTALL = '\
     packagegroup-webos-boot \

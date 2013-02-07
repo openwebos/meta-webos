@@ -1,10 +1,10 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
 DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r11"
+PR = "r12"
 
 inherit packagegroup
 
@@ -98,7 +98,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     makedevs \
     ncurses \
     openssl \
-    opkg \
     parted \
     procps \
     psmisc \

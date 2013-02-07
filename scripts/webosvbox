@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Print usage and exit
 
 function Usage {
@@ -320,7 +334,18 @@ function stopvm {
 
 # ssh into the vm
 function sshIntoVm {
-    ssh -p $VMHOSTSSH root@localhost
+    # Use /dev/null as the known hosts file to avoid an error whenever the
+    # Virtual Machine's identity changes. Disabling strict host checking
+    # avoids being asked to accept the new key.
+    #
+    # Whilst these options are a "bad idea" when connecting to a real host,
+    # this script is explicitly used to connect to VM's running Open webOS
+    # whose identities change regularly.
+    #
+    # It does, however, result in a Warning on every connection that the
+    # host has been permanently added to the known hosts file (i.e. /dev/null).
+    #
+    ssh -p $VMHOSTSSH -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost
 }
 
 # Check some fundamental prerequisites:
@@ -332,7 +357,10 @@ checkVbox
 # Set up defaults before parsing command options
 setDefaults
 
-# Parse the command line. This can't be iin a function for obvious reasons.
+# Parse the command line. 
+#
+# This can't be in a function as it needs to access and shift the command 
+# line arguments.
 if [ $# -ne 0 ]    # Script invoked with command-line args
 then
     while getopts ":c:i:n:p:r:v:" Option
@@ -356,7 +384,7 @@ then
     echo "No command specified";
     Usage;
 else
-    # Loop through positional commands in order
+    # Loop through positional commands in the order they are provided
 
     while [ "$1" != "" ]
     do

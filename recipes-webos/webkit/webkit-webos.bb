@@ -1,13 +1,13 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Open webOS edition of the WebKit web rendering engine"
 SECTION = "libs"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abbaf8b8a7c36b6eec80"
 
-DEPENDS = "qt4-webos qmake-webos-native luna-service2 sqlite3 gperf-native"
+DEPENDS = "qt4-webos luna-service2 sqlite3 gperf-native"
 
-PR = "r10"
+PR = "r11"
 
 inherit webos_public_repo
 inherit webos_qmake

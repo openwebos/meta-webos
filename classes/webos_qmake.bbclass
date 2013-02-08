@@ -10,6 +10,8 @@
 # assigned to make variables.
 inherit webos_oe_runmake_no_env_override
 
+DEPENDS += "qmake-webos-native"
+
 export QMAKE = "${STAGING_BINDIR_NATIVE}/qmake-palm"
 export MOC = "${STAGING_BINDIR_NATIVE}/moc-palm"
 

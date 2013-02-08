@@ -54,11 +54,7 @@ CACHE = "${TMPDIR}/cache/${TCMODE}-${TCLIBC}${@['', '/' + str(d.getVar('MACHINE'
 
 USER_CLASSES ?= ""
 
-# opkglibdir is used in rootfs-ipk, change that to
-# OPKGLIBDIR_webos := "${libdir}"
-# and remove opkg*bbappends when oe-core is upgraded to revision which includes this:
-# http://lists.linuxtogo.org/pipermail/openembedded-core/2013-February/035407.html 
-opkglibdir_forcevariable = "${libdir}/opkg"
+OPKGLIBDIR_forcevariable := "${libdir}"
 
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base"
 

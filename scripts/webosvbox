@@ -334,6 +334,20 @@ function stopvm {
 
 # ssh into the vm
 function sshIntoVm {
+    # In case they have manually changed the port, or specified an unusual
+    # one when the machine was created, we pull the port number from the
+    # virtual machine itself.
+    #
+    # If there isn't a port forwarding rule set, then we are not going to
+    # be able to ssh in in any case.
+    #
+    port=`VBoxManage showvminfo $VMNAME | grep "name = ssh,.*host port = [0-9]*,.*guest port = 22" | grep -o "host port = [0-9]*" | cut -d '=' -f 2`
+    if [ "$port" == "" ]
+    then
+        echo "VM $VMNAME does not appear to have ssh port forwarding enabled. Exiting"
+        exit 1;
+    fi
+
     # Use /dev/null as the known hosts file to avoid an error whenever the
     # Virtual Machine's identity changes. Disabling strict host checking
     # avoids being asked to accept the new key.
@@ -345,7 +359,7 @@ function sshIntoVm {
     # It does, however, result in a Warning on every connection that the
     # host has been permanently added to the known hosts file (i.e. /dev/null).
     #
-    ssh -p $VMHOSTSSH -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost
+    ssh -p $port -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@localhost
 }
 
 # Check some fundamental prerequisites:

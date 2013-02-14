@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/${VBOX_NAME}/COPYING;md5=e197d5641bb35b29d
 
 DEPENDS = "virtual/kernel"
 
-INC_PR = "r0"
+INC_PR = "r1"
 
 inherit module
 
@@ -30,4 +30,6 @@ module_do_install() {
     MODULE_DIR=${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/misc
     install -d $MODULE_DIR
     install -m 644 vboxguest.ko $MODULE_DIR
+    install -m 644 vboxsf.ko $MODULE_DIR
+    install -m 644 vboxvideo.ko $MODULE_DIR
 }

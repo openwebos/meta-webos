@@ -7,9 +7,9 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/${VBOX_NAME}/COPYING;md5=e197d5641bb35b29d
 
 DEPENDS = "virtual/kernel"
 
-INC_PR = "r1"
+INC_PR = "r2"
 
-inherit module
+inherit module kernel-module-split
 
 COMPATIBLE_MACHINE = "(qemux86|qemux86-64)"
 
@@ -33,3 +33,14 @@ module_do_install() {
     install -m 644 vboxsf.ko $MODULE_DIR
     install -m 644 vboxvideo.ko $MODULE_DIR
 }
+
+PACKAGES += "kernel-module-vboxguest kernel-module-vboxsf kernel-module-vboxvideo"
+RDEPENDS_${PN} += "kernel-module-vboxguest kernel-module-vboxsf kernel-module-vboxvideo"
+
+FILES_${PN} = ""
+ALLOW_EMPTY_${PN} = "1"
+
+# autoload if installed
+module_autoload_vboxguest = "vboxguest"
+module_autoload_vboxsf = "vboxsf"
+module_autoload_vboxvideo = "vboxvideo"

@@ -1,19 +1,11 @@
+# (c) Copyright 2013 Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2013 LG Electronics
+
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
-PRINC := "${@int(PRINC) + 1}"
+PR_append = "webos1"
 
-# NOTE: we have to rewrite the SRC_URI here as we don't want the
-# 0001-update-ca-certificates-remove-c-rehash.patch patch
-SRC_URI = "${DEBIAN_MIRROR}/main/c/ca-certificates/ca-certificates_${PV}.tar.gz \
-           file://certstoreinit"
+CERT_SOURCE_DIR = "${datadir}/ca-certificates"
+CERT_TARGET_DIR = "${sysconfdir}/ssl/certs"
 
-do_install_append() {
-    install -d ${D}${webos_upstartconfdir}
-    install -m 0644 ${WORKDIR}/certstoreinit ${D}${webos_upstartconfdir}/certstoreinit
-}
+inherit webos_certificates
 
-FILES_${PN} += " ${webos_upstartconfdir}/certstoreinit"
-
-pkg_postrm_${PN}() {
-    # Remove possible installed certificates by the update-ca-certificates script
-    rm -rf ${sysconfdir}/ssl/certs
-}

@@ -104,7 +104,6 @@ CONNECTIVITY_CHECK_URIS ?= "git://git.yoctoproject.org/yocto-firewall-test;proto
 
 # TODO can check on all these host machines.
 SANITY_TESTED_DISTROS ?= " \
-            Ubuntu 12.04.1 LTS \n \
-            Ubuntu 12.04.2 LTS \n \
-            Ubuntu 12.10 \n \
+            Ubuntu-12.04 \n \
+            Ubuntu-12.10 \n \
             "

@@ -6,14 +6,13 @@ require conf/distro/include/webos-filesystem-paths.inc
 require conf/distro/include/webos-component-head.inc
 require conf/distro/include/webos-preferred-providers.inc
 require conf/distro/include/webos-preferred-versions.inc
+require conf/distro/include/webos-features.inc
 
 TCMODE ?= "default"
 require conf/distro/include/tcmode-${TCMODE}.inc
 
 TCLIBC ?= "eglibc"
 require conf/distro/include/tclibc-${TCLIBC}.inc
-
-DISTRO_FEATURES_append = " largefile opengl"
 
 SDK_NAME = "${DISTRO}-${TCLIBC}-${SDK_ARCH}-${TARGET_ARCH}"
 SDKPATH = "/opt/${DISTRO}/${SDK_VERSION}"

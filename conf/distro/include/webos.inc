@@ -7,12 +7,7 @@ require conf/distro/include/webos-component-head.inc
 require conf/distro/include/webos-preferred-providers.inc
 require conf/distro/include/webos-preferred-versions.inc
 require conf/distro/include/webos-features.inc
-
-TCMODE ?= "default"
-require conf/distro/include/tcmode-${TCMODE}.inc
-
-TCLIBC ?= "eglibc"
-require conf/distro/include/tclibc-${TCLIBC}.inc
+require conf/distro/include/webos-toolchain.inc
 
 SDK_NAME = "${DISTRO}-${TCLIBC}-${SDK_ARCH}-${TARGET_ARCH}"
 SDKPATH = "/opt/${DISTRO}/${SDK_VERSION}"
@@ -29,9 +24,6 @@ DISTRO_EXTRA_RRECOMMENDS += " ${WEBOS_DEFAULT_EXTRA_RRECOMMENDS}"
 WEBOSQEMUDEPS = "${@base_contains("INCOMPATIBLE_LICENSE", "GPLv3", "", "qemu-config",d)}"
 DISTRO_EXTRA_RDEPENDS_append_qemuarm = " ${WEBOSQEMUDEPS}"
 DISTRO_EXTRA_RDEPENDS_append_qemux86 = " ${WEBOSQEMUDEPS}"
-
-TCLIBCAPPEND ?= "-${TCLIBC}"
-#TMPDIR .= "${TCLIBCAPPEND}"
 
 CACHE = "${TMPDIR}/cache/${TCMODE}-${TCLIBC}${@['', '/' + str(d.getVar('MACHINE', True))][bool(d.getVar('MACHINE', True))]}${@['', '/' + str(d.getVar('SDKMACHINE', True))][bool(d.getVar('SDKMACHINE', True))]}"
 

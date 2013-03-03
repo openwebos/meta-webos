@@ -1,4 +1,5 @@
 # Copyright (c) 2012-2013  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics
 
 #
 # NOTE: Keep the lists in alphabetical order
@@ -83,6 +84,7 @@ PREFERRED_VERSION_qmake-webos-native ?= "${PREFERRED_VERSION_qt4-webos}"
 PREFERRED_VERSION_qt4-webos ?= "4.8.3-4"
 PREFERRED_VERSION_serviceinstaller ?= "2.0.0-1.01"
 PREFERRED_VERSION_sleepd ?= "1.1.1-14"
+PREFERRED_VERSION_smartkey-hun ?= "3.0.0-1.01"
 PREFERRED_VERSION_storaged ?= "2.1.0-5"
 PREFERRED_VERSION_underscore ?= "0.6.0-8"
 PREFERRED_VERSION_webappmanager ?= "3.0.0-3"

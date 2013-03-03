@@ -9,6 +9,7 @@ require conf/distro/include/webos-preferred-versions.inc
 require conf/distro/include/webos-features.inc
 require conf/distro/include/webos-toolchain.inc
 require conf/distro/include/webos-sdk.inc
+require conf/distro/include/webos-repositories.inc
 
 EXTRAOPKGCONFIG = ""
 
@@ -38,11 +39,6 @@ INHERIT_DISTRO ?= "debian devshell sstate license webos_base"
 INHERIT += "${PACKAGE_CLASSES} ${USER_CLASSES} ${INHERIT_INSANE} ${INHERIT_DISTRO}"
 
 QEMU_TARGETS ?= "arm i386"
-
-OPENWEBOS_GIT_REPO ?= "git://github.com/openwebos"
-ISIS_PROJECT_GIT_REPO ?= "git://github.com/isis-project"
-ISIS_PROJECT_DOWNLOAD ?= "https://github.com/downloads/isis-project"
-ENYOJS_GIT_REPO ?= "git://github.com/enyojs"
 
 # Default WEBOS_TARGET_* values (see webos_cmake.bbclass)
 WEBOS_TARGET_CORE_OS ?= "rockhopper"

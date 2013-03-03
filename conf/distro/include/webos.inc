@@ -8,9 +8,7 @@ require conf/distro/include/webos-preferred-providers.inc
 require conf/distro/include/webos-preferred-versions.inc
 require conf/distro/include/webos-features.inc
 require conf/distro/include/webos-toolchain.inc
-
-SDK_NAME = "${DISTRO}-${TCLIBC}-${SDK_ARCH}-${TARGET_ARCH}"
-SDKPATH = "/opt/${DISTRO}/${SDK_VERSION}"
+require conf/distro/include/webos-sdk.inc
 
 EXTRAOPKGCONFIG = ""
 

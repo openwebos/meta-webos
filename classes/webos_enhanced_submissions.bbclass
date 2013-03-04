@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013  LG Electronics
 # 
 # webos_enhanced_submissions
 #
@@ -43,18 +44,14 @@
 # i.e., it includes the submission. If there is no PREFERRED_VERSION_<packagename>
 # setting, '0' will be returned.
 def webos_enhsub_get_pv(pn, d):
-    import bb
-
-    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
     return preferred_v.split('_')[0]
 
 # The component version is PREFERRED_VERSION_<packagename> with the last hyphen-
 # separated field removed; i.e., it does not include the submission. If there is
 # no PREFERRED_VERSION_<packagename> setting, '0' will be returned.
 def webos_enhsub_get_component_version(pn, d):
-    import bb
-
-    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
     split_preferred_v = preferred_v.split('-')
     if len(split_preferred_v) == 1:
         # If there's no submission, then the component version can't
@@ -67,9 +64,7 @@ def webos_enhsub_get_component_version(pn, d):
 # PREFERRED_VERSION_<packagename>. If there is no PREFERRED_VERSION_<packagename>
 # setting, '0' will be returned.
 def webos_enhsub_get_submission(pn, d):
-    import bb
-
-    preferred_v = bb.data.getVar('PREFERRED_VERSION_' + pn, d, 1) or '0'
+    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
     split_preferred_v = preferred_v.split('-')
     if len(split_preferred_v) == 1:
         # If there no hyphen, that means there's no submission

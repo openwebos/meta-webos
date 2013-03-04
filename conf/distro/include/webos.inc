@@ -32,7 +32,7 @@ USER_CLASSES ?= ""
 # OPKGLIBDIR_webos := "${libdir}"
 # and remove opkg*bbappends when oe-core is upgraded to revision which includes this:
 # http://lists.linuxtogo.org/pipermail/openembedded-core/2013-February/035407.html 
-opkglibdir_webos = "${libdir}/opkg"
+opkglibdir_forcevariable = "${libdir}/opkg"
 PACKAGE_CLASSES ?= "package_ipk"
 INHERIT_INSANE ?= "insane"
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base"

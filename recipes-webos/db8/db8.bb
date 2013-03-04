@@ -1,4 +1,4 @@
-#      Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+#      Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "A userspace service that provides access to the Open webOS database"
 SECTION = "webos/base"
@@ -10,7 +10,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "db luna-service2 luna-prefs jemalloc icu pmloglib curl glib-2.0"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_component
 inherit webos_public_repo
@@ -24,3 +24,4 @@ inherit webos_system_bus
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG};protocol=git"
 S = "${WORKDIR}/git"
+#FILES_${PN}-dbg += "${libdir}/${PN}/tests/.debug"

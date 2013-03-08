@@ -1,13 +1,16 @@
-# (c) Copyright 2012-2013  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012-2013  Hewlett-Packard Development Company, L.P.
 
+#
+# NOTE: Keep the lists in alphabetical order
+#
+
+# Upstream components don't have submissions
 PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
-PREFERRED_VERSION_vboxguestdrivers ?= "4.2.6"
-
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "164"
-
-# Newer upstream meta-oe already has 2.0.3 version which isn't compatible with our libpbnjson yet
+PREFERRED_VERSION_vboxguestdrivers ?= "4.2.6"
+# Newer upstream meta-oe already has yajl 2.0.3 which isn't compatible with our libpbnjson yet
 # https://github.com/openwebos/libpbnjson/pull/2
 PREFERRED_VERSION_yajl ?= "1.0.12"
 

@@ -16,7 +16,7 @@ inherit webos_library
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS_PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/WebKitSupplemental;tag=${WEBOS_GIT_TAG}"
 S = "${WORKDIR}/git"
 
 PALM_CC_OPT = "-O2"

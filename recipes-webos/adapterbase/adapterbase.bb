@@ -14,7 +14,7 @@ inherit webos_submissions
 inherit webos_library
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS_PROJECT_GIT_REPO}/AdapterBase;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/AdapterBase;tag=${WEBOS_GIT_TAG}"
 S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE += "LUNA_STAGING=."

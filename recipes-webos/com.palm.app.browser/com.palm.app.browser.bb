@@ -12,7 +12,7 @@ inherit webos_submissions
 inherit webos_arch_indep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${ISIS_PROJECT_GIT_REPO}/isis-browser;tag=${WEBOS_GIT_TAG};protocol=git"
+SRC_URI = "${ISIS_PROJECT_GIT_REPO}/isis-browser;tag=${WEBOS_GIT_TAG}"
 S = "${WORKDIR}/git"
 
 do_install() {

@@ -1,10 +1,11 @@
 # (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2013 LG Electronics
 
 DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r13"
+PR = "r14"
 
 inherit packagegroup
 
@@ -28,6 +29,9 @@ RPROVIDES_${PN} += "packagegroup-webos-core"
 RREPLACES_${PN} += "packagegroup-webos-core"
 RCONFLICTS_${PN} += "packagegroup-webos-core"
 
+VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
+VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
+
 RDEPENDS_${PN} = " \
     activitymanager \
     app-services \
@@ -38,7 +42,7 @@ RDEPENDS_${PN} = " \
     enyo-1.0 \
     filecache \
     keyboard-efigs \
-    librdx-stub \
+    ${VIRTUAL-RUNTIME_librdx} \
     luna-applauncher \
     luna-init \
     luna-sysmgr \
@@ -73,7 +77,7 @@ WEBOS_MISSING_FROM_RDEPENDS = " \
     loadable-frameworks \
     mojoservice-frameworks \
     nodejs \
-    rdx-utils-stub \
+    ${VIRTUAL-RUNTIME_rdx-utils} \
     underscore \
     webkit-supplemental \
     webkit-webos \

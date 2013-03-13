@@ -1,9 +1,16 @@
 # (c) Copyright 2013  Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2013  LG Electronics
 
 inherit qmake5
 
 export QT_DIR_NAME = "qt5"
 export QT_CONF_PATH = "${WORKDIR}/qt.conf"
+
+# These are used in the luna-sysmgr recipe
+export QT_CONFIGURE_PREFIX_PATH = "${STAGING_EXECPREFIXDIR}"
+export QT_CONFIGURE_HEADERS_PATH = "${STAGING_INCDIR}/${QT_STAGING}"
+export QT_CONFIGURE_LIBRARIES_PATH = "${STAGING_LIBDIR}/${QT_STAGING}"
+export QT_CONFIGURE_BINARIES_PATH = "${STAGING_BINDIR_NATIVE}/${QT_STAGING}"
 
 do_generate_qt_config_file() {
 
@@ -30,3 +37,6 @@ HostBinaries = ${STAGING_BINDIR_NATIVE}
 EOF
 
 }
+
+# See meta-qt5/qmake5_base.bbclass for more info
+do_generate_qt_config_file[depends] += "qt5-native:do_populate_sysroot"

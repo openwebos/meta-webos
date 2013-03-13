@@ -5,7 +5,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r15"
+PR = "r16"
 
 inherit packagegroup
 
@@ -29,14 +29,27 @@ RPROVIDES_${PN} += "packagegroup-webos-core"
 RREPLACES_${PN} += "packagegroup-webos-core"
 RCONFLICTS_${PN} += "packagegroup-webos-core"
 
+VIRTUAL-RUNTIME_webappmanager ?= "webappmanager"
 VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
+
+# we're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only one item
+# and changing that in <distro>-preferred-providers.inc would require .bbappend in meta-<distro>
+# to do PR/PRINC/PR_append bump anyway so it's easier to change this variable in .bbappend together
+# with bump
+# browserserver, webkit-supplemental, webkit-webos should be added to RDEPENDS of top level components
+# which need them
+WEBOS_PACKAGESET_BROWSER = " \
+    browser-adapter \
+    com.palm.app.browser \
+    browserserver \
+    webkit-supplemental \
+    webkit-webos \
+"
 
 RDEPENDS_${PN} = " \
     activitymanager \
     app-services \
-    browser-adapter \
-    com.palm.app.browser \
     configurator \
     core-apps \
     enyo-1.0 \
@@ -59,9 +72,10 @@ RDEPENDS_${PN} = " \
     pmlogctl \
     pmlogdaemon \
     sleepd \
-    webappmanager \
+    ${VIRTUAL-RUNTIME_webappmanager} \
     webos-connman-adapter \
     webos-shutdownscripts \
+    ${WEBOS_PACKAGESET_BROWSER} \
     ${WEBOS_MISSING_FROM_RDEPENDS} \
     ${WEBOS_FOSS_MISSING_FROM_RDEPENDS} \
 "
@@ -70,7 +84,6 @@ RDEPENDS_${PN} = " \
 # missing from the RDEPENDS lists of the components that expect them to be
 # present at runtime.
 WEBOS_MISSING_FROM_RDEPENDS = " \
-    browserserver \
     cpushareholder-stub \
     fbprogress \
     foundation-frameworks \
@@ -79,8 +92,6 @@ WEBOS_MISSING_FROM_RDEPENDS = " \
     nodejs \
     ${VIRTUAL-RUNTIME_rdx-utils} \
     underscore \
-    webkit-supplemental \
-    webkit-webos \
 "
 
 # XXX These FOSS components must be explicitly added because they are missing

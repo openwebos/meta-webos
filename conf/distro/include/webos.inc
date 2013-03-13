@@ -38,6 +38,13 @@ INHERIT_INSANE ?= "insane"
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base"
 INHERIT += "${PACKAGE_CLASSES} ${USER_CLASSES} ${INHERIT_INSANE} ${INHERIT_DISTRO}"
 
+# Drop the unsafe-references-in-binaries and unsafe-references-in-scripts that
+# appear in the default WARN_QA because we don't plan to support a separate
+# partition for /usr. Once oe-core is upgraded to include
+# 2fb58da56e8e7044de21fd10fe9164d204587236, remove this assignment to enable the
+# xorg-driver-abi and textrel checks.
+WARN_QA = "ldflags useless-rpaths rpaths staticdev libdir"
+
 QEMU_TARGETS ?= "arm i386"
 
 # Default WEBOS_TARGET_* values (see webos_cmake.bbclass)

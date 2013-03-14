@@ -12,6 +12,9 @@ export QT_CONFIGURE_HEADERS_PATH = "${STAGING_INCDIR}/${QT_STAGING}"
 export QT_CONFIGURE_LIBRARIES_PATH = "${STAGING_LIBDIR}/${QT_STAGING}"
 export QT_CONFIGURE_BINARIES_PATH = "${STAGING_BINDIR_NATIVE}/${QT_STAGING}"
 
+# This is used in the webappmanager recipes
+export STAGING_INCDIR
+
 do_generate_qt_config_file() {
 
     # Set webOS specific locations for .pr* files to access

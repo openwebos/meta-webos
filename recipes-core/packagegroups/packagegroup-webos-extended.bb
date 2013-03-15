@@ -5,7 +5,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r14"
+PR = "r15"
 
 inherit packagegroup
 
@@ -98,6 +98,7 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     hunspell \
     icu \
     iproute2 \
+    lsb \
     makedevs \
     ncurses \
     openssl \

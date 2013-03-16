@@ -8,6 +8,7 @@ OPENWEBOS_GIT_REPO ?= "git://github.com/openwebos"
 OPENWEBOS_GIT_REPO_COMPLETE ?= "${OPENWEBOS_GIT_REPO}/${WEBOS_REPO_NAME};tag=${WEBOS_GIT_TAG}"
 
 ISIS_PROJECT_GIT_REPO ?= "git://github.com/isis-project"
+ISIS_PROJECT_GIT_REPO_COMPLETE ?= "${ISIS_PROJECT_GIT_REPO}/${WEBOS_REPO_NAME};tag=${WEBOS_GIT_TAG}"
 ISIS_PROJECT_DOWNLOAD ?= "https://github.com/downloads/isis-project"
 
 ENYOJS_GIT_REPO ?= "git://github.com/enyojs"

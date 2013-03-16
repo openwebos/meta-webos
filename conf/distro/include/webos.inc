@@ -33,10 +33,8 @@ USER_CLASSES ?= ""
 # and remove opkg*bbappends when oe-core is upgraded to revision which includes this:
 # http://lists.linuxtogo.org/pipermail/openembedded-core/2013-February/035407.html 
 opkglibdir_forcevariable = "${libdir}/opkg"
-PACKAGE_CLASSES ?= "package_ipk"
-INHERIT_INSANE ?= "insane"
+
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base"
-INHERIT += "${PACKAGE_CLASSES} ${USER_CLASSES} ${INHERIT_INSANE} ${INHERIT_DISTRO}"
 
 # Drop the unsafe-references-in-binaries and unsafe-references-in-scripts that
 # appear in the default WARN_QA because we don't plan to support a separate

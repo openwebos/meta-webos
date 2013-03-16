@@ -18,7 +18,7 @@ inherit webos_cmake
 inherit webos_program
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG}"
+SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 
 # Pass in the portion before the hyphen, which is expected to have 3 dot-separated fields

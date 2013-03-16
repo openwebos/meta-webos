@@ -14,7 +14,7 @@ inherit webos_submissions
 inherit webos_arch_indep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG}"
+SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 
 do_install() {

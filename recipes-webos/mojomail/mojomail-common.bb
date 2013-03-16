@@ -17,5 +17,6 @@ inherit webos_library
 inherit webos_machine_impl_dep
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/mojomail;tag=${WEBOS_GIT_TAG}"
+WEBOS_REPO_NAME = "mojomail"
+SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git/common"

@@ -18,5 +18,5 @@ inherit webos_daemon
 inherit webos_system_bus
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG}"
+SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

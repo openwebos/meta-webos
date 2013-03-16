@@ -23,7 +23,7 @@ inherit webos_system_bus
 inherit webos_machine_dep
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${OPENWEBOS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG}"
+SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 
 EXTRA_OEMAKE += "MACHINE=${MACHINE}"

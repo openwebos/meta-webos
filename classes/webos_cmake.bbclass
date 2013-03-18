@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013 LG Electronics
 #
 # webos_cmake
 #
@@ -9,7 +10,10 @@
 # Expects that webos_submissions or webos_enhanced_submissions will also be
 # inherited (for WEBOS_COMPONENT_VERSION).
 
-DEPENDS += "cmake-modules-webos-native"
+# Extra variable is needed to be able to inhibit this dependency in case
+# we have some recipe which can reuse this bbclass but without this dependency
+WEBOS_CMAKE_DEPENDS = "cmake-modules-webos-native"
+DEPENDS_append = " ${WEBOS_CMAKE_DEPENDS}"
 
 inherit cmake
 

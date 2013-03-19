@@ -21,6 +21,7 @@ do_generate_qt_config_file() {
     ${OE_QMAKE_QMAKE} -set WEBOS_STAGING_INCDIR ${STAGING_INCDIR}
     ${OE_QMAKE_QMAKE} -set WEBOS_INSTALL_QML ${libdir}/qt5/qml
     ${OE_QMAKE_QMAKE} -set WEBOS_INSTALL_LIBS ${libdir}
+    ${OE_QMAKE_QMAKE} -set WEBOS_INSTALL_BINS ${bindir}
     ${OE_QMAKE_QMAKE} -set WEBOS_INSTALL_HEADERS ${includedir}/
 
     cat > ${QT_CONF_PATH} <<EOF

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,7 +42,8 @@ OPTIONS:
                     Defaults to 1.
 
     -i image        Specify the path to an alternative vmdk image to use.
-                    Defaults to latest image in BUILD-qemux86/deploy/image
+                    Defaults to image in local folder or, if it doesn't exist,
+                    to the latest image in BUILD-qemux86/deploy/image
 
     -n name         Set the VM name to <name>. Do not include spaces.
                     Defaults to "webos-image". Can be overriden by setting
@@ -136,8 +138,12 @@ function setDefaults {
     # Default name for the IDE controller
     IDENAME=$VMIMAGESTEM
 
-    # Default to the latest VMDK image
-    VMIMAGE=`readlink -f BUILD-qemux86/deploy/images/$VMIMAGESTEM-qemux86.vmdk`
+    # Default to the latest VMDK image and check if it's in local folder first
+    if [ -f $VMIMAGESTEM-qemux86.vmdk ] ; then
+        VMIMAGE="$VMIMAGESTEM-qemux86.vmdk"
+    else
+        VMIMAGE=`readlink -f BUILD-qemux86/deploy/images/$VMIMAGESTEM-qemux86.vmdk`
+    fi
 }
 
 # Check versions of VirtualBox etc
@@ -371,9 +377,9 @@ checkVbox
 # Set up defaults before parsing command options
 setDefaults
 
-# Parse the command line. 
+# Parse the command line.
 #
-# This can't be in a function as it needs to access and shift the command 
+# This can't be in a function as it needs to access and shift the command
 # line arguments.
 if [ $# -ne 0 ]    # Script invoked with command-line args
 then

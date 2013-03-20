@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# (c) Copyright 2013 LG Electronics
 #
 # webos_qmake
 #
@@ -10,7 +11,10 @@
 # assigned to make variables.
 inherit webos_oe_runmake_no_env_override
 
-DEPENDS += "qmake-webos-native"
+# Extra variable is needed to be able to inhibit this dependency in case
+# we have some recipe which can reuse this bbclass but without this dependency
+WEBOS_QMAKE_DEPENDS = "qmake-webos-native"
+DEPENDS_append = " ${WEBOS_QMAKE_DEPENDS}"
 
 export QMAKE = "${STAGING_BINDIR_NATIVE}/qmake-palm"
 export MOC = "${STAGING_BINDIR_NATIVE}/moc-palm"

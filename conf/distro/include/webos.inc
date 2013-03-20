@@ -58,13 +58,17 @@ WEBOS_TARGET_MACHINE_IMPL ?= "emulator"
 
 
 # The Open webOS distro is packaged into these image types:
-IMAGE_FSTYPES ?= "tar.bz2 ext3"
+IMAGE_FSTYPES ?= "tar.gz"
 
-# Only create a vmdk image when we're building for the (32-bit Intel
-# architecture) emulator, i.e. when MACHINE is qemux86.
-# NB. If IMAGE_FSTYPES_append_qemux86 = " vmdk" is used, the inherit of
-# image-vmdk.bbclass in image.bbclass doesn't happen.
-IMAGE_FSTYPES += "${@ 'vmdk' if '${MACHINE}' == 'qemux86' else '' }"
+# Only create a vmdk image when we're building for x86 emulator,
+# i.e. when MACHINE is qemux86 or qemux86-64
+# If IMAGE_FSTYPES_append_qemux86 = " vmdk" is used, the inherit of
+# image-vmdk.bbclass in image.bbclass doesn't happen, because IMAGE_FSTYPES
+# overrides are expanded too late.
+IMAGE_FSTYPES := "${@ '${IMAGE_FSTYPES} vmdk' if '${MACHINE}'.startswith('qemux86') else '${IMAGE_FSTYPES}' }"
+
+# "tar.bz2 ext3" is added by qemu.inc, replace tar.bz2 with tar.gz in it
+IMAGE_FSTYPES := "${@ ' ${IMAGE_FSTYPES} '.replace(' tar.bz2 ',' tar.gz ') }"
 
 
 # Redirect console output to keep it from spewing all over the VirtualBox window

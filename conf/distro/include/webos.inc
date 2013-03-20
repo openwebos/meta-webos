@@ -13,6 +13,8 @@ require conf/distro/include/webos-repositories.inc
 
 EXTRAOPKGCONFIG = ""
 
+WEBOS_DISTRO_API_VERSION = "4.0.0"
+
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = "packagegroup-core-boot"
 WEBOS_DEFAULT_EXTRA_RRECOMMENDS = ""

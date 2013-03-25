@@ -15,6 +15,10 @@ EXTRAOPKGCONFIG = ""
 
 WEBOS_DISTRO_API_VERSION = "4.0.0"
 
+# This should be overridden in official builds. Should use the following format "[prefix-]<build-number>".
+# The optional [prefix-] identifies different build jobs, for example engineering builds.
+WEBOS_DISTRO_BUILD_INFO ?= "unofficial"
+
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = "packagegroup-core-boot"
 WEBOS_DEFAULT_EXTRA_RRECOMMENDS = ""

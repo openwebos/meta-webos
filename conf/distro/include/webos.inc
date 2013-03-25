@@ -14,6 +14,7 @@ require conf/distro/include/webos-repositories.inc
 EXTRAOPKGCONFIG = ""
 
 WEBOS_DISTRO_API_VERSION = "4.0.0"
+WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', None).strip()}"
 
 # This should be overridden in official builds. Should use the following format "[prefix-]<build-number>".
 # The optional [prefix-] identifies different build jobs, for example engineering builds.

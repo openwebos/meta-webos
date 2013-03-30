@@ -1,4 +1,5 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013  LG Electronics
 
 SUMMARY = "Open webOS preferences manager"
 SECTION = "webos/base"
@@ -7,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "luna-service2 cjson sqlite3 glib-2.0"
 
-PR = "r7"
+PR = "r8"
 
 #inherit webos_component
 inherit webos_public_repo
@@ -26,10 +27,12 @@ PRODUCT_DEVICE_NAME_BRANDED ?= "HP Open webOS Device"
 PRODUCT_DEVICE_NAME_SHORT ?= "webOS Device"
 PRODUCT_DEVICE_NAME_SHORT_BRANDED ?= "HP Open webOS Device"
 PRODUCT_DEVICE_NAME_PRODUCT_LINE_NAME ?= "Open webOS Device"
-PRODUCT_DEVICE_NAME_PRODUCT_LINE_VERSION ?= "3.5.0"
 PRODUCT_DEVICE_NAME_PRODUCT_CLASS ?= "Tablet"
 PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME ?= "Open webOS"
-PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION ?= "3.5.0"
+
+# Versions can not be overridden
+PRODUCT_DEVICE_NAME_PRODUCT_LINE_VERSION = "${WEBOS_DISTRO_API_VERSION}"
+PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_VERSION = "${WEBOS_DISTRO_API_VERSION}"
 
 do_install_append() {
     # CFISH-930: remove "other" perms granted by pmmakefiles (aka palmmake):

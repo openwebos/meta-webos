@@ -8,7 +8,7 @@ SECTION = "webos/services"
 DEPENDS = "luna-service2 libpbnjson glib-2.0 luna-prefs openssl"
 RDEPENDS_${PN} = "connman"
 
-PR = "r0"
+PR = "r1"
 
 inherit webos_component
 inherit webos_public_repo
@@ -16,6 +16,7 @@ inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_daemon
 inherit webos_system_bus
+inherit webos_machine_dep
 
 # Set EXTRA_OECMAKE in webos-connman-adapter.bbappend to override default value for wifi and wired interfaces, for eg.
 # EXTRA_OECMAKE += "-DWIFI_IFACE_NAME=wlan0 -DWIRED_IFACE_NAME=eth1"

@@ -7,7 +7,7 @@ DESCRIPTION = "Event driven system init"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
 
-INC_PR = "r10"
+INC_PR = "r11"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext
@@ -27,9 +27,9 @@ PACKAGES =+ "upstart-sysvcompat upstart-sysvcompat-doc"
 FILES_upstart-sysvcompat += " \
     ${base_sbindir}/reboot.* ${base_sbindir}/halt.* ${base_sbindir}/poweroff.* \
     ${base_sbindir}/shutdown.* ${base_sbindir}/telinit ${base_sbindir}/runlevel \
-    ${sysconfdir}/event.d/control-alt-delete \
-    ${sysconfdir}/event.d/rc* \
-    ${sysconfdir}/event.d/sulogin \
+    ${webos_upstartconfdir}/control-alt-delete \
+    ${webos_upstartconfdir}/rc* \
+    ${webos_upstartconfdir}/sulogin \
     ${sysconfdir}/init.d \
     ${sysconfdir}/default/rcS \
 "
@@ -52,14 +52,14 @@ do_install () {
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/default
     install -d ${D}${sysconfdir}/init.d
-    install -d ${D}${sysconfdir}/event.d
+    install -d ${D}${webos_upstartconfdir}
 
     install -m 0644 ${WORKDIR}/init/rcS-default   ${D}${sysconfdir}/default/rcS
     install -m 0755 ${WORKDIR}/init/rc            ${D}${sysconfdir}/init.d
     install -m 0755 ${WORKDIR}/init/rcS           ${D}${sysconfdir}/init.d
-    install -m 0644 ${WORKDIR}/rc*                ${D}${sysconfdir}/event.d
-    install -m 0644 ${WORKDIR}/control-alt-delete ${D}${sysconfdir}/event.d
-    install -m 0644 ${WORKDIR}/sulogin            ${D}${sysconfdir}/event.d
+    install -m 0644 ${WORKDIR}/rc*                ${D}${webos_upstartconfdir}
+    install -m 0644 ${WORKDIR}/control-alt-delete ${D}${webos_upstartconfdir}
+    install -m 0644 ${WORKDIR}/sulogin            ${D}${webos_upstartconfdir}
 }
 
 ALTERNATIVE_${PN}  = "init"

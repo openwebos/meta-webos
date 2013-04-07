@@ -79,3 +79,4 @@ PV[vardeps] += "PREFERRED_VERSION_${PN}"
 WEBOS_COMPONENT_VERSION = "${@webos_enhsub_get_component_version('${PN}', d)}"
 WEBOS_SUBMISSION = "${@webos_enhsub_get_submission('${PN}', d)}"
 
+require conf/distro/include/webos-repositories.inc

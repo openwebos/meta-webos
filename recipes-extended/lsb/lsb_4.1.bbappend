@@ -1,11 +1,12 @@
 # (c) Copyright 2013 LG Electronics
 
-PR_append = "webos2"
+PR_append = "webos3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += "file://fix-lsb_release-to-work-with-busybox-head-and-find.patch"
 
+WEBOS_TARGET_CORE_OS ?= "undefined"
 BUILD_INFO_FILE = "${DISTRO}-release"
 BUILD_DISTRIB_ID = "${@ '${WEBOS_TARGET_CORE_OS}'.capitalize()}"
 

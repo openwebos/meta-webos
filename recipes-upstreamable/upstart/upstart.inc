@@ -1,3 +1,5 @@
+# (c) Copyright 2013 LG Electronics
+
 SECTION = "base"
 PRIORITY = "optional"
 DEPENDS = ""
@@ -5,7 +7,7 @@ DESCRIPTION = "Event driven system init"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
 
-INC_PR = "r9"
+INC_PR = "r10"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext
@@ -36,6 +38,8 @@ FILES_upstart-sysvcompat-doc += " \
     ${mandir}/*/shutdown.* ${mandir}/*/telinit.* ${mandir}/*/runlevel.* \
 "
 
+RRECOMMENDS_${PN} += "${BPN}-getty"
+
 EXTRA_OEMAKE += "'bindir=${base_bindir}' \
                  'sbindir=${base_sbindir}' \
                  'usrbindir=${bindir}' \
@@ -56,50 +60,6 @@ do_install () {
     install -m 0644 ${WORKDIR}/rc*                ${D}${sysconfdir}/event.d
     install -m 0644 ${WORKDIR}/control-alt-delete ${D}${sysconfdir}/event.d
     install -m 0644 ${WORKDIR}/sulogin            ${D}${sysconfdir}/event.d
-
-    if [ ! -z "${SERIAL_CONSOLE}" ]; then
-        cat <<EOF >> ${D}${sysconfdir}/event.d/tty-serial
-# tty-serial - getty
-#
-# This service maintains a getty on tty-serial from the point the system is
-# started until it is shut down again.
-
-start on runlevel 2
-start on runlevel 3
-start on runlevel 4
-start on runlevel 5
-
-stop on runlevel 0
-stop on runlevel 1
-stop on runlevel 6
-
-respawn
-exec ${base_sbindir}/getty ${SERIAL_CONSOLE}
-EOF
-    fi
-    if [ "${USE_VT}" = "1" ]; then
-        for n in ${SYSVINIT_ENABLED_GETTYS}
-        do
-            cat <<EOF >> ${D}${sysconfdir}/event.d/tty$n
-# tty$n - getty
-#
-# This service maintains a getty on tty$n from the point the system is
-# started until it is shut down again.
-
-start on runlevel 2
-start on runlevel 3
-start on runlevel 4
-start on runlevel 5
-
-stop on runlevel 0
-stop on runlevel 1
-stop on runlevel 6
-
-respawn
-exec ${base_sbindir}/getty 38400 tty$n
-EOF
-        done
-    fi
 }
 
 ALTERNATIVE_${PN}  = "init"

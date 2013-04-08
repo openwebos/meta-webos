@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013 LG Electronics
 
 require upstart.inc
 
@@ -7,12 +8,9 @@ SRC_URI = "http://upstart.ubuntu.com/download/0.3/upstart-${PV}.tar.bz2;name=ups
     file://init/rcS-default file://init/rc file://init/rcS \
 "
 
-RRECOMMENDS_${PN} = "libupstart upstart-sysvcompat"
+RRECOMMENDS_${PN} += "libupstart upstart-sysvcompat"
 
 PR = "${INC_PR}.0"
-
-USE_VT ?= "1"
-SYSVINIT_ENABLED_GETTYS ?= "1"
 
 SRC_URI[upstart.md5sum] = "a9e475e1458c876add0441d9d4cfe9c0" 
 SRC_URI[upstart.sha256sum] = "d4f7fff9112049eab318518719735d0ac66ff558ed91c2d7c7c41124de2832b6"

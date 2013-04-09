@@ -1,5 +1,5 @@
 # Copyright (c) 2012-2013  Hewlett-Packard Development Company, L.P. 
-# Copyright (c) 2013 LG Electronics
+# Copyright (c) 2013  LG Electronics, Inc.
 
 SUMMARY = "webOS portability layer - device-specific modules"
 SECTION = "webos/base"
@@ -12,12 +12,12 @@ VBOX_RDEPENDS = ""
 VBOX_RDEPENDS_qemux86 = "vboxguestdrivers"
 RDEPENDS_${PN} = "lsb ${VBOX_RDEPENDS}"
 
-PR = "r7"
+PR = "r8"
 
 EXTRA_OECMAKE += "-DDISTRO_VERSION:STRING='${DISTRO_VERSION}' -DDISTRO_NAME:STRING='${DISTRO_NAME}' \
                   -DWEBOS_DISTRO_API_VERSION:STRING='${WEBOS_DISTRO_API_VERSION}' \
                   -DWEBOS_DISTRO_RELEASE_CODENAME:STRING='${WEBOS_DISTRO_RELEASE_CODENAME}' \
-                  -DWEBOS_DISTRO_BUILD_INFO:STRING='${WEBOS_DISTRO_BUILD_INFO}'"
+                  -DWEBOS_DISTRO_BUILD_ID:STRING='${WEBOS_DISTRO_BUILD_ID}'"
 
 inherit webos_component
 inherit webos_public_repo

@@ -1,5 +1,5 @@
 # Copyright (c) 2012-2013  Hewlett-Packard Development Company, L.P.
-# Copyright (c) 2013 LG Electronics
+# Copyright (c) 2013  LG Electronics, Inc.
 
 #
 # NOTE: Keep the lists in alphabetical order
@@ -69,8 +69,8 @@ PREFERRED_VERSION_nodejs-module-webos-pmlog ?= "2.0.0-10"
 PREFERRED_VERSION_nodejs-module-webos-sysbus ?= "2.0.0-25"
 PREFERRED_VERSION_novacomd ?= "2.0.0-123"
 PREFERRED_VERSION_npapi-headers ?= "3.0.0-0.4"
-PREFERRED_VERSION_nyx-lib ?= "5.0.0-64"
-PREFERRED_VERSION_nyx-modules ?= "5.0.0-83"
+PREFERRED_VERSION_nyx-lib ?= "5.1.0-65"
+PREFERRED_VERSION_nyx-modules ?= "5.1.0-84"
 PREFERRED_VERSION_pmcertificatemgr ?= "2.0.0-27"
 PREFERRED_VERSION_pmklogd ?= "2.0.0-10"
 PREFERRED_VERSION_pmlogconf ?= "2.0.0-16"

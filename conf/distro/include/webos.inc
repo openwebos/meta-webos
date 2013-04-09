@@ -1,5 +1,5 @@
-# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
-# (c) Copyright 2013 LG Electronics
+# Copyright (c) 2012-2013  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013  LG Electronics, Inc.
 
 require conf/distro/include/webos-filesystem-paths.inc
 
@@ -15,9 +15,10 @@ EXTRAOPKGCONFIG = ""
 
 WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', None).strip()}"
 
-# This should be overridden in official builds. Should use the following format "[prefix-]<build-number>".
-# The optional [prefix-] identifies different build jobs, for example engineering builds.
-WEBOS_DISTRO_BUILD_INFO ?= "unofficial"
+# All of the types of official build jobs should override this in the following format:
+#  "[prefix-]<build-number>".  The optional [prefix-] identifies different build jobs,
+# for example engineering builds; it is left off for the official build.
+WEBOS_DISTRO_BUILD_ID ?= "unofficial"
 
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = "packagegroup-core-boot"

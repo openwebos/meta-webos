@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS edition of the open-source json-c library"
 SECTION = "libs"
@@ -8,8 +9,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 inherit webos_autotools
 inherit webos_enhanced_submissions
 inherit webos_library
+inherit webos_public_repo
 
-PR = "r2"
+PR = "r3"
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"

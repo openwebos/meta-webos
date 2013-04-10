@@ -1,5 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
-# (c) Copyright 2013  LG Electronics
+# (c) Copyright 2013  LG Electronics, Inc.
 # 
 # webos_enhanced_submissions
 #
@@ -78,5 +78,3 @@ PV[vardeps] += "PREFERRED_VERSION_${PN}"
 # These two are intended for use in the recipes that inherit this file:
 WEBOS_COMPONENT_VERSION = "${@webos_enhsub_get_component_version('${PN}', d)}"
 WEBOS_SUBMISSION = "${@webos_enhsub_get_submission('${PN}', d)}"
-
-require conf/distro/include/webos-repositories.inc

@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013  LG Electronics, Inc.
 #
 # webos_public_repo
 #
@@ -6,3 +7,4 @@
 # will have) a public Open webOS repo.
 #
 
+require conf/distro/include/webos-repositories.inc

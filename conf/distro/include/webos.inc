@@ -21,7 +21,7 @@ WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', 
 WEBOS_DISTRO_BUILD_ID ?= "unofficial"
 
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
-WEBOS_DEFAULT_EXTRA_RDEPENDS = "packagegroup-core-boot"
+WEBOS_DEFAULT_EXTRA_RDEPENDS = ""
 WEBOS_DEFAULT_EXTRA_RRECOMMENDS = ""
 
 DISTRO_EXTRA_RDEPENDS += " ${WEBOS_DEFAULT_EXTRA_RDEPENDS}"

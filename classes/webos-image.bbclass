@@ -7,8 +7,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 # IMAGE_FEATURES control content of the webOS reference images
 #
-# By default we install packagegroup-webos-boot and -extended packages - this gives
-# full working Open webOS image.
+# By default we install packagegroup-core-boot and packagegroup-webos-extended packages
+# this gives full working Open webOS image.
 #
 # Available IMAGE_FEATURES:
 #
@@ -18,7 +18,6 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 #
 # and IMAGE_FEATURES from core-image
 
-PACKAGE_GROUP_webos-boot = "packagegroup-webos-boot"
 PACKAGE_GROUP_webos-extended = "packagegroup-webos-extended"
 PACKAGE_GROUP_webos-test = "packagegroup-webos-test"
 PACKAGE_GROUP_webos-temp = "packagegroup-webos-temp"
@@ -26,7 +25,7 @@ PACKAGE_GROUP_webos-temp = "packagegroup-webos-temp"
 WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp ssh-server-dropbear package-management"
 
 WEBOS_IMAGE_BASE_INSTALL = '\
-    packagegroup-webos-boot \
+    packagegroup-core-boot \
     packagegroup-webos-extended \
     \
     ${WEBOS_IMAGE_EXTRA_INSTALL} \

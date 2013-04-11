@@ -10,3 +10,6 @@ PREFERRED_PROVIDER_jpeg-native = "jpeg-native"
 # Keith says that image does not boot when only one is included
 # TODO: find what is needed from initscripts and merge that to webos-initscripts
 VIRTUAL-RUNTIME_initscripts = "initscripts webos-initscripts"
+
+# Other alternatives are sysvinit, systemd
+VIRTUAL-RUNTIME_init_manager = "upstart"

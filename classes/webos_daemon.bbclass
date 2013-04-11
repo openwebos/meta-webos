@@ -1,4 +1,5 @@
 # (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# (c) Copyright 2013 LG Electronics
 #
 # webos_daemon
 #
@@ -8,6 +9,3 @@
 
 # We expect all daemons will use pkgconfig when building.
 inherit webos_pkgconfig
-
-# Currently, we use Upstart
-RDEPENDS_${PN} += "upstart"

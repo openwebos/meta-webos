@@ -36,12 +36,20 @@ WEBOS_IMAGE_EXTRA_INSTALL ?= ""
 IMAGE_INSTALL ?= "${WEBOS_IMAGE_BASE_INSTALL}"
 
 # Add ${webos_sysconfdir}/build/image-name during image construction that contains the image name
-ROOTFS_POSTPROCESS_COMMAND += "rootfs_set_image_name ; "
+ROOTFS_POSTPROCESS_COMMAND += "rootfs_set_image_name ; clean_python_installation ; "
 
 # Can be used to echo image name to ${webos_sysconfdir}/build/image-name
 rootfs_set_image_name () {
     mkdir -p ${IMAGE_ROOTFS}${webos_sysconfdir}/build
     echo ${IMAGE_BASENAME} > ${IMAGE_ROOTFS}${webos_sysconfdir}/build/image-name
+}
+
+# cleanup python installation
+clean_python_installation () {
+    for p in `find ${IMAGE_ROOTFS}${libdir} -name "*pyo" `
+    do
+        rm -f $p
+    done
 }
 
 inherit core-image

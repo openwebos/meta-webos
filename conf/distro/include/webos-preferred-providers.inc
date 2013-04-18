@@ -3,9 +3,9 @@
 # Place distro-wide PREFERRED_PROVIDER settings here; place MACHINE-specific
 # settings in <MACHINE>.conf .
 
-# Prefer normal jpeg instead of libjpeg-turbo from meta-oe
-PREFERRED_PROVIDER_jpeg = "jpeg"
-PREFERRED_PROVIDER_jpeg-native = "jpeg-native"
+# Prefer libjpeg-turbo from meta-oe as it provides SIMD optimizations
+PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
+PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
 # Keith says that image does not boot when only one is included
 # TODO: find what is needed from initscripts and merge that to webos-initscripts

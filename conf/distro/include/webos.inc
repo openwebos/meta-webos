@@ -5,6 +5,7 @@ require conf/distro/include/webos-filesystem-paths.inc
 
 require conf/distro/include/webos-component-head.inc
 require conf/distro/include/webos-preferred-providers.inc
+require conf/distro/include/webos-recipe-blacklist.inc
 require conf/distro/include/webos-preferred-versions.inc
 require conf/distro/include/webos-features.inc
 require conf/distro/include/webos-toolchain.inc

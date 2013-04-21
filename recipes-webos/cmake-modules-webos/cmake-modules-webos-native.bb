@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 DESCRIPTION = "CMake modules used by webOS"
 LICENSE = "Apache-2.0"

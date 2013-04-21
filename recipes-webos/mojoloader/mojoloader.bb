@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "JavaScript loader for foundation frameworks and other loadable libraries"
 SECTION = "webos/frameworks"

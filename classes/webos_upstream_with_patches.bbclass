@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 #
 # webos_upstream_with_patches
 #

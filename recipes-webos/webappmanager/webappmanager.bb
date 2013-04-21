@@ -1,4 +1,4 @@
-# (c) Copyright 2010-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2010-2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "WebAppMgr is responsible for running Enyo applications on webOS"
 SECTION = "webos/base"

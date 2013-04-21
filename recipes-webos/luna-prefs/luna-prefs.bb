@@ -1,5 +1,5 @@
-# Copyright (c) 2012  Hewlett-Packard Development Company, L.P.
-# Copyright (c) 2013  LG Electronics
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS preferences manager"
 SECTION = "webos/base"

@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Node.js event-based server-side JavaScript engine"
 HOMEPAGE = "http://nodejs.org"

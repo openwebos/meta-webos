@@ -1,4 +1,4 @@
-# Copyright (c) 2013  LG Electronics, Inc.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 PR_append = "webos4"
 

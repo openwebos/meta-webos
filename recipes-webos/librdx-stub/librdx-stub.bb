@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Stubbed version of the webOS Remote Diagnostics Library"
 SECTION = "webos/libs"

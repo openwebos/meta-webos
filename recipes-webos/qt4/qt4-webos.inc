@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Open webOS edition of the Qt4 cross-platform application framework"
 SECTION = "libs"

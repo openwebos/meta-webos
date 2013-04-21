@@ -1,4 +1,4 @@
-# (c) Copyright 2013  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 
 # LevelDB library for db8 package
 #

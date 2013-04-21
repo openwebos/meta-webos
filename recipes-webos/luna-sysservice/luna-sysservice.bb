@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Provides image manipulation, preference, timezone and ringtone services for Open webOS components"
 SECTION = "webos/base"

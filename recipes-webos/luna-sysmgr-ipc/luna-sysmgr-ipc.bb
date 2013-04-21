@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Open webOS IPC library used by luna-sysmgr"
 SECTION = "webos/base"

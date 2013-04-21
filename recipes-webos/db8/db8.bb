@@ -1,4 +1,4 @@
-#      Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "A userspace service that provides access to the Open webOS database"
 SECTION = "webos/base"

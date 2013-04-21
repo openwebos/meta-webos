@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "A module for nodejs that allows dynamic loading and execution of Javascript files"
 SECTION = "webos/nodejs/module"

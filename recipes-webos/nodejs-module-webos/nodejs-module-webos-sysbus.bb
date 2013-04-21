@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "A module for nodejs that allows Javascript access to the Open webOS system bus"
 SECTION = "webos/nodejs/module"

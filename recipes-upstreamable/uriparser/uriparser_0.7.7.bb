@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SECTION = "uriparser"
 DESCRIPTION = "RFC 3986 compliant URI parsing library"

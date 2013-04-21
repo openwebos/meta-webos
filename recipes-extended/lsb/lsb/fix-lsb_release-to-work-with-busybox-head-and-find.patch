@@ -1,4 +1,4 @@
-# (c) Copyright 2013 LG Electronics
+# Copyright (c) 2013 LG Electronics, Inc.
 
 # Busybox implementation only supports head -1 option if ENABLE_INCLUDE_SUSv2
 # or ENABLE_FEATURE_FANCY_HEAD configuration options are enabled. Also the -and

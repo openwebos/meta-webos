@@ -1,5 +1,5 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
-# (c) Copyright 2013  LG Electronics
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 DESCRIPTION = "Implementation of the Open webOS SmartKey spell checking service using hunspell"
 SECTION = "webos/base"

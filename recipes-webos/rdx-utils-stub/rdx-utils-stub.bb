@@ -1,4 +1,4 @@
-# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "Stubbed implementation of the webOS Remote Diagnostics Utilities"
 SECTION = "webos/base"

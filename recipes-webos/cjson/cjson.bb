@@ -1,5 +1,5 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
-# (c) Copyright 2013 LG Electronics, Inc.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS edition of the open-source json-c library"
 SECTION = "libs"

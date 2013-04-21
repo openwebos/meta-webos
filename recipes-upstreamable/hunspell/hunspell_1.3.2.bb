@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P. 
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SECTION = "libs"
 DESCRIPTION = "Hunspell spell checker and morphological analyzer"

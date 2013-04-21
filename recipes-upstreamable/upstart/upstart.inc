@@ -1,4 +1,4 @@
-# (c) Copyright 2013 LG Electronics
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SECTION = "base"
 PRIORITY = "optional"

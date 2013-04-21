@@ -1,4 +1,4 @@
-# (c) Copyright 2012-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "WebKit supplemental features for Open webOS"
 SECTION = "webos/libs"

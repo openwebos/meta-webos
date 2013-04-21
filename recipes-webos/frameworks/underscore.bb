@@ -1,4 +1,4 @@
-# (c) Copyright 2012  Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
 
 SUMMARY = "The underscore.js utility-belt library for JavaScript made into an Open webOS loadable framework"
 SECTION = "webos/frameworks"

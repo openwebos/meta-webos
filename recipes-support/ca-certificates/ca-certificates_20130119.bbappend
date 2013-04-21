@@ -1,5 +1,5 @@
-# (c) Copyright 2013 Hewlett-Packard Development Company, L.P.
-# (c) Copyright 2013 LG Electronics
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 PR_append = "webos2"

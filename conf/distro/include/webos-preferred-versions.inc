@@ -6,7 +6,7 @@
 #
 
 # Upstream components don't have submissions
-PREFERRED_VERSION_connman ?= "1.4"
+PREFERRED_VERSION_connman ?= "1.12"
 PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
 # Stick to latest udev version provided by oe-core
@@ -91,6 +91,6 @@ PREFERRED_VERSION_underscore ?= "0.6.0-8"
 PREFERRED_VERSION_webappmanager ?= "3.0.0-3"
 PREFERRED_VERSION_webkit-webos ?= "1.3-0.54"
 PREFERRED_VERSION_webkit-supplemental ?= "2.0.0-0.5"
-PREFERRED_VERSION_webos-connman-adapter ?= "1.0.0-7"
+PREFERRED_VERSION_webos-connman-adapter ?= "1.0.0-9"
 PREFERRED_VERSION_webos-initscripts = "2.0.0-123"
 PREFERRED_VERSION_webos-shutdownscripts = "2.0.0-34"

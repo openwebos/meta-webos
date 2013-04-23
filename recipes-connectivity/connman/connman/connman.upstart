@@ -1,0 +1,46 @@
+# Copyright (c) 2013 LG Electronics, Inc.
+
+start on stopped finish
+
+respawn
+
+console output
+
+script
+	DAEMON=/usr/sbin/connmand
+
+	if [ -f /etc/default/connman ] ; then
+		. /etc/default/connman
+	fi
+
+	# to keep connman running
+	EXTRA_PARAM="${EXTRA_PARAM} -n "
+
+	set -e
+
+	nfsroot=0
+
+	exec 9<&0 < /proc/mounts
+	while read dev mtpt fstype rest; do
+		if test $mtpt = "/" ; then
+			case $fstype in
+			    nfs | nfs4)
+				nfsroot=1
+				break
+				;;
+			    *)
+				;;
+			esac
+		fi
+	done
+
+	if test $nfsroot -eq 1 ; then
+		ethn=`ifconfig | grep eth | sed -e "s/\(eth[0-9]\)\(.*\)/\1/"`
+		EXTRA_PARAM="-I $ethn"
+	fi
+	if [ -f /usr/lib/connman/wired-setup ] ; then
+		. /usr/lib/connman/wired-setup
+	fi
+	exec $DAEMON $EXTRA_PARAM
+end script
+

@@ -23,8 +23,10 @@ OECMAKE_SOURCEPATH = "${S}"
 
 # If inheriting from webos_machine_dep, then use a separate build directory for
 # each value of MACHINE (as they'll be different). Note that do_clean() assumes this != ${S}
-OECMAKE_BUILDPATH = "${@ '${S}/BUILD-${MACHINE}' if bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else '${S}/BUILD-${PACKAGE_ARCH}' }"
-OECMAKE_BUILDPATH[vardepvalue] = "${OECMAKE_BUILDPATH}"
+OECMAKE_BUILDPATH_SUBDIR = "${@ 'BUILD-${MACHINE}' if bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else 'BUILD-${PACKAGE_ARCH}' }"
+OECMAKE_BUILDPATH_SUBDIR[vardepvalue] = "${OECMAKE_BUILDPATH_SUBDIR}"
+
+OECMAKE_BUILDPATH = "${S}/${OECMAKE_BUILDPATH_SUBDIR}"
 
 WEBOS_PKGCONFIG_BUILDDIR = "${OECMAKE_BUILDPATH}"
 

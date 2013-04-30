@@ -10,6 +10,7 @@ RRECOMMENDS_${PN} = "\
     trace-cmd \
     kernel-module-oprofile \
     blktrace \
+    bootchart \
     "
 
 # Remove latencytop, because it depends on gtk+ which depends on cairo-xlib, 

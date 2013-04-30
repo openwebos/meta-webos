@@ -5,7 +5,7 @@ DESCRIPTION = "Test components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r11"
+PR = "r12"
 
 inherit packagegroup
 
@@ -100,6 +100,7 @@ VALGRIND_armv7a = "valgrind"
 
 # libpcap is a dependency library for iftop
 RDEPENDS_${PN} = "\
+    bootchart \
     htop \
     iftop \
     libpcap \

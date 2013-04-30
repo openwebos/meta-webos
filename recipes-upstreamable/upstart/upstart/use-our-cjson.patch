@@ -1,0 +1,458 @@
+--- a/configure.ac
++++ b/upstart-1.8/configure.ac
+@@ -48,7 +48,7 @@
+ # 2) New json_tokener_parse_verbose() function required to detect invalid
+ #    JSON (!)
+ #
+-PKG_CHECK_MODULES([JSON], [json >= 0.10])
++PKG_CHECK_MODULES([JSON], [cjson >= 0.10])
+ 
+ AM_CONDITIONAL([HAVE_UDEV], [test "$have_udev" = yes])
+ 
+--- a/init/control.h
++++ b/init/control.h
+@@ -28,7 +28,7 @@
+ #include <nih-dbus/dbus_connection.h>
+ #include <nih-dbus/dbus_message.h>
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ #include "event.h"
+ #include "quiesce.h"
+--- a/init/event.h
++++ b/init/event.h
+@@ -26,7 +26,7 @@
+ #include "session.h"
+ #include "state.h"
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ /**
+  * EventProgress:
+--- a/init/job_class.c
++++ b/init/job_class.c
+@@ -59,7 +59,7 @@
+ #include "com.ubuntu.Upstart.h"
+ #include "com.ubuntu.Upstart.Job.h"
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ extern json_object *json_classes;
+ 
+--- a/init/main.c
++++ b/init/main.c
+@@ -581,6 +581,7 @@
+ 			break;
+ 	}
+ 
++#if 0
+ #ifndef DEBUG
+ 	if (use_session_bus == FALSE && user_mode == FALSE) {
+ 		/* Now that the startup is complete, send all further logging output
+@@ -588,19 +589,19 @@
+ 		 */
+ 		if (system_setup_console (CONSOLE_NONE, FALSE) < 0) {
+ 			NihError *err;
+-			
++
+ 			err = nih_error_get ();
+ 			nih_fatal ("%s: %s", _("Unable to setup standard file descriptors"),
+ 				   err->message);
+ 			nih_free (err);
+-	
++
+ 			exit (1);
+ 		}
+ 
+ 		nih_log_set_logger (logger_kmsg);
+ 	}
+ #endif /* DEBUG */
+-
++#endif // 0
+ 
+ 	/* Generate and run the startup event or read the state from the
+ 	 * init daemon that exec'd us
+--- a/init/process.h
++++ b/init/process.h
+@@ -22,7 +22,7 @@
+ 
+ #include <nih/macros.h>
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ /**
+  * ProcessType:
+--- a/init/session.h
++++ b/init/session.h
+@@ -27,7 +27,7 @@
+ 
+ #include <nih-dbus/dbus_message.h>
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ /**
+  * Session:
+--- a/init/state.c
++++ b/init/state.c
+@@ -398,12 +398,15 @@
+ 	 */
+ 	conf_init ();
+ 
+-	json = json_tokener_parse_verbose (state, &error);
++	// 'our' cjson doesn't have this function - hope it is about the same the non-verbose version
++	// json = json_tokener_parse_verbose  (statei, &error);
++	json = json_tokener_parse (state);
+ 
+ 	if (! json) {
+-		nih_error ("%s: %s",
+-				_("Detected invalid serialisation data"),
+-				json_tokener_error_desc (error));
++		// we seem to always go this way - so don't nag
++		//nih_error ("%s: %s",
++		//		_("Detected invalid serialisation data"),
++		//		json_tokener_error_desc (error));
+ 		return ret;
+ 	}
+ 
+@@ -668,6 +671,9 @@
+  *
+  * Returns: JSON-serialised @array, or NULL on error.
+  **/
++
++// our cjson doesn't have 64-bit funtions
++#if 0
+ json_object *
+ state_serialise_int64_array (int64_t *array, int count)
+ {
+@@ -702,6 +708,7 @@
+ 	return NULL;
+ }
+ 
++#endif // 0
+ /**
+  * state_deserialise_int32_array:
+  *
+@@ -763,6 +770,8 @@
+ 	return -1;
+ }
+ 
++// our cjson doesn't have 64-bit funtions
++#if 0
+ /**
+  * state_deserialise_int64_array:
+  *
+@@ -823,6 +832,7 @@
+ 	nih_free (*array);
+ 	return -1;
+ }
++#endif // 0
+ 
+ /**
+  * state_rlimit_serialise:
+@@ -1086,7 +1096,7 @@
+  * versions of JSON-C defined a number to be the same size as a native
+  * integer (which might be 32-bit or 64-bit). Version 0.10 rectified
+  * this by storing all integer types as 64-bit internally but it does
+- * not define 
++ * not define
+  *
+  * Returns: JSON type.
+  **/
+--- a/init/state.h
++++ b/init/state.h
+@@ -343,7 +343,7 @@
+ #include <nih/alloc.h>
+ #include <nih/list.h>
+ 
+-#include <json.h>
++#include "ujson.h"
+ 
+ /**
+  * STATE_WAIT_SECS:
+@@ -441,11 +441,14 @@
+  * Encode @value as a JSON integer.
+  *
+  * Returns: json_object that encodes @value.
+- */
++
++ our cjson doesn't have 64-bit funtions so extend the comment around macro
+ #define state_new_json_int(value) \
+ 	 (sizeof (value) > sizeof (int) \
+ 	 ? json_object_new_int64 (value) \
+ 	 : json_object_new_int (value))
++*/
++#define state_new_json_int(value) json_object_new_int(value)
+ 
+ 
+ /*
+@@ -530,9 +533,11 @@
+  * XXX: state_get_json_int_var() to ensure portability.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_get_json_int64_var(json, name, var) \
+-	 (_state_get_json_num_var (json, name, int64, var))
++ *
++ * #define state_get_json_int64_var(json, name, var) \
++ * 	 (_state_get_json_num_var (json, name, int64, var))
++ * can't build 64-bit on 32-bit system
++ **/
+ 
+ /**
+  * state_get_json_int_var:
+@@ -545,11 +550,15 @@
+  * Query @json, setting @var to integer value of @name.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
++
+ #define state_get_json_int_var(json, name, var) \
+ 	(sizeof (var) == (size_t)4 \
+ 		? state_get_json_int32_var (json, name, var) \
+ 		: state_get_json_int64_var (json, name, var))
++ * our cjson doesn't have 64-bit funtions
++**/
++
++#define state_get_json_int_var(json, name, var) state_get_json_int32_var (json, name, var)
+ 
+ /**
+  * _state_get_json_num_var_to_obj:
+@@ -603,10 +612,10 @@
+  * XXX: state_get_json_int_var_to_obj() to ensure portability.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_get_json_int64_var_to_obj(json, object, name) \
+-	  (_state_get_json_num_var_to_obj (json, object, name, int64))
+-
++ * our cjson doesn't have 64-bit funtions
++ * #define state_get_json_int64_var_to_obj(json, object, name) \
++ *	  (_state_get_json_num_var_to_obj (json, object, name, int64))
++ **/
+ 
+ /**
+  * state_get_json_int_var_to_obj:
+@@ -619,11 +628,15 @@
+  * @name in @object to its value.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_get_json_int_var_to_obj(json, object, name) \
+-	(sizeof (object->name) == (size_t)4 \
+-		? state_get_json_int32_var_to_obj (json, object, name) \
+-		: state_get_json_int64_var_to_obj (json, object, name))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_get_json_int_var_to_obj(json, object, name) \
++ *	(sizeof (object->name) == (size_t)4 \
++ *		? state_get_json_int32_var_to_obj (json, object, name) \
++ *		: state_get_json_int64_var_to_obj (json, object, name))
++ **/
++
++#define state_get_json_int_var_to_obj(json, object, name) state_get_json_int32_var_to_obj (json, object, name)
+ 
+ /**
+  * state_get_json_string_var:
+@@ -954,9 +967,11 @@
+  * value (which encompasses both 32-bit and 64-bit values).
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_set_json_int64_var_from_obj(json, object, name) \
+-	(state_set_json_num_var_from_obj (json, object, name, int64, int64_t))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_set_json_int64_var_from_obj(json, object, name) \
++ *	(state_set_json_num_var_from_obj (json, object, name, int64, int64_t))
++ **/
+ 
+ /**
+  * state_set_json_int32_var:
+@@ -982,9 +997,11 @@
+  * Add value of 64-bit integer entity @var to @json with name @name.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_set_json_int64_var(json, name, var) \
+-	 (state_set_json_var_full (json, name, var, int64))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_set_json_int64_var(json, name, var) \
++ *	 (state_set_json_var_full (json, name, var, int64))
++ **/
+ 
+ /**
+  * state_set_json_int_var:
+@@ -996,11 +1013,15 @@
+  * Add value of integer entity @var to @json with name @name.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_set_json_int_var(json, name, var) \
+-	(sizeof (var) == (size_t)4 \
+-	? state_set_json_int32_var (json, name, var) \
+-	: state_set_json_int64_var (json, name, var))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_set_json_int_var(json, name, var) \
++ *	(sizeof (var) == (size_t)4 \
++ *	? state_set_json_int32_var (json, name, var) \
++ *	: state_set_json_int64_var (json, name, var))
++ **/
++
++#define state_set_json_int_var(json, name, var) state_set_json_int32_var (json, name, var)
+ 
+ /**
+  * state_set_json_int_var_from_obj:
+@@ -1013,11 +1034,16 @@
+  * @json with stringified @name.
+  *
+  * Returns: TRUE on success, or FALSE on error.
+- **/
+-#define state_set_json_int_var_from_obj(json, object, name) \
+-	(sizeof (object->name) == (size_t)4 \
+-	? state_set_json_int32_var_from_obj (json, object, name) \
+-	: state_set_json_int64_var_from_obj (json, object, name))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_set_json_int_var_from_obj(json, object, name) \
++ *	(sizeof (object->name) == (size_t)4 \
++ *	? state_set_json_int32_var_from_obj (json, object, name) \
++ *	: state_set_json_int64_var_from_obj (json, object, name))
++ **/
++
++
++#define state_set_json_int_var_from_obj(json, object, name)  state_set_json_int32_var_from_obj (json, object, name)
+ 
+ /**
+  * state_set_json_string_var:
+@@ -1083,11 +1109,15 @@
+  * @len: length of @array.
+  *
+  * Returns: JSON-serialised @array, or NULL on error.
+- **/
+-#define state_serialise_int_array(type, array, len) \
+-	(sizeof (type) == (size_t)4 \
+-	 ? state_serialise_int32_array ((int32_t *)array, len) \
+-	 : state_serialise_int64_array ((int64_t *)array, len))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_serialise_int_array(type, array, len) \
++ *	(sizeof (type) == (size_t)4 \
++ * 	 ? state_serialise_int32_array ((int32_t *)array, len) \
++ *	 : state_serialise_int64_array ((int64_t *)array, len))
++ **/
++
++#define state_serialise_int_array(type, array, len) state_serialise_int32_array ((int32_t *)array, len)
+ 
+ /**
+  * state_deserialise_int_array:
+@@ -1102,11 +1132,15 @@
+  * is the same as the size of @type.
+  *
+  * Returns: 0 on success, -1 on ERROR.
+- **/
+-#define state_deserialise_int_array(parent, json, type, array, len) \
+-	(sizeof (type) == (size_t)4 \
+-	 ? state_deserialise_int32_array (parent, json, (int32_t **)array, len) \
+-	 : state_deserialise_int64_array (parent, json, (int64_t **)array, len))
++ *
++ * our cjson doesn't have 64-bit funtions
++ * #define state_deserialise_int_array(parent, json, type, array, len) \
++ *	(sizeof (type) == (size_t)4 \
++ *	 ? state_deserialise_int32_array (parent, json, (int32_t **)array, len) \
++ *	 : state_deserialise_int64_array (parent, json, (int64_t **)array, len))
++ **/
++
++#define state_deserialise_int_array(parent, json, type, array, len) state_deserialise_int32_array (parent, json, (int32_t **)array, len)
+ 
+ NIH_BEGIN_EXTERN
+ 
+@@ -1159,10 +1193,12 @@
+ json_object *
+ state_serialise_int32_array (int32_t *array, int count)
+ 	__attribute__ ((warn_unused_result));
+-
+-json_object *
+-state_serialise_int64_array (int64_t *array, int count)
+-	__attribute__ ((warn_unused_result));
++/*
++ * our cjson doesn't have 64-bit funtions
++ * json_object *
++ * state_serialise_int64_array (int64_t *array, int count)
++ *	__attribute__ ((warn_unused_result));
++ */
+ 
+ int
+ _state_deserialise_str_array (void *parent, json_object *json,
+@@ -1174,16 +1210,19 @@
+ 		int32_t **array, size_t *len)
+ 	__attribute__ ((warn_unused_result));
+ 
+-int
+-state_deserialise_int64_array (void *parent, json_object *json,
+-		int64_t **array, size_t *len)
+-	__attribute__ ((warn_unused_result));
++/*
++ * our cjson doesn't have 64-bit funtions
++ * int
++ * state_deserialise_int64_array (void *parent, json_object *json,
++ *		int64_t **array, size_t *len)
++ *	__attribute__ ((warn_unused_result));
++ */
+ 
+ json_object *
+ state_rlimit_serialise_all (struct rlimit * const *rlimits)
+ 	__attribute__ ((warn_unused_result));
+ 
+-int 
++int
+ state_rlimit_deserialise_all (json_object *json, const void *parent,
+ 			      struct rlimit *(*rlimits)[])
+ 	__attribute__ ((warn_unused_result));
+--- a/init/tests/test_state.c
++++ b/init/tests/test_state.c
+@@ -2252,18 +2252,20 @@
+ 	/*******************************/
+ 	TEST_FEATURE ("explicit 64-bit integer array");
+ 
+-	json = state_serialise_int64_array (array64, size64);
+-	TEST_NE_P (json, NULL);
+-
+-	ret = state_deserialise_int64_array (parent, json,
+-			&new_array64, &new_size);
+-	TEST_EQ (ret, 0);
+-
+-	ret = TEST_CMP_INT_ARRAYS (array64, new_array64, size64, new_size);
+-	TEST_EQ (ret, 0);
+-
+-	json_object_put (json);
+-
++/*
++ * our cjson doesn't have 64-bit funtions
++ *	json = state_serialise_int64_array (array64, size64);
++ *	TEST_NE_P (json, NULL);
++ *
++ *	ret = state_deserialise_int64_array (parent, json,
++ *			&new_array64, &new_size);
++ *	TEST_EQ (ret, 0);
++ *
++ *	ret = TEST_CMP_INT_ARRAYS (array64, new_array64, size64, new_size);
++ *	TEST_EQ (ret, 0);
++ *
++ *	json_object_put (json);
++ */
+ 	/*******************************/
+ 	TEST_FEATURE ("implicit 64-bit integer array");
+ 
+--- a/init/ujson.h
++++ b/init/ujson.h
+@@ -0,0 +1,3 @@
++#include <cjson/json.h>
++
++typedef struct json_object json_object;

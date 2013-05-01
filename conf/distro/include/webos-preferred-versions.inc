@@ -11,6 +11,8 @@ PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "164"
+# valgrind v3.7.0 is not fully supporting arm
+PREFERRED_VERSION_valgrind ?= "3.8.1"
 PREFERRED_VERSION_vboxguestdrivers ?= "4.2.6"
 # Newer upstream meta-oe already has yajl 2.0.3 which isn't compatible with our libpbnjson yet
 # https://github.com/openwebos/libpbnjson/pull/2

@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 luna-webkit-api libpbnjson"
 
+WEBOS_VERSION = "3.0.0-2_af9ae855efd01e3f60b277cd55ee4d1ff5505fb7"
 PR = "r3"
 
 inherit webos_public_repo
@@ -15,7 +16,6 @@ inherit webos_enhanced_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

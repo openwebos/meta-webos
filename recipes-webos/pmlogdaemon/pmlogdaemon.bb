@@ -10,6 +10,7 @@ DEPENDS = "pmloglib zlib glib-2.0 librdx libpbnjson pmloglib-private luna-servic
 # provided by busybox.
 RDEPENDS_${PN} = "busybox"
 
+WEBOS_VERSION = "3.0.0-109_fe389b29eeebfdc0b65584cce96c338ec6e4b312"
 PR = "r7"
 
 inherit webos_component
@@ -19,7 +20,6 @@ inherit webos_cmake
 inherit webos_daemon
 inherit webos_system_bus
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

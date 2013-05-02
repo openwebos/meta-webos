@@ -7,14 +7,16 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "adapterbase browserserver libpng npapi-headers glib-2.0 qt4-webos"
 
-PR = "r8"
+# isis-project components don't have submissions
+PE = "1"
+PV = "0.4"
+SRCREV = "7c4cb757dcaac08a18e0ea1699e2c748710bdbc5"
+PR = "r9"
 
 inherit webos_public_repo
-inherit webos_enhanced_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "BrowserAdapter"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

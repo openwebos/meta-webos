@@ -5,6 +5,7 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
+WEBOS_VERSION = "2.0.0-1.02_9db5f65a072d2f5af7070efbf38af41705232990"
 PR = "r8"
 
 inherit webos_enhanced_submissions
@@ -12,7 +13,6 @@ inherit webos_arch_indep
 inherit webos_machine_dep
 inherit webos_public_repo
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

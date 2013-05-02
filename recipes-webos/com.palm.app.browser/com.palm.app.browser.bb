@@ -5,13 +5,15 @@ SECTION = "webos/apps"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r4"
+# isis-project components don't have submissions
+PE = "1"
+PV = "0.21"
+SRCREV = "0f2a339d30023018d1d0d435b2aa0350a32c83e4"
+PR = "r5"
 
 inherit webos_public_repo
-inherit webos_enhanced_submissions
 inherit webos_arch_indep
 
-WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "isis-browser"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

@@ -11,6 +11,7 @@ VBOX_RDEPENDS = ""
 VBOX_RDEPENDS_qemux86 = "vboxguestdrivers"
 RDEPENDS_${PN} = "lsb ${VBOX_RDEPENDS}"
 
+WEBOS_VERSION = "5.2.0-90_033656269c325add774e920698f23e54bd36520c"
 PR = "r9"
 
 EXTRA_OECMAKE += "-DDISTRO_VERSION:STRING='${DISTRO_VERSION}' -DDISTRO_NAME:STRING='${DISTRO_NAME}' \
@@ -36,7 +37,6 @@ inherit webos_machine_dep
 inherit webos_machine_impl_dep
 inherit webos_core_os_dep
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

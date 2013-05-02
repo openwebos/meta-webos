@@ -9,6 +9,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS = "glib-2.0 curl"
 
+WEBOS_VERSION = "0.7.3-5_719023f7fcf4e97eff594dd73bbf2d6c4de02d09"
 PR = "r1"
 
 inherit webos_upstream_from_repo
@@ -17,6 +18,5 @@ inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_library
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

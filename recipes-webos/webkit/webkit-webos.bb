@@ -7,16 +7,17 @@ LIC_FILES_CHKSUM =  "file://Source/WebCore/LICENSE-LGPL-2.1;md5=a778a33ef338abba
 
 DEPENDS = "qt4-webos luna-service2 sqlite3 gperf-native"
 
-PR = "r12"
+# isis-project components don't have submissions
+PE = "1"
+PV = "0.54"
+PR = "r14"
 
 inherit webos_public_repo
 inherit webos_qmake
-inherit webos_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-# Webkit source is identified by WEBOS_SUBMISSION extracted from PREFERRED_VERSION_${PN}.
-SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${WEBOS_SUBMISSION}s.zip \
+SRC_URI = "${ISIS_PROJECT_DOWNLOAD}/WebKit/WebKit_${PV}s.zip \
   file://0001-Build-fix-with-newer-bison-2.6.patch"
 
 # XXX Expediently patch Tools/Scripts/webkitdirs.pm to remove the

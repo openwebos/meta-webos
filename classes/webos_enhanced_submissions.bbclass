@@ -1,79 +1,53 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
-# 
+#
 # webos_enhanced_submissions
 #
-# Parse a PREFERRED_VERSION_<packagename> in the following format:
+# Parse a WEBOS_VERSION in the following format:
 #
 #    <component-version>-<enhanced-submission>
 #
-# setting WEBOS_COMPONENT_VERSION and WEBOS_SUBMISSION, where
+# where
 # <enhanced-submission> is of the form:
 #
-#    <submission>[_<recipe-PR>]
+#    <submission>_<40-character-revision-hash>
 #
-# Note that until this change can be applied to findPreferredProvider(), the
-# optional _<recipe-PR> can not be used:
+# setting WEBOS_COMPONENT_VERSION, WEBOS_SUBMISSION, WEBOS_GIT_PARAM_TAG, WEBOS_GIT_REPO_TAG, WEBOS_SRCREV, SRCREV, and PV.
 #
-#  diff --git a/lib/bb/providers.py b/lib/bb/providers.py
-#  index 24cb217..b598f02 100644
-#  --- a/lib/bb/providers.py
-#  +++ b/lib/bb/providers.py
-#  @@ -127,7 +127,7 @@ def findPreferredProvider(pn, cfgData, dataCache, pkg_pn = None, item = None):
-#   
-#       preferred_v = localdata.getVar('PREFERRED_VERSION', True)
-#       if preferred_v:
-#  -        m = re.match('(\d+:)*(.*)(_.*)*', preferred_v)
-#  +        m = re.match('(\d+:)*([^_]*)(_.*)*', preferred_v)
-#           if m:
-#               if m.group(1):
-#                   preferred_e = int(m.group(1)[:-1])
-#
-#
-# Explicitly inheriting from this bbclass also implies that the component uses
-# the Open webOS convention for submission tags, i.e., they are of the form:
+# The default tag name is the Open webOS convention for submission tags, i.e., they are of the form:
 #    submissions/<integer>
 # or, when the component has been branched:
 #    submissions/<integer>.<integer>
-# where <integer> does not contain leading zeros. If they are different, inherit
-# from webos_submissions instead.
-#
+# where <integer> does not contain leading zeros.
+# The default can be overridden by setting WEBOS_GIT_REPO_TAG.
 
+inherit webos_submissions
 
-# PV is the first underscore-separated field in PREFERRED_VERSION_<packagename>,
-# i.e., it includes the submission. If there is no PREFERRED_VERSION_<packagename>
-# setting, '0' will be returned.
-def webos_enhsub_get_pv(pn, d):
-    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
-    return preferred_v.split('_')[0]
+# SRCREV is the second underscore-separated field in WEBOS_VERSION.
+def webos_enhsub_get_srcrev(d, webos_v):
+    split_webos_v = webos_v.split('_')
+    webos_git_repo_tag = d.getVar('WEBOS_GIT_REPO_TAG', True) or "submissions/%s" % d.getVar('WEBOS_SUBMISSION', True)
+    if len(split_webos_v) == 1:
+        # If there no hyphen, that means there's no srcrev, return tag name
+        return webos_git_repo_tag
+    srcrev = split_webos_v[1]
+    if (len(srcrev) != 40 or (False in [c in "abcdef0123456789" for c in srcrev])):
+        file = d.getVar('FILE', True)
+        bb.fatal("%s: WEBOS_VERSION needs to end with _<revision-hash> where revision-hash is the 40-character SHA1 identifier of '%s' tag" % (file, webos_git_repo_tag))
+    return srcrev
 
-# The component version is PREFERRED_VERSION_<packagename> with the last hyphen-
-# separated field removed; i.e., it does not include the submission. If there is
-# no PREFERRED_VERSION_<packagename> setting, '0' will be returned.
-def webos_enhsub_get_component_version(pn, d):
-    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
-    split_preferred_v = preferred_v.split('-')
-    if len(split_preferred_v) == 1:
-        # If there's no submission, then the component version can't
-        # contain a hyphen
-        return preferred_v.split('_')[0]
-    return "-".join(split_preferred_v[:-1])
+# Set WEBOS_SRCREV to value from WEBOS_VERSION and then use it as initial value
+# for SRCREV and WEBOS_GIT_PARAM_TAG, this way setting SRCREV in recipe after
+# inheritting this bbclass or from some config file with override will work and
+# checkout right revision without triggering sanity check failure.
+WEBOS_SRCREV = "${@webos_enhsub_get_srcrev(d, '${WEBOS_VERSION}')}"
+SRCREV = "${WEBOS_SRCREV}"
+WEBOS_GIT_PARAM_TAG = "${SRCREV}"
 
-# The submission is the first underscore-separated field in the enhanced
-# submission field, which is the last hyphen-separated field in
-# PREFERRED_VERSION_<packagename>. If there is no PREFERRED_VERSION_<packagename>
-# setting, '0' will be returned.
-def webos_enhsub_get_submission(pn, d):
-    preferred_v = d.getVar('PREFERRED_VERSION_' + pn, True) or '0'
-    split_preferred_v = preferred_v.split('-')
-    if len(split_preferred_v) == 1:
-        # If there no hyphen, that means there's no submission
-        return '0'
-    return split_preferred_v[-1].split('_')[0]
-
-
-PV = "${@webos_enhsub_get_pv('${PN}', d)}"
-PV[vardeps] += "PREFERRED_VERSION_${PN}"
-
-# These two are intended for use in the recipes that inherit this file:
-WEBOS_COMPONENT_VERSION = "${@webos_enhsub_get_component_version('${PN}', d)}"
-WEBOS_SUBMISSION = "${@webos_enhsub_get_submission('${PN}', d)}"
+# When WEBOS_SRCREV isn't SHA-1 show error
+do_fetch[prefuncs] += "webos_srcrev_sanity_check"
+python webos_srcrev_sanity_check() {
+    webos_srcrev = d.getVar('WEBOS_SRCREV', True)
+    if (len(webos_srcrev) != 40 or (False in [c in "abcdef0123456789" for c in webos_srcrev])):
+        file = d.getVar('FILE', True)
+        bb.error("%s: WEBOS_VERSION needs contain SRCREV" % file)
+}

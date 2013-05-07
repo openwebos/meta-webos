@@ -15,6 +15,7 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
+WEBOS_VERSION = "3.0.0-3_1bcdb5bd8b97d148a3e46ae002fcf091b6d202f6"
 PR = "r14"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
@@ -27,7 +28,6 @@ inherit webos_system_bus
 #inherit webos_daemon
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

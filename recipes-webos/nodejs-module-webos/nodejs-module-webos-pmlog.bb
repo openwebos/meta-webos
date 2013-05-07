@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "pmloglib node-gyp-native"
 
+WEBOS_VERSION = "3.0.1-15_7f02b885268a1016a163fd3cd34123cc6f17d54a"
 PR = "r3"
 
 inherit webos_component
@@ -15,7 +16,6 @@ inherit webos_enhanced_submissions
 #inherit webos_cmake
 inherit webos_library
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

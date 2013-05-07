@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos"
 
+WEBOS_VERSION = "2.0.0-0.5_70fb05fd340ab342c5132dc8bfa174dbe6c9d330"
 PR = "r8"
 
 inherit webos_public_repo
@@ -15,7 +16,7 @@ inherit webos_enhanced_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_REPO_TAG = "${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "WebKitSupplemental"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

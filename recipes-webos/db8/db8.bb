@@ -10,6 +10,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
+WEBOS_VERSION = "2.0.0-81_c55a5a3046acb57f77b00530e3b1da257c3f5be2"
 PR = "r14"
 
 # ensure leveldb is installed in image
@@ -26,7 +27,6 @@ inherit webos_system_bus
 
 EXTRA_OECMAKE += "-DWEBOS_CONFIG_BUILD_TESTS:BOOL=TRUE -DWEBOS_DB8_BACKEND:STRING=leveldb"
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

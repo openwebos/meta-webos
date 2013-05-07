@@ -14,12 +14,12 @@ inherit webos_oe_runmake_no_env_override
 inherit webos_enhanced_submissions
 inherit webos_library
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "qt"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE} \
            file://0002-webkit2-set-OUTPUT_DIR-value-if-empty.patch \
 "
 S = "${WORKDIR}/git"
+WEBOS_VERSION = "4.8.3-4_7dd334c87bbc78c32176cafafc8d08a830242704"
 INC_PR = "r22"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"

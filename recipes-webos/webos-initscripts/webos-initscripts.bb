@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 RDEPENDS_${PN} = "upstart"
 
+WEBOS_VERSION = "2.0.0-123_e0a37c804adee5fa58e5ed40d527b08bba912c86"
 PR = "r1"
 
 inherit webos_component
@@ -15,6 +16,5 @@ inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_arch_indep
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

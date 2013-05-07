@@ -5,6 +5,7 @@ LICENSE = "Apache-2.0"
 SECTION = "webos/devel/tools"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
+WEBOS_VERSION = "1.0.0~rc5-16_5d5084fca6179b6365b7c8130809ce66f441bb30"
 PR = "r0"
 
 inherit webos_component
@@ -31,7 +32,6 @@ EXTRA_OECMAKE += "-DWEBOS_COMPONENT_VERSION:STRING=${WEBOS_COMPONENT_VERSION}"
 # Make needs to know that build directory is a subdirectory
 EXTRA_OEMAKE += "-C ${OECMAKE_BUILDPATH}"
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

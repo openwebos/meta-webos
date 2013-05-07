@@ -7,9 +7,10 @@ inherit webos_public_repo
 inherit webos_arch_indep
 inherit webos_enhanced_submissions
 
+WEBOS_VERSION = "1.0.0-0.1_4b9cfe22e7f344db454aa87a53c77ba2e95a1ce5"
 PR = "r0"
 # The tag doesn't follow our normal conventions
-WEBOS_GIT_PARAM_TAG = "v${WEBOS_SUBMISSION}"
+WEBOS_GIT_REPO_TAG = "v${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

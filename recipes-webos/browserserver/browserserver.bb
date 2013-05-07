@@ -9,6 +9,7 @@ DEPENDS = "libpbnjson flex-native qt4-webos webkit-webos jemalloc glib-2.0 pmcer
 # libptmalloc3.so is preloaded by /etc/event.d/browerserver
 RDEPENDS_${PN} = "ptmalloc3 ${VIRTUAL-RUNTIME_browser_fonts}"
 
+WEBOS_VERSION = "3.0.0-0.7.2_e2506f5828457d662853e5aeec9f4f269c9a1952"
 PR = "r10"
 
 inherit webos_public_repo
@@ -17,7 +18,7 @@ inherit webos_daemon
 inherit webos_system_bus
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_REPO_TAG = "${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "BrowserServer"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

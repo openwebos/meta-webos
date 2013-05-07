@@ -7,6 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "libxml2 luna-service2 glib-2.0 cjson sqlite3 "
 
+WEBOS_VERSION = "2.0.0-1.00_a9a7751d97888f88b1b9a0bfa9b7997201d4f4cc"
 PR = "r6"
 
 inherit webos_component
@@ -16,7 +17,6 @@ inherit webos_cmake
 inherit webos_system_bus
 inherit webos_daemon
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

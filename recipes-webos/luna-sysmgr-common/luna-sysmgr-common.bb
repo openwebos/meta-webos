@@ -11,6 +11,7 @@ DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 cjson nyx-lib libpbnjson 
 # http://lists.openembedded.org/pipermail/openembedded-core/2013-July/080893.html
 DEPENDS += "virtual/${TARGET_PREFIX}binutils"
 
+WEBOS_VERSION = "3.0.0-3_197f440025a5c5daa46e2b6857521c42a5d40490"
 PR = "r4"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
@@ -21,7 +22,6 @@ inherit webos_enhanced_submissions
 inherit webos_library
 inherit webos_machine_dep
 
-WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

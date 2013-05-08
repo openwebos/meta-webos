@@ -5,7 +5,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r17"
+PR = "r18"
 
 inherit packagegroup
 
@@ -32,6 +32,7 @@ RCONFLICTS_${PN} += "packagegroup-webos-core"
 VIRTUAL-RUNTIME_webappmanager ?= "webappmanager"
 VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
+VIRTUAL-RUNTIME_webos-compositor ?= "luna-sysmgr"
 
 # we're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only one item
 # and changing that in <distro>-preferred-providers.inc would require .bbappend in meta-<distro>
@@ -58,7 +59,7 @@ RDEPENDS_${PN} = " \
     ${VIRTUAL-RUNTIME_librdx} \
     luna-applauncher \
     luna-init \
-    luna-sysmgr \
+    ${VIRTUAL-RUNTIME_webos-compositor} \
     luna-sysservice \
     luna-systemui \
     luna-universalsearchmgr \

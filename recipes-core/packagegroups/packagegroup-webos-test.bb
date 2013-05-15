@@ -5,7 +5,7 @@ DESCRIPTION = "Test components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r8"
+PR = "r9"
 
 inherit packagegroup
 
@@ -93,8 +93,11 @@ RPROVIDES_${PN} = "task-webos-test"
 RREPLACES_${PN} = "task-webos-test"
 RCONFLICTS_${PN} = "task-webos-test"
 
+# libpcap is a dependency library for iftop
 RDEPENDS_${PN} = "\
     htop \
+    iftop \
+    libpcap \
     ltp \
     netperf \
     nmon \

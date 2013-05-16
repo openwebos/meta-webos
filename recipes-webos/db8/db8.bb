@@ -1,4 +1,4 @@
-# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SUMMARY = "A userspace service that provides access to the Open webOS database"
 SECTION = "webos/base"
@@ -8,9 +8,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # db8 is also the provider for mojodb
 PROVIDES = "mojodb"
 
-DEPENDS = "db luna-service2 jemalloc icu pmloglib curl glib-2.0"
+DEPENDS = "db luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb"
 
-PR = "r9"
+PR = "r10"
 
 inherit webos_component
 inherit webos_public_repo

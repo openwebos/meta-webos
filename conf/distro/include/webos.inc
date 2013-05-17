@@ -34,6 +34,11 @@ KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PV}-${PR}-${MACHINE}-${WEBOS_IMA
 # is the start time of the build or the build number.
 BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 
+# Add WEBOS_DISTRO_RELEASE_CODENAME and WEBOS_DISTRO_BUILD_ID to what's displayed
+# as the "build configuration".
+BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
+
+
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = ""
 WEBOS_DEFAULT_EXTRA_RRECOMMENDS = ""

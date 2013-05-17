@@ -1,0 +1,23 @@
+Index: a/Makefile
+===================================================================
+--- a/Makefile	2013-04-10 15:24:36.000000000 -0700
++++ b/Makefile	2013-04-10 15:25:50.000000000 -0700
+@@ -15,15 +15,15 @@
+ 
+ lib/mallinfo.so: src/mallinfo.c
+ 	@mkdir -p lib
+-	gcc -g -W -Wall -shared -O2 -fPIC  -Wl,-soname,mallinfo.so.0 -o $@ $^
++	$(CC) -g -W -Wall -shared -O2 -fPIC  -Wl,-soname,mallinfo.so.0 -o $@ $^
+ 
+ bin/mem-monitor: src/mem-monitor.c src/mem-monitor-util.c
+ 	@mkdir -p bin
+-	gcc -g -W -Wall -O2 -o $@ $+
++	$(CC) -g -W -Wall -O2 -o $@ $+
+ 
+ bin/mem-cpu-monitor: src/mem-cpu-monitor.c src/sp_report.c
+ 	@mkdir -p bin
+-	gcc -std=c99 -g -W -Wall -O2 -o $@ $+ -lspmeasure
++	$(CC) -std=c99 -g -W -Wall -O2 -o $@ $+ -lspmeasure
+ 
+ install:
+ 	install -d  $(DESTDIR)/usr/bin

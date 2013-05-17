@@ -106,5 +106,6 @@ RDEPENDS_${PN} = "\
     ltp \
     nmon \
     ${PYTHON} \
+    sp-memusage \
     ${VALGRIND} \
 "

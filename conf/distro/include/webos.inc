@@ -16,10 +16,23 @@ EXTRAOPKGCONFIG = ""
 
 WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', None).strip()}"
 
-# All of the types of official build jobs should override this in the following format:
-#  "[prefix-]<build-number>".  The optional [prefix-] identifies different build jobs,
-# for example engineering builds; it is left off for the official build.
+# All of the types of official build jobs should override this in the following
+# format: "[site:][prefix-]<build-number>", where the optional [site:] identifies
+# the build server site, and the optional [prefix-] identifies different build
+# jobs, for example engineering builds; it is left off for the official build.
+# [site>:] is dropped for the authoritative "official" build.
 WEBOS_DISTRO_BUILD_ID ?= "unofficial"
+
+# Only suffix image names with DATETIME when the build is unofficial; otherwise,
+# use WEBOS_DISTRO_BUILD_ID.
+WEBOS_IMAGE_NAME_SUFFIX = "${@ base_conditional( \
+                                  'WEBOS_DISTRO_BUILD_ID', 'unofficial', \
+                                  '${DATETIME}', '${WEBOS_DISTRO_BUILD_ID}', d) }"
+IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
+KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PV}-${PR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
+# Don't rebuild the kernel (or the rootfs) images if the only thing that's changed
+# is the start time of the build or the build number.
+BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = ""

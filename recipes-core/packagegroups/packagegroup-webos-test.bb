@@ -5,7 +5,7 @@ DESCRIPTION = "Test components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r10"
+PR = "r11"
 
 inherit packagegroup
 
@@ -93,6 +93,11 @@ RPROVIDES_${PN} = "task-webos-test"
 RREPLACES_${PN} = "task-webos-test"
 RCONFLICTS_${PN} = "task-webos-test"
 
+VALGRIND = "valgrind"
+# only armv7a is supported
+VALGRIND_arm = ""
+VALGRIND_armv7a = "valgrind"
+
 # libpcap is a dependency library for iftop
 RDEPENDS_${PN} = "\
     htop \
@@ -101,5 +106,5 @@ RDEPENDS_${PN} = "\
     ltp \
     nmon \
     ${PYTHON} \
-    valgrind \
+    ${VALGRIND} \
 "

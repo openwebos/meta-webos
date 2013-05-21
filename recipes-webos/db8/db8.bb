@@ -10,7 +10,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "db luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb"
 
-PR = "r10"
+PR = "r11"
 
 inherit webos_component
 inherit webos_public_repo
@@ -21,7 +21,10 @@ inherit webos_daemon
 inherit webos_library
 inherit webos_system_bus
 
+EXTRA_OECMAKE += "-DWEBOS_CONFIG_BUILD_TESTS:BOOL=TRUE"
+
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
-#FILES_${PN}-dbg += "${libdir}/${PN}/tests/.debug"
+
+FILES_${PN}-dbg += "${libdir}/${PN}/tests/.debug"

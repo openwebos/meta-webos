@@ -10,7 +10,10 @@ PROVIDES = "mojodb"
 
 DEPENDS = "db luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb"
 
-PR = "r11"
+PR = "r12"
+
+# ensure leveldb is installed in image
+RDEPENDS_${PN} = "leveldb"
 
 inherit webos_component
 inherit webos_public_repo

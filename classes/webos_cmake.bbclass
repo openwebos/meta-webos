@@ -38,11 +38,16 @@ WEBOS_TARGET_CORE_OS ?= "rockhopper"
 EXTRA_OECMAKE += "-DWEBOS_COMPONENT_VERSION:STRING=${WEBOS_COMPONENT_VERSION}"
 EXTRA_OECMAKE += "${@ '-DWEBOS_TARGET_CORE_OS:STRING=${WEBOS_TARGET_CORE_OS}' if bb.data.inherits_class('webos_core_os_dep', d) else '' }"
 # XXX Add webos_kernel_dep() to webOS.cmake that adds WEBOS_TARGET_KERNEL_HEADERS to the search path
-EXTRA_OECMAKE += "${@ '-DWEBOS_TARGET_KERNEL_HEADERS:STRING=${STAGING_KERNEL_DIR}/include' if bb.data.inherits_class('webos_kernel_dep', d) and not bb.data.inherits_class('native', d) else '' }"
-EXTRA_OECMAKE += "${@ '-DWEBOS_TARGET_MACHINE:STRING=${MACHINE}' if bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else '' }"
-EXTRA_OECMAKE += "${@ '-DWEBOS_TARGET_MACHINE_IMPL:STRING=${WEBOS_TARGET_MACHINE_IMPL}' if bb.data.inherits_class('webos_machine_impl_dep', d) and not bb.data.inherits_class('native', d) else '' }"
+EXTRA_OECMAKE_KERNEL_HEADERS = "${@ '-DWEBOS_TARGET_KERNEL_HEADERS:STRING=${STAGING_KERNEL_DIR}/include' if bb.data.inherits_class('webos_kernel_dep', d) and not bb.data.inherits_class('native', d) else '' }"
+EXTRA_OECMAKE += "${EXTRA_OECMAKE_KERNEL_HEADERS}"
 
-EXTRA_OECMAKE[vardepvalue] = "${EXTRA_OECMAKE}"
+EXTRA_OECMAKE_MACHINE = "${@ '-DWEBOS_TARGET_MACHINE:STRING=${MACHINE}' if bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else '' }"
+EXTRA_OECMAKE_MACHINE[vardepvalue] = "${EXTRA_OECMAKE_MACHINE}"
+EXTRA_OECMAKE += "${EXTRA_OECMAKE_MACHINE}"
+
+EXTRA_OECMAKE_MACHINE_IMPL = "${@ '-DWEBOS_TARGET_MACHINE_IMPL:STRING=${WEBOS_TARGET_MACHINE_IMPL}' if bb.data.inherits_class('webos_machine_impl_dep', d) and not bb.data.inherits_class('native', d) else '' }"
+EXTRA_OECMAKE_MACHINE_IMPL[vardepvalue] = "${EXTRA_OECMAKE_MACHINE_IMPL}"
+EXTRA_OECMAKE += "${EXTRA_OECMAKE_MACHINE_IMPL}"
 
 # This information is always useful to have around
 EXTRA_OECMAKE += "-Wdev"

@@ -34,12 +34,13 @@ VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 VIRTUAL-RUNTIME_webos-compositor ?= "luna-sysmgr"
 
-# we're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only one item
-# and changing that in <distro>-preferred-providers.inc would require .bbappend in meta-<distro>
-# to do PR/PRINC/PR_append bump anyway so it's easier to change this variable in .bbappend together
-# with bump
-# browserserver, webkit-supplemental, webkit-webos should be added to RDEPENDS of top level components
-# which need them
+# We're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only
+# one item and changing that in <distro>-preferred-providers.inc would require
+# .bbappend in meta-<distro> to do PR/PRINC/PR_append bump anyway so it's easier
+# to change this variable in .bbappend together with bump.
+#
+# XXX browserserver, webkit-supplemental, webkit-webos should be added to the
+# RDEPENDS of the top level components which need them.
 WEBOS_PACKAGESET_BROWSER = " \
     browser-adapter \
     com.palm.app.browser \
@@ -54,6 +55,11 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
     luna-universalsearchmgr \
 "
 
+# nyx-lib needs nyx-modules at runtime, but a runtime dependency is not defined
+# in its recipe because nyx-modules is MACHINE_ARCH (e.g. qemux86), while nyx-lib is
+# TUNE_PKGARCH  (e.g. i586). Instead, it is pulled into the image by adding it here.
+# (There are more details as to why this was done in nyx-lib.bb.)
+
 RDEPENDS_${PN} = " \
     activitymanager \
     app-services \
@@ -64,7 +70,6 @@ RDEPENDS_${PN} = " \
     keyboard-efigs \
     ${VIRTUAL-RUNTIME_librdx} \
     luna-init \
-    ${VIRTUAL-RUNTIME_webos-compositor} \
     luna-sysservice \
     mojolocation-stub \
     mojomail-imap \
@@ -78,12 +83,13 @@ RDEPENDS_${PN} = " \
     pmlogdaemon \
     sleepd \
     ${VIRTUAL-RUNTIME_webappmanager} \
+    ${VIRTUAL-RUNTIME_webos-compositor} \
     webos-connman-adapter \
     webos-shutdownscripts \
     ${WEBOS_PACKAGESET_BROWSER} \
+    ${WEBOS_PACKAGESET_SYSTEMAPPS} \
     ${WEBOS_MISSING_FROM_RDEPENDS} \
     ${WEBOS_FOSS_MISSING_FROM_RDEPENDS} \
-    ${WEBOS_PACKAGESET_SYSTEMAPPS} \
 "
 
 # XXX These non-top-level components must be explicitly added because they are
@@ -130,6 +136,3 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
 # Unused meta-webos components:
 # - glibcurl
 # - libtinyxml
-
-# Unused meta-oe components:
-# - orc

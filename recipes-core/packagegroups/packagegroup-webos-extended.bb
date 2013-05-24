@@ -48,6 +48,12 @@ WEBOS_PACKAGESET_BROWSER = " \
     webkit-webos \
 "
 
+WEBOS_PACKAGESET_SYSTEMAPPS = " \
+    luna-applauncher \
+    luna-systemui \
+    luna-universalsearchmgr \
+"
+
 RDEPENDS_${PN} = " \
     activitymanager \
     app-services \
@@ -57,12 +63,9 @@ RDEPENDS_${PN} = " \
     filecache \
     keyboard-efigs \
     ${VIRTUAL-RUNTIME_librdx} \
-    luna-applauncher \
     luna-init \
     ${VIRTUAL-RUNTIME_webos-compositor} \
     luna-sysservice \
-    luna-systemui \
-    luna-universalsearchmgr \
     mojolocation-stub \
     mojomail-imap \
     mojomail-pop \
@@ -80,6 +83,7 @@ RDEPENDS_${PN} = " \
     ${WEBOS_PACKAGESET_BROWSER} \
     ${WEBOS_MISSING_FROM_RDEPENDS} \
     ${WEBOS_FOSS_MISSING_FROM_RDEPENDS} \
+    ${WEBOS_PACKAGESET_SYSTEMAPPS} \
 "
 
 # XXX These non-top-level components must be explicitly added because they are

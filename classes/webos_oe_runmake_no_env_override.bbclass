@@ -1,4 +1,5 @@
 # Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 #
 # webos_oe_runmake_no_env_override
 #
@@ -6,7 +7,9 @@
 # variables. Inherit this class (before making any assignments to EXTRA_OEMAKE)
 # to disable this. Typically, this is done when using a configurator that
 # generates Makefiles with the expected settings from the environment already
-# assigned to make variables (e.g. qmake).
+# assigned to make variables (e.g. qmake). Another scenario when it's needed is
+# when a Makefile expects to append to the CFLAGS, etc. that are passed in from
+# the environment.
 #
 
 EXTRA_OEMAKE = ""

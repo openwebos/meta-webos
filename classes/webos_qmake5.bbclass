@@ -25,7 +25,7 @@ WEBOS_QMAKE_MACHINE ?= "${MACHINE}"
 WEBOS_QMAKE_TARGET ?= ""
 
 # add only when WEBOS_QMAKE_MACHINE is defined (by default it equals MACHINE)
-EXPORT_WEBOS_QMAKE_MACHINE += "${@ 'export MACHINE=${WEBOS_QMAKE_MACHINE}' if d.getVar('WEBOS_QMAKE_TARGET', True) != '' and bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else '' }"
+EXPORT_WEBOS_QMAKE_MACHINE += "${@ 'export MACHINE=${WEBOS_QMAKE_MACHINE}' if d.getVar('WEBOS_QMAKE_MACHINE', True) != '' and bb.data.inherits_class('webos_machine_dep', d) and not bb.data.inherits_class('native', d) else '' }"
 EXPORT_WEBOS_QMAKE_MACHINE[vardepvalue] = "${EXPORT_WEBOS_QMAKE_MACHINE}"
 
 # add only when WEBOS_QMAKE_TARGET is defined (by default it's empty)

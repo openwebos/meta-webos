@@ -20,9 +20,9 @@ SRC_URI[sha256sum] = "1cc368da85c56a339bb611c566d194e3fdfbab9e8314a85c7d09cc16a6
 
 SRC_URI = "http://upstart.ubuntu.com/download/${PV}/upstart-${PV}.tar.gz"
 
-SRC_URI += "file://upstart/fix-initctl-set-env.patch"
-SRC_URI += "file://upstart/remove-legacy-jobs.patch"
-SRC_URI += "file://upstart/use-our-cjson.patch"
+SRC_URI += "file://fix-initctl-set-env.patch"
+SRC_URI += "file://remove-legacy-jobs.patch"
+SRC_URI += "file://use-our-cjson.patch"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext

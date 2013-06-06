@@ -43,8 +43,11 @@ script
     # dropbear expects /var/log/lastlog, so touch, and use /bin/true
     # in case touch fails, e.g. because /var/log doesn't exist
     [ -e /var/log/lastlog ] || touch /var/log/lastlog || /bin/true
+
+    [ -e /etc/default/dropbear ] && . /etc/default/dropbear
+
     logger "starting dropbear"
-    /usr/sbin/dropbear -F
+    /usr/sbin/dropbear -F ${DROPBEAR_EXTRA_ARGS}
 end script
 
 respawn

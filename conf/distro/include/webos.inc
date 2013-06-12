@@ -14,6 +14,7 @@ require conf/distro/include/webos-repositories.inc
 EXTRAOPKGCONFIG = ""
 
 WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', None).strip()}"
+WEBOS_DISTRO_PRERELEASE ?= "devel"
 
 # All of the types of official build jobs should override this in the following
 # format: "[site:][prefix-]<build-number>", where the optional [site:] identifies

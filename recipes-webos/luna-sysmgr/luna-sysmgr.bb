@@ -15,7 +15,7 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r13"
+PR = "r14"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
@@ -64,12 +64,19 @@ install_launcher3_support() {
         find conf/launcher3/ -maxdepth 1 -name "*.conf" -not -name "*[-]*.conf" -print0 | xargs -0 -I file install -v -m 644 file ${D}${webos_sysconfdir}/launcher3/
     fi
     
+    # and all the platform specific conf files
+    # (no good way to do this with find/xargs, given the <base>-<machine>.conf -> <base>-platform.conf name change needed on the install copy)
+    # (do them all individually)
+    if [ -f conf/launcher3/launcher_icon_layout_settings-${MACHINE}.conf ]
+    then
+        install	-v -m 644 conf/launcher3/launcher_icon_layout_settings-${MACHINE}.conf ${D}${webos_sysconfdir}/launcher3/launcher_icon_layout_settings-platform.conf
+    fi
+
     #install the default designator mapping and tab/page definition - default is in ${webos_sysconfdir}/launcher3/app-keywords-to-designator-map.txt
     if [ -f conf/launcher3/app-keywords-to-designator-map.txt ]
     then
         install -v -m 644 conf/launcher3/app-keywords-to-designator-map.txt ${D}${webos_sysconfdir}/launcher3/
     fi
-    
 }
 
 do_install() {

@@ -153,7 +153,7 @@ Index: ptmalloc3/malloc_utils.c
 + *******************************************************************************
 + * @file malloc_utils.c
 + * 
-+ * Copyright (c) 2010 Palm, Inc. or its subsidiaries.
++ * Copyright (c) 2010-2013 LG Electronics, Inc.
 + * 
 + * @brief Useful malloc utility functions.
 + * 

@@ -1,4 +1,4 @@
-# Copyright (c) 2011-2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2011-2013 LG Electronics, Inc.
 
 SUMMARY = "Kernel logging daemon"
 SECTION = "webos/base"

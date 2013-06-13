@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 DESCRIPTION = "c-ares is a C library that resolves names asynchronously."
 HOMEPAGE = "http://daniel.haxx.se/projects/c-ares/"

@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS Luna System Bus library, daemon, and utilities"
 SECTION = "webos/base"

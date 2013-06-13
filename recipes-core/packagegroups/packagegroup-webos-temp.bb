@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 DESCRIPTION = "Temporary additions to Open webOS images"
 LICENSE = "Apache-2.0"

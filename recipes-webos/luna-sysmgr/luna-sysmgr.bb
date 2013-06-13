@@ -1,4 +1,4 @@
-# Copyright (c) 2010-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2010-2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS System Manager"
 SECTION = "webos/base"

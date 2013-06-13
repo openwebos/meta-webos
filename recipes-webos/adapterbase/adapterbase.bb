@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "A base class library for browser plugins loaded by Open webOS"
 SECTION = "webos/devel"

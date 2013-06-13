@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "libsandbox is a collection of APIs for separating running programs"
 SECTION = "webos/devel"

@@ -1,4 +1,4 @@
-# Copyright (c) 2012 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 DESCRIPTION = "Public headers for multiprocess support in LunaSysMgr"
 LICENSE = "Apache-2.0"

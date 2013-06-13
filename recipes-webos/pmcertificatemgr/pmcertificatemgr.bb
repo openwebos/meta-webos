@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Provides certificate storage and wrapper API on openssl certificate manipulation functions"
 SECTION = "webos/libs"

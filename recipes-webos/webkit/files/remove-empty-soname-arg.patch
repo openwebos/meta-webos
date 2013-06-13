@@ -1,4 +1,4 @@
-# Copyright 2012  Palm, Inc.  All rights reserved.
+# Copyright (c) 2012-2013 LG Electronics, Inc.
 --- a/Tools/Scripts/webkitdirs.pm	2012-09-25 14:27:04.892587462 -0700
 +++ b/Tools/Scripts/webkitdirs.pm	2012-09-25 14:28:40.375387082 -0700
 @@ -2324,7 +2324,11 @@

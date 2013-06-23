@@ -28,7 +28,8 @@ WEBOS_IMAGE_NAME_SUFFIX = "${@ base_conditional( \
                                   'WEBOS_DISTRO_BUILD_ID', 'unofficial', \
                                   '${DATETIME}', '${WEBOS_DISTRO_BUILD_ID}', d) }"
 IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
-KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PV}-${PR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
+KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
+MODULE_IMAGE_BASE_NAME = "modules-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
 # Don't rebuild the kernel (or the rootfs) images if the only thing that's changed
 # is the start time of the build or the build number.
 BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"

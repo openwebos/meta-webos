@@ -1,6 +1,9 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-PR_append = "webos3"
+PR_append = "webos4"
+
+# Assign to PE, because empty PKGE in KERNEL_IMAGE_BASE_NAME causes two hyphens.
+PE = "1"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 

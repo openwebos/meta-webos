@@ -1,0 +1,140 @@
+diff -urN alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc
+--- alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc	2013-04-27 07:48:46.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc	2013-06-05 12:06:29.037187614 +0900
+@@ -632,6 +632,15 @@
+     sigdelset(&waitmask, SIGINT);
+     sigdelset(&waitmask, SIGTERM);
+ 
++// turbok3 : 2013/06/04
++// to emit upstart event for alljoyn services.
++#if 1
++	printf("\n\n###########################################################################\n");
++	printf("alljoyn-daemon : emit upstart event.\n");
++	printf("###########################################################################\n\n\n");
++	system("initctl emit --no-wait alljoyn-daemon-ready");
++#endif
++
+     quit = 0;
+ 
+     while (!quit) {
+diff -urN alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc
+--- alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc	2013-04-27 07:37:12.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc	2013-06-05 12:05:16.401436950 +0900
+@@ -152,6 +152,8 @@
+         return ret;
+     }
+ 
++// do not support the GTK toolkit on webos platform.
++#if 0
+     PRBool supportsXEmbed = PR_FALSE;
+     ret = NPN_GetValue(NULL, NPNVSupportsXEmbedBool, &supportsXEmbed);
+     if ((NPERR_NO_ERROR != ret) || !supportsXEmbed) {
+@@ -165,6 +167,7 @@
+         QCC_LogError(ER_FAIL, ("Toolkit is not Gtk2"));
+         return NPERR_INCOMPATIBLE_VERSION_ERROR;
+     }
++#endif
+ 
+     return ret;
+ }
+diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/alljoyn_js/Makefile
+--- alljoyn-3.3.0-src-org/alljoyn_js/Makefile	2013-04-27 07:37:12.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_js/Makefile	2013-06-05 12:05:16.402436938 +0900
+@@ -20,10 +20,6 @@
+ 
+ all: distclean dist
+ 
+-CC=gcc
+-CXX=g++
+-AR=ar
+-
+ # build configuration
+ ifeq "$(CPU)" "x86"
+     CPU	= x86
+@@ -77,9 +73,9 @@
+ 
+ ifeq "$(CPU)" "x86"
+ # Force 32-bit builds
+-    CXXFLAGS+=-m32 -pthread
+-    CFLAGS+=-m32 -pthread
+-    LINKFLAGS+=-m32 -pthread
++    CXXFLAGS+=-fPIC -pthread
++    CFLAGS+=-fPIC -pthread
++    LINKFLAGS+=-fPIC -pthread
+ else
+     ifeq "$(CPU)" "x86_64"
+         CXXFLAGS+=-m64 -fPIC -pthread
+@@ -106,10 +102,10 @@
+ 
+ # Platform specifics system libs
+ ifeq "$(OS)" "linux"
+-    LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl
++    LIBS := -lrt -lstdc++ -lpthread -lcrypto -lssl
+ endif
+ 
+-INSTALLDIR = $(PWD)/../build/$(OS)/$(CPU)/$(VARIANT)
++INSTALLDIR = $(PWD)/../build/
+ ALLJOYNLIB = $(INSTALLDIR)/dist/lib/liballjoyn.a
+ AJDAEMONLIB = $(INSTALLDIR)/dist/lib/libajdaemon.a
+ BUNDLED_OBJ = $(INSTALLDIR)/dist/lib/BundledDaemon.o
+diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
+--- alljoyn-3.3.0-src-org/Makefile	2013-04-27 07:48:46.000000000 +0900
++++ alljoyn-3.3.0-src-patch/Makefile	2013-06-05 12:05:16.402436938 +0900
+@@ -18,11 +18,8 @@
+ 
+ .PHONY: all dist clean distclean
+ 
+-all: distclean dist
++all: dist
+ 
+-CC=gcc
+-CXX=g++
+-AR=ar
+ 
+ # build configuration
+ ifeq "$(CPU)" "x86"
+@@ -77,8 +74,8 @@
+ 
+ ifeq "$(CPU)" "x86"
+ # Force 32-bit builds
+-    CXXFLAGS+=-m32
+-    CFLAGS+=-m32
++    CXXFLAGS+=-fPIC
++    CFLAGS+=-fPIC
+ else
+     ifeq "$(CPU)" "x86-64"
+         CXXFLAGS+=-m64 -fPIC
+@@ -105,12 +102,12 @@
+ LIBS = -lalljoyn
+ # Platform specifics system libs
+ ifeq "$(OS)" "linux"
+-    LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl
++    LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl -ldl -lm
+ endif
+ 
+ CRYPTO = openssl
+ 
+-INSTALLDIR = $(PWD)/build/$(OS)/$(CPU)/$(VARIANT)
++INSTALLDIR = $(PWD)/build/
+ ALLJOYNLIB = $(INSTALLDIR)/dist/lib/liballjoyn.a
+ COMMONDIR = $(PWD)/common
+ 
+@@ -127,15 +124,14 @@
+ 	@mkdir -p $(INSTALLDIR)/dist/samples
+ 	cd common; make;
+ 	cd alljoyn_core; make;
++	cd alljoyn_js; make;
+ 
+ clean:
+ 	@rm -f $(JUNK)
+ 	cd common; make clean;
+ 	cd alljoyn_core; make clean;
++	cd alljoyn_js; make clean;
+ 
+ distclean: clean
+-	@rm -rf $(INSTALLDIR)/dist/lib
+-	@rm -rf $(INSTALLDIR)/dist/bin
+-	@rm -rf $(INSTALLDIR)/dist/inc
+-	@rm -rf $(INSTALLDIR)/dist/samples
++	@rm -rf $(INSTALLDIR)/dist/*
+ 

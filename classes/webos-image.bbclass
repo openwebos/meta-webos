@@ -51,4 +51,19 @@ clean_python_installation () {
     done
 }
 
+# A hook function to support read-only-rootfs IMAGE_FEATURES
+webos_read_only_rootfs_hook () {
+    # Tweak the mount option and fs_passno for rootfs in fstab
+    sed -i -e '/^[#[:space:]]*\/dev\/root/{s/rw/ro/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' ${IMAGE_ROOTFS}/etc/fstab
+
+    # Change the value of ROOTFS_READ_ONLY in /etc/default/rcS to yes
+    if [ -e ${IMAGE_ROOTFS}/etc/default/rcS ]; then
+         sed -i 's/ROOTFS_READ_ONLY=no/ROOTFS_READ_ONLY=yes/' ${IMAGE_ROOTFS}/etc/default/rcS
+    else
+         bberror "${IMAGE_ROOTFS}/etc/default/rcS not found -- unable to correct the ROOTFS_READ_ONLY environment variable."
+         exit 1
+    fi
+}
+ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "read-only-rootfs", "webos_read_only_rootfs_hook ; ", "", d)}'
+
 inherit core-image

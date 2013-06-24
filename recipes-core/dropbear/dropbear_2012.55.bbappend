@@ -2,13 +2,14 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PR_append = "webos3"
+PR_append = "webos4"
 
 SRC_URI += "file://dropbear.upstart"
 
 do_install_append() {
     install -d ${D}${webos_upstartconfdir}
     install -m 0644 ${WORKDIR}/dropbear.upstart ${D}${webos_upstartconfdir}/dropbear
+    sed -i -e 's:WEBOSPERSISTENTSTORAGEDIR:${webos_persistentstoragedir}:g' ${D}${webos_upstartconfdir}/dropbear
 }
 
 # move startup scripts in different packages

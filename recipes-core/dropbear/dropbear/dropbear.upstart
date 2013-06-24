@@ -25,19 +25,16 @@ console output
 service
 
 script
-    # Current plan is that the dropbear package includes these keys.
-    # This is not secure, but it speeds boots considerably, and
-    # current plan is also that we don't ship with dropbear.  If we do
-    # ship, we'll want to move back to generating keys locally.  So
-    # leave this in.
-    mkdir -p /etc/dropbear
-    if [ ! -f /etc/dropbear/dropbear_rsa_host_key ]; then
-            logger "generating /etc/dropbear/dropbear_rsa_host_key"
-            /usr/sbin/dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key
+    # Store the generated keys in the tree that persists across software updates.
+    # Only generate them once.
+    mkdir -p WEBOSPERSISTENTSTORAGEDIR/dropbear
+    if [ ! -f WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_rsa_host_key ]; then
+        logger "generating WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_rsa_host_key"
+        /usr/sbin/dropbearkey -t rsa -f WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_rsa_host_key
     fi
-    if [ ! -f /etc/dropbear/dropbear_dss_host_key ]; then
-            logger "generating /etc/dropbear/dropbear_dss_host_key"
-            /usr/sbin/dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+    if [ ! -f WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_dss_host_key ]; then
+        logger "generating WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_dss_host_key"
+        /usr/sbin/dropbearkey -t dss -f WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_dss_host_key
     fi
 
     # dropbear expects /var/log/lastlog, so touch, and use /bin/true
@@ -47,8 +44,7 @@ script
     [ -e /etc/default/dropbear ] && . /etc/default/dropbear
 
     logger "starting dropbear"
-    /usr/sbin/dropbear -F ${DROPBEAR_EXTRA_ARGS}
+    /usr/sbin/dropbear -F ${DROPBEAR_EXTRA_ARGS} -d WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_dss_host_key -r WEBOSPERSISTENTSTORAGEDIR/dropbear/dropbear_rsa_host_key
 end script
 
 respawn
-

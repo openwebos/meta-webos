@@ -5,7 +5,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r18"
+PR = "r19"
 
 inherit packagegroup
 
@@ -33,6 +33,7 @@ VIRTUAL-RUNTIME_webappmanager ?= "webappmanager"
 VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 VIRTUAL-RUNTIME_webos-compositor ?= "luna-sysmgr"
+VIRTUAL-RUNTIME_webos-ime ?= "keyboard-efigs"
 
 # We're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only
 # one item and changing that in <distro>-preferred-providers.inc would require
@@ -55,6 +56,7 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
     luna-universalsearchmgr \
 "
 
+
 # nyx-lib needs nyx-modules at runtime, but a runtime dependency is not defined
 # in its recipe because nyx-modules is MACHINE_ARCH (e.g. qemux86), while nyx-lib is
 # TUNE_PKGARCH  (e.g. i586). Instead, it is pulled into the image by adding it here.
@@ -67,7 +69,7 @@ RDEPENDS_${PN} = " \
     core-apps \
     enyo-1.0 \
     filecache \
-    keyboard-efigs \
+    ${VIRTUAL-RUNTIME_webos-ime} \
     ${VIRTUAL-RUNTIME_librdx} \
     luna-init \
     luna-sysservice \

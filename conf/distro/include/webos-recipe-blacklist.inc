@@ -11,4 +11,4 @@
 
 INHERIT += "blacklist"
 
-PNBLACKLIST[mesa-dri]  = "mesa-dri is replaced by mesa"
+include conf/distro/include/webos-recipe-blacklist-world.inc

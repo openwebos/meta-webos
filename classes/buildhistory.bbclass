@@ -326,6 +326,8 @@ buildhistory_get_installed() {
 	# Get list of installed packages
 	pkgcache="$1/installed-packages.tmp"
 	list_installed_packages file | sort > $pkgcache
+	pkgcachearch="$1/installed-packages-arch.tmp"
+	list_installed_packages arch | sort > $pkgcachearch
 
 	cat $pkgcache | awk '{ print $1 }' > $1/installed-package-names.txt
 	if [ -s $pkgcache ] ; then
@@ -347,18 +349,17 @@ buildhistory_get_installed() {
 
 	# Produce installed package sizes list
 	printf "" > $1/installed-package-sizes.tmp
-	cat $pkgcache | while read pkg pkgfile
+	cat $pkgcachearch | while read pkg arch
 	do
-		if [ -f $pkgfile ] ; then
-			pkgsize=`du -k $pkgfile | head -n1 | awk '{ print $1 }'`
-			echo $pkgsize $pkg >> $1/installed-package-sizes.tmp
-		fi
+		size=`oe-pkgdata-util read_values ${TMPDIR}/pkgdata ${TARGET_VENDOR}-${TARGET_OS} "PKGSIZE" ${pkg}_${arch}`
+		echo "$size $pkg" >> $1/installed-package-sizes.tmp
 	done
 	cat $1/installed-package-sizes.tmp | sort -n -r | awk '{print $1 "\tKiB " $2}' > $1/installed-package-sizes.txt
 	rm $1/installed-package-sizes.tmp
 
 	# We're now done with the cache, delete it
 	rm $pkgcache
+	rm $pkgcachearch
 
 	if [ "$2" != "sdk" ] ; then
 		# Produce some cut-down graphs (for readability)

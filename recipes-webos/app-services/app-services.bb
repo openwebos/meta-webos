@@ -5,7 +5,7 @@ SECTION = "webos/services"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r5"
+PR = "r6"
 
 #inherit webos_component
 inherit webos_public_repo
@@ -55,11 +55,13 @@ do_install() {
     cp -vrf com.palm.service.accounts/tempdb/kinds/* ${D}${webos_sysconfdir}/tempdb/kinds/ 2> /dev/null || true
     cp -vrf com.palm.service.accounts/tempdb/permissions/* ${D}${webos_sysconfdir}/tempdb/permissions/ 2> /dev/null || true
 
-# install account service upstart file
-    install -d ${D}${webos_upstartconfdir} 2> /dev/null || true
-    install -m 644 ${S}/com.palm.service.accounts/files/etc/event.d/createLocalAccount ${D}${webos_upstartconfdir}/ 
+# install account service upstart files
+    install -d ${D}${sysconfdir}/event.d 2> /dev/null || true
+    install -m 644 ${S}/com.palm.service.accounts/files/etc/event.d/createLocalAccount ${D}${sysconfdir}/event.d/
+    install -d ${D}${sysconfdir}/init 2> /dev/null || true
+    install -m 644 ${S}/com.palm.service.accounts/files/etc/init/createLocalAccount.conf ${D}${sysconfdir}/init/
 }
 
-FILES_${PN} += "${webos_servicesdir} ${webos_sysconfdir} ${webos_upstartconfdir}"
+FILES_${PN} += "${webos_servicesdir} ${webos_sysconfdir} ${sysconfdir}"
 FILES_${PN} += "${webos_sysbus_pubservicesdir} ${webos_sysbus_prvservicesdir} ${webos_sysbus_prvrolesdir}"
 FILES_${PN} += "${webos_accttemplatesdir}"

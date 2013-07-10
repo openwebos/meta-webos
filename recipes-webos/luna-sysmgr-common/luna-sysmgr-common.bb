@@ -1,4 +1,5 @@
 # Copyright (c) 2012-2013 Hewlett-Packard Development Company, L.P.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SUMMARY = "Library containing common parts of luna-sysmgr and webappmanager"
 SECTION = "webos/libs"
@@ -7,7 +8,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 cjson nyx-lib libpbnjson luna-webkit-api luna-sysmgr-ipc luna-sysmgr-ipc-messages sqlite3 pmloglib librolegen serviceinstaller"
 
-PR = "r3"
+# temporary until we have oe-core with this patch included
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-July/080893.html
+DEPENDS += "virtual/${TARGET_PREFIX}binutils"
+
+PR = "r4"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

@@ -15,7 +15,7 @@ RDEPENDS_${PN} = "ptmalloc3"
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
 
-PR = "r13"
+PR = "r14"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
@@ -159,8 +159,6 @@ do_install() {
         install -v -m 644 conf/luna.conf ${D}${webos_sysconfdir}
         install -v -m 644 conf/lunaAnimations.conf ${D}${webos_sysconfdir}
         install -v -m 644 conf/timezone.txt ${D}${webos_sysconfdir}
-        install -v -m 644 conf/locale.txt ${D}${webos_sysconfdir}
-        install -v -m 644 conf/defaultPreferences.txt ${D}${webos_sysconfdir}
         install -v -m 644 conf/notificationPolicy.conf ${D}${webos_sysconfdir}
         install -v -m 644 conf/persistentWindows.conf ${D}${webos_sysconfdir}
         install -v -m 644 conf/default-launcher-page-layout.json ${D}${webos_sysconfdir}

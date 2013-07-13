@@ -5,7 +5,7 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r7"
+PR = "r8"
 
 #inherit webos_component TODO
 inherit webos_arch_indep
@@ -23,6 +23,9 @@ do_install_append() {
         install -d ${D}${datadir}/fonts
         tar xvzf ${S}/files/conf/fonts/fonts.tgz --directory=${D}${datadir}/fonts
     fi
+    install -d ${D}${webos_sysconfdir}
+    install -v -m 644 ${S}/files/conf/locale.txt ${D}${webos_sysconfdir}
+    install -v -m 644 ${S}/files/conf/defaultPreferences.txt ${D}${webos_sysconfdir}
 }
 
 FILES_${PN} += "${webos_prefix} ${webos_sysconfdir} ${datadir}/fonts"

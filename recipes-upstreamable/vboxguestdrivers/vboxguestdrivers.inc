@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/${VBOX_NAME}/COPYING;md5=e197d5641bb35b29d
 
 DEPENDS = "virtual/kernel"
 
-INC_PR = "r2"
+INC_PR = "r3"
 
 inherit module kernel-module-split
 
@@ -24,6 +24,18 @@ do_export_sources() {
     mkdir -p "${S}"
     ${WORKDIR}/${VBOX_NAME}/src/VBox/Additions/linux/export_modules ${T}/vbox_modules.tar.gz
     tar -C "${S}" -xzf ${T}/vbox_modules.tar.gz
+
+    #add a mount utility to use shared folder from VBox Addition Source Code
+    mkdir -p "${S}/utils"
+    install ${WORKDIR}/${VBOX_NAME}/src/VBox/Additions/linux/sharedfolders/mount.vboxsf.c ${S}/utils
+    install ${WORKDIR}/${VBOX_NAME}/src/VBox/Additions/linux/sharedfolders/vbsfmount.c ${S}/utils
+    install ${S}/../Makefile.utils ${S}/utils/Makefile
+
+}
+
+#add process to compile and install mount utility
+do_compile_append() {
+    oe_runmake -C ${S}/utils
 }
 
 module_do_install() {
@@ -34,10 +46,15 @@ module_do_install() {
     install -m 644 vboxvideo.ko $MODULE_DIR
 }
 
+do_install_append() {
+    install -d ${D}${base_sbindir}
+    install -m 755 ${S}/utils/mount.vboxsf ${D}${base_sbindir}
+}
+
 PACKAGES += "kernel-module-vboxguest kernel-module-vboxsf kernel-module-vboxvideo"
 RDEPENDS_${PN} += "kernel-module-vboxguest kernel-module-vboxsf kernel-module-vboxvideo"
 
-FILES_${PN} = ""
+FILES_${PN} = "${base_sbindir}"
 ALLOW_EMPTY_${PN} = "1"
 
 # autoload if installed

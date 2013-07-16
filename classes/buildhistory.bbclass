@@ -581,12 +581,10 @@ def _webos_append_to_bom(d, srcrevs):
     data['packagelist'] = packages.split()
     
     import pickle
-    bhdir = d.getVar('BUILDHISTORY_DIR', True)
-    if not os.path.exists(bhdir): os.makedirs(bhdir)
-    bompath = os.path.join(bhdir, "WEBOS_BOM_data.pkl")
-    f = open(bompath, "a+b")
-    pickle.dump(data, f)
-    f.close()
+    topdir = d.getVar('TMPDIR', True)
+    bompath = os.path.join(topdir, "WEBOS_BOM_data.pkl")
+    with open(bompath, 'a+b') as f:
+        pickle.dump(data, f)
 
 do_fetch[postfuncs] += "write_srcrev"
 python write_srcrev() {

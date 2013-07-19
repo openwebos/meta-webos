@@ -4,7 +4,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r19"
+PR = "r20"
 
 inherit packagegroup
 
@@ -54,7 +54,6 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
     luna-systemui \
     luna-universalsearchmgr \
 "
-
 
 # nyx-lib needs nyx-modules at runtime, but a runtime dependency is not defined
 # in its recipe because nyx-modules is MACHINE_ARCH (e.g. qemux86), while nyx-lib is
@@ -116,7 +115,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     binutils \
     bzip2 \
     curl \
-    dhcp-client \
     e2fsprogs \
     gzip \
     hunspell \
@@ -132,6 +130,12 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     sqlite3 \
     sysvinit-pidof \
     tzdata \
+"
+
+# These packages that are installed in the qemux86 image only.
+#
+RDEPENDS_${PN}_append_qemux86 = " \
+    dhcp-client \
 "
 
 # Unused meta-webos components:

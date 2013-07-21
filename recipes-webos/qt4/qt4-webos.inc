@@ -20,7 +20,7 @@ SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE} \
            file://0002-webkit2-set-OUTPUT_DIR-value-if-empty.patch \
 "
 S = "${WORKDIR}/git"
-INC_PR = "r20"
+INC_PR = "r21"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"
 
@@ -83,8 +83,8 @@ QT_CONFIG_FLAGS = "${QT4_MACHINE_CONFIG_ARCH_LITE_QPA} \
                    -release -opensource -confirm-license \
                    -no-cups -no-nis -no-exceptions \
                    -no-accessibility -no-qt3support -no-xmlpatterns -no-multimedia -no-phonon -no-phonon-backend \
-                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite -no-sql-psql -no-sql-mysql \
-                   -no-libtiff -no-libmng -no-gstreamer -no-audio-backend -no-gtkstyle \
+                   -no-svg -no-webkit -no-javascript-jit -no-scripttools -no-dbus -no-sql-sqlite -no-sql-sqlite2 -no-sql-psql -no-sql-mysql \
+                   -no-libtiff -no-libmng -no-gstreamer -no-audio-backend -no-gtkstyle -no-openvg \
                    -reduce-relocations -reduce-exports -force-pkg-config -glib -qt-zlib -system-freetype -qt-kbd-linuxinput \
                    -prefix ${prefix} -datadir ${libdir}/qmake-webos \
                    -make 'libs' \

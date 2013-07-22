@@ -176,7 +176,7 @@ python buildhistory_emit_pkghistory() {
 
     packagelist = packages.split()
     if not os.path.exists(pkghistdir):
-        os.makedirs(pkghistdir)
+        bb.utils.mkdirhier(pkghistdir)
     else:
         # Remove files for packages that no longer exist
         for item in os.listdir(pkghistdir):
@@ -276,7 +276,7 @@ def write_pkghistory(pkginfo, d):
 
     pkgpath = os.path.join(pkghistdir, pkginfo.name)
     if not os.path.exists(pkgpath):
-        os.makedirs(pkgpath)
+        bb.utils.mkdirhier(pkgpath)
 
     infofile = os.path.join(pkgpath, "latest")
     with open(infofile, "w") as f:
@@ -595,7 +595,7 @@ python write_srcrev() {
     srcrevs, tag_srcrevs = _get_srcrev_values(d)
     if srcrevs:
         if not os.path.exists(pkghistdir):
-            os.makedirs(pkghistdir)
+            bb.utils.mkdirhier(pkghistdir)
         old_tag_srcrevs = {}
         if os.path.exists(srcrevfile):
             with open(srcrevfile) as f:

@@ -7,7 +7,9 @@
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
-# Keith says that image does not boot when only one is included
+# Fonts used by the browser
+VIRTUAL-RUNTIME_browser_fonts = "isis-fonts"
+
 # TODO: find what is needed from initscripts and merge that to webos-initscripts
 VIRTUAL-RUNTIME_initscripts = "initscripts webos-initscripts"
 

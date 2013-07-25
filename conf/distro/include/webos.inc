@@ -54,6 +54,16 @@ CACHE = "${TMPDIR}/cache/${TCMODE}-${TCLIBC}${@['', '/' + str(d.getVar('MACHINE'
 
 USER_CLASSES ?= ""
 
+# WEBOS_EXTRA_MACHINEOVERRIDES will appear in OVERRIDES before what's added by
+# the machine architecture .inc file, which appears before MACHINE.
+# WEBOS_EXTRA_MACHINEOVERRIDES is set in webos_machine_impl_dep.bbclass . Do it
+# this way instead of just in the bbclass so that the position in OVERRIDES is
+# fixed.
+WEBOS_EXTRA_MACHINEOVERRIDES ?= ""
+MACHINEOVERRIDES =. "${WEBOS_EXTRA_MACHINEOVERRIDES}"
+MACHINEOVERRIDES[vardepsexclude] += "WEBOS_EXTRA_MACHINEOVERRIDES"
+OVERRIDES[vardepsexclude] += "WEBOS_EXTRA_MACHINEOVERRIDES"
+
 OPKGLIBDIR_forcevariable := "${libdir}"
 
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base buildstats-summary"

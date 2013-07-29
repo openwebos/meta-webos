@@ -7,13 +7,14 @@ LIC_FILES_CHKSUM = "file://NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
 
 DEPENDS = "openssl"
 
-PR = "r0"
+PR = "r1"
 
 # Remove xulrunner fetch once [GF-7675] is implemented.
 SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-src.tgz;name=alljoyncore \
            http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/3.6.27/sdk/xulrunner-3.6.27.en-US.linux-i686.sdk.tar.bz2;name=xulrunner-sdk \
            file://alljoyn.pc \
            file://alljoyn.upstart \
+           file://alljoyn.conf \
            file://alljoyn-3.3.0.patch"
 
 SRC_URI[alljoyncore.md5sum] = "bef8485dd65e9a92387d21582be9323d"
@@ -55,6 +56,9 @@ do_install() {
 
     install -d ${D}${webos_upstartconfdir}
     install -v -m 644 ${WORKDIR}/alljoyn.upstart ${D}${webos_upstartconfdir}/alljoyn
+
+    install -d ${D}${sysconfdir}/init
+    install -v -m 644 ${WORKDIR}/alljoyn.conf ${D}${sysconfdir}/init/
 }
 
 # The results of do_compile() are already stripped

@@ -541,6 +541,7 @@ python buildhistory_eventhandler() {
     if isinstance(e, bb.event.BuildCompleted):
         if e.data.getVar('BUILDHISTORY_FEATURES', True).strip():
             if e.data.getVar("BUILDHISTORY_COMMIT", True) == "1":
+                bb.note("Writing buildhistory")
                 bb.build.exec_func("buildhistory_commit", e.data)
 }
 

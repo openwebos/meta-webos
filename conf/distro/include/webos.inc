@@ -57,12 +57,9 @@ OPKGLIBDIR_forcevariable := "${libdir}"
 
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base"
 
-# Drop the unsafe-references-in-binaries and unsafe-references-in-scripts that
-# appear in the default WARN_QA because we don't plan to support a separate
-# partition for /usr. Once oe-core is upgraded to include
-# 2fb58da56e8e7044de21fd10fe9164d204587236, remove this assignment to enable the
-# xorg-driver-abi and textrel checks.
-WARN_QA = "ldflags useless-rpaths rpaths staticdev libdir"
+# Remove version-going-backwards from ERROR_QA when oe-core is upgraded to include:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-August/082351.html
+WARN_QA += "version-going-backwards"
 
 QEMU_TARGETS ?= "arm i386"
 

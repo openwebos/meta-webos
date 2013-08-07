@@ -59,8 +59,18 @@ webos_read_only_rootfs_hook () {
     # Change the value of ROOTFS_READ_ONLY in /etc/default/rcS to yes
     if [ -e ${IMAGE_ROOTFS}/etc/default/rcS ]; then
          sed -i 's/ROOTFS_READ_ONLY=no/ROOTFS_READ_ONLY=yes/' ${IMAGE_ROOTFS}/etc/default/rcS
-    else
-         bberror "${IMAGE_ROOTFS}/etc/default/rcS not found -- unable to correct the ROOTFS_READ_ONLY environment variable."
+    fi
+
+    # Change the value of ROOTFS_READ_ONLY in /etc/init/SetInitEnv.conf to yes
+    if [ -e ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf ]; then
+         sed -i 's/ROOTFS_READ_ONLY="no"/ROOTFS_READ_ONLY="yes"/' ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf
+    fi
+
+    # If both /etc/default/rcS and /etc/init/SetInitEnv.conf are not found,
+    # then ROOTFS_READ_ONLY will not be properly passed to the init process,
+    # and therefore this class file must be modified to remedy that issue.
+    if [ ! -e ${IMAGE_ROOTFS}/etc/default/rcS -a ! -e ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf ]; then
+         bberror "Both ${IMAGE_ROOTFS}/etc/default/rcS and ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf are not found -- unable to correct the ROOTFS_READ_ONLY environment variable."
          exit 1
     fi
 }

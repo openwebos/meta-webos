@@ -2,7 +2,7 @@
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-PR_append = "webos4"
+EXTENDPRAUTO_append = "webos4"
 
 SRC_URI += "file://dropbear.upstart"
 

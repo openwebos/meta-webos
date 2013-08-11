@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = \
 
 inherit webos_public_repo
 inherit webos_oe_runmake_no_env_override
-inherit webos_submissions
+inherit webos_enhanced_submissions
 inherit webos_library
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
@@ -20,7 +20,7 @@ SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE} \
            file://0002-webkit2-set-OUTPUT_DIR-value-if-empty.patch \
 "
 S = "${WORKDIR}/git"
-INC_PR = "r21"
+INC_PR = "r22"
 
 EXTRA_OEMAKE += "-C ${PALM_BUILD_DIR}"
 

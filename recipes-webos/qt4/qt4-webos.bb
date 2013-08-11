@@ -8,11 +8,6 @@ DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib icu openssl"
 
 PR = "${INC_PR}.4"
 
-inherit webos_public_repo
-inherit webos_oe_runmake_no_env_override
-inherit webos_submissions
-inherit webos_library
-
 inherit webos_machine_dep
 
 QT4_MACHINE_CONFIG_ARCH_LITE_QPA = "-qpa"

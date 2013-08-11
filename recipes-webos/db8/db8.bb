@@ -8,9 +8,9 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # db8 is also the provider for mojodb
 PROVIDES = "mojodb"
 
-DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb"
+DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
-PR = "r13"
+PR = "r14"
 
 # ensure leveldb is installed in image
 RDEPENDS_${PN} = "leveldb"

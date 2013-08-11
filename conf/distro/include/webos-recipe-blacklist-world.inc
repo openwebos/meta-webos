@@ -226,6 +226,9 @@ PNBLACKLIST[libglu] = "broken: we don't build libGL with mesa: cannot find -lGL"
 PNBLACKLIST[gst-plugins-gl] = "broken: depends on X11 headers: gstglwindow_x11ES2.c:29:22: fatal error: X11/Xlib.h: No such file or directory"
 # remove this when using libav from libav_git.bb which doesn't create libpostproc packages and DEPENDS on libpostproc
 PNBLACKLIST[libpostproc] = "broken: conflicts with packages created by libav-0.8.4"
+# cloud9 isn't compatible with 0.10 nodejs https://github.com/ajaxorg/cloud9/issues/2741
+# proper fix would be to retain 0.8 version in nodejs8 (like we do with nodejs4_0.4.12) and update cloud9 dependency to nodejs8
+PNBLACKLIST[cloud9] = "broken: isn't compatible with our nodejs"
 
 # cannot blacklist this, too many things depends on it
 #PNBLACKLIST[ltrace] = "broken: error: 'BREAKPOINT_LENGTH' undeclared here (not in a function) "

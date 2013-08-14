@@ -1,17 +1,16 @@
-# Copyright (c) 2013 LG ELectronics, Inc.
+# Copyright (c) 2013 LG Electronics, Inc.
 
 SUMMARY = "AllJoyn Open Source Project"
+DESCRIPTION = "open-source software framework developed by Qualcomm Innovation Center to enable peer-to-peer communication"
 SECTION = "libs/network"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
 
-DEPENDS = "openssl"
+DEPENDS = "openssl xulrunner"
 
-PR = "r1"
+PR = "r2"
 
-# Remove xulrunner fetch once [GF-7675] is implemented.
 SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-src.tgz;name=alljoyncore \
-           http://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/3.6.27/sdk/xulrunner-3.6.27.en-US.linux-i686.sdk.tar.bz2;name=xulrunner-sdk \
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
@@ -20,12 +19,12 @@ SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-s
 SRC_URI[alljoyncore.md5sum] = "bef8485dd65e9a92387d21582be9323d"
 SRC_URI[alljoyncore.sha256sum] = "5605f65abe4bb80b0946192bfb80d9d27838b9f1306227e76d46a714a17b439f"
 
-SRC_URI[xulrunner-sdk.md5sum] = "2fc380eb06874a1051468f84328bfddc"
-SRC_URI[xulrunner-sdk.sha256sum] = "42812d23ebe0fda002926ea5820aa665ad76f5bb3b0fb7d723fba80ce9b6baa8"
 
 S = "${WORKDIR}/alljoyn-${PV}-src"
 
-export GECKO_BASE = "${WORKDIR}/xulrunner-sdk"
+export GECKO_BASE = "${STAGING_INCDIR}/xulrunner-sdk"
+
+# The CPU and OS variables are used to set the build output directory in AllJoyn Makefile
 EXTRA_OEMAKE = "CPU=x86 OS=linux VARIANT=release"
 
 #
@@ -36,7 +35,7 @@ INSANE_SKIP_${PN} += "ldflags"
 
 do_install() {
     install -d ${D}${libdir}
-    install -v ${S}/build/dist/lib/liballjoyn.so ${D}${libdir}
+    oe_libinstall -so -C ${S}/build/dist/lib liballjoyn      ${D}${libdir}
 
     install -d ${D}${sbindir}
     install -v ${S}/build/dist/bin/alljoyn-daemon ${D}${sbindir}
@@ -64,9 +63,5 @@ do_install() {
 # The results of do_compile() are already stripped
 INHIBIT_PACKAGE_STRIP = "1"
 
-# Until [GF-7676] is implemented, only an unversioned liballjoyn.so (without an
-# SONAME) is built => the .so needs to go into ${PN} instead of ${PN}-dev. Note
-# that plugins are always unversioned.
-SOLIBS = "${SOLIBSDEV}"
-FILES_SOLIBSDEV = ""
+# Note that plugins are always unversioned.
 FILES_${PN} += "${webos_browserpluginsdir}/*.so"

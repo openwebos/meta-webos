@@ -1,6 +1,6 @@
 diff -urN alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc
---- alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc	2013-04-27 07:48:46.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc	2013-06-05 12:06:29.037187614 +0900
+--- alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc	2013-07-02 08:31:15.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc	2013-07-02 08:29:34.000000000 +0900
 @@ -632,6 +632,15 @@
      sigdelset(&waitmask, SIGINT);
      sigdelset(&waitmask, SIGTERM);
@@ -17,9 +17,34 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc alljoyn
      quit = 0;
  
      while (!quit) {
+diff -urN alljoyn-3.3.0-src-org/alljoyn_core/src/Makefile alljoyn-3.3.0-src-patch/alljoyn_core/src/Makefile
+--- alljoyn-3.3.0-src-org/alljoyn_core/src/Makefile	2013-07-02 08:30:54.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_core/src/Makefile	2013-07-02 08:29:02.000000000 +0900
+@@ -15,6 +15,8 @@
+ 
+ STATIC_LIB = liballjoyn.a
+ DYNAMIC_LIB = liballjoyn.so
++MAJOR = 0
++MINOR = 1.0
+ 
+ .PHONY: all clean
+ 
+@@ -47,8 +49,10 @@
+ corelib: $(ALLJOYN_CC_OBJS) $(ALLJOYN_C_OBJS)
+ 	$(AR) r $(STATIC_LIB) $(ALLJOYN_CC_OBJS) $(ALLJOYN_C_OBJS) $(COMMON_OBJS)
+ 	cp $(STATIC_LIB) $(INSTALLDIR)/dist/lib
+-	$(CC) -o $(DYNAMIC_LIB) $(CXXFLAGS) $(CPPDEFINES) $(LINKFLAGS) $(INCLUDE)  $(ALLJOYN_CC_OBJS) $(ALLJOYN_C_OBJS) $(COMMON_OBJS) $(LIBS)
+-	cp $(DYNAMIC_LIB) $(INSTALLDIR)/dist/lib
++	$(CC) -Wl,-soname,$(DYNAMIC_LIB).$(MAJOR) -o $(DYNAMIC_LIB).$(MAJOR).$(MINOR) $(CXXFLAGS) $(CPPDEFINES) $(LINKFLAGS) $(INCLUDE)  $(ALLJOYN_CC_OBJS) $(ALLJOYN_C_OBJS) $(COMMON_OBJS) $(LIBS)
++	cp $(DYNAMIC_LIB).$(MAJOR).$(MINOR) $(INSTALLDIR)/dist/lib
++	cd $(INSTALLDIR)/dist/lib && ln -sf $(DYNAMIC_LIB).$(MAJOR).$(MINOR) $(DYNAMIC_LIB)
++	cd $(INSTALLDIR)/dist/lib && ln -sf $(DYNAMIC_LIB).$(MAJOR).$(MINOR) $(DYNAMIC_LIB).$(MAJOR)
+ 
+ clean:
+ 	@rm -f *.o *~ $(STATIC_LIB) $(DYNAMIC_LIB) $(OS_SRC_DIR)/*.o $(OS_SRC_DIR)/linux/*.o
 diff -urN alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc
---- alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc	2013-04-27 07:37:12.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc	2013-06-05 12:05:16.401436950 +0900
+--- alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc	2013-07-02 08:30:46.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc	2013-07-02 08:28:54.000000000 +0900
 @@ -152,6 +152,8 @@
          return ret;
      }
@@ -38,8 +63,8 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc alljoyn-3.3.0-src-pat
      return ret;
  }
 diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/alljoyn_js/Makefile
---- alljoyn-3.3.0-src-org/alljoyn_js/Makefile	2013-04-27 07:37:12.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_js/Makefile	2013-06-05 12:05:16.402436938 +0900
+--- alljoyn-3.3.0-src-org/alljoyn_js/Makefile	2013-07-02 08:30:50.000000000 +0900
++++ alljoyn-3.3.0-src-patch/alljoyn_js/Makefile	2013-07-02 08:28:58.000000000 +0900
 @@ -20,10 +20,6 @@
  
  all: distclean dist
@@ -77,9 +102,32 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/allj
  ALLJOYNLIB = $(INSTALLDIR)/dist/lib/liballjoyn.a
  AJDAEMONLIB = $(INSTALLDIR)/dist/lib/libajdaemon.a
  BUNDLED_OBJ = $(INSTALLDIR)/dist/lib/BundledDaemon.o
+diff -urN alljoyn-3.3.0-src-org/common/Makefile alljoyn-3.3.0-src-patch/common/Makefile
+--- alljoyn-3.3.0-src-org/common/Makefile	2013-07-02 08:30:39.000000000 +0900
++++ alljoyn-3.3.0-src-patch/common/Makefile	2013-07-02 08:28:48.000000000 +0900
+@@ -23,17 +23,10 @@
+ 	cd crypto/$(CRYPTO); make;
+ 
+ 	@mkdir -p $(INSTALLDIR)/dist/inc/qcc
+-	cp inc/qcc/Log.h \
+-       inc/qcc/ManagedObj.h \
+-       inc/qcc/String.h \
+-       inc/qcc/atomic.h \
+-       inc/qcc/SocketWrapper.h \
+-       inc/qcc/platform.h $(INSTALLDIR)/dist/inc/qcc
++	cp inc/qcc/*.h $(INSTALLDIR)/dist/inc/qcc
+ 
+ 	@mkdir -p $(INSTALLDIR)/dist/inc/qcc/$(OS_GROUP)
+-	cp inc/qcc/${OS_GROUP}/atomic.h \
+-       inc/qcc/${OS_GROUP}/platform_types.h \
+-       inc/qcc/${OS_GROUP}/unicode.h $(INSTALLDIR)/dist/inc/qcc/$(OS_GROUP)
++	cp inc/qcc/${OS_GROUP}/* $(INSTALLDIR)/dist/inc/qcc/$(OS_GROUP)
+ 
+ clean:
+ 	cd src; make clean;
 diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
---- alljoyn-3.3.0-src-org/Makefile	2013-04-27 07:48:46.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/Makefile	2013-06-05 12:05:16.402436938 +0900
+--- alljoyn-3.3.0-src-org/Makefile	2013-07-02 08:30:24.000000000 +0900
++++ alljoyn-3.3.0-src-patch/Makefile	2013-07-02 08:28:31.000000000 +0900
 @@ -18,11 +18,8 @@
  
  .PHONY: all dist clean distclean

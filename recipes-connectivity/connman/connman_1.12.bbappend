@@ -2,13 +2,12 @@
 
 INHIBIT_UPDATERCD_BBCLASS = "1"
 
-PR_append = "webos2"
+PR_append = "webos3"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 
 SRC_URI += " \
-    file://connman.upstart \
-    file://0001-wifi-Interface-creation-callback-might-arise-when-it.patch"
+    file://connman.upstart"
 
 do_install_append() {
     install -d ${D}${webos_upstartconfdir}

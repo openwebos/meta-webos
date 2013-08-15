@@ -76,4 +76,44 @@ webos_read_only_rootfs_hook () {
 }
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "read-only-rootfs", "webos_read_only_rootfs_hook ; ", "", d)}'
 
+# Luna-service services should be executable only by user and group,
+# because it'd be possible to hijack them with LD_PRELOAD and
+# fool the hub daemon to raise own LS2-security permissions.
+luna_service2_check_permissions () {
+    # Look for exeName in LS2 roles files, extract paths to service binaries
+    dirs=`cat <<END
+${IMAGE_ROOTFS}${webos_sysbus_prvrolesdir}
+${IMAGE_ROOTFS}${webos_sysbus_pubrolesdir}
+END`
+    services=`find $dirs -name '*.json' | \
+              xargs grep exeName | \
+              sed -n -r 's/^.*"exeName"\s*:\s*"([^"]+)".*$/\1/p' | \
+              sort | uniq`
+    for f in $services
+    do
+        # js is a special service
+        if [ "$f" = 'js' ] ; then
+            continue
+        fi
+        # luna-send-pub and ls-monitor-pub should be executable by everybody
+        if [ "$f" = '/usr/bin/luna-send-pub' -o "$f" = '/usr/bin/ls-monitor-pub'] ; then
+            continue
+        fi
+
+        # Check file permissions of the file. We want that the file ins't
+        # accessible by others:
+        # -rwxr-x--- (0750)
+        if ! perms=`stat -L -c %a ${IMAGE_ROOTFS}$f` 2>/dev/null ; then
+            bbwarn "QA Issue: Unable to check the binary $f mentioned in LS2 role files"
+            continue
+        fi
+        # Get the "other" part of octal permissions
+        world_bits=`echo $perms | cut -c 3-`
+        if [ $world_bits != 0 ]; then
+            bbwarn "QA Issue: LS2 service $f is accessible for the whole world"
+        fi
+    done
+}
+ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("WEBOS_TARGET_MACHINE_IMPL", "hardware", "luna_service2_check_permissions ; ", "", d)}'
+
 inherit core-image

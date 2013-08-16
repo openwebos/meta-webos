@@ -7,11 +7,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos webkit-webos"
 
-PR = "r7"
+PR = "r8"
 
 inherit webos_public_repo
 inherit webos_qmake
-inherit webos_submissions
+inherit webos_enhanced_submissions
 inherit webos_library
 inherit webos_machine_dep
 

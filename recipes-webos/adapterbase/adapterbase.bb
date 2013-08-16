@@ -7,10 +7,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "glib-2.0 npapi-headers"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_public_repo
-inherit webos_submissions
+inherit webos_enhanced_submissions
 inherit webos_library
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"

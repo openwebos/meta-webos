@@ -5,11 +5,11 @@ SECTION = "webos/devel"
 LICENSE = "MPL-1.1"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MPL-1.1;md5=1d38e87ed8d522c49f04e1efe0fab3ab"
 
-inherit webos_public_repo
-inherit webos_submissions
-inherit webos_arch_indep
+PR = "r4"
 
-PR = "r3"
+inherit webos_public_repo
+inherit webos_enhanced_submissions
+inherit webos_arch_indep
 
 WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"

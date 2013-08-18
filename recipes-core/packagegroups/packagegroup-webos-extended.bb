@@ -4,7 +4,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r20"
+PR = "r21"
 
 inherit packagegroup
 
@@ -33,6 +33,7 @@ VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 VIRTUAL-RUNTIME_webos-compositor ?= "luna-sysmgr"
 VIRTUAL-RUNTIME_webos-ime ?= "keyboard-efigs"
+VIRTUAL-RUNTIME_novacomd ?= "novacomd"
 
 # We're not using VIRTUAL-RUNTIME because VIRTUAL-RUNTIME is usually used for only
 # one item and changing that in <distro>-preferred-providers.inc would require
@@ -69,6 +70,7 @@ RDEPENDS_${PN} = " \
     filecache \
     ${VIRTUAL-RUNTIME_webos-ime} \
     ${VIRTUAL-RUNTIME_librdx} \
+    ${VIRTUAL-RUNTIME_novacomd} \
     luna-init \
     luna-sysservice \
     mojolocation-stub \
@@ -76,7 +78,6 @@ RDEPENDS_${PN} = " \
     mojomail-pop \
     mojomail-smtp \
     mojoservicelauncher \
-    novacomd \
     nyx-modules \
     pmklogd \
     pmlogctl \

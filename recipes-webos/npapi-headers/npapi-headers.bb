@@ -11,7 +11,7 @@ inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_arch_indep
 
-WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

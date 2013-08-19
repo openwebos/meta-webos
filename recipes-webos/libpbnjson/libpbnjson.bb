@@ -18,6 +18,6 @@ inherit webos_library
 # These are the defaults, but explicitly specify so that readers know they exist
 EXTRA_OECMAKE += "-DWITH_DOCS:BOOL=FALSE -DWITH_TESTS:BOOL=FALSE"
 
-WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

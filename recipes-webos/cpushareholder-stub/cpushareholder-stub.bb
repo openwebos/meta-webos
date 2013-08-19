@@ -16,6 +16,6 @@ inherit webos_cmake
 inherit webos_arch_indep
 inherit webos_program
 
-WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}" 
+WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

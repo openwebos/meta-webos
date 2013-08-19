@@ -16,7 +16,7 @@ inherit webos_cmake
 inherit webos_library
 inherit webos_machine_impl_dep
 
-WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "mojomail"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git/common"

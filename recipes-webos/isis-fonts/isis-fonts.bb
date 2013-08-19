@@ -9,7 +9,7 @@ inherit webos_enhanced_submissions
 
 PR = "r0"
 # The tag doesn't follow our normal conventions
-WEBOS_GIT_TAG = "v${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "v${WEBOS_SUBMISSION}"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 

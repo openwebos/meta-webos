@@ -81,6 +81,7 @@ IMAGE_FSTYPES := "${@ '${IMAGE_FSTYPES} vmdk' if '${MACHINE}'.startswith('qemux8
 # "tar.bz2 ext3" is added by qemu.inc, replace tar.bz2 with tar.gz in it
 IMAGE_FSTYPES := "${@ ' ${IMAGE_FSTYPES} '.replace(' tar.bz2 ',' tar.gz ') }"
 
+PATH_prepend = "${WEBOS_EXTRA_PATH}"
 
 # Redirect console output to keep it from spewing all over the VirtualBox window
 # (This is added to qemux86 kernel cmdline by openembedded-core/meta/classes/syslinux.bbclass)

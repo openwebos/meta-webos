@@ -13,8 +13,8 @@ inherit webos_enhanced_submissions
 #inherit webos_cmake
 inherit webos_arch_indep
 
-WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
-SRC_URI = "${ENYOJS_GIT_REPO}/${PN};tag=${WEBOS_GIT_TAG}"
+WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
+SRC_URI = "${ENYOJS_GIT_REPO}/${PN};tag=${WEBOS_GIT_PARAM_TAG}"
 S = "${WORKDIR}/git"
 
 do_install() {

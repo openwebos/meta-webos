@@ -15,6 +15,6 @@ inherit webos_machine_impl_dep
 DEPENDS = "${@base_conditional('WEBOS_TARGET_MACHINE_IMPL','host','libusb','nyx-lib',d)}"
 RDEPENDS_${PN} = "${@base_conditional('WEBOS_TARGET_MACHINE_IMPL','emulator','iproute2','',d)}"
 
-WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

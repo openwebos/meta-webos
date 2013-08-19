@@ -13,7 +13,7 @@ inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_library
 
-WEBOS_GIT_TAG = "${WEBOS_SUBMISSION}"
+WEBOS_GIT_PARAM_TAG = "${WEBOS_SUBMISSION}"
 WEBOS_REPO_NAME = "AdapterBase"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

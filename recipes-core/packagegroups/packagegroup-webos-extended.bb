@@ -141,7 +141,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     makedevs \
     ncurses \
     openssl \
-    parted \
     procps \
     psmisc \
     sqlite3 \

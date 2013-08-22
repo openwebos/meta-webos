@@ -25,7 +25,7 @@ PREFERRED_VERSION_yajl ?= "1.0.12"
 # must have a PREFERRED_VERSION with format: <component-version>-<submission>
 PREFERRED_VERSION_adapterbase ?= "3.0.0-0.2"
 PREFERRED_VERSION_activitymanager ?= "2.0.0-112"
-PREFERRED_VERSION_app-services ?= "3.0.1-3"
+PREFERRED_VERSION_app-services ?= "3.0.1-4"
 PREFERRED_VERSION_browser-adapter ?= "3.0.0-0.4"
 PREFERRED_VERSION_browserserver ?= "3.0.0-0.7.2"
 PREFERRED_VERSION_cjson ?= "1.8.0-35"

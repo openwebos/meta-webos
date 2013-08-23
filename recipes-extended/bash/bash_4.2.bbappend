@@ -1,6 +1,6 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
-PR_append = "webos1"
+EXTENDPRAUTO_append = "webos1"
 
 # We don't want bash to ever be /bin/sh: our upstart conf files don't work when
 # it is -- apparently it handles quotes on the command line differently from

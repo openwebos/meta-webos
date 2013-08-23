@@ -1,6 +1,6 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-PR_append = "webos6"
+EXTENDPRAUTO_append = "webos6"
 
 inherit update-alternatives
 ALTERNATIVE_${PN} = "openssl-cnf"

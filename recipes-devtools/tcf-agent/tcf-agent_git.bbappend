@@ -1,6 +1,6 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-PR_append = "webos1"
+EXTENDPRAUTO_append = "webos1"
 
 # Remove epl-v10.html from SRC_URI and LIC_FILES_CHKSUM
 # Revisit this bbappend when oe-core is upgraded to include

@@ -1,6 +1,6 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
-PR_append = "webos1"
+EXTENDPRAUTO_append = "webos1"
 
 PACKAGES = "fuser killall pstree \
             ${PN}-dbg ${PN}-staticdev ${PN} \

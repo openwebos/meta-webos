@@ -1,6 +1,6 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
-PR_append = "webos2"
+EXTENDPRAUTO_append = "webos2"
 
 EXTRA_OECONF =+ " --disable-static"
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
-PR_append = "webos2"
+EXTENDPRAUTO_append = "webos2"
 
 # All the original recipe does is stage a tarball and some autotools files;
 # nothing compiled.

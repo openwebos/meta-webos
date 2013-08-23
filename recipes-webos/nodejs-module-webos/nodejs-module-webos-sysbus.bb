@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "luna-service2 node-gyp-native"
 
-PR = "r3"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo
@@ -42,6 +42,11 @@ FILES_${PN} += "${webos_prefix}/nodejs"
 do_install_append() {
     install -d ${D}${webos_prefix}/nodejs
     ln -svnf ${libdir}/nodejs/palmbus.js ${D}${webos_prefix}/nodejs/
+    # The CMake build did this with macros
+    install -d ${D}${webos_sysbus_prvrolesdir}
+    sed "s|@WEBOS_INSTALL_BINDIR@|$bindir|" < ${S}/files/sysbus/com.palm.nodejs.json.prv.in > ${D}${webos_sysbus_prvrolesdir}/com.palm.nodejs.json
+    install -d ${D}${webos_sysbus_pubrolesdir}
+    sed "s|@WEBOS_INSTALL_BINDIR@|$bindir|" < ${S}/files/sysbus/com.palm.nodejs.json.pub.in > ${D}${webos_sysbus_pubrolesdir}/com.palm.nodejs.json
 }
 
 FILES_${PN} += "${libdir}/nodejs"

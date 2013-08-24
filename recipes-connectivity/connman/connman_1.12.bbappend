@@ -2,7 +2,7 @@
 
 INHIBIT_UPDATERCD_BBCLASS = "1"
 
-EXTENDPRAUTO_append = "webos2"
+PR_append = "webos2"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 

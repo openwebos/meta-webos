@@ -1,6 +1,6 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos1"
+PR_append = "webos1"
 
 # Explictly disable bzip2 support. Backport patch from oe-core
 # http://lists.linuxtogo.org/pipermail/openembedded-core/2013-February/035778.html

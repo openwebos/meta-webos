@@ -1,6 +1,6 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos4"
+PR_append = "webos4"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 

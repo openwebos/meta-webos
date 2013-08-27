@@ -11,12 +11,21 @@ VBOX_RDEPENDS = ""
 VBOX_RDEPENDS_qemux86 = "vboxguestdrivers"
 RDEPENDS_${PN} = "lsb ${VBOX_RDEPENDS}"
 
-PR = "r8"
+PR = "r9"
 
 EXTRA_OECMAKE += "-DDISTRO_VERSION:STRING='${DISTRO_VERSION}' -DDISTRO_NAME:STRING='${DISTRO_NAME}' \
                   -DWEBOS_DISTRO_API_VERSION:STRING='${WEBOS_DISTRO_API_VERSION}' \
                   -DWEBOS_DISTRO_RELEASE_CODENAME:STRING='${WEBOS_DISTRO_RELEASE_CODENAME}' \
                   -DWEBOS_DISTRO_BUILD_ID:STRING='${WEBOS_DISTRO_BUILD_ID}'"
+
+# Only pass in a value for the Manufacturing version if one is actually
+# defined. Otherwise, let the CMake script provide the default value.
+#
+# Defining it to be the empty string will override the default used in
+# the CMake script.
+WEBOS_DISTRO_MANUFACTURING_VERSION ??= ""
+EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_MANUFACTURING_VERSION:STRING="${WEBOS_DISTRO_MANUFACTURING_VERSION}"' \
+                  if d.getVar('WEBOS_DISTRO_MANUFACTURING_VERSION',True) != '' else ''}"
 
 inherit webos_component
 inherit webos_public_repo

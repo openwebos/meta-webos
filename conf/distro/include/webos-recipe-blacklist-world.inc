@@ -394,7 +394,6 @@ PNBLACKLIST[lsbtest] = "rdepends on broken rpm"
 python () {
     if d.getVar('DISTRO', True) == 'webos':
         d.setVarFlag('PNBLACKLIST', 'mesa-demos', 'depends on blacklisted glew')
-        d.setVarFlag('PNBLACKLIST', 'nyx-utils', 'broken: fails to fetch, repo isn\'t public yet')
         d.setVarFlag('PNBLACKLIST', 'weston', 'broken: doesn\'t build with old mesa and without exported FLAGS to disable X11 headers')
 }
 # this syntax doesn't work:

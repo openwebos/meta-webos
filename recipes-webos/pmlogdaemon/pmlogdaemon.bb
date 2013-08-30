@@ -10,13 +10,14 @@ DEPENDS = "pmloglib zlib glib-2.0 librdx libpbnjson pmloglib-private"
 # provided by busybox.
 RDEPENDS_${PN} = "busybox"
 
-PR = "r5"
+PR = "r6"
 
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_daemon
+inherit webos_system_bus
 
 WEBOS_GIT_TAG = "submissions/${WEBOS_SUBMISSION}"
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"

@@ -5,12 +5,12 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "pmloglib zlib glib-2.0 librdx libpbnjson pmloglib-private"
+DEPENDS = "pmloglib zlib glib-2.0 librdx libpbnjson pmloglib-private luna-service2"
 # show_disk_usage.sh script uses mktemp, find, xargs, and du, all of which are
 # provided by busybox.
 RDEPENDS_${PN} = "busybox"
 
-PR = "r6"
+PR = "r7"
 
 inherit webos_component
 inherit webos_public_repo

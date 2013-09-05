@@ -4,7 +4,7 @@ DESCRIPTION = "meta-webos components used in Open webOS"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-PR = "r21"
+PR = "r22"
 
 inherit packagegroup
 
@@ -54,6 +54,12 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
     luna-applauncher \
     luna-systemui \
     luna-universalsearchmgr \
+    app-services \
+    core-apps \
+    mojolocation-stub \
+    mojomail-imap \
+    mojomail-pop \
+    mojomail-smtp \
 "
 
 # nyx-lib needs nyx-modules at runtime, but a runtime dependency is not defined
@@ -63,9 +69,7 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
 
 RDEPENDS_${PN} = " \
     activitymanager \
-    app-services \
     configurator \
-    core-apps \
     enyo-1.0 \
     filecache \
     ${VIRTUAL-RUNTIME_webos-ime} \
@@ -73,10 +77,6 @@ RDEPENDS_${PN} = " \
     ${VIRTUAL-RUNTIME_novacomd} \
     luna-init \
     luna-sysservice \
-    mojolocation-stub \
-    mojomail-imap \
-    mojomail-pop \
-    mojomail-smtp \
     mojoservicelauncher \
     nyx-modules \
     pmklogd \

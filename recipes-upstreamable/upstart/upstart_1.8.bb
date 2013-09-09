@@ -3,7 +3,6 @@
 DESCRIPTION = "Event driven system init"
 SECTION = "base"
 
-PRIORITY = "optional"
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 
@@ -16,7 +15,7 @@ RRECOMMENDS_${PN} = "libupstart"
 # initctl-set-env.patch extends the initctl set-env command => mark its package version
 # to indicate that it's a webOS edition
 PKGV .= "-0webos1"
-PR = "r1"
+PR = "r2"
 
 SRC_URI[md5sum] = "01e3dd4b787d5ec8fcdbe904b2ceec31"
 SRC_URI[sha256sum] = "1cc368da85c56a339bb611c566d194e3fdfbab9e8314a85c7d09cc16a67fc8c3"
@@ -50,9 +49,9 @@ do_install () {
     install -d ${D}${sysconfdir}/init
     install -d ${D}${sysconfdir}/default
     install -d ${D}${sysconfdir}/init.d
-
 }
-ALTERNATIVE_${PN}  = "init"
+
+ALTERNATIVE_${PN}  = "init reboot halt poweroff shutdown telinit"
 
 ALTERNATIVE_LINK_NAME[init] = "${base_sbindir}/init"
 ALTERNATIVE_LINK_NAME[reboot] = "${base_sbindir}/reboot"
@@ -62,8 +61,8 @@ ALTERNATIVE_LINK_NAME[shutdown] = "${base_sbindir}/shutdown"
 ALTERNATIVE_LINK_NAME[telinit] = "${base_sbindir}/telinit"
 
 ALTERNATIVE_PRIORITY[init] = "60"
-ALTERNATIVE_PRIORITY[reboot] = "200"
-ALTERNATIVE_PRIORITY[halt] = "200"
-ALTERNATIVE_PRIORITY[poweroff] = "200"
-ALTERNATIVE_PRIORITY[shutdown] = "200"
-ALTERNATIVE_PRIORITY[telinit] = "200"
+ALTERNATIVE_PRIORITY[reboot] = "210"
+ALTERNATIVE_PRIORITY[halt] = "210"
+ALTERNATIVE_PRIORITY[poweroff] = "210"
+ALTERNATIVE_PRIORITY[shutdown] = "210"
+ALTERNATIVE_PRIORITY[telinit] = "210"

@@ -2,7 +2,6 @@
 
 DESCRIPTION = "Event driven system init"
 SECTION = "base"
-PRIORITY = "optional"
 
 LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
@@ -10,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=4325afd396febcb659c36b49533135d4"
 DEPENDS = ""
 RRECOMMENDS_${PN} += "libupstart upstart-sysvcompat"
 
-PR = "r12"
+PR = "r13"
 
 SRC_URI = "http://upstart.ubuntu.com/download/0.3/upstart-${PV}.tar.bz2;name=upstart \
     http://upstart.ubuntu.com/download/example-jobs/0.3/example-jobs-${PV}.tar.gz;name=compat \
@@ -86,9 +85,9 @@ ALTERNATIVE_LINK_NAME[shutdown] = "${base_sbindir}/shutdown"
 ALTERNATIVE_LINK_NAME[telinit] = "${base_sbindir}/telinit"
 
 ALTERNATIVE_PRIORITY[init] = "60"
-ALTERNATIVE_PRIORITY[reboot] = "200"
-ALTERNATIVE_PRIORITY[halt] = "200"
-ALTERNATIVE_PRIORITY[poweroff] = "200"
-ALTERNATIVE_PRIORITY[shutdown] = "200"
-ALTERNATIVE_PRIORITY[telinit] = "200"
+ALTERNATIVE_PRIORITY[reboot] = "210"
+ALTERNATIVE_PRIORITY[halt] = "210"
+ALTERNATIVE_PRIORITY[poweroff] = "210"
+ALTERNATIVE_PRIORITY[shutdown] = "210"
+ALTERNATIVE_PRIORITY[telinit] = "210"
 

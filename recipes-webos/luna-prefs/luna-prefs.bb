@@ -5,9 +5,9 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "luna-service2 cjson sqlite3 glib-2.0"
+DEPENDS = "luna-service2 cjson sqlite3 glib-2.0 nyx-lib"
 
-PR = "r9"
+PR = "r10"
 
 #inherit webos_component
 inherit webos_public_repo
@@ -23,9 +23,9 @@ SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
 
 PRODUCT_DEVICE_NAME ?= "Open webOS Device"
-PRODUCT_DEVICE_NAME_BRANDED ?= "HP Open webOS Device"
+PRODUCT_DEVICE_NAME_BRANDED ?= "LGE Open webOS Device"
 PRODUCT_DEVICE_NAME_SHORT ?= "webOS Device"
-PRODUCT_DEVICE_NAME_SHORT_BRANDED ?= "HP Open webOS Device"
+PRODUCT_DEVICE_NAME_SHORT_BRANDED ?= "LGE Open webOS Device"
 PRODUCT_DEVICE_NAME_PRODUCT_LINE_NAME ?= "Open webOS Device"
 PRODUCT_DEVICE_NAME_PRODUCT_CLASS ?= "Tablet"
 PRODUCT_DEVICE_NAME_PRODUCT_BROWSER_OS_NAME ?= "Open webOS"

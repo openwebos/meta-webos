@@ -76,6 +76,19 @@ webos_read_only_rootfs_hook () {
 }
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "read-only-rootfs", "webos_read_only_rootfs_hook ; ", "", d)}'
 
+# disable luna-service2 security
+luna_service2_disable_security () {
+    if [ -e ${IMAGE_ROOTFS}${sysconfdir}/luna-service2/ls-public.conf ]; then
+        sed -i '/^\[Security\]$/{N;s/^\[Security\]\nEnabled=true$/[Security]\nEnabled=false/}' \
+            ${IMAGE_ROOTFS}${sysconfdir}/luna-service2/ls-public.conf
+    fi
+    if [ -e ${IMAGE_ROOTFS}${sysconfdir}/luna-service2/ls-private.conf ]; then
+        sed -i '/^\[Security\]$/{N;s/^\[Security\]\nEnabled=true$/[Security]\nEnabled=false/}' \
+            ${IMAGE_ROOTFS}${sysconfdir}/luna-service2/ls-private.conf
+    fi
+}
+ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "luna-service2-disable-security", "luna_service2_disable_security; ", "" ,d)}'
+
 # Luna-service services should be executable only by user and group,
 # because it'd be possible to hijack them with LD_PRELOAD and
 # fool the hub daemon to raise own LS2-security permissions.
@@ -117,3 +130,4 @@ END`
 ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("WEBOS_TARGET_MACHINE_IMPL", "hardware", "luna_service2_check_permissions ; ", "", d)}'
 
 inherit core-image
+

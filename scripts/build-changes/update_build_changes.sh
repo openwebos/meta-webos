@@ -29,7 +29,18 @@ BN=$1
 URL=$2
 
 if [ -n "$URL" ] ; then
-  scp "${URL}/latest_project_baselines.txt" .
+  if ! scp "${URL}/latest_project_baselines.txt" . ; then
+    # create directories on target side
+    TARGET=`echo ${URL} | sed 's/:.*//g'`
+    DIRECTORY=`echo ${URL} | sed 's/.*://g'`
+    echo "Trying to create ${DIRECTORY} ${DIRECTORY}/history on ${TARGET}"
+    ssh ${TARGET} mkdir -p ${DIRECTORY} ${DIRECTORY}/history
+  fi
+fi
+
+if [ ! -f latest_project_baselines.txt ] ; then
+  # create dummy file
+  echo ". origin/master" > latest_project_baselines.txt
 fi
 
 `dirname $0`/build_changes.sh > build_changes.log

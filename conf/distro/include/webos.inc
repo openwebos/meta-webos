@@ -71,7 +71,8 @@ INHERIT_DISTRO ?= "debian devshell sstate license webos_base buildstats-summary"
 
 # Remove version-going-backwards from ERROR_QA when oe-core is upgraded to include:
 # http://lists.openembedded.org/pipermail/openembedded-core/2013-August/082351.html
-WARN_QA_append = " version-going-backwards"
+WARN_QA_append = " version-going-backwards webos-enh-sub-warning"
+ERROR_QA_append = " webos-enh-sub-error"
 
 QEMU_TARGETS ?= "arm i386"
 

@@ -94,10 +94,7 @@ ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "luna-service2
 # fool the hub daemon to raise own LS2-security permissions.
 luna_service2_check_permissions () {
     # Look for exeName in LS2 roles files, extract paths to service binaries
-    dirs=`cat <<END
-${IMAGE_ROOTFS}${webos_sysbus_prvrolesdir}
-${IMAGE_ROOTFS}${webos_sysbus_pubrolesdir}
-END`
+    dirs='${IMAGE_ROOTFS}${webos_sysbus_prvrolesdir} ${IMAGE_ROOTFS}${webos_sysbus_pubrolesdir}'
     services=`find $dirs -name '*.json' | \
               xargs grep exeName | \
               sed -n -r 's/^.*"exeName"\s*:\s*"([^"]+)".*$/\1/p' | \
@@ -109,7 +106,7 @@ END`
             continue
         fi
         # luna-send-pub and ls-monitor-pub should be executable by everybody
-        if [ "$f" = '/usr/bin/luna-send-pub' -o "$f" = '/usr/bin/ls-monitor-pub'] ; then
+        if [ "$f" = '${bindir}/luna-send-pub' -o "$f" = '${bindir}/ls-monitor-pub' ] ; then
             continue
         fi
 
@@ -127,6 +124,8 @@ END`
         fi
     done
 }
+# Since many components restrict permissions only for the real hardware,
+# the permissions of luna services should be checked only for the relevant target.
 ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("WEBOS_TARGET_MACHINE_IMPL", "hardware", "luna_service2_check_permissions ; ", "", d)}'
 
 inherit core-image

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "pmloglib"
 
-WEBOS_VERSION = "3.0.0-16_78a3892b32bc8c9749e3f1d640bf937c37bf9f18"
+WEBOS_VERSION = "3.0.0-17_6ce8ed0938006ed7d1fb3235cb65bc64b713705a"
 PR = "r3"
 
 inherit webos_component

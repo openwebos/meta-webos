@@ -7,7 +7,7 @@ SECTION = "libs"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://COPYING;beginline=7;md5=f2b61f6f29dddc6cffb3a86382ff97b1"
 
-PR = "r0"
+PR = "r1"
 
 inherit autotools pkgconfig cmake
 

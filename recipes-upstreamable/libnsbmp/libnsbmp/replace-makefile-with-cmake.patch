@@ -40,7 +40,7 @@ diff -wurN libnsbmp-0.1.0/Makefile libnsbmp-0.1.0/Makefile
 diff -urN libnsbmp-0.1.0/CMakeLists.txt libnsbmp-0.1.0/CMakeLists.txt
 --- libnsbmp-0.1.0/CMakeLists.txt    2013-04-20 04:07:55.000000000 +0900
 +++ libnsbmp-0.1.0/CMakeLists.txt    2013-08-05 09:59:30.000000000 +0900
-@@ -0,0 +1,36 @@
+@@ -0,0 +1,35 @@
 +# ---
 +# libnsbmp CMake script
 +# by Jinho Lee (jh0506.lee@lge.com)
@@ -71,7 +71,6 @@ diff -urN libnsbmp-0.1.0/CMakeLists.txt libnsbmp-0.1.0/CMakeLists.txt
 +# ---
 +# set properties
 +set_target_properties(nsbmp PROPERTIES SOVERSION ${NSBMP_VERSION})
-+set_target_properties(nsbmp PROPERTIES LINK_FLAGS "-Wl")
 +
 +# ---
 +# install library

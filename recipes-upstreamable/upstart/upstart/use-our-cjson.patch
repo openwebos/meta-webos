@@ -1,3 +1,7 @@
+This (hopefully temporary) fix is necessary due to 'our' cjson's
+32-bit-ness and different name than that expected by the Upstart
+build process.
+We should be able to remove this file when our cjson is removed.
 --- a/configure.ac
 +++ b/upstart-1.8/configure.ac
 @@ -48,7 +48,7 @@

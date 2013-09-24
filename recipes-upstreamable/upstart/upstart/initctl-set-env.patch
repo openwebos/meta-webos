@@ -1,0 +1,52 @@
+Extend the functionality of the set-env command of initctl to process
+multiple NAME=VALUE settings by simply processing all of the strings 
+in args[] instead of just the first.
+--- a/util/initctl.c
++++ b/util/initctl.c
+@@ -1442,6 +1444,7 @@ set_env_action (NihCommand *command, char * const *args)
+ 	char                    *envvar;
+ 	nih_local char         **job_details = NULL;
+ 	int                      ret;
++	int			 argno = 0;				//webOS
+ 
+ 	nih_assert (command != NULL);
+ 	nih_assert (args != NULL);
+@@ -1456,17 +1459,19 @@ set_env_action (NihCommand *command, char * const *args)
+ 	if (! job_details)
+ 		return 1;
+ 
+-	envvar = args[0];
++	envvar = args[argno];						// webOS
+ 
+ 	upstart = upstart_open (NULL);
+ 	if (! upstart)
+ 		return 1;
+ 
+-	ret = upstart_set_env_sync (NULL, upstart, job_details,
+-			envvar, ! retain_var);
+-
+-	if (ret < 0)
+-		goto error;
++	while (NULL != envvar) {					// webOS
++		ret = upstart_set_env_sync (NULL, upstart, job_details,
++				envvar, ! retain_var);
++		if (ret < 0)
++			goto error;
++		envvar = args[++argno];					// webOS
++	}								// webOS
+ 
+ 	return 0;
+ error:
+@@ -3189,9 +3193,9 @@ static NihCommand commands[] = {
+ 	  N_("Discards all changes make to the job environment table, setting it back to its default value."),
+ 	  &env_group, reset_env_options, reset_env_action },
+ 
+-	{ "set-env", N_("VARIABLE[=VALUE]"),
+-	  N_("Set a job environment variable."),
+-	  N_("Adds or updates a variable in the job environment table."),
++	{ "set-env", N_("VARIABLE[=VALUE][ VARIABLE2[=VALUE2]...]"),		// webOS
++	  N_("Set a job environment variable or variables from a list (webOS extension)."),	// webOS
++	  N_("Adds or updates a variable or variables from a list in the job environment table."),	// webOS
+ 	  &env_group, set_env_options, set_env_action },
+ 
+ 	{ "unset-env", N_("VARIABLE"),

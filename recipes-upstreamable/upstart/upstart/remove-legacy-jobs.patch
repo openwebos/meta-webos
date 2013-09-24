@@ -1,3 +1,6 @@
+As we are trying to do away with sysvinit remainders,
+these are not needed.  All the functionality is present
+in our Upstart jobs.
 --- a/Makefile.am
 +++ b/Makefile.am
 @@ -1,6 +1,6 @@

@@ -1,3 +1,7 @@
+This patch fixes (an apparent) bug in Upstart 1.8 that causes the
+undocumented --global extension to the set-env command to fail.
+As one of the major reasons for us to move to Upstart 1.8 was to
+get that ability, this fix is needed.
 --- a/init/control.c
 +++ b/init/control.c
 @@ -1200,12 +1200,16 @@

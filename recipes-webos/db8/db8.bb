@@ -10,7 +10,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
-WEBOS_VERSION = "3.0.0-86_195bb0b1522da045a342e43d504fe0f695328188"
+WEBOS_VERSION = "3.1.0-87_dccf4c596caaad4cf3faeacb4efea41e8ec7a956"
 PR = "r15"
 
 # ensure leveldb is installed in image

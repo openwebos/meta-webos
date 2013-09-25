@@ -7,14 +7,19 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "glib-2.0 libpbnjson"
 
-WEBOS_VERSION = "3.0.1-39_07de3b1e719cdc0bf1c340edf04ed783d6540e7d"
+WEBOS_VERSION = "3.0.1-40_fe99f2fae3c118b5ea7ee4e01598daf625a54d49"
 PR = "r5"
+
+WEBOS_DISTRO_PRERELEASE ??= ""
+EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="${WEBOS_DISTRO_PRERELEASE}"' \
+                  if d.getVar('WEBOS_DISTRO_PRERELEASE',True) != '' else ''}"
 
 inherit webos_component
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake
 inherit webos_library
+inherit webos_prerelease_dep
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

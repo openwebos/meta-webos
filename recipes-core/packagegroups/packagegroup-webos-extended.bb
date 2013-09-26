@@ -130,7 +130,6 @@ RDEPENDS_${PN} = " \
 # aren't actually needed).
 WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     bash \
-    binutils \
     bzip2 \
     curl \
     e2fsprogs \

@@ -63,7 +63,7 @@ webos_read_only_rootfs_hook () {
 
     # Change the value of ROOTFS_READ_ONLY in /etc/init/SetInitEnv.conf to yes
     if [ -e ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf ]; then
-         sed -i 's/ROOTFS_READ_ONLY="no"/ROOTFS_READ_ONLY="yes"/' ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf
+         sed -i 's/ROOTFS_READ_ONLY="*no"*/ROOTFS_READ_ONLY=yes/' ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf
     fi
 
     # If both /etc/default/rcS and /etc/init/SetInitEnv.conf are not found,

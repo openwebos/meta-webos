@@ -1,0 +1,61 @@
+diff -urN alljoyn-3.3.0-src_org/alljoyn_core/daemon/TCPTransport.cc alljoyn-3.3.0-src_patch/alljoyn_core/daemon/TCPTransport.cc
+--- alljoyn-3.3.0-src_org/alljoyn_core/daemon/TCPTransport.cc	2013-04-27 07:48:46.000000000 +0900
++++ alljoyn-3.3.0-src_patch/alljoyn_core/daemon/TCPTransport.cc	2013-09-27 10:20:38.053947022 +0900
+@@ -505,6 +505,9 @@
+ 
+     void SetAuthDone(void)
+     {
++        Timespec tNow;
++        GetTimeNow(&tNow);
++        SetStartTime(tNow);
+         m_authState = AUTH_DONE;
+     }
+ 
+@@ -1445,6 +1448,16 @@
+             continue;
+         }
+ 
++        if (authState == _TCPEndpoint::AUTH_DONE) {
++            Timespec tNow;
++            GetTimeNow(&tNow);
++            if (!ep->GetHasRxSessionMessage() && (ep->GetStartTime() + 2000 < tNow)) {
++                /* This is a zombie connection. Kill it */
++                QCC_DbgHLPrintf(("TCPTransport:: Killing zombie endpoint %s\n", ep->GetUniqueName().c_str()));
++                ep->Stop();
++            }
++        }
++
+         /*
+          * There are two possibilities for the disposition of the RX and
+          * TX threads.  First, they were never successfully started.  In
+diff -urN alljoyn-3.3.0-src_org/alljoyn_core/src/RemoteEndpoint.cc alljoyn-3.3.0-src_patch/alljoyn_core/src/RemoteEndpoint.cc
+--- alljoyn-3.3.0-src_org/alljoyn_core/src/RemoteEndpoint.cc	2013-04-27 07:48:46.000000000 +0900
++++ alljoyn-3.3.0-src_patch/alljoyn_core/src/RemoteEndpoint.cc	2013-09-27 10:20:48.578560167 +0900
+@@ -908,4 +908,13 @@
+     }
+ }
+ 
+-}
+\ No newline at end of file
++bool _RemoteEndpoint::GetHasRxSessionMessage()
++{
++    if (internal) {
++        return internal->hasRxSessionMsg;
++    } else {
++        return false;
++    }
++}
++
++}
+diff -urN alljoyn-3.3.0-src_org/alljoyn_core/src/RemoteEndpoint.h alljoyn-3.3.0-src_patch/alljoyn_core/src/RemoteEndpoint.h
+--- alljoyn-3.3.0-src_org/alljoyn_core/src/RemoteEndpoint.h	2013-04-27 07:48:46.000000000 +0900
++++ alljoyn-3.3.0-src_patch/alljoyn_core/src/RemoteEndpoint.h	2013-09-27 10:21:04.914695885 +0900
+@@ -375,6 +375,8 @@
+      */
+     void SetSessionId(uint32_t sessionId);
+ 
++    bool GetHasRxSessionMessage();
++
+   protected:
+ 
+     /**

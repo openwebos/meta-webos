@@ -8,13 +8,14 @@ LIC_FILES_CHKSUM = "file://NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
 
 DEPENDS = "openssl xulrunner"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-src.tgz;name=alljoyncore \
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
-           file://alljoyn-3.3.0.patch"
+           file://alljoyn-3.3.0.patch \
+           file://fix_cpu_consumption.patch"
 
 SRC_URI[alljoyncore.md5sum] = "bef8485dd65e9a92387d21582be9323d"
 SRC_URI[alljoyncore.sha256sum] = "5605f65abe4bb80b0946192bfb80d9d27838b9f1306227e76d46a714a17b439f"

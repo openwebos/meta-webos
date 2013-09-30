@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 RPROVIDES_${PN} = "rdx-utils"
 
-WEBOS_VERSION = "2.0.0-1_381cc3df3ef488694ec6935492dbc162a557b87b"
+WEBOS_VERSION = "2.0.0-1_51341059f7e53bbff150c728a2ac09daf90edf55"
 PR = "r2"
 
 inherit webos_component

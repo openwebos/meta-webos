@@ -14,7 +14,7 @@ inherit webos_oe_runmake_no_env_override
 inherit webos_enhanced_submissions
 inherit webos_library
 
-WEBOS_VERSION = "4.8.3-4_7dd334c87bbc78c32176cafafc8d08a830242704"
+WEBOS_VERSION = "4.8.3-4_3c858662992358a486499c940f498aa355b75255"
 INC_PR = "r22"
 
 WEBOS_REPO_NAME = "qt"

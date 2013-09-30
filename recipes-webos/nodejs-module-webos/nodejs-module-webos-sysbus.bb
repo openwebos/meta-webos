@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "luna-service2 node-gyp-native"
 
-WEBOS_VERSION = "3.0.1-30_792a8ef9e56d21f8a980b2e4d81e6639ffe235d9"
+WEBOS_VERSION = "3.0.1-30_09eba8060cced26c4045ff55e5cbfa44c22aeac2"
 PR = "r4"
 
 inherit webos_component

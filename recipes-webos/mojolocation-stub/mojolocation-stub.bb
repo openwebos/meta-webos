@@ -5,7 +5,7 @@ SECTION = "webos/services"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-WEBOS_VERSION = "2.0.0-2_717d6e57e7a5bd528cf4bef07027a4e6e7b53f08"
+WEBOS_VERSION = "2.0.0-2_8d6e78b68385f729c0305f79f20fde3e30645c50"
 PR = "r4"
 
 #inherit webos_component

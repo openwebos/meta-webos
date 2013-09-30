@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "librolegen glib-2.0 libpbnjson luna-service2"
 
-WEBOS_VERSION = "2.0.0-2_a579f1ee97a839dd501b4b8abc206ebb48f634cb"
+WEBOS_VERSION = "2.0.0-2_0a0484add41dad82c0775419f291c5420326ab46"
 PR = "r2"
 
 inherit webos_component

@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 luna-webkit-api libpbnjson"
 
-WEBOS_VERSION = "3.0.0-2_af9ae855efd01e3f60b277cd55ee4d1ff5505fb7"
+WEBOS_VERSION = "3.0.0-2_189da3d92122c19aae9fa2343a7977c972b2e6bb"
 PR = "r3"
 
 inherit webos_public_repo

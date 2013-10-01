@@ -429,7 +429,7 @@ END
 	echo "IMAGESIZE = $imagesize" >> ${BUILDHISTORY_DIR_IMAGE}/image-info.txt
 
 	# Add some configuration information
-	echo "${MACHINE}: ${IMAGE_BASENAME} configured for ${DISTRO} ${DISTRO_VERSION}" > ${BUILDHISTORY_DIR_IMAGE}/build-id
+	echo "${MACHINE}: ${IMAGE_BASENAME} configured for ${DISTRO} ${DISTRO_VERSION}" > ${BUILDHISTORY_DIR_IMAGE}/build-id.txt
 
 	cat >> ${BUILDHISTORY_DIR_IMAGE}/build-id.txt <<END
 ${@buildhistory_get_layers(d)}

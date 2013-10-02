@@ -5,12 +5,12 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "luna-service2 libpbnjson qt4-webos uriparser libxml2 sqlite3 pmloglib cjson"
+DEPENDS = "luna-service2 libpbnjson qt4-webos uriparser libxml2 sqlite3 pmloglib cjson nyx-lib"
 
 RDEPENDS_${PN} = "sntp"
 
 WEBOS_VERSION = "2.0.1-14_a26a604fb0c52a68eec5357fbf69090100e0fed2"
-PR = "r9"
+PR = "r10"
 
 inherit webos_component
 inherit webos_public_repo

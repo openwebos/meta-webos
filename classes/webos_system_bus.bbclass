@@ -16,8 +16,6 @@
 #     skipped.
 #
 
-RDEPENDS_${PN} += "luna-service2"
-
 webos_system_bus_install_files () {
     local _LS_PRV_DIR="${D}$1"    # destination directory for private hub files
     local _LS_PUB_DIR="${D}$2"    # destination directory for public hub files
@@ -68,3 +66,11 @@ do_install_append () {
 
 FILES_${PN} += "${webos_sysbus_prvservicesdir} ${webos_sysbus_pubservicesdir}"
 FILES_${PN} += "${webos_sysbus_prvrolesdir}    ${webos_sysbus_pubrolesdir}"
+
+sysroot_stage_dirs_append() {
+    # $to is 2nd parameter passed to sysroot_stage_dir, e.g. ${SYSROOT_DESTDIR} passed from sysroot_stage_all
+    rm -rf $to${webos_sysbus_prvservicesdir}
+    rm -rf $to${webos_sysbus_pubservicesdir}
+    rm -rf $to${webos_sysbus_prvrolesdir}
+    rm -rf $to${webos_sysbus_pubrolesdir}
+}

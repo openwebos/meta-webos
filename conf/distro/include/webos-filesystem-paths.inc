@@ -52,6 +52,8 @@ export webos_servicesdir = "${prefix}/palm/services"
 export webos_soundsdir = "${prefix}/palm/sounds"
 export webos_sysmgrdir = "${prefix}/palm/sysmgr"
 
+# Note that everything under localstatedir is erased by a NYX_SYSTEM_ERASE_VAR
+# erasure.
 export webos_db8datadir = "${localstatedir}/db"
 export webos_filecachedir = "${localstatedir}/file-cache"
 export webos_preferencesdir = "${localstatedir}/preferences"
@@ -64,15 +66,21 @@ export webos_sysbus_dynpubservicesdir = "${localstatedir}/palm/ls2/services/pub"
 export webos_sysbus_dynprvservicesdir = "${localstatedir}/palm/ls2/services/prv"
 export webos_sysbus_dynpubrolesdir = "${localstatedir}/palm/ls2/roles/pub"
 export webos_sysbus_dynprvrolesdir = "${localstatedir}/palm/ls2/roles/prv"
+export webos_sysbus_devpubservicesdir = "${localstatedir}/palm/ls2-dev/services/pub"
+export webos_sysbus_devprvservicesdir = "${localstatedir}/palm/ls2-dev/services/prv"
+export webos_sysbus_devpubrolesdir = "${localstatedir}/palm/ls2-dev/roles/pub"
+export webos_sysbus_devprvrolesdir = "${localstatedir}/palm/ls2-dev/roles/prv"
 
 export webos_sysmgr_datadir = "${libdir}/luna"
 export webos_sysmgr_localstatedir = "${localstatedir}/luna"
 
 export webos_cryptofsdir = "${webos_mediadir}/cryptofs"
+
+# Everything under this tree is erased by a NYX_SYSTEM_ERASE_VAR erasure.
 export webos_browserstoragedir = "${webos_cryptofsdir}/.browser"
 
 # This is the tree for components downloaded from the app catalog; everything
-# under this tree persists across software updates.
+# under this tree is erased by a NYX_SYSTEM_ERASE_VAR erasure.
 export webos_downloadeddir = "${webos_cryptofsdir}/apps"
 # The old name for webos_downloadeddir
 export webos_appstoragedir = "${webos_downloadeddir}"
@@ -84,14 +92,18 @@ export webos_downloaded_pluginsdir = "${webos_downloadeddir}/usr/palm/plugins"
 export webos_downloaded_servicesdir = "${webos_downloadeddir}/usr/palm/services"
 
 # The specs for webos_execstatedir apply to this location with the additional
-# constraint that everything under this tree persists across software updates.
-# Note that this is not the case for anything under localstatedir, including
-# even the existence of the standard directory names.
+# constraint that everything under this tree persists a NYX_SYSTEM_ERASE_VAR
+# erasure. It is only deleted by a NYX_SYSTEM_ERASE_ALL erasure.
 export webos_persistentstoragedir = "${webos_cryptofsdir}/data"
 
 # On devices that support it, this tree is externally mountable as (USB) mass
 # storage. Applications that want their data to be visible in this manner should
-# store them here instead of under webos_persistentstoragedir.
+# store them here instead of under webos_persistentstoragedir. This tree is
+# erased by NYX_SYSTEM_ERASE_MEDIA.
 export webos_mountablestoragedir = "${webos_mediadir}/internal"
 # The old name for webos_mountablestoragedir
 export webos_localstoragedir = "${webos_mountablestoragedir}"
+
+# This is the tree for components loaded while in developer mode; everything
+# under this tree is erased by a NYX_SYSTEM_ERASE_DEVELOPER erasure.
+export webos_developerdir = "${webos_mediadir}/developer"

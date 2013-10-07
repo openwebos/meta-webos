@@ -10,7 +10,7 @@ DEPENDS = "pmloglib zlib glib-2.0 librdx libpbnjson pmloglib-private luna-servic
 # provided by busybox.
 RDEPENDS_${PN} = "busybox"
 
-WEBOS_VERSION = "3.0.0-111_213d8575a1fb3b931a24d8d86f3e023eaa6e4eb4"
+WEBOS_VERSION = "3.0.0-112_afca7363e4a0bb5d90c4b9ab5f86e136003f212a"
 PR = "r7"
 
 inherit webos_component

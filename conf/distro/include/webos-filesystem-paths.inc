@@ -43,6 +43,8 @@ export webos_accttemplatesdir = "${prefix}/palm/public/accounts"
 export webos_applicationsdir = "${prefix}/palm/applications"
 export webos_frameworksdir = "${prefix}/palm/frameworks"
 export webos_keysdir = "${prefix}/palm/data"
+# This is the location of the pre-installed catalog apps IPKs
+export webos_picapkgdir = "${prefix}/palm/ipkgs"
 # This is the location of webOS application plugins. There is a subdirectory for
 # each application that is named using the final field of its complete name.
 export webos_pluginsdir = "${prefix}/palm/plugins"

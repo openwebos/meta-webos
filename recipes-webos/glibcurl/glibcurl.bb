@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS = "glib-2.0 curl"
 
-WEBOS_VERSION = "0.7.3-5_719023f7fcf4e97eff594dd73bbf2d6c4de02d09"
+WEBOS_VERSION = "0.7.3-5_02973b88e5305769c281f728d9bebfff0c6f0da7"
 PR = "r1"
 
 inherit webos_upstream_from_repo

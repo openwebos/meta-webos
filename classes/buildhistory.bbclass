@@ -545,7 +545,7 @@ END
 			git init -q
 		fi
 		# Check if there are new/changed files to commit (other than metadata-revs)
-		repostatus=`git status --porcelain | grep -v " metadata-revs$"`
+		repostatus=`time -f "TIME: %e %S %U %P %c %w %R %F %M %x %C" git status --porcelain | grep -v " metadata-revs$"`
 		HOSTNAME=`hostname 2>/dev/null || echo unknown`
 		if [ "$repostatus" != "" ] ; then
 			git add -A .
@@ -555,7 +555,7 @@ END
 				git commit $entry metadata-revs -m "$entry: Build ${BUILDNAME} of ${DISTRO} ${DISTRO_VERSION} for machine ${MACHINE} on $HOSTNAME" --author "${BUILDHISTORY_COMMIT_AUTHOR}" > /dev/null
 			done
 			if [ "${BUILDHISTORY_PUSH_REPO}" != "" ] ; then
-				git push -q ${BUILDHISTORY_PUSH_REPO}
+				time -f "TIME: %e %S %U %P %c %w %R %F %M %x %C" git push -q ${BUILDHISTORY_PUSH_REPO}
 			fi
 		else
 			git commit ${BUILDHISTORY_DIR}/ --allow-empty -m "No changes: Build ${BUILDNAME} of ${DISTRO} ${DISTRO_VERSION} for machine ${MACHINE} on $HOSTNAME" --author "${BUILDHISTORY_COMMIT_AUTHOR}" > /dev/null
@@ -567,7 +567,11 @@ python buildhistory_eventhandler() {
         if e.data.getVar('BUILDHISTORY_FEATURES', True).strip():
             if e.data.getVar("BUILDHISTORY_COMMIT", True) == "1":
                 bb.note("Writing buildhistory")
+                import time
+                start=time.time()
                 bb.build.exec_func("buildhistory_commit", e.data)
+                stop=time.time()
+                bb.note("Writing buildhistory took: %s seconds" % repr(stop-start))
 }
 
 addhandler buildhistory_eventhandler

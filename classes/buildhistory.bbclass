@@ -357,6 +357,18 @@ buildhistory_get_installed() {
 	cat $1/installed-package-sizes.tmp | sort -n -r | awk '{print $1 "\tKiB " $2}' > $1/installed-package-sizes.txt
 	rm $1/installed-package-sizes.tmp
 
+	# Produce installed package file sizes list
+	printf "" > $1/installed-package-file-sizes.tmp
+	cat $pkgcache | while read pkg pkgfile
+	do
+		if [ -f $pkgfile ] ; then
+			pkgsize=`du -k $pkgfile | head -n1 | awk '{ print $1 }'`
+			echo $pkgsize $pkg >> $1/installed-package-file-sizes.tmp
+		fi
+	done
+	cat $1/installed-package-file-sizes.tmp | sort -n -r | awk '{print $1 "\tKiB " $2}' > $1/installed-package-file-sizes.txt
+	rm $1/installed-package-file-sizes.tmp
+
 	# We're now done with the cache, delete it
 	rm $pkgcache
 	rm $pkgcachearch

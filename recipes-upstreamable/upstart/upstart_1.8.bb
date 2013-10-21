@@ -15,7 +15,7 @@ RRECOMMENDS_${PN} = "libupstart"
 # initctl-set-env.patch extends the initctl set-env command => mark its package version
 # to indicate that it's a webOS edition
 PKGV .= "-0webos1"
-PR = "r4"
+PR = "r5"
 
 SRC_URI[md5sum] = "01e3dd4b787d5ec8fcdbe904b2ceec31"
 SRC_URI[sha256sum] = "1cc368da85c56a339bb611c566d194e3fdfbab9e8314a85c7d09cc16a67fc8c3"
@@ -34,9 +34,19 @@ inherit gettext
 
 # libupstart can be used for upstart event generation from other programs.
 # However it is not used by upstart itself, so package it separately.
-PACKAGES =+ "libupstart libupstart-dev"
+# Reset PACKAGES to remove files we do not want in ${PN} (-systemd, -udev-bridge, -dev)
+PACKAGES = "libupstart libupstart-dev ${PN}-dbg ${PN}-systemd ${PN}-udev-bridge ${PN}-dev ${PN} ${PN}-doc ${PN}-locale"
+
 FILES_libupstart += "${libdir}/libupstart.so.*"
 FILES_libupstart-dev += "${libdir}/libupstart.la ${libdir}/libupstart.so ${includedir}/upstart/"
+
+# this moves upstart-*-bridge.conf and binaries from /sbin to -udev-bridge, and system.d files to -systemd ipks
+FILES_${PN}-systemd = "${sysconfdir}/dbus-1/*"
+FILES_${PN}-udev-bridge = "${sysconfdir}/init/* ${base_sbindir}/*bridge"
+
+# this moves these files to the -dev ipk since they may be of use to developers
+FILES_${PN}-dev += "${base_bindir}/init-checkconf ${base_bindir}/initctl2dot ${base_bindir}/upstart-monitor"
+FILES_${PN}-dev += "${webos_install_datadir}/applications/upstart-monitor"
 
 EXTRA_OEMAKE += "'bindir=${base_bindir}' \
                  'sbindir=${base_sbindir}' \
@@ -47,10 +57,6 @@ EXTRA_OEMAKE += "'bindir=${base_bindir}' \
 
 do_install () {
     oe_runmake 'DESTDIR=${D}' install
-    install -d ${D}${sysconfdir}
-    install -d ${D}${sysconfdir}/init
-    install -d ${D}${sysconfdir}/default
-    install -d ${D}${sysconfdir}/init.d
 }
 
 ALTERNATIVE_${PN}  = "init reboot halt poweroff shutdown telinit"

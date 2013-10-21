@@ -7,8 +7,12 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "pmloglib cjson glib-2.0"
 
-WEBOS_VERSION = "3.5.1-157_26f357b5637239edb83e618e8eda5dbad43740b1"
+WEBOS_VERSION = "3.5.1-158_44b5daa6766c95c3bb39f2ca1165f557e8bfa966"
 PR = "r10"
+
+WEBOS_DISTRO_PRERELEASE ??= ""
+EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="devel"' \
+                  if d.getVar('WEBOS_DISTRO_PRERELEASE',True) != '' else ''}"
 
 inherit webos_component
 inherit webos_public_repo
@@ -20,6 +24,7 @@ inherit webos_program
 inherit webos_system_bus
 inherit webos_core_os_dep
 inherit webos_machine_impl_dep
+inherit webos_prerelease_dep
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

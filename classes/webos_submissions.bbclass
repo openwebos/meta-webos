@@ -9,32 +9,7 @@
 # setting WEBOS_COMPONENT_VERSION, WEBOS_SUBMISSION, and PV.
 #
 
-# PV is the first underscore-separated field in WEBOS_VERSION,
-# i.e., it includes the submission. If there is no WEBOS_VERSION
-# setting, '0' will be returned.
-def webos_submissions_get_pv(wv):
-    return wv.split('_')[0] if wv else '0'
-
-# The component version is PV with the last hyphen-separated field
-# removed; i.e., it does not include the submission.
-def webos_submissions_get_component_version(wv):
-    pv = webos_submissions_get_pv(wv)
-    split_pv = pv.split('-')
-    if len(split_pv) == 1:
-        # If there's no submission, then the component version can't
-        # contain a hyphen
-        return split_pv[0]
-    return "-".join(split_pv[:-1])
-
-# The submission is the last hyphen-separated field in PV.
-# If there is no hyphen in PV setting, '0' will be returned.
-def webos_submissions_get_submission(wv):
-    pv = webos_submissions_get_pv(wv)
-    split_pv = pv.split('-')
-    if len(split_pv) == 1:
-        # If there no hyphen, that means there's no submission
-        return '0'
-    return split_pv[-1]
+inherit webos_version
 
 # When WEBOS_VERSION isn't defined show error
 do_fetch[prefuncs] += "webos_submissions_version_sanity_check"
@@ -56,6 +31,6 @@ python webos_submissions_version_sanity_check() {
 }
 
 WEBOS_VERSION ?= "0"
-PV = "${@webos_submissions_get_pv('${WEBOS_VERSION}')}"
-WEBOS_COMPONENT_VERSION = "${@webos_submissions_get_component_version('${WEBOS_VERSION}')}"
-WEBOS_SUBMISSION        = "${@webos_submissions_get_submission('${WEBOS_VERSION}')}"
+PV = "${@webos_version_get_pv('${WEBOS_VERSION}')}"
+WEBOS_COMPONENT_VERSION = "${@webos_version_get_component_version('${WEBOS_VERSION}')}"
+WEBOS_SUBMISSION        = "${@webos_version_get_submission('${WEBOS_VERSION}')}"

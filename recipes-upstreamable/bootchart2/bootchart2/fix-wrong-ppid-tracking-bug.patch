@@ -1,0 +1,45 @@
+When Upstart script is executed, Upstart always forks /bin/sh to execute
+'script ~ end script' block. So, ppid-s of some processes are set to pid-s
+of /bin/sh, not to actual parent processes and this skews the process tree.
+
+This patch tries to find those processes and set their ppid-s to their actual
+parent processes.
+diff --git a/pybootchartgui/process_tree.py b/pybootchartgui/process_tree.py
+index cf88110..b368bad 100644
+--- a/pybootchartgui/process_tree.py
++++ b/pybootchartgui/process_tree.py
+@@ -53,8 +53,7 @@ class ProcessTree:
+         self.sample_period = sample_period
+ 
+         self.build()
+-        if not accurate_parentage:
+-            self.update_ppids_for_daemons(self.process_list)
++        self.update_ppids_for_processes_executed_by_upstart()
+ 
+         self.start_time = self.get_start_time(self.process_tree)
+         self.end_time = self.get_end_time(self.process_tree)
+@@ -128,6 +127,24 @@ class ProcessTree:
+             return -100000000
+         return max( [max(proc.pid, self.get_max_pid(proc.child_list)) for proc in process_subtree] )
+ 
++    def update_ppids_for_processes_executed_by_upstart(self):
++        """Upstart hack: when Upstart script is executed, Upstart always
++           forks /bin/sh to execute 'script ~ end script' block. So, ppid-s of
++           some processes are set to pid-s of /bin/sh and this skews the process
++           tree.
++           This function tries to find those processes and set their ppid-s to
++           their actual parent processes.
++        """
++        for proc in self.process_list:
++            if proc.cmd == "sh":
++                for upstart in self.process_list:
++                    if proc.pid // 1000 == upstart.pid // 1000 and upstart.cmd != "sh":
++                        for child in proc.child_list:
++                            child.ppid = upstart.pid
++                            child.parent = upstart
++                            upstart.child_list.append(child)
++                        proc.child_list = []
++
+     def update_ppids_for_daemons(self, process_list):
+         """Fedora hack: when loading the system services from rc, runuser(1)
+            is used.  This sets the PPID of all daemons to 1, skewing

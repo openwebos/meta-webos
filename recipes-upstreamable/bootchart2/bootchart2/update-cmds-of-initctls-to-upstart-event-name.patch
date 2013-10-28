@@ -1,0 +1,55 @@
+When we want to emit some Upstart events, we're using
+'initctl emit (--no-wait) <event_name>'.
+
+This function tries to find 'initctl'-s and change their 'cmd' value
+from 'initctl' to '<event_name>' to figure out when '<event_name>'
+is emitted by whom
+--- a/pybootchartgui/process_tree.py	2013-12-10 11:24:28.692318301 +0900
++++ b/pybootchartgui/process_tree.py	2013-12-10 11:24:44.796176307 +0900
+@@ -73,6 +73,7 @@
+             p_runs = self.merge_runs(self.process_tree)
+             writer.status("pruned %i process, %i exploders, %i threads, and %i runs" % (p_processes, p_exploders, p_threads, p_runs))
+ 
++        self.update_cmds_of_initctls()
+         self.sort(self.process_tree)
+ 
+         self.start_time = self.get_start_time(self.process_tree)
+@@ -145,6 +146,20 @@
+                             upstart.child_list.append(child)
+                         proc.child_list = []
+ 
++    def update_cmds_of_initctls(self):
++        """Upstart hack: When we want to emit some Upstart events, we're using
++           'initctl emit (--no-wait) <event_name>'.
++           This function tries to find 'initctl'-s and change their 'cmd' value
++           from 'initctl' to '<event_name>' to figure out when '<event_name>'
++           is emitted by whom
++        """
++        for proc in self.process_list:
++            if proc.cmd == "initctl" and proc.args[1] == "emit":
++                if proc.args[2] != "--no-wait":
++                    proc.cmd = proc.args[2]
++                else:
++                    proc.cmd = proc.args[3]
++
+     def update_ppids_for_daemons(self, process_list):
+         """Fedora hack: when loading the system services from rc, runuser(1)
+            is used.  This sets the PPID of all daemons to 1, skewing
+@@ -193,7 +208,7 @@
+                 prune = False
+                 if is_idle_background_process_without_children(p):
+                     prune = True
+-                elif p.duration <= 2 * self.sample_period:
++                elif p.duration <= 2 * self.sample_period and p.cmd != 'initctl':
+                     # short-lived process
+                     prune = True
+ 
+@@ -266,7 +281,7 @@
+         while idx < len(process_subtree)-1:
+             p = process_subtree[idx]
+             nextp = process_subtree[idx+1]
+-            if nextp.cmd == p.cmd:
++            if nextp.cmd == p.cmd and p.cmd != "initctl":
+                 process_subtree.pop(idx+1)
+                 idx -= 1
+                 num_removed += 1

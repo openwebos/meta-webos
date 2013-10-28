@@ -101,7 +101,7 @@ VALGRIND_armv7a = "valgrind"
 # libpcap is a dependency library for iftop
 RDEPENDS_${PN} = "\
     binutils \
-    bootchart \
+    bootchart2 \
     db8-tests \
     htop \
     iftop \

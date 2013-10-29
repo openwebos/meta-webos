@@ -3,7 +3,7 @@ multiple NAME=VALUE settings by simply processing all of the strings
 in args[] instead of just the first.
 --- a/util/initctl.c
 +++ b/util/initctl.c
-@@ -1442,6 +1444,7 @@ set_env_action (NihCommand *command, char * const *args)
+@@ -1431,6 +1433,7 @@ set_env_action (NihCommand *command, char * const *args)
  	char                    *envvar;
  	nih_local char         **job_details = NULL;
  	int                      ret;
@@ -11,7 +11,7 @@ in args[] instead of just the first.
  
  	nih_assert (command != NULL);
  	nih_assert (args != NULL);
-@@ -1456,17 +1459,19 @@ set_env_action (NihCommand *command, char * const *args)
+@@ -1445,17 +1448,19 @@ set_env_action (NihCommand *command, char * const *args)
  	if (! job_details)
  		return 1;
  
@@ -37,7 +37,7 @@ in args[] instead of just the first.
  
  	return 0;
  error:
-@@ -3189,9 +3193,9 @@ static NihCommand commands[] = {
+@@ -3178,9 +3182,9 @@ static NihCommand commands[] = {
  	  N_("Discards all changes make to the job environment table, setting it back to its default value."),
  	  &env_group, reset_env_options, reset_env_action },
  

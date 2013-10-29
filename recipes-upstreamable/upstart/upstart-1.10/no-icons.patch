@@ -1,0 +1,12 @@
+This patch simply ignores the icon files that we do not
+install and removes a complaint from the build log.
+--- /scripts/Makefile.am
++++ /scripts/Makefile.am
+@@ -1,7 +1,5 @@
+ ## Process this file with automake to produce Makefile.in
+
+-SUBDIRS = data
+-
+ install_scripts = \
+	initctl2dot.py \
+	init-checkconf.sh \

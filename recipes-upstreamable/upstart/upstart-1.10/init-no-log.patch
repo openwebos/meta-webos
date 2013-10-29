@@ -5,7 +5,7 @@ Since we do not want Upstart to be doing logging anyway there is no code
 added to provide a command line flag to override this change.
 --- a/init/job_process.c
 +++ b/init/job_process.c
-@@ -120,7 +120,7 @@ static void job_process_remap_fd        (int *fd, int reserved_fd, int error_fd)
+@@ -121,7 +121,7 @@ static void job_process_remap_fd        (int *fd, int reserved_fd, int error_fd)
   * If TRUE, do not log any job output.
   *
   **/

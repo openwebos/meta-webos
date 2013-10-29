@@ -6,8 +6,8 @@ in our Upstart jobs.
 @@ -1,6 +1,6 @@
  ## Process this file with automake to produce Makefile.in
  
--SUBDIRS = intl dbus init util extra conf doc contrib po scripts
-+SUBDIRS = intl dbus init util extra doc contrib po scripts
+-SUBDIRS = test dbus init util extra lib conf doc contrib po scripts
++SUBDIRS = dbus init util extra lib doc contrib po scripts
  
- EXTRA_DIST = HACKING
+ EXTRA_DIST = HACKING README.tests
  

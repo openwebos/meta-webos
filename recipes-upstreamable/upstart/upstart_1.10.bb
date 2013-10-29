@@ -10,39 +10,41 @@ inherit autotools pkgconfig update-alternatives
 inherit gettext
 
 DEPENDS = "cjson dbus libnih udev"
-RRECOMMENDS_${PN} = "libupstart"
 
 # initctl-set-env.patch extends the initctl set-env command => mark its package version
 # to indicate that it's a webOS edition
 PKGV .= "-0webos1"
-PR = "r5"
+PR = "r0"
 
-SRC_URI[md5sum] = "01e3dd4b787d5ec8fcdbe904b2ceec31"
-SRC_URI[sha256sum] = "1cc368da85c56a339bb611c566d194e3fdfbab9e8314a85c7d09cc16a67fc8c3"
+SRC_URI[md5sum] = "1401e7fe811bb76ebbbde8a117026b80"
+SRC_URI[sha256sum] = "a217d3cc31ff0708e568b1cb5d53144ad8bf00b3885dcd37c00ad5a17dbf1c46"
 
 SRC_URI = "http://upstart.ubuntu.com/download/${PV}/upstart-${PV}.tar.gz"
 
 SRC_URI += "file://fix-initctl-set-env.patch"
 SRC_URI += "file://initctl-set-env.patch"
 SRC_URI += "file://init-no-log.patch"
+SRC_URI += "file://no-icons.patch"
 SRC_URI += "file://remove-legacy-jobs.patch"
 SRC_URI += "file://use-our-cjson.patch"
-SRC_URI += "file://no-icons.patch"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext
 
 # libupstart can be used for upstart event generation from other programs.
 # However it is not used by upstart itself, so package it separately.
-# Reset PACKAGES to remove files we do not want in ${PN} (-systemd, -udev-bridge, -dev)
-PACKAGES = "libupstart libupstart-dev ${PN}-dbg ${PN}-systemd ${PN}-udev-bridge ${PN}-dev ${PN} ${PN}-doc ${PN}-locale"
+PACKAGES =+ "libupstart libupstart-dev libupstart-staticdev ${PN}-systemd ${PN}-udev-bridge"
 
+# dynamic libupstart libs for the target device
 FILES_libupstart += "${libdir}/libupstart.so.*"
-FILES_libupstart-dev += "${libdir}/libupstart.la ${libdir}/libupstart.so ${includedir}/upstart/"
 
-# this moves upstart-*-bridge.conf and binaries from /sbin to -udev-bridge, and system.d files to -systemd ipks
+# add these two to libupstart above to build for libupstart
+FILES_libupstart-dev += "${libdir}/libupstart.la ${libdir}/libupstart.so ${includedir}/upstart/ ${libdir}/pkgconfig/*"
+FILES_libupstart-staticdev += "${libdir}/libupstart.a"
+
+# this moves upstart-*-bridge.conf and binaries from /init, /sbin and /usr/share/upstart/* to -udev-bridge, and system.d files to -systemd ipks
 FILES_${PN}-systemd = "${sysconfdir}/dbus-1/*"
-FILES_${PN}-udev-bridge = "${sysconfdir}/init/* ${base_sbindir}/*bridge"
+FILES_${PN}-udev-bridge = "${sysconfdir}/init/* ${base_sbindir}/*bridge ${datadir}/upstart/*"
 
 # this moves these files to the -dev ipk since they may be of use to developers
 FILES_${PN}-dev += "${base_bindir}/init-checkconf ${base_bindir}/initctl2dot ${base_bindir}/upstart-monitor"
@@ -58,7 +60,6 @@ EXTRA_OEMAKE += "'bindir=${base_bindir}' \
 do_install () {
     oe_runmake 'DESTDIR=${D}' install
 }
-
 ALTERNATIVE_${PN}  = "init reboot halt poweroff shutdown telinit"
 
 ALTERNATIVE_LINK_NAME[init] = "${base_sbindir}/init"

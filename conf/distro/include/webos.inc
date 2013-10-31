@@ -39,6 +39,34 @@ BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 # as the "build configuration".
 BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
 
+# Apply fix from oe-core commit 89d7d46947d9bb8c7bf568c65e52d5bbe159027f
+# Drop this when upgrading oe-core to 1.6 release or newer
+DEPENDS_pn-cracklib-native_class-native = "zlib-native"
+
+# Drop virtual/kernel build-time dependency
+# Drop this when upgrading oe-core to 1.6 release or newer with this change:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/086514.html
+DEPENDS_pn-packagegroup-core-boot = ""
+
+# Build time dependency on TUNE_PKGARCH recipes base-passwd, shadow, shadow-sysroot
+# Drop this when upgrading oe-core to 1.6 release or newer with this change:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/085849.html
+PACKAGE_ARCH_pn-xuser-account = "${TUNE_PKGARCH}"
+
+# Drop these PACKAGE_ARCH assignments when upgrading oe-core to 1.6 release or newer with this change:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/085999.html
+# change from allarch, because drobear has different signature for each TUNE_PKGARCH
+PACKAGE_ARCH_pn-packagegroup-core-ssh-dropbear = "${TUNE_PKGARCH}"
+# change from allarch, because fontconfig has different signature for each TUNE_PKGARCH
+PACKAGE_ARCH_pn-packagegroup-fonts-truetype = "${TUNE_PKGARCH}"
+# depends on eglibc-locale, libgcc, gcc-runtime, eglibc or external-toochain based on MACHINE configuration
+PACKAGE_ARCH_pn-packagegroup-core-standalone-sdk-target = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-packagegroup-cli-tools = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-packagegroup-core-buildessential = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-packagegroup-core-nfs = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-packagegroup-core-sdk = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-packagegroup-sdk-target = "${MACHINE_ARCH}"
+PACKAGE_ARCH_pn-nfs-export-root = "${MACHINE_ARCH}"
 
 # Override these in webOS based distros to modify DISTRO_EXTRA_R*
 WEBOS_DEFAULT_EXTRA_RDEPENDS = ""

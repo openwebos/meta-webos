@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "pmloglib cjson glib-2.0"
 
-WEBOS_VERSION = "3.5.1-160_4a61ffb1c7c3c71781daeebdc63907fdce24cdb7"
+WEBOS_VERSION = "3.5.1-158_44b5daa6766c95c3bb39f2ca1165f557e8bfa966"
 PR = "r12"
 
 WEBOS_DISTRO_PRERELEASE ??= ""

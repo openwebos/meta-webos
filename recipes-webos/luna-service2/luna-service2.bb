@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 DEPENDS = "pmloglib cjson glib-2.0"
 
 WEBOS_VERSION = "3.5.1-160_4a61ffb1c7c3c71781daeebdc63907fdce24cdb7"
-PR = "r11"
+PR = "r12"
 
 WEBOS_DISTRO_PRERELEASE ??= ""
 EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="devel"' \
@@ -38,8 +38,6 @@ do_install_append() {
     ln -svnf luna-service2/lunaservice-errors.h ${D}${includedir}/lunaservice-errors.h
     ln -svnf lib${PN}.so ${D}${libdir}/liblunaservice.so
 }
-
-EXTRA_OECMAKE += " ${@base_contains('WEBOS_LTTNG_ENABLED', '1', '-DWEBOS_LTTNG_ENABLED:BOOLEAN=True', '', d)}"
 
 WEBOS_DISABLE_LS2_SECURITY ?= "0"
 EXTRA_OECMAKE += '${@base_conditional("WEBOS_DISABLE_LS2_SECURITY", "1", "-DWEBOS_LS2_SECURE:BOOLEAN=False", "" ,d)}'

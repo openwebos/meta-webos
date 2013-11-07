@@ -1,16 +1,21 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos3"
+EXTENDPRAUTO_append = "webos4"
 
 dirs700 = " \
+    ${webos_db8datadir} \
     ${webos_db8datadir}/temp \
-    "
+"
+
+dirs755 += " \
+    ${webos_cryptofsdir} \
+"
 
 # webOS expects this directory to be writeable by all (because it's typically
 # been mounted on a VFAT partition, which doesn't enforce permissions).
 dirs777 = " \
     ${webos_mountablestoragedir} \
-    "
+"
 
 do_install_prepend() {
     local d
@@ -42,14 +47,4 @@ do_install_append() {
 generate_fstab_entries() {
     echo "# additional in-memory storage for db8"
     echo "tmpfs ${webos_db8datadir}/temp tmpfs size=32M,mode=0700 0 0"
-}
-
-# work around for incorrect permissions in packages-split, remove when oe-core
-# revision used in our builds include this fix:
-# http://lists.openembedded.org/pipermail/openembedded-core/2013-September/084016.html
-# postinst scripts are executed in do_rootfs time when rootfs is still read-write
-pkg_postinst_${PN} () {
-    for d in ${dirs777}; do
-        chmod 777 $D$d
-    done
 }

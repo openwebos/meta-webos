@@ -80,6 +80,28 @@ QEMU_TARGETS ?= "arm i386"
 WEBOS_TARGET_CORE_OS ?= "rockhopper"
 WEBOS_TARGET_MACHINE_IMPL ?= "emulator"
 
+# Change default PACKAGE_ARCH to MACHINE_ARCH, one of important goals for OE
+# is to share binary feed and sstate between MACHINEs with the same architecture
+# design of some webOS components doesn't support this very well - TUNE_PKGARCH
+# recipes (runtime) depending on MACHINE_ARCH recipes, couple of recipes
+# could be TUNE_PKGARCH if the MACHINE-specific changes are moved to separate
+# config file provided by small MACHINE_ARCH recipe instead of using MACHINE
+# variable in build-time to customize component.
+# All officially supported MACHINEs have different architecture, so we weren't
+# sharing any packages/sstate.
+# Be aware that this wasn't tested with nativesdk.
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+# For toolchain recipes keep TUNE_PKGARCH, to support default STAGING_BINDIR_TOOLCHAIN
+# as defined in bitbake.conf
+# STAGING_BINDIR_TOOLCHAIN = "${STAGING_DIR_NATIVE}${bindir_native}/${TUNE_PKGARCH}${TARGET_VENDOR}-${TARGET_OS}"
+PACKAGE_ARCH_pn-binutils-cross = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_pn-gcc-cross = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_pn-gcc-cross-initial = "${TUNE_PKGARCH}"
+# libgcc.inc: target=`echo ${MULTIMACH_TARGET_SYS} | sed -e s#-${SDKPKGSUFFIX}##`
+PACKAGE_ARCH_pn-libgcc = "${TUNE_PKGARCH}"
+# gcc-runtime.inc: mtarget=`echo ${MULTIMACH_TARGET_SYS} | sed -e s#-${SDKPKGSUFFIX}##`
+PACKAGE_ARCH_pn-gcc-runtime = "${TUNE_PKGARCH}"
 
 # The Open webOS distro is packaged into these image types:
 IMAGE_FSTYPES ?= "tar.gz"

@@ -5,7 +5,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # You don't need to change this value when you're changing just RDEPENDS_${PN} variable.
-PR = "r22"
+PR = "r23"
 
 inherit packagegroup
 
@@ -63,6 +63,27 @@ WEBOS_PACKAGESET_SYSTEMAPPS = " \
     mojomail-smtp \
 "
 
+# This packageset controls which time zone packages should be included in webOS.
+# Since any application that uses localtime will indirectly depend on presence of
+# time zone data, we pull in those packages as a top-level dependency. By
+# assigning the list to its own variable, we have the option to only include a
+# subset should there be a device that will only be used within some region.
+WEBOS_PACKAGESET_TZDATA ?= " \
+    tzdata \
+    tzdata-africa \
+    tzdata-americas \
+    tzdata-antarctica \
+    tzdata-arctic \
+    tzdata-asia \
+    tzdata-atlantic \
+    tzdata-australia \
+    tzdata-europe \
+    tzdata-misc \
+    tzdata-pacific \
+    tzdata-posix \
+    tzdata-right \
+"
+
 # nyx-lib needs nyx-modules at runtime, but a runtime dependency is not defined
 # in its recipe because nyx-modules is MACHINE_ARCH (e.g. qemux86), while nyx-lib is
 # TUNE_PKGARCH  (e.g. i586). Instead, it is pulled into the image by adding it here.
@@ -90,6 +111,7 @@ RDEPENDS_${PN} = " \
     webos-shutdownscripts \
     ${WEBOS_PACKAGESET_BROWSER} \
     ${WEBOS_PACKAGESET_SYSTEMAPPS} \
+    ${WEBOS_PACKAGESET_TZDATA} \
     ${WEBOS_MISSING_FROM_RDEPENDS} \
     ${WEBOS_FOSS_MISSING_FROM_RDEPENDS} \
 "
@@ -131,7 +153,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
     psmisc \
     sqlite3 \
     sysvinit-pidof \
-    tzdata \
 "
 
 # These packages that are installed in the qemux86 image only.

@@ -5,7 +5,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # You don't need to change this value when you're changing just RDEPENDS_${PN} variable.
-PR = "r23"
+PR = "r24"
 
 inherit packagegroup
 
@@ -31,7 +31,6 @@ RCONFLICTS_${PN} += "packagegroup-webos-core"
 
 VIRTUAL-RUNTIME_webappmanager ?= "webappmanager"
 VIRTUAL-RUNTIME_librdx ?= "librdx-stub"
-VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 VIRTUAL-RUNTIME_webos-compositor ?= "luna-sysmgr"
 VIRTUAL-RUNTIME_webos-ime ?= "keyboard-efigs"
 VIRTUAL-RUNTIME_novacomd ?= "novacomd"
@@ -49,6 +48,16 @@ WEBOS_PACKAGESET_BROWSER = " \
     browserserver \
     webkit-supplemental \
     webkit-webos \
+"
+
+
+# Enyo 1 and related framework packages
+WEBOS_PACKAGESET_ENYO_1 = " \
+    enyo-1.0 \
+    foundation-frameworks \
+    loadable-frameworks \
+    mojoservice-frameworks \
+    underscore \
 "
 
 WEBOS_PACKAGESET_SYSTEMAPPS = " \
@@ -92,7 +101,7 @@ WEBOS_PACKAGESET_TZDATA ?= " \
 RDEPENDS_${PN} = " \
     activitymanager \
     configurator \
-    enyo-1.0 \
+    ${WEBOS_PACKAGESET_ENYO_1} \
     filecache \
     ${VIRTUAL-RUNTIME_webos-ime} \
     ${VIRTUAL-RUNTIME_librdx} \
@@ -112,22 +121,7 @@ RDEPENDS_${PN} = " \
     ${WEBOS_PACKAGESET_BROWSER} \
     ${WEBOS_PACKAGESET_SYSTEMAPPS} \
     ${WEBOS_PACKAGESET_TZDATA} \
-    ${WEBOS_MISSING_FROM_RDEPENDS} \
     ${WEBOS_FOSS_MISSING_FROM_RDEPENDS} \
-"
-
-# XXX These non-top-level components must be explicitly added because they are
-# missing from the RDEPENDS lists of the components that expect them to be
-# present at runtime.
-WEBOS_MISSING_FROM_RDEPENDS = " \
-    cpushareholder-stub \
-    fbprogress \
-    foundation-frameworks \
-    loadable-frameworks \
-    mojoservice-frameworks \
-    nodejs \
-    ${VIRTUAL-RUNTIME_rdx-utils} \
-    underscore \
 "
 
 # XXX These FOSS components must be explicitly added because they are missing
@@ -156,7 +150,6 @@ WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
 "
 
 # These packages that are installed in the qemux86 image only.
-#
 RDEPENDS_${PN}_append_qemux86 = " \
     dhcp-client \
 "

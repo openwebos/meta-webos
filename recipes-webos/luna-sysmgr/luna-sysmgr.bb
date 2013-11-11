@@ -14,9 +14,12 @@ RDEPENDS_${PN} = "ptmalloc3"
 # luna-sysmgr's upstart conf expects to have ionice available. Under OE-core, this is supplied by util-linux.
 RDEPENDS_${PN} += "util-linux"
 #RDEPENDS_${PN} += "jail" #TODO
+#  luna-sysmgr's upstart conf expects setcpushares-task and setcpushares-pdk to be available
+VIRTUAL-RUNTIME_cpushareholder ?= "cpushareholder-stub"
+RDEPENDS_${PN} += "${VIRTUAL-RUNTIME_cpushareholder}"
 
 WEBOS_VERSION = "3.0.0-3_b7c8f26142bcf5941f3f2ebdd33647709f1bb74c"
-PR = "r14"
+PR = "r15"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component

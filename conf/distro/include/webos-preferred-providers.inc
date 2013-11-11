@@ -7,6 +7,11 @@
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
+# Just for documentation; these values are the defaults set in the recipes that
+# use them.
+VIRTUAL-RUNTIME_cpushareholder = "cpushareholder-stub"
+VIRTUAL-RUNTIME_rdx-utils = "rdx-utils-stub"
+
 # Fonts used by the browser
 VIRTUAL-RUNTIME_browser_fonts = "isis-fonts"
 

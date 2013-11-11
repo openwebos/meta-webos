@@ -6,11 +6,12 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "boost libpbnjson"
+RDEPENDS_${PN} = "nodejs"
 # fork_server.js wants to load these:
-RDEPENDS_${PN} = "nodejs-module-webos-dynaload nodejs-module-webos-pmlog nodejs-module-webos-sysbus mojoloader"
+RDEPENDS_${PN} += "nodejs-module-webos-dynaload nodejs-module-webos-pmlog nodejs-module-webos-sysbus mojoloader"
 
 WEBOS_VERSION = "3.0.1-79_a6b36ba94cb157097ba54d5cfa21a583e250e2e1"
-PR = "r4"
+PR = "r5"
 
 inherit webos_component
 inherit webos_public_repo

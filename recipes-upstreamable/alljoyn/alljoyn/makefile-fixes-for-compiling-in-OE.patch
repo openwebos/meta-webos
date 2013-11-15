@@ -1,25 +1,6 @@
-diff -urN alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc
---- alljoyn-3.3.0-src-org/alljoyn_core/daemon/posix/daemon-main.cc	2013-07-02 08:31:15.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_core/daemon/posix/daemon-main.cc	2013-07-02 08:29:34.000000000 +0900
-@@ -632,6 +632,15 @@
-     sigdelset(&waitmask, SIGINT);
-     sigdelset(&waitmask, SIGTERM);
- 
-+// turbok3 : 2013/06/04
-+// to emit upstart event for alljoyn services.
-+#if 1
-+	printf("\n\n###########################################################################\n");
-+	printf("alljoyn-daemon : emit upstart event.\n");
-+	printf("###########################################################################\n\n\n");
-+	system("initctl emit --no-wait alljoyn-daemon-ready");
-+#endif
-+
-     quit = 0;
- 
-     while (!quit) {
-diff -urN alljoyn-3.3.0-src-org/alljoyn_core/src/Makefile alljoyn-3.3.0-src-patch/alljoyn_core/src/Makefile
---- alljoyn-3.3.0-src-org/alljoyn_core/src/Makefile	2013-07-02 08:30:54.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_core/src/Makefile	2013-07-02 08:29:02.000000000 +0900
+diff -urN alljoyn-3.4.2-src-org/alljoyn_core/src/Makefile alljoyn-3.4.2-src-patch/alljoyn_core/src/Makefile
+--- alljoyn-3.4.2-src-org/alljoyn_core/src/Makefile	2013-11-09 10:03:15.000000000 +0900
++++ alljoyn-3.4.2-src-patch/alljoyn_core/src/Makefile	2013-11-13 13:50:41.721742739 +0900
 @@ -15,6 +15,8 @@
  
  STATIC_LIB = liballjoyn.a
@@ -42,41 +23,23 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_core/src/Makefile alljoyn-3.3.0-src-patc
  
  clean:
  	@rm -f *.o *~ $(STATIC_LIB) $(DYNAMIC_LIB) $(OS_SRC_DIR)/*.o $(OS_SRC_DIR)/linux/*.o
-diff -urN alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc
---- alljoyn-3.3.0-src-org/alljoyn_js/jni/npapi/np.cc	2013-07-02 08:30:46.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_js/jni/npapi/np.cc	2013-07-02 08:28:54.000000000 +0900
-@@ -152,6 +152,8 @@
-         return ret;
-     }
- 
-+// do not support the GTK toolkit on webos platform.
-+#if 0
-     PRBool supportsXEmbed = PR_FALSE;
-     ret = NPN_GetValue(NULL, NPNVSupportsXEmbedBool, &supportsXEmbed);
-     if ((NPERR_NO_ERROR != ret) || !supportsXEmbed) {
-@@ -165,6 +167,7 @@
-         QCC_LogError(ER_FAIL, ("Toolkit is not Gtk2"));
-         return NPERR_INCOMPATIBLE_VERSION_ERROR;
-     }
-+#endif
- 
-     return ret;
- }
-diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/alljoyn_js/Makefile
---- alljoyn-3.3.0-src-org/alljoyn_js/Makefile	2013-07-02 08:30:50.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/alljoyn_js/Makefile	2013-07-02 08:28:58.000000000 +0900
-@@ -20,10 +20,6 @@
+diff -urN alljoyn-3.4.2-src-org/alljoyn_js/Makefile alljoyn-3.4.2-src-patch/alljoyn_js/Makefile
+--- alljoyn-3.4.2-src-org/alljoyn_js/Makefile	2013-11-09 10:03:47.000000000 +0900
++++ alljoyn-3.4.2-src-patch/alljoyn_js/Makefile	2013-11-13 13:50:52.745490137 +0900
+@@ -20,9 +20,9 @@
  
  all: distclean dist
  
 -CC=gcc
 -CXX=g++
 -AR=ar
--
++#CC=gcc
++#CXX=g++
++#AR=ar
+ 
  # build configuration
  ifeq "$(CPU)" "x86"
-     CPU	= x86
-@@ -77,9 +73,9 @@
+@@ -77,9 +77,9 @@
  
  ifeq "$(CPU)" "x86"
  # Force 32-bit builds
@@ -89,12 +52,8 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/allj
  else
      ifeq "$(CPU)" "x86_64"
          CXXFLAGS+=-m64 -fPIC -pthread
-@@ -106,10 +102,10 @@
- 
- # Platform specifics system libs
- ifeq "$(OS)" "linux"
--    LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl
-+    LIBS := -lrt -lstdc++ -lpthread -lcrypto -lssl
+@@ -109,7 +109,7 @@
+     LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl
  endif
  
 -INSTALLDIR = $(PWD)/../build/$(OS)/$(CPU)/$(VARIANT)
@@ -102,9 +61,9 @@ diff -urN alljoyn-3.3.0-src-org/alljoyn_js/Makefile alljoyn-3.3.0-src-patch/allj
  ALLJOYNLIB = $(INSTALLDIR)/dist/lib/liballjoyn.a
  AJDAEMONLIB = $(INSTALLDIR)/dist/lib/libajdaemon.a
  BUNDLED_OBJ = $(INSTALLDIR)/dist/lib/BundledDaemon.o
-diff -urN alljoyn-3.3.0-src-org/common/Makefile alljoyn-3.3.0-src-patch/common/Makefile
---- alljoyn-3.3.0-src-org/common/Makefile	2013-07-02 08:30:39.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/common/Makefile	2013-07-02 08:28:48.000000000 +0900
+diff -urN alljoyn-3.4.2-src-org/common/Makefile alljoyn-3.4.2-src-patch/common/Makefile
+--- alljoyn-3.4.2-src-org/common/Makefile	2013-11-09 10:04:55.000000000 +0900
++++ alljoyn-3.4.2-src-patch/common/Makefile	2013-11-13 13:51:00.300767159 +0900
 @@ -23,17 +23,10 @@
  	cd crypto/$(CRYPTO); make;
  
@@ -125,10 +84,10 @@ diff -urN alljoyn-3.3.0-src-org/common/Makefile alljoyn-3.3.0-src-patch/common/M
  
  clean:
  	cd src; make clean;
-diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
---- alljoyn-3.3.0-src-org/Makefile	2013-07-02 08:30:24.000000000 +0900
-+++ alljoyn-3.3.0-src-patch/Makefile	2013-07-02 08:28:31.000000000 +0900
-@@ -18,11 +18,8 @@
+diff -urN alljoyn-3.4.2-src-org/Makefile alljoyn-3.4.2-src-patch/Makefile
+--- alljoyn-3.4.2-src-org/Makefile	2013-11-09 10:03:15.000000000 +0900
++++ alljoyn-3.4.2-src-patch/Makefile	2013-11-13 13:50:29.006979374 +0900
+@@ -18,11 +18,11 @@
  
  .PHONY: all dist clean distclean
  
@@ -138,10 +97,34 @@ diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
 -CC=gcc
 -CXX=g++
 -AR=ar
++#CC=gcc
++#CXX=g++
++#AR=ar
  
  # build configuration
  ifeq "$(CPU)" "x86"
-@@ -77,8 +74,8 @@
+@@ -51,12 +51,15 @@
+ endif
+ endif
+ 
+-ICE?=on
+-ifeq "$(OS)" "linux"
+-BT?=on
+-else
++#ICE?=on
++#ifeq "$(OS)" "linux"
++#BT?=on
++#else
++#BT?=off
++#endif
++
+ BT?=off
+-endif
++ICE?=off
+ 
+ ifeq "$(OS)" "linux"
+     # Linux specific flags
+@@ -83,8 +86,8 @@
  
  ifeq "$(CPU)" "x86"
  # Force 32-bit builds
@@ -150,10 +133,10 @@ diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
 +    CXXFLAGS+=-fPIC
 +    CFLAGS+=-fPIC
  else
-     ifeq "$(CPU)" "x86-64"
+     ifeq "$(CPU)" "x86_64"
          CXXFLAGS+=-m64 -fPIC
-@@ -105,12 +102,12 @@
- LIBS = -lalljoyn
+@@ -110,12 +113,12 @@
+ 
  # Platform specifics system libs
  ifeq "$(OS)" "linux"
 -    LIBS += -lrt -lstdc++ -lpthread -lcrypto -lssl
@@ -167,7 +150,7 @@ diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
  ALLJOYNLIB = $(INSTALLDIR)/dist/lib/liballjoyn.a
  COMMONDIR = $(PWD)/common
  
-@@ -127,15 +124,14 @@
+@@ -132,15 +135,15 @@
  	@mkdir -p $(INSTALLDIR)/dist/samples
  	cd common; make;
  	cd alljoyn_core; make;
@@ -185,4 +168,5 @@ diff -urN alljoyn-3.3.0-src-org/Makefile alljoyn-3.3.0-src-patch/Makefile
 -	@rm -rf $(INSTALLDIR)/dist/inc
 -	@rm -rf $(INSTALLDIR)/dist/samples
 +	@rm -rf $(INSTALLDIR)/dist/*
++	@rm -rf $(INSTALLDIR)/dist/
  

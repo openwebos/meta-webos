@@ -4,22 +4,20 @@ SUMMARY = "AllJoyn Open Source Project"
 DESCRIPTION = "open-source software framework developed by Qualcomm Innovation Center to enable peer-to-peer communication"
 SECTION = "libs/network"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
+LIC_FILES_CHKSUM = "file://alljoyn_core/NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
 
 DEPENDS = "openssl xulrunner"
 
-PR = "r5"
+PR = "r0"
 
 SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-src.tgz;name=alljoyncore \
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
-           file://alljoyn-3.3.0.patch \
-           file://fix_cpu_consumption.patch"
+           file://makefile-fixes-for-compiling-in-OE.patch"
 
-SRC_URI[alljoyncore.md5sum] = "bef8485dd65e9a92387d21582be9323d"
-SRC_URI[alljoyncore.sha256sum] = "5605f65abe4bb80b0946192bfb80d9d27838b9f1306227e76d46a714a17b439f"
-
+SRC_URI[alljoyncore.md5sum] = "2d6274410ab23fcb17eb1d7a8bcc4e76"
+SRC_URI[alljoyncore.sha256sum] = "be7d50c7f1696908012421a3fb7addd588c8c7427125915ec07f6b8d59b07b0b"
 
 S = "${WORKDIR}/alljoyn-${PV}-src"
 

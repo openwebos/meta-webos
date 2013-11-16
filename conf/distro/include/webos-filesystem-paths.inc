@@ -8,6 +8,7 @@ export webos_bootdir = "${base_prefix}/boot"
 export webos_browserpluginsdir = "${libdir}/BrowserPlugins"
 export webos_defaultconfdir = "${sysconfdir}/default"
 export webos_execstatedir = "${localstatedir}/lib"
+export webos_fontsdir = "${datadir}/fonts"
 export webos_homedir = "${base_prefix}/home"
 export webos_firmwaredir = "${base_libdir}/firmware"
 export webos_logdir = "${localstatedir}/log"
@@ -51,6 +52,7 @@ export webos_pluginsdir = "${prefix}/palm/plugins"
 # This is the location of the trees for JS services; the files for native (dynamic)
 # services are located under sbindir, libdir, etc. as if they were Linux daemons.
 export webos_servicesdir = "${prefix}/palm/services"
+export webos_smartkeydatadir = "${prefix}/palm/smartkey"
 export webos_soundsdir = "${prefix}/palm/sounds"
 export webos_sysmgrdir = "${prefix}/palm/sysmgr"
 

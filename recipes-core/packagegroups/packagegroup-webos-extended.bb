@@ -117,7 +117,6 @@ RDEPENDS_${PN} = " \
     ${VIRTUAL-RUNTIME_webappmanager} \
     ${VIRTUAL-RUNTIME_webos-compositor} \
     webos-connman-adapter \
-    webos-shutdownscripts \
     ${WEBOS_PACKAGESET_BROWSER} \
     ${WEBOS_PACKAGESET_SYSTEMAPPS} \
     ${WEBOS_PACKAGESET_TZDATA} \

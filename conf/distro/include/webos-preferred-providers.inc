@@ -16,7 +16,7 @@ VIRTUAL-RUNTIME_rdx-utils = "rdx-utils-stub"
 VIRTUAL-RUNTIME_browser_fonts = "isis-fonts"
 
 # TODO: find what is needed from initscripts and merge that to webos-initscripts
-VIRTUAL-RUNTIME_initscripts = "initscripts webos-initscripts"
+VIRTUAL-RUNTIME_initscripts = "initscripts webos-initscripts webos-shutdownscripts"
 
 # Other alternatives are sysvinit, systemd
 VIRTUAL-RUNTIME_init_manager = "upstart"

@@ -128,11 +128,9 @@ RDEPENDS_${PN} = " \
 # runtime (or perhaps some are in fact top-level components and some others
 # aren't actually needed).
 WEBOS_FOSS_MISSING_FROM_RDEPENDS = " \
-    bash \
     bzip2 \
     curl \
     e2fsprogs \
-    gzip \
     hunspell \
     icu \
     iproute2 \

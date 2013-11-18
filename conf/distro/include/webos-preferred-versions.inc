@@ -11,6 +11,9 @@ PREFERRED_VERSION_libsoup-2.4 ?= "2.40.3"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
 PREFERRED_VERSION_nodejs ?= "0.10.15"
 PREFERRED_VERSION_ntp ?= "4.2.6p5"
+# non-GPLv3 versions of these components
+PREFERRED_VERSION_readline ?= "5.2"
+PREFERRED_VERSION_tar ?= "1.17"
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "182"
 PREFERRED_VERSION_upstart ?= "0.3.11"

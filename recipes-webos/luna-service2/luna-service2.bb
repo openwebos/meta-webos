@@ -11,7 +11,7 @@ VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_cpushareholder} ${VIRTUAL-RUNTIME_rdx-utils}"
 
 WEBOS_VERSION = "3.5.2-162_d926ad7ec03a836140c4fbd77395a1a5d9ea7ff1"
-PR = "r14"
+PR = "r15"
 
 WEBOS_DISTRO_PRERELEASE ??= ""
 EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="devel"' \
@@ -43,6 +43,10 @@ do_install_append() {
     ln -svnf lib${PN}.so ${D}${libdir}/liblunaservice.so
 }
 
+# Disable LTTng tracepoints explicitly.
+# LTTng tracepoints in LS2 can cause out of memory, because LS2 is used by many components.
+# To enable tracepoints back use WEBOS_LTTNG_ENABLED_pn-luna-service2 = "1"
+WEBOS_LTTNG_ENABLED = "0"
 EXTRA_OECMAKE += " ${@base_contains('WEBOS_LTTNG_ENABLED', '1', '-DWEBOS_LTTNG_ENABLED:BOOLEAN=True', '', d)}"
 
 WEBOS_DISABLE_LS2_SECURITY ?= "0"

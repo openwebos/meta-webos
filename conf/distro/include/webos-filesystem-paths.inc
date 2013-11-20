@@ -100,6 +100,11 @@ export webos_downloaded_servicesdir = "${webos_downloadeddir}/usr/palm/services"
 # erasure. It is only deleted by a NYX_SYSTEM_ERASE_ALL erasure.
 export webos_persistentstoragedir = "${webos_cryptofsdir}/data"
 
+# db8 database use this directory to store mediadb database.
+# mediadb database store results of fileindexer and contain information
+# about media files. Potentially this db can be big
+export webos_db8mediadir = "${webos_persistentstoragedir}/db8/mediadb"
+
 # On devices that support it, this tree is externally mountable as (USB) mass
 # storage. Applications that want their data to be visible in this manner should
 # store them here instead of under webos_persistentstoragedir. This tree is

@@ -5,6 +5,7 @@ EXTENDPRAUTO_append = "webos6"
 dirs700 = " \
     ${webos_db8datadir} \
     ${webos_db8datadir}/temp \
+    ${webos_db8mediadir} \
 "
 
 dirs755 += " \

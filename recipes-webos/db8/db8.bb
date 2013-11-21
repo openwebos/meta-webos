@@ -11,7 +11,7 @@ PROVIDES = "mojodb"
 DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
 WEBOS_VERSION = "3.1.0-98_bed5b4b3b1d00b2456c6cbb203d0366cce439992"
-PR = "r17"
+PR = "r18"
 
 # ensure leveldb is installed in image
 RDEPENDS_${PN} = "leveldb"
@@ -35,3 +35,5 @@ PACKAGES =+ "${PN}-tests"
 FILES_${PN}-tests = "${libdir}/${PN}/tests/*"
 FILES_${PN}-dbg += "${libdir}/${PN}/tests/.debug"
 
+# Remove when [GF-52239] is fixed
+INSANE_SKIP_${PN}-tests = "rpaths"

@@ -13,7 +13,7 @@ Index: ptmalloc3/Makefile.palm
 +
 +# -DMAP_DEV_HEAP: enable to see all allocations in /proc/pid/maps as /dev/heap
 +
-+LDFLAGS := -pthread -shared -fPIC -lpthread -Wl,--no-undefined
++LDFLAGS := -pthread -shared -fPIC -lpthread -Wl,--no-undefined -Wl,-O1 -Wl,--hash-style=gnu
 +
 +all: libptmalloc3.so
 +

@@ -6,19 +6,19 @@ HOMEPAGE = "http://www.malloc.de/en/"
 LICENSE = "BSD"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD;md5=3775480a712fc46a69647678acb234cb"
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://www.malloc.de/malloc/ptmalloc3-current.tar.gz \
            file://ptmalloc3-current-webos.patch "
 
+SRC_URI[md5sum] = "c0b9dd5f16f8eae979166dc74b60015c"
+SRC_URI[sha256sum] = "f353606f24a579597a1ff5b51009a45d75da047b3975d82c3f613f85bcf312db"
+
 S = "${WORKDIR}/${PN}"
 
 do_compile () {
-    cd ${S}; make -f Makefile.palm CC="$CC"
+    make -f Makefile.palm CC="$CC"
 }
-
-FILES_${PN} = " ${libdir}/lib*.so"
-FILES_${PN}-dev = "${includedir}"
 
 do_install() {
     #oenote instaling ptmalloc3
@@ -32,6 +32,5 @@ do_install() {
     rm ${D}/${includedir}/sysdeps/generic/atomic.h
 }
 
-SRC_URI[md5sum] = "c0b9dd5f16f8eae979166dc74b60015c"
-SRC_URI[sha256sum] = "f353606f24a579597a1ff5b51009a45d75da047b3975d82c3f613f85bcf312db"
-
+FILES_${PN} = " ${libdir}/lib*.so"
+FILES_${PN}-dev = "${includedir}"

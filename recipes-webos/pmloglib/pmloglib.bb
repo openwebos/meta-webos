@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "glib-2.0 libpbnjson"
 
-WEBOS_VERSION = "3.0.1-45_f969ec3a404d9c987650960f9d63cda48c0ee6df"
+WEBOS_VERSION = "3.0.1-46_aee3aa0bf2b3bbc07f9a7eb3a86245c2adac3d94"
 PR = "r5"
 
 WEBOS_DISTRO_PRERELEASE ??= ""

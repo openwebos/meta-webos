@@ -118,6 +118,14 @@ IMAGE_FSTYPES := "${@ ' ${IMAGE_FSTYPES} '.replace(' tar.bz2 ',' tar.gz ') }"
 
 PATH_prepend = "${WEBOS_EXTRA_PATH}"
 
+# Ensure that git checkout files have the same permissions when do_unpack
+# is executed on builders with different umask.
+# Drop this when upgrading oe-core to 1.6 release or newer, with this fix:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/086881.html
+# For details see:
+# https://bugzilla.yoctoproject.org/show_bug.cgi?id=5590
+do_unpack[umask] = "022"
+
 # Redirect console output to keep it from spewing all over the VirtualBox window
 # (This is added to qemux86 kernel cmdline by openembedded-core/meta/classes/syslinux.bbclass)
 APPEND_append_qemux86 = " console=ttyS0"

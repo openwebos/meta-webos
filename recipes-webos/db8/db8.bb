@@ -2,6 +2,7 @@
 
 SUMMARY = "A userspace service that provides access to the Open webOS database"
 SECTION = "webos/base"
+AUTHOR = "Maksym Sditanov <maxim.sditanov@lge.com>"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
@@ -10,7 +11,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
-WEBOS_VERSION = "3.1.0-103_169264924127079cd206f0a0d4e32d24e7f75460"
+WEBOS_VERSION = "3.1.0-110_8226c9d9fd2c7bf06038fe38507c3e0838435410"
 PR = "r18"
 
 # ensure leveldb is installed in image

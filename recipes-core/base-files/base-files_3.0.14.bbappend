@@ -1,6 +1,8 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos8"
+AUTHOR = "Herb Kuta <herb.kuta@lge.com>"
+
+EXTENDPRAUTO_append = "webos9"
 
 dirs700 = " \
     ${webos_db8datadir} \
@@ -49,5 +51,5 @@ do_install_append() {
 
 generate_fstab_entries() {
     echo "# additional in-memory storage for db8"
-    echo "tmpfs ${webos_db8datadir}/temp tmpfs size=32M,mode=0700 0 0"
+    echo "tmpfs ${webos_db8datadir}/temp tmpfs size=80M,mode=0700 0 0"
 }

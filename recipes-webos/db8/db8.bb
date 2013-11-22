@@ -9,10 +9,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 # db8 is also the provider for mojodb
 PROVIDES = "mojodb"
 
-DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
+DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb leveldb-tl boost"
 
-WEBOS_VERSION = "3.2.0-139_60b0568e93ca042ee0a2ccb1ebeddff9ae0e7e12"
-PR = "r20"
+WEBOS_VERSION = "3.2.0-140_863b443d5f508b1e0ecf8e702eb94ae93903802e"
+PR = "r21"
 
 # ensure leveldb is installed in image
 RDEPENDS_${PN} = "leveldb"
@@ -26,7 +26,7 @@ inherit webos_daemon
 inherit webos_library
 inherit webos_system_bus
 
-EXTRA_OECMAKE += "-DWEBOS_CONFIG_BUILD_TESTS:BOOL=TRUE -DWEBOS_DB8_BACKEND:STRING=leveldb -DCMAKE_SKIP_RPATH:BOOL=TRUE"
+EXTRA_OECMAKE += "-DWEBOS_CONFIG_BUILD_TESTS:BOOL=TRUE -DWEBOS_DB8_BACKEND:STRING='leveldb;sandwich' -DCMAKE_SKIP_RPATH:BOOL=TRUE"
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

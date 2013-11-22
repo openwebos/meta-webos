@@ -2,22 +2,43 @@ Index: a/Makefile
 ===================================================================
 --- a/Makefile	2013-04-10 15:24:36.000000000 -0700
 +++ b/Makefile	2013-04-10 15:25:50.000000000 -0700
-@@ -15,15 +15,15 @@
+@@ -1,6 +1,6 @@
  
- lib/mallinfo.so: src/mallinfo.c
+ BINS = bin/mem-monitor bin/mem-cpu-monitor
+-LIBS = lib/mallinfo.so
++LIBS = lib/libmallinfo.so.0
+ 
+ all: $(BINS) $(LIBS)
+ 
+@@ -13,17 +13,18 @@
+ tags:
+ 	ctags *.c *.h
+ 
+-lib/mallinfo.so: src/mallinfo.c
++lib/libmallinfo.so.0: src/mallinfo.c
  	@mkdir -p lib
 -	gcc -g -W -Wall -shared -O2 -fPIC  -Wl,-soname,mallinfo.so.0 -o $@ $^
-+	$(CC) -g -W -Wall -shared -O2 -fPIC  -Wl,-soname,mallinfo.so.0 -o $@ $^
++	$(CC) $(LDFLAGS) -g -W -Wall -shared -O2 -fPIC  -Wl,-soname,libmallinfo.so.0 -o $@ $^
++	ln -s libmallinfo.so.0 lib/libmallinfo.so
  
  bin/mem-monitor: src/mem-monitor.c src/mem-monitor-util.c
  	@mkdir -p bin
 -	gcc -g -W -Wall -O2 -o $@ $+
-+	$(CC) -g -W -Wall -O2 -o $@ $+
++	$(CC) $(LDFLAGS) -g -W -Wall -O2 -o $@ $+
  
  bin/mem-cpu-monitor: src/mem-cpu-monitor.c src/sp_report.c
  	@mkdir -p bin
 -	gcc -std=c99 -g -W -Wall -O2 -o $@ $+ -lspmeasure
-+	$(CC) -std=c99 -g -W -Wall -O2 -o $@ $+ -lspmeasure
++	$(CC) $(LDFLAGS) -std=c99 -g -W -Wall -O2 -o $@ $+ -lspmeasure
  
  install:
  	install -d  $(DESTDIR)/usr/bin
+@@ -29,7 +30,7 @@
+ 	install -d  $(DESTDIR)/usr/bin
+ 	cp -a bin/* $(DESTDIR)/usr/bin
+ 	install -d  $(DESTDIR)/usr/lib
+-	cp -a lib/*.so  $(DESTDIR)/usr/lib
++	cp -a lib/*.so* $(DESTDIR)/usr/lib
+ 	cp -a scripts/* $(DESTDIR)/usr/bin
+ 	install -d      $(DESTDIR)/usr/share/man/man1
+ 	cp -a man/*.1   $(DESTDIR)/usr/share/man/man1

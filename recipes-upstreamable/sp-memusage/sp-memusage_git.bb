@@ -8,7 +8,7 @@ DEPENDS = "sp-measure"
 RDEPENDS_${PN} = "sp-measure"
 
 SRCREV = "65e6a729ce04cd90206689ae28fbabc4baf801f6"
-PR = "r0"
+PR = "r1"
 PV = "1.3.2+git${SRCPV}"
 
 inherit autotools
@@ -16,3 +16,5 @@ inherit autotools
 SRC_URI = "git://gitorious.org/maemo-tools/sp-memusage.git \
            file://build-fixes.patch"
 S = "${WORKDIR}/git"
+
+FILES_${PN} += "${datadir}/sp-memusage-tests"

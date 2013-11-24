@@ -10,7 +10,7 @@ DEPENDS = "qt4-webos luna-service2 sqlite3 gperf-native"
 # isis-project components don't have submissions
 PE = "1"
 PV = "0.54"
-PR = "r14"
+PR = "r15"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -118,3 +118,6 @@ FILES_${PN} += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/qmldir"
 FILES_${PN} += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/libqmlwebkitplugin.so"
 FILES_${PN}-dbg += "${libdir}/.debug"
 FILES_${PN}-dbg += "${QT_CONFIGURE_IMPORTS_PATH}/QtWebKit/.debug"
+
+# libQtWebKit.so.4.8.3' has relocations in .text
+INSANE_SKIP_${PN} = "textrel"

@@ -398,3 +398,19 @@ python () {
 }
 # this syntax doesn't work:
 # PNBLACKLIST_webos[mesa-demos] = "depends on blacklisted glew"
+
+# upstream recipes with known QA issues
+# /usr/bin/luajit-2.0.0, /usr/lib/libluajit-5.1.so.2.0.0
+INSANE_SKIP_${PN}_pn-luajit = "already-stripped"
+# /usr/lib/libx264.so.129
+INSANE_SKIP_${PN}_pn-x264 = "textrel"
+# Following entries for libav can be removed when oe-core is upgraded to 9a670f780b1f1204d426017ff9a95842ad85800e or newer
+INSANE_SKIP_libswscale_pn-libav = "textrel"
+INSANE_SKIP_libpostproc_pn-libav = "textrel"
+INSANE_SKIP_libavutil_pn-libav = "textrel"
+INSANE_SKIP_libavformat_pn-libav = "textrel"
+INSANE_SKIP_libavfilter_pn-libav = "textrel"
+INSANE_SKIP_libavdevice_pn-libav = "textrel"
+INSANE_SKIP_libavcodec_pn-libav = "textrel"
+# /usr/bin/oscam
+INSANE_SKIP_${PN}_pn-oscam = "already-stripped"

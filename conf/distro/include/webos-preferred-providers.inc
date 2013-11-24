@@ -21,8 +21,7 @@ VIRTUAL-RUNTIME_initscripts = "initscripts webos-initscripts webos-shutdownscrip
 # Other alternatives are sysvinit, systemd
 VIRTUAL-RUNTIME_init_manager = "upstart"
 
-# Remove this when oe-core is upgraded to include
-# http://git.openembedded.org/openembedded-core/commit/?id=f5d018a769fa297efa629cbbf6e42a49173faa8b
-# Weak assignment is OK here, because we're not changing existing
-# PREFERRED_PROVIDER, we're just backporting this line from newer default-providers.inc
-PREFERRED_PROVIDER_udev ?= "${@base_contains('DISTRO_FEATURES','systemd','systemd','udev',d)}"
+# With upstart we don't need update-rc.d, as bonus fixes following avahi issue for us:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/086901.html
+BAD_RECOMMENDATIONS += "update-rc.d"
+UPDATERCD_class-target = ""

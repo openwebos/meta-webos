@@ -12,7 +12,7 @@ DEPENDS = "qt4-webos glib-2.0 luna-prefs luna-service2 cjson nyx-lib libpbnjson 
 DEPENDS += "virtual/${TARGET_PREFIX}binutils"
 
 WEBOS_VERSION = "3.0.0-3_00754405740b7f9d08ae0897f490b00123e17c2c"
-PR = "r4"
+PR = "r5"
 
 # Don't uncomment until all of the do_*() tasks have been moved out of the recipe
 #inherit webos_component
@@ -45,3 +45,6 @@ do_install() {
 
     install -v -m 644 ${S}/include/*.h ${D}${includedir}/luna-sysmgr-common
 }
+
+# /usr/lib/libLunaSysMgrCommon.so.1.0.0 contains RPATH pointing to sysroot
+INSANE_SKIP_${PN} = "rpaths"

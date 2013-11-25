@@ -11,7 +11,7 @@ DEPENDS = "qt4-webos webkit-webos"
 PE = "1"
 PV = "0.5"
 SRCREV = "70fb05fd340ab342c5132dc8bfa174dbe6c9d330"
-PR = "r9"
+PR = "r10"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -89,3 +89,6 @@ FILES_${PN} += "${webos_qtpluginsdir}/webkit/libqtwebkitplugin.so"
 FILES_${PN} += "${datadir}/fonts"
 FILES_${PN}-dbg += "${webos_qtpluginsdir}/platforms/.debug"
 FILES_${PN}-dbg += "${webos_qtpluginsdir}/webkit/.debug"
+
+# qemuarm has bad RPATHs
+INSANE_SKIP_${PN}_append_qemuarm = " rpaths"

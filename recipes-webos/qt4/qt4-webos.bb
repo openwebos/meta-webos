@@ -6,7 +6,7 @@ require qt4-webos.inc
 # do_configure() -- see commentary in qmake-webos-native.bb
 DEPENDS = "freetype jpeg libpng zlib glib-2.0 nyx-lib icu openssl"
 
-PR = "${INC_PR}.4"
+PR = "${INC_PR}.5"
 
 inherit webos_machine_dep
 
@@ -124,3 +124,6 @@ FILES_${PN}-dbg += "${webos_qtpluginsdir}/*/.debug"
 QT_CONFIGURE_IMPORTS_PATH = "${webos_qtpluginsdir}/imports"
 FILES_${PN}-dbg += "${QT_CONFIGURE_IMPORTS_PATH}/Qt/labs/shaders/.debug"
 FILES_${PN}-buildsrc += "${QT4_STAGING_BUILD_DIR}"
+
+# qemuarm has bad RPATHs in 15 libraries
+INSANE_SKIP_${PN}_append_qemuarm = " rpaths"

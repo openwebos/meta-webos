@@ -51,16 +51,22 @@ DEPENDS_pn-packagegroup-core-boot = ""
 # Build time dependency on TUNE_PKGARCH recipes base-passwd, shadow, shadow-sysroot
 # Drop this when upgrading oe-core to 1.6 release or newer with this change:
 # http://lists.openembedded.org/pipermail/openembedded-core/2013-November/085849.html
-PACKAGE_ARCH_pn-xuser-account = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_pn-xuser-account = "${MACHINE_ARCH}"
 
 # Drop these PACKAGE_ARCH assignments when upgrading oe-core to 1.6 release or newer with this change:
 # http://lists.openembedded.org/pipermail/openembedded-core/2013-November/085999.html
 # change from allarch, because drobear has different signature for each TUNE_PKGARCH
-PACKAGE_ARCH_pn-packagegroup-core-ssh-dropbear = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_pn-packagegroup-core-ssh-dropbear = "${MACHINE_ARCH}"
+# change from allarch, because openssh has different signature for each TUNE_PKGARCH
+PACKAGE_ARCH_pn-packagegroup-core-ssh-openssh = "${MACHINE_ARCH}"
 # change from allarch, because fontconfig has different signature for each TUNE_PKGARCH
-PACKAGE_ARCH_pn-packagegroup-fonts-truetype = "${TUNE_PKGARCH}"
+PACKAGE_ARCH_pn-packagegroup-fonts-truetype = "${MACHINE_ARCH}"
 # depends on eglibc-locale, libgcc, gcc-runtime, eglibc or external-toochain based on MACHINE configuration
 PACKAGE_ARCH_pn-packagegroup-core-standalone-sdk-target = "${MACHINE_ARCH}"
+# depends on tcf-agent, gdb, openssh
+PACKAGE_ARCH_pn-packagegroup-core-eclipse-debug = "${MACHINE_ARCH}"
+# depends on VIRTUAL-RUNTIME_initscripts which includes MACHINE_ARCH webos-shutdownscripts
+PACKAGE_ARCH_pn-packagegroup-core-basic = "${MACHINE_ARCH}"
 PACKAGE_ARCH_pn-packagegroup-cli-tools = "${MACHINE_ARCH}"
 PACKAGE_ARCH_pn-packagegroup-core-buildessential = "${MACHINE_ARCH}"
 PACKAGE_ARCH_pn-packagegroup-core-nfs = "${MACHINE_ARCH}"

@@ -58,6 +58,7 @@ WEBOS_PACKAGESET_ENYO_1 = " \
     loadable-frameworks \
     mojoservice-frameworks \
     underscore \
+    luna-init-fonts \
 "
 
 WEBOS_PACKAGESET_SYSTEMAPPS = " \

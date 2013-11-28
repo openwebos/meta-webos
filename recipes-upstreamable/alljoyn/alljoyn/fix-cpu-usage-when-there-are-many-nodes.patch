@@ -1,0 +1,505 @@
+diff -urN alljoyn-3.4.3-src-org/alljoyn_core/daemon/posix/daemon-main.cc alljoyn-3.4.3-src-patch/alljoyn_core/daemon/posix/daemon-main.cc
+--- alljoyn-3.4.3-src-org/alljoyn_core/daemon/posix/daemon-main.cc	2013-11-19 03:59:17.000000000 +0900
++++ alljoyn-3.4.3-src-patch/alljoyn_core/daemon/posix/daemon-main.cc	2013-11-28 11:37:52.187830346 +0900
+@@ -124,7 +124,7 @@
+ #endif
+     "  <limit auth_timeout=\"5000\"/>"
+     "  <limit max_incomplete_connections=\"16\"/>"
+-    "  <limit max_completed_connections=\"64\"/>"
++    "  <limit max_completed_connections=\"32\"/>"
+     "  <limit max_untrusted_clients=\"0\"/>"
+     "  <property restrict_untrusted_clients=\"true\"/>"
+     "  <ip_name_service>"
+diff -urN alljoyn-3.4.3-src-org/alljoyn_core/daemon/SessionlessObj.cc alljoyn-3.4.3-src-patch/alljoyn_core/daemon/SessionlessObj.cc
+--- alljoyn-3.4.3-src-org/alljoyn_core/daemon/SessionlessObj.cc	2013-11-19 03:59:17.000000000 +0900
++++ alljoyn-3.4.3-src-patch/alljoyn_core/daemon/SessionlessObj.cc	2013-11-28 11:37:41.579831674 +0900
+@@ -260,6 +260,7 @@
+     QCC_DbgTrace(("SessionlessObj::AddRule(%s, ...)", epName.c_str()));
+ 
+     if (rule.sessionless == Rule::SESSIONLESS_TRUE) {
++        router.LockNameTable();
+         lock.Lock();
+         map<String, uint32_t>::iterator it = ruleCountMap.find(epName);
+         if (it == ruleCountMap.end()) {
+@@ -272,7 +273,9 @@
+              */
+             if (!changeIdMap.empty() || !messageMap.empty()) {
+                 lock.Unlock();
++                router.UnlockNameTable();
+                 RereceiveMessages(epName, "");
++                router.LockNameTable();
+                 lock.Lock();
+             }
+         } else {
+@@ -289,6 +292,7 @@
+             }
+         }
+         lock.Unlock();
++        router.UnlockNameTable();
+     }
+ }
+ 
+@@ -297,6 +301,7 @@
+     QCC_DbgTrace(("SessionlessObj::RemoveRule(%s, ...)", epName.c_str()));
+ 
+     if (rule.sessionless == Rule::SESSIONLESS_TRUE) {
++        router.LockNameTable();
+         lock.Lock();
+         map<String, uint32_t>::iterator it = ruleCountMap.find(epName);
+         if (it != ruleCountMap.end()) {
+@@ -314,6 +319,7 @@
+             isDiscoveryStarted = false;
+         }
+         lock.Unlock();
++        router.UnlockNameTable();
+     }
+ }
+ 
+@@ -491,6 +497,7 @@
+ 
+     /* Remove entries from ruleCountMap for names exiting from the bus */
+     if (oldOwner && !newOwner) {
++        router.LockNameTable();
+         lock.Lock();
+         map<String, uint32_t>::iterator it = ruleCountMap.find(name);
+         if (it != ruleCountMap.end()) {
+@@ -531,6 +538,7 @@
+             isDiscoveryStarted = false;
+         }
+         lock.Unlock();
++        router.UnlockNameTable();
+     }
+ }
+ 
+@@ -823,6 +831,7 @@
+         }
+ 
+         /* Look for new/failed joinsessions to try/retry (after backoff) */
++        router.LockNameTable();
+         lock.Lock();
+         map<String, ChangeIdEntry>::iterator cit = changeIdMap.begin();
+         while (cit != changeIdMap.end()) {
+@@ -850,6 +859,7 @@
+             ++cit;
+         }
+         lock.Unlock();
++        router.UnlockNameTable();
+ 
+         /* Rearm alarm */
+         if (tilExpire != ::numeric_limits<uint32_t>::max()) {
+@@ -880,6 +890,7 @@
+     }
+ 
+     /* Send out RequestSignals or RequestRange message if join was successful. Otherwise retry. */
++    router.LockNameTable();
+     lock.Lock();
+     map<String, ChangeIdEntry>::iterator cit = changeIdMap.find(guid);
+     if (cit != changeIdMap.end()) {
+@@ -900,14 +911,12 @@
+                 /* Check to see if session host is capable of handling RequestSignalRange */
+                 bool rangeCapable = false;
+                 BusEndpoint ep = router.FindEndpoint(ctx1->name);
+-                router.LockNameTable();
+                 if (ep->IsValid() && (ep->GetEndpointType() == ENDPOINT_TYPE_VIRTUAL)) {
+                     RemoteEndpoint rep = VirtualEndpoint::cast(ep)->GetBusToBusEndpoint(id);
+                     if (rep->IsValid()) {
+                         rangeCapable = (rep->GetRemoteProtocolVersion() >= 6);
+                     }
+                 }
+-                router.UnlockNameTable();
+                 if (rangeCapable) {
+                     /* Handle head of catchup list */
+                     isCatchup = true;
+@@ -944,6 +953,7 @@
+             }
+         }
+         lock.Unlock();
++        router.UnlockNameTable();
+ 
+         if (status == ER_OK) {
+             /* Add/replace sessionless adv name for remote daemon */
+@@ -976,6 +986,7 @@
+         }
+     } else {
+         lock.Unlock();
++        router.UnlockNameTable();
+         QCC_LogError(ER_FAIL, ("Missing entry in changeIdMap for %s", guid.c_str()));
+     }
+ 
+diff -urN alljoyn-3.4.3-src-org/alljoyn_core/src/BusAttachment.cc alljoyn-3.4.3-src-patch/alljoyn_core/src/BusAttachment.cc
+--- alljoyn-3.4.3-src-org/alljoyn_core/src/BusAttachment.cc	2013-11-19 03:59:17.000000000 +0900
++++ alljoyn-3.4.3-src-patch/alljoyn_core/src/BusAttachment.cc	2013-11-28 11:37:52.187830346 +0900
+@@ -109,7 +109,7 @@
+     bus(bus),
+     listenersLock(),
+     listeners(),
+-    m_ioDispatch("iodisp", 128),
++    m_ioDispatch("iodisp", 96),
+     transportList(bus, factories, &m_ioDispatch, concurrency),
+     keyStore(application),
+     authManager(keyStore),
+diff -urN alljoyn-3.4.3-src-org/common/inc/qcc/Timer.h alljoyn-3.4.3-src-patch/common/inc/qcc/Timer.h
+--- alljoyn-3.4.3-src-org/common/inc/qcc/Timer.h	2013-11-19 04:00:53.000000000 +0900
++++ alljoyn-3.4.3-src-patch/common/inc/qcc/Timer.h	2013-11-28 11:38:30.259825451 +0900
+@@ -26,6 +26,7 @@
+ #include <qcc/Debug.h>
+ #include <qcc/atomic.h>
+ #include <set>
++#include <deque>
+ 
+ #include <qcc/Mutex.h>
+ #include <qcc/Thread.h>
+@@ -241,6 +242,8 @@
+      */
+     bool RemoveAlarm(const Alarm& alarm, bool blockIfTriggered = true);
+ 
++    bool ForceRemoveAlarm(const Alarm& alarm, bool blockIfTriggered = true);
++
+     /**
+      * Remove any alarm for a specific listener returning the alarm. Returns a boolean if an alarm
+      * was removed. This function is designed to be called in a loop to remove all alarms for a
+@@ -339,6 +342,7 @@
+     Mutex reentrancyLock;
+     qcc::String nameStr;
+     const uint32_t maxAlarms;
++    std::deque<qcc::Thread*> addWaitQueue; /**< Threads waiting for alarms set to become not-full */
+ };
+ 
+ }
+diff -urN alljoyn-3.4.3-src-org/common/os/posix/Timer.cc alljoyn-3.4.3-src-patch/common/os/posix/Timer.cc
+--- alljoyn-3.4.3-src-org/common/os/posix/Timer.cc	2013-11-19 04:00:53.000000000 +0900
++++ alljoyn-3.4.3-src-patch/common/os/posix/Timer.cc	2013-11-28 11:38:30.259825451 +0900
+@@ -25,12 +25,15 @@
+ #include <qcc/Debug.h>
+ #include <qcc/Timer.h>
+ #include <Status.h>
++#include <algorithm>
+ 
+ #define QCC_MODULE  "TIMER"
+ 
+ #define WORKER_IDLE_TIMEOUT_MS  20
+ #define FALLBEHIND_WARNING_MS   500
+ 
++#define TIMER_IS_DEAD_ALERTCODE  1
++
+ using namespace std;
+ using namespace qcc;
+ 
+@@ -202,6 +205,13 @@
+         lock.Unlock();
+ 
+     }
++
++    lock.Lock();
++    deque<Thread*>::iterator it = addWaitQueue.begin();
++    while (it != addWaitQueue.end()) {
++        (*it++)->Alert(TIMER_IS_DEAD_ALERTCODE);
++    }
++    lock.Unlock();
+     return status;
+ }
+ 
+@@ -230,10 +240,28 @@
+     if (isRunning) {
+         /* Don't allow an infinite number of alarms to exist on this timer */
+         while (maxAlarms && (alarms.size() >= maxAlarms) && isRunning) {
+-            lock.Unlock();
+-            qcc::Sleep(2);
+-            lock.Lock();
++            Thread* thread = Thread::GetThread();
++            assert(thread);
++            addWaitQueue.push_front(thread);
++            lock.Unlock(MUTEX_CONTEXT);
++            QStatus status1 = Event::Wait(Event::neverSet, Event::WAIT_FOREVER);
++            lock.Lock(MUTEX_CONTEXT);
++            deque<Thread*>::iterator eit = find(addWaitQueue.begin(), addWaitQueue.end(), thread);
++            if (eit != addWaitQueue.end()) {
++                addWaitQueue.erase(eit);
++            }
++            /* Reset alert status */
++            if (ER_ALERTED_THREAD == status1) {
++                thread->GetStopEvent().ResetEvent();
++                if (thread->GetAlertCode() == TIMER_IS_DEAD_ALERTCODE) {
++
++
++                    lock.Unlock(MUTEX_CONTEXT);
++                    return ER_TIMER_EXITING;
++                }
++            }
+         }
++
+         /* Ensure timer is still running */
+         if (isRunning) {
+             /* Insert the alarm and alert the Timer thread if necessary */
+@@ -335,6 +363,55 @@
+     return foundAlarm;
+ }
+ 
++bool Timer::ForceRemoveAlarm(const Alarm& alarm, bool blockIfTriggered)
++{
++    bool foundAlarm = false;
++    lock.Lock();
++    if (isRunning || expireOnExit) {
++        if (alarm->periodMs) {
++            set<Alarm>::iterator it = alarms.begin();
++            while (it != alarms.end()) {
++                if ((*it)->id == alarm->id) {
++                    foundAlarm = true;
++                    alarms.erase(it);
++                    break;
++                }
++                ++it;
++            }
++        } else {
++            set<Alarm>::iterator it = alarms.find(alarm);
++            if (it != alarms.end()) {
++                foundAlarm = true;
++                alarms.erase(it);
++            }
++        }
++        if (blockIfTriggered && !foundAlarm) {
++            /*
++             * There might be a call in progress to the alarm that is being removed.
++             * RemoveAlarm must not return until this alarm is finished.
++             */
++            for (size_t i = 0; i < timerThreads.size(); ++i) {
++                if ((timerThreads[i] == NULL) || (timerThreads[i] == Thread::GetThread())) {
++                    continue;
++                }
++                const Alarm* curAlarm = timerThreads[i]->GetCurrentAlarm();
++                while (isRunning && curAlarm && (*curAlarm == alarm)) {
++                    timerThreads[i]->Alert(TIMER_IS_DEAD_ALERTCODE);
++                    lock.Unlock();
++                    qcc::Sleep(2);
++                    lock.Lock();
++                    if (timerThreads[i] == NULL) {
++                        break;
++                    }
++                    curAlarm = timerThreads[i]->GetCurrentAlarm();
++                }
++            }
++        }
++    }
++    lock.Unlock();
++    return foundAlarm;
++}
++
+ QStatus Timer::ReplaceAlarm(const Alarm& origAlarm, const Alarm& newAlarm, bool blockIfTriggered)
+ {
+     QStatus status = ER_NO_SUCH_ALARM;
+@@ -554,9 +631,9 @@
+                  * if the system gets too far behind.  We define "too far" by
+                  * the constant FALLBEHIND_WARNING_MS.
+                  */
+-                if (delay < 0 && abs(delay) > FALLBEHIND_WARNING_MS) {
++                if (delay < 0 && std::abs((long)delay) > FALLBEHIND_WARNING_MS) {
+                     QCC_LogError(ER_TIMER_FALLBEHIND, ("TimerThread::Run(): Timer \"%s\" alarm is late by %ld ms",
+-                                                       Thread::GetThreadName(), abs(delay)));
++                                                       Thread::GetThreadName(), std::abs((long)delay)));
+                 }
+ 
+                 TimerThread* tt = NULL;
+@@ -692,6 +769,7 @@
+                  * the list.
+                  */
+                 timer->lock.Lock();
++
+                 /* Make sure the alarm has not been serviced yet.
+                  * If it has already been serviced by another thread, just ignore
+                  * and go back to the top of the loop.
+@@ -701,6 +779,14 @@
+                     Alarm top = *it;
+                     timer->alarms.erase(it);
+                     currentAlarm = &top;
++                    if (0 < timer->addWaitQueue.size()) {
++                        Thread* wakeMe = timer->addWaitQueue.back();
++                        timer->addWaitQueue.pop_back();
++                        QStatus status = wakeMe->Alert();
++                        if (ER_OK != status) {
++                            QCC_LogError(status, ("Failed to alert thread blocked on full tx queue"));
++                        }
++                    }
+                     timer->lock.Unlock();
+ 
+                     QCC_DbgPrintf(("TimerThread::Run(): ******** AlarmTriggered()"));
+diff -urN alljoyn-3.4.3-src-org/common/os/windows/Timer.cc alljoyn-3.4.3-src-patch/common/os/windows/Timer.cc
+--- alljoyn-3.4.3-src-org/common/os/windows/Timer.cc	2013-11-19 04:00:53.000000000 +0900
++++ alljoyn-3.4.3-src-patch/common/os/windows/Timer.cc	2013-11-28 11:38:30.259825451 +0900
+@@ -25,12 +25,15 @@
+ #include <qcc/Debug.h>
+ #include <qcc/Timer.h>
+ #include <Status.h>
++#include <algorithm>
+ 
+ #define QCC_MODULE  "TIMER"
+ 
+ #define WORKER_IDLE_TIMEOUT_MS  20
+ #define FALLBEHIND_WARNING_MS   500
+ 
++#define TIMER_IS_DEAD_ALERTCODE  1
++
+ using namespace std;
+ using namespace qcc;
+ 
+@@ -201,6 +204,13 @@
+         }
+         lock.Unlock();
+     }
++
++    lock.Lock();
++    deque<Thread*>::iterator it = addWaitQueue.begin();
++    while (it != addWaitQueue.end()) {
++        (*it++)->Alert(TIMER_IS_DEAD_ALERTCODE);
++    }
++    lock.Unlock();
+     return status;
+ }
+ 
+@@ -229,9 +239,27 @@
+     if (isRunning) {
+         /* Don't allow an infinite number of alarms to exist on this timer */
+         while (maxAlarms && (alarms.size() >= maxAlarms) && isRunning) {
+-            lock.Unlock();
+-            qcc::Sleep(2);
+-            lock.Lock();
++            Thread* thread = Thread::GetThread();
++            assert(thread);
++            addWaitQueue.push_front(thread);
++            lock.Unlock(MUTEX_CONTEXT);
++            QStatus status1 = Event::Wait(Event::neverSet, Event::WAIT_FOREVER);
++            lock.Lock(MUTEX_CONTEXT);
++            deque<Thread*>::iterator eit = find(addWaitQueue.begin(), addWaitQueue.end(), thread);
++            if (eit != addWaitQueue.end()) {
++                addWaitQueue.erase(eit);
++            }
++
++            /* Reset alert status */
++            if (ER_ALERTED_THREAD == status1) {
++                thread->GetStopEvent().ResetEvent();
++                if (thread->GetAlertCode() == TIMER_IS_DEAD_ALERTCODE) {
++
++
++                    lock.Unlock(MUTEX_CONTEXT);
++                    return ER_TIMER_EXITING;
++                }
++            }
+         }
+         /* Ensure timer is still running */
+         if (isRunning) {
+@@ -332,6 +360,55 @@
+     return foundAlarm;
+ }
+ 
++bool Timer::ForceRemoveAlarm(const Alarm& alarm, bool blockIfTriggered)
++{
++    bool foundAlarm = false;
++    lock.Lock();
++    if (isRunning || expireOnExit) {
++        if (alarm->periodMs) {
++            set<Alarm>::iterator it = alarms.begin();
++            while (it != alarms.end()) {
++                if ((*it)->id == alarm->id) {
++                    foundAlarm = true;
++                    alarms.erase(it);
++                    break;
++                }
++                ++it;
++            }
++        } else {
++            set<Alarm>::iterator it = alarms.find(alarm);
++            if (it != alarms.end()) {
++                foundAlarm = true;
++                alarms.erase(it);
++            }
++        }
++        if (blockIfTriggered && !foundAlarm) {
++            /*
++             * There might be a call in progress to the alarm that is being removed.
++             * RemoveAlarm must not return until this alarm is finished.
++             */
++            for (size_t i = 0; i < timerThreads.size(); ++i) {
++                if ((timerThreads[i] == NULL) || (timerThreads[i] == Thread::GetThread())) {
++                    continue;
++                }
++                const Alarm* curAlarm = timerThreads[i]->GetCurrentAlarm();
++                while (isRunning && curAlarm && (*curAlarm == alarm)) {
++                    timerThreads[i]->Alert(TIMER_IS_DEAD_ALERTCODE);
++                    lock.Unlock();
++                    qcc::Sleep(2);
++                    lock.Lock();
++                    if (timerThreads[i] == NULL) {
++                        break;
++                    }
++                    curAlarm = timerThreads[i]->GetCurrentAlarm();
++                }
++            }
++        }
++    }
++    lock.Unlock();
++    return foundAlarm;
++}
++
+ QStatus Timer::ReplaceAlarm(const Alarm& origAlarm, const Alarm& newAlarm, bool blockIfTriggered)
+ {
+     QStatus status = ER_NO_SUCH_ALARM;
+@@ -687,6 +764,7 @@
+                  * the list.
+                  */
+                 timer->lock.Lock();
++
+                 /* Make sure the alarm has not been serviced yet.
+                  * If it has already been serviced by another thread, just ignore
+                  * and go back to the top of the loop.
+@@ -696,6 +774,14 @@
+                     Alarm top = *it;
+                     timer->alarms.erase(it);
+                     currentAlarm = &top;
++                    if (0 < timer->addWaitQueue.size()) {
++                        Thread* wakeMe = timer->addWaitQueue.back();
++                        timer->addWaitQueue.pop_back();
++                        QStatus status = wakeMe->Alert();
++                        if (ER_OK != status) {
++                            QCC_LogError(status, ("Failed to alert thread blocked on full tx queue"));
++                        }
++                    }
+                     timer->lock.Unlock();
+ 
+                     QCC_DbgPrintf(("TimerThread::Run(): ******** AlarmTriggered()"));
+diff -urN alljoyn-3.4.3-src-org/common/os/winrt/Timer.cc alljoyn-3.4.3-src-patch/common/os/winrt/Timer.cc
+--- alljoyn-3.4.3-src-org/common/os/winrt/Timer.cc	2013-11-19 04:00:53.000000000 +0900
++++ alljoyn-3.4.3-src-patch/common/os/winrt/Timer.cc	2013-11-28 11:38:30.259825451 +0900
+@@ -417,6 +417,11 @@
+     return status;
+ }
+ 
++bool Timer::ForceRemoveAlarm(const Alarm& alarm, bool blockIfTriggered)
++{
++    //TODO: AJCORE332: Implement forceRemoveAlarm and addWaitQueue as implemented in windows/posix.
++    return false;
++}
+ bool Timer::RemoveAlarm(const Alarm& alarm, bool blockIfTriggered)
+ {
+     bool removed = false;
+diff -urN alljoyn-3.4.3-src-org/common/src/IODispatch.cc alljoyn-3.4.3-src-patch/common/src/IODispatch.cc
+--- alljoyn-3.4.3-src-org/common/src/IODispatch.cc	2013-11-19 04:00:53.000000000 +0900
++++ alljoyn-3.4.3-src-patch/common/src/IODispatch.cc	2013-11-28 11:38:30.259825451 +0900
+@@ -27,7 +27,7 @@
+ 
+ 
+ IODispatch::IODispatch(const char* name, uint32_t concurrency) :
+-    timer(name, true, concurrency, false, 50),
++    timer(name, true, concurrency, false, 96),
+     reload(false),
+     isRunning(false),
+     numAlarmsInProgress(0),
+@@ -311,8 +311,8 @@
+ 
+         if (isRunning) {
+             /* Timer is running. Remove any pending alarms */
+-            timer.RemoveAlarm(dispatchEntry.readAlarm, true /* blocking */);
+-            timer.RemoveAlarm(dispatchEntry.writeAlarm, true /* blocking */);
++            timer.ForceRemoveAlarm(dispatchEntry.readAlarm, true /* blocking */);
++            timer.ForceRemoveAlarm(dispatchEntry.writeAlarm, true /* blocking */);
+         }
+         /* If IODispatch has been stopped,
+          * RemoveAlarms may not have successfully removed the alarm.

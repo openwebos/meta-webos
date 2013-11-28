@@ -9,6 +9,6 @@ includedir=/usr/include
 
 Name: alljoyn
 Description: AllJoyn Open Source Project
-Version: 3.4.2
+Version: 3.4.3
 Libs: -L${libdir}
 Cflags: -I${includedir}/alljoyn

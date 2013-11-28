@@ -14,10 +14,11 @@ SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-s
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
-           file://makefile-fixes-for-compiling-in-OE.patch"
+           file://makefile-fixes-for-compiling-in-OE.patch \
+           file://fix-cpu-usage-when-there-are-many-nodes.patch"
 
-SRC_URI[alljoyncore.md5sum] = "2d6274410ab23fcb17eb1d7a8bcc4e76"
-SRC_URI[alljoyncore.sha256sum] = "be7d50c7f1696908012421a3fb7addd588c8c7427125915ec07f6b8d59b07b0b"
+SRC_URI[alljoyncore.md5sum] = "473af628ba8234d72d58667612a63a26"
+SRC_URI[alljoyncore.sha256sum] = "280968c0a63d916a9a1c7fd73f87c0d9ea0bfa0900ddee25af86e6438f603b3c"
 
 S = "${WORKDIR}/alljoyn-${PV}-src"
 

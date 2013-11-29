@@ -131,6 +131,12 @@ PACKAGE_ARCH_pn-libgcc = "${TUNE_PKGARCH}"
 # gcc-runtime.inc: mtarget=`echo ${MULTIMACH_TARGET_SYS} | sed -e s#-${SDKPKGSUFFIX}##`
 PACKAGE_ARCH_pn-gcc-runtime = "${TUNE_PKGARCH}"
 
+# Drop this when upgrading oe-core to 1.6 release or newer, with this fix:
+# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/087115.html
+# Assign vardepvalue, because otherwise signature is changed before and after
+# perl is built (from None to real version in config.sh).
+get_perl_version[vardepvalue] = "${PERL_OWN_DIR}"
+
 # The Open webOS distro is packaged into these image types:
 IMAGE_FSTYPES ?= "tar.gz"
 

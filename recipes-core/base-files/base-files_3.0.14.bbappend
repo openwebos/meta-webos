@@ -1,6 +1,6 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos7"
+EXTENDPRAUTO_append = "webos8"
 
 dirs700 = " \
     ${webos_db8datadir} \
@@ -11,7 +11,7 @@ dirs700 = " \
 dirs755 += " \
     ${webos_cryptofsdir} \
     ${webos_picapkgdir} \
-    ${webos_preferences} \
+    ${webos_preferencesdir} \
 "
 
 # webOS expects this directory to be writeable by all (because it's typically

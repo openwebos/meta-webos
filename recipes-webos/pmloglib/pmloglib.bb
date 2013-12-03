@@ -1,13 +1,14 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS logging library"
+AUTHOR = "Gayathri Srinivasan <gayathri.srinivasan@lge.com>"
 SECTION = "webos/libs"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "glib-2.0 libpbnjson"
 
-WEBOS_VERSION = "3.0.1-47_ca0a518b7022b58d4efd1785fd1ae3787af3bc65"
+WEBOS_VERSION = "3.0.1-48_f61d1762e550635c8ac43a0386325d4cb9baad3a"
 PR = "r5"
 
 WEBOS_DISTRO_PRERELEASE ??= ""

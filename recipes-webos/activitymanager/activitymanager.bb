@@ -1,13 +1,14 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 DESCRIPTION = "Open webOS component to manage all running activities."
+AUTHOR = "Ludovic Legrand <ludovic.legrand@lge.com>"
 LICENSE = "Apache-2.0"
 SECTION = "webos/dameons"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "luna-service2 db8 boost openssl glib-2.0 pmloglib nyx-lib"
 
-WEBOS_VERSION = "3.0.0-121_bc573cb5690be1870acf9aadf52116179047a2cc"
+WEBOS_VERSION = "3.0.0-122_e07a91824eb78c8fe8b33bed380c948a2a02790c"
 PR = "r4"
 
 inherit webos_component

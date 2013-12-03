@@ -1,0 +1,26 @@
+From 716df6a2f2eb323c98897e29d53a8bbba8f938e9 Mon Sep 17 00:00:00 2001
+From: Maksym Sditanov <feniksgordonfreeman@gmail.com>
+Date: Tue, 3 Dec 2013 19:18:53 +0200
+Subject: [PATCH] Fix issue 144, 219
+
+Use fallocate function to allocate all required disk space.
+---
+ util/env_posix.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/env_posix.cc b/util/env_posix.cc
+index 3e2925d..4b5bd39 100644
+--- a/util/env_posix.cc
++++ b/util/env_posix.cc
+@@ -231,7 +231,7 @@ class PosixMmapFile : public WritableFile {
+ 
+   bool MapNewRegion() {
+     assert(base_ == NULL);
+-    if (ftruncate(fd_, file_offset_ + map_size_) < 0) {
++    if (fallocate(fd_, 0, file_offset_, map_size_) < 0) {
+       return false;
+     }
+     void* ptr = mmap(NULL, map_size_, PROT_READ | PROT_WRITE, MAP_SHARED,
+-- 
+1.8.3.2
+

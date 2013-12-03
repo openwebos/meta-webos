@@ -13,13 +13,14 @@ HOMEPAGE = "http://leveldb.googlecode.com"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=92d1b128950b11ba8495b64938fc164d"
 
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://${BPN}.googlecode.com/files/${BP}.tar.gz \
     file://explicitly.disable.tcmalloc.patch \
+    file://0001-Fix-issue-144-219.patch \
 "
-SRC_URI[md5sum] = "7e5d8fd6de0daf545bb523b53a9d47c6"
-SRC_URI[sha256sum] = "84a4ab34671e1271d895f093932f8c8cfecb45b2e085da738671599825d12f62"
+SRC_URI[md5sum] = "38ce005460d71040f959d71fd8d7fc78"
+SRC_URI[sha256sum] = "9122d2c248ba40d6ce46d0c3e4738fcfa941d0d93fdba20a101471a98e8b00a3"
 
 do_compile() {
     # do not use oe_runmake. oe_runmake pass to make compilation arguments and override

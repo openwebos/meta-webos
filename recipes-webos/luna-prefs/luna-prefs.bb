@@ -1,13 +1,14 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS preferences manager"
+AUTHOR = "Keith Derrick <keith.derrick@lge.com>"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "luna-service2 cjson sqlite3 glib-2.0 nyx-lib"
 
-WEBOS_VERSION = "2.0.0-4_6057d4329880e7b77a963fd0bea49a7b4957ecc6"
+WEBOS_VERSION = "2.0.0-5_cf2260ed5340b0de913ccfe90aa0b4fc9eaa5fc4"
 PR = "r10"
 
 #inherit webos_component

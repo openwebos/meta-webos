@@ -1,13 +1,14 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Command line utilities for the Open webOS Platform Portability Layer"
+AUTHOR = "Ed Chejlava <ed.chejlava@lge.com>"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "nyx-lib"
 
-WEBOS_VERSION = "1.0.0-12_3d2146c30364fbb494694ed886414ffa40d91119"
+WEBOS_VERSION = "1.0.1-14_490b98d8186c786147e2b9e2af03865ad773341c"
 PR = "r0"
 
 inherit webos_component

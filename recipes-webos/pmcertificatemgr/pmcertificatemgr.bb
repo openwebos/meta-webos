@@ -1,6 +1,7 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Provides certificate storage and wrapper API on openssl certificate manipulation functions"
+AUTHOR = "Keith Derrick <keith.derrick@lge.com>"
 SECTION = "webos/libs"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
@@ -8,7 +9,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 DEPENDS = "openssl"
 RDEPENDS_${PN} = "ca-certificates"
 
-WEBOS_VERSION = "2.0.0-28_b621daee845da9ec6aa6b6de81b3fe3b8f8632b4"
+WEBOS_VERSION = "2.0.0-29_3cec1b22765db57b9c0c9bbba8e3cee0a2c4e2cb"
 PR = "r4"
 
 inherit webos_component

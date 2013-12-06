@@ -15,7 +15,7 @@ checkout=.
 update=Y
 minimal_submission="1"
 minimal_version="0.1.0"
-script_version="1.0.2"
+script_version="1.0.3"
 
 usage () {
     cat << EOF
@@ -356,6 +356,7 @@ if [ -n "$recipe" ] ; then
 
     if [ -n "${OLD_SUBMISSION}" ] ; then
         LOG=`(cd $checkout && git log --no-merges --oneline submissions/${OLD_SUBMISSION}..submissions/${SUBMISSION})`
+        ISSUES=`(cd $checkout && git log --no-merges submissions/${OLD_SUBMISSION}..submissions/${SUBMISSION} | grep "^ *\[.\+-[0-9]\+\].*$" | tr -s " " | sed "s/^ *//g")`
     fi
 
     if [ "$OLD_COMMIT" = "$NEW_COMMIT_FROM_REF" ]; then
@@ -379,6 +380,10 @@ $SUBJECT
   in the same change, this script shows only log from last update. !
 submissions/${OLD_SUBMISSION}..submissions/${SUBMISSION}
 $LOG
+
+:Issues Addressed:
+$ISSUES
+
 EOF
     echo_confirmation "Update recipe"
     sed -i "${REPLACEMENT}" $recipe

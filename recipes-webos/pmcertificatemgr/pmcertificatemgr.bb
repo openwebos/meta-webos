@@ -6,11 +6,11 @@ SECTION = "webos/libs"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "openssl"
+DEPENDS = "openssl glib-2.0"
 RDEPENDS_${PN} = "ca-certificates"
 
 WEBOS_VERSION = "2.0.0-29_3cec1b22765db57b9c0c9bbba8e3cee0a2c4e2cb"
-PR = "r4"
+PR = "r5"
 
 inherit webos_component
 inherit webos_public_repo

@@ -9,7 +9,10 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=44ac4678311254db62edf8fd39cb8124"
 
 RDEPENDS_${PN} = "python-pycairo python-compression python-image"
 
+PR = "r1"
+
 inherit autotools
+inherit systemd
 inherit update-alternatives
 
 RCONFLICTS_${PN} = "bootchart"
@@ -18,12 +21,15 @@ ALTERNATIVE_TARGET[init] = "${base_sbindir}/bootchartd"
 ALTERNATIVE_LINK_NAME[init] = "${base_sbindir}/init"
 ALTERNATIVE_PRIORITY = "40"
 
+SYSTEMD_SERVICE_${PN} = "bootchart.service bootchart-done.service bootchart-done.timer"
+
 SRCREV = "4ad582906fe8a555a398829c3fd9ecfbe0d3f0c2"
 PV = "0.14.5+git${SRCPV}"
 
 SRC_URI = "git://github.com/mmeeks/bootchart.git"
 SRC_URI += "file://fix-wrong-ppid-tracking-bug.patch"
 SRC_URI += "file://update-cmds-of-initctls-to-upstart-event-name.patch"
+SRC_URI += "file://change-a-color-of-upstart-event-name.patch"
 
 S = "${WORKDIR}/git"
 
@@ -31,3 +37,4 @@ FILES_${PN} += "${base_libdir}/bootchart/bootchart-collector"
 FILES_${PN} += "${base_libdir}/bootchart/tmpfs"
 FILES_${PN} += "${libdir}"
 FILES_${PN}-dbg += "${base_libdir}/bootchart/.debug"
+FILES_${PN}-doc += "${datadir}/docs"

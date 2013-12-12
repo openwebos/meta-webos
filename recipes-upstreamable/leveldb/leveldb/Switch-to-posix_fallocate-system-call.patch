@@ -1,0 +1,28 @@
+From bb30c5252d9f755aef48598f1ec1d17fd78675fd Mon Sep 17 00:00:00 2001
+From: Iyad Qumei <iyad.qumei@lge.com>
+Date: Thu, 12 Dec 2013 11:07:51 -0800
+Subject: [PATCH] Switch to posix_fallocate system call
+
+Using fallocate system call caused failure to boot in nfs mode.
+
+Signed-off-by: Iyad Qumei <iyad.qumei@lge.com>
+---
+ util/env_posix.cc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/util/env_posix.cc b/util/env_posix.cc
+index 3e2925d..d241dce 100644
+--- a/util/env_posix.cc
++++ b/util/env_posix.cc
+@@ -231,7 +231,7 @@ class PosixMmapFile : public WritableFile {
+ 
+   bool MapNewRegion() {
+     assert(base_ == NULL);
+-    if (ftruncate(fd_, file_offset_ + map_size_) < 0) {
++    if (posix_fallocate(fd_, file_offset_, map_size_) < 0) {
+       return false;
+     }
+     void* ptr = mmap(NULL, map_size_, PROT_READ | PROT_WRITE, MAP_SHARED,
+-- 
+1.7.9.5
+

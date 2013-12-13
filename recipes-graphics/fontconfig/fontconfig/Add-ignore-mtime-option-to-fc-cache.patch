@@ -1,0 +1,207 @@
+From 5d81e8c278a4f5ce01fca844baf2714d48d6be5b Mon Sep 17 00:00:00 2001
+From: Martin Unsal <martin.unsal@lge.com>
+Date: Thu, 12 Dec 2013 16:42:37 -0800
+Subject: [PATCH] Add --ignore-mtime option to fc-cache
+
+This option generates a font cache file which does not record
+the mtime of the font cache directory. As a result, the cache
+will continue to be valid regardless of any changes to the fonts
+directory. This is only desirable if the font cache directory
+is guaranteed to never change (e.g. readonly filesystem).
+
+Also libfontcache is modified to respect this option in font
+cache file.
+---
+ fc-cache/fc-cache.c     |   18 ++++++++++++++----
+ fontconfig/fontconfig.h |    6 ++++++
+ src/fccache.c           |   11 ++++++++---
+ src/fccfg.c             |   13 +++++++++++++
+ src/fcint.h             |    7 +++++++
+ 5 files changed, 48 insertions(+), 7 deletions(-)
+
+diff --git a/fc-cache/fc-cache.c b/fc-cache/fc-cache.c
+index a91e1f1..941eb1c 100644
+--- a/fc-cache/fc-cache.c
++++ b/fc-cache/fc-cache.c
+@@ -69,6 +69,7 @@ const struct option longopts[] = {
+     {"really-force", 0, 0, 'r'},
+     {"system-only", 0, 0, 's'},
+     {"sysroot", 1, 0, 'y'},
++    {"ignore-mtime", 0, 0, 'i'},
+     {"version", 0, 0, 'V'},
+     {"verbose", 0, 0, 'v'},
+     {"help", 0, 0, 'h'},
+@@ -86,10 +87,10 @@ usage (char *program, int error)
+ {
+     FILE *file = error ? stderr : stdout;
+ #if HAVE_GETOPT_LONG
+-    fprintf (file, "usage: %s [-frsvVh] [-y SYSROOT] [--force|--really-force] [--system-only] [--sysroot=SYSROOT] [--verbose] [--version] [--help] [dirs]\n",
++    fprintf (file, "usage: %s [-frsvVh] [-y SYSROOT] [--force|--really-force] [--system-only] [--sysroot=SYSROOT] [--ignore-mtime] [--verbose] [--version] [--help] [dirs]\n",
+ 	     program);
+ #else
+-    fprintf (file, "usage: %s [-frsvVh] [-y SYSROOT] [dirs]\n",
++    fprintf (file, "usage: %s [-frsivVh] [-y SYSROOT] [dirs]\n",
+ 	     program);
+ #endif
+     fprintf (file, "Build font information caches in [dirs]\n"
+@@ -100,6 +101,7 @@ usage (char *program, int error)
+     fprintf (file, "  -r, --really-force    erase all existing caches, then rescan\n");
+     fprintf (file, "  -s, --system-only     scan system-wide directories only\n");
+     fprintf (file, "  -y, --sysroot=SYSROOT for scanning, prefix all paths with SYSROOT. The cache file will not contain the SYSROOT!\n");
++    fprintf (file, "  -i, --ignore-mtime    always use cache file regardless of font directory mtime\n");
+     fprintf (file, "  -v, --verbose         display status information while busy\n");
+     fprintf (file, "  -V, --version         display font config version and exit\n");
+     fprintf (file, "  -h, --help            display this help and exit\n");
+@@ -108,6 +110,7 @@ usage (char *program, int error)
+     fprintf (file, "  -r,   (really force) erase all existing caches, then rescan\n");
+     fprintf (file, "  -s         (system)  scan system-wide directories only\n");
+     fprintf (file, "  -y SYSROOT           for scanning, prefix all paths with SYSROOT. The cache file will not contain the SYSROOT!\n");
++    fprintf (file, "  -i                   always use cache file regardless of font directory mtime\n");
+     fprintf (file, "  -v         (verbose) display status information while busy\n");
+     fprintf (file, "  -V         (version) display font config version and exit\n");
+     fprintf (file, "  -h         (help)    display this help and exit\n");
+@@ -294,6 +297,7 @@ main (int argc, char **argv)
+     FcBool	force = FcFalse;
+     FcBool	really_force = FcFalse;
+     FcBool	systemOnly = FcFalse;
++    FcBool	ignoreMtime = FcFalse;
+     FcConfig	*config;
+     FcChar8 *sysroot = NULL;
+     int		i;
+@@ -303,9 +307,9 @@ main (int argc, char **argv)
+     int		c;
+ 
+ #if HAVE_GETOPT_LONG
+-    while ((c = getopt_long (argc, argv, "frsy:Vvh", longopts, NULL)) != -1)
++    while ((c = getopt_long (argc, argv, "frsy:iVvh", longopts, NULL)) != -1)
+ #else
+-    while ((c = getopt (argc, argv, "frsy:Vvh")) != -1)
++    while ((c = getopt (argc, argv, "frsy:iVvh")) != -1)
+ #endif
+     {
+ 	switch (c) {
+@@ -321,6 +325,9 @@ main (int argc, char **argv)
+ 	case 'y':
+ 	    sysroot = FcStrCopy ((const FcChar8*) optarg);
+ 	    break;
++	case 'i':
++	    ignoreMtime = FcTrue;
++	    break;
+ 	case 'V':
+ 	    fprintf (stderr, "fontconfig version %d.%d.%d\n", 
+ 		     FC_MAJOR, FC_MINOR, FC_REVISION);
+@@ -356,6 +363,9 @@ main (int argc, char **argv)
+ 	sysroot = canon_sysroot;
+     }
+ 
++    if (ignoreMtime)
++	FcConfigSetIgnoreMtime(FcTrue);
++
+     config = FcInitLoadConfig ();
+     if (!config)
+     {
+diff --git a/fontconfig/fontconfig.h b/fontconfig/fontconfig.h
+index b05f6ca..c6e8055 100644
+--- a/fontconfig/fontconfig.h
++++ b/fontconfig/fontconfig.h
+@@ -423,6 +423,12 @@ FcConfigSetSysRoot (const FcChar8 *sysroot);
+ FcPublic FcChar8 *
+ FcConfigGetSysRoot (void);
+ 
++FcPublic void
++FcConfigSetIgnoreMtime (const FcBool ignoreMtime);
++
++FcPublic FcBool
++FcConfigGetIgnoreMtime (void);
++
+ /* fccharset.c */
+ FcPublic FcCharSet*
+ FcCharSetCreate (void);
+diff --git a/src/fccache.c b/src/fccache.c
+index c3dcc72..13f8060 100644
+--- a/src/fccache.c
++++ b/src/fccache.c
+@@ -538,7 +538,9 @@ FcCacheTimeValid (FcCache *cache, struct stat *dir_stat)
+ 		dir, cache->checksum, (int) dir_stat->st_mtime);
+     if (sysroot)
+ 	FcStrFree (dir);
+-    return cache->checksum == (int) dir_stat->st_mtime;
++    /* cache checksum may instruct us to ignore font dir mtime, used
++       with readonly root filesystem and pre-generated font cache */
++    return (cache->checksum == (int) dir_stat->st_mtime) || (cache->checksum == FC_INVALID_TIME);
+ }
+ 
+ /*
+@@ -702,7 +704,7 @@ FcDirCacheValidateHelper (int fd, struct stat *fd_stat, struct stat *dir_stat, v
+ 	ret = FcFalse;
+     else if (fd_stat->st_size != c.size)
+ 	ret = FcFalse;
+-    else if (c.checksum != (int) dir_stat->st_mtime)
++    else if ( (c.checksum != (int) dir_stat->st_mtime) && (c.checksum != FC_INVALID_TIME) )
+ 	ret = FcFalse;
+     return ret;
+ }
+@@ -795,7 +797,10 @@ FcDirCacheBuild (FcFontSet *set, const FcChar8 *dir, struct stat *dir_stat, FcSt
+     cache->magic = FC_CACHE_MAGIC_ALLOC;
+     cache->version = FC_CACHE_CONTENT_VERSION;
+     cache->size = serialize->size;
+-    cache->checksum = (int) dir_stat->st_mtime;
++    if (FcConfigGetIgnoreMtime())
++	cache->checksum = (int) FC_INVALID_TIME;
++    else
++	cache->checksum = (int) dir_stat->st_mtime;
+ 
+     /*
+      * Serialize directory name
+diff --git a/src/fccfg.c b/src/fccfg.c
+index ad97c05..414f29b 100644
+--- a/src/fccfg.c
++++ b/src/fccfg.c
+@@ -38,6 +38,7 @@
+ 
+ FcConfig    *_fcConfig;
+ static FcChar8 *_FcConfigSysRoot = NULL;
++static FcBool _FcConfigIgnoreMtime = FcFalse;
+ 
+ FcConfig *
+ FcConfigCreate (void)
+@@ -2269,6 +2270,18 @@ FcConfigGetSysRoot (void)
+     return _FcConfigSysRoot;
+ }
+ 
++FcPublic void
++FcConfigSetIgnoreMtime (const FcBool ignoreMtime)
++{
++    _FcConfigIgnoreMtime = ignoreMtime;
++}
++
++FcPublic FcBool
++FcConfigGetIgnoreMtime ()
++{
++    return _FcConfigIgnoreMtime;
++}
++
+ #define __fccfg__
+ #include "fcaliastail.h"
+ #undef __fccfg__
+diff --git a/src/fcint.h b/src/fcint.h
+index e9f315f..df31adb 100644
+--- a/src/fcint.h
++++ b/src/fcint.h
+@@ -373,6 +373,13 @@ struct _FcCache {
+ 					   FcChar8)
+ 
+ /*
++ * Provide an invalid value for _FcCache.checksum. (time_t)(-1) is
++ * guaranteed not to be a valid time, see "man mktime". This value
++ * is used to skip mtime check.
++ */
++#define FC_INVALID_TIME	(time_t)(-1)
++
++/*
+  * Used while constructing a directory cache object
+  */
+ 
+-- 
+1.7.9.5
+

@@ -59,25 +59,17 @@ clean_python_installation () {
 
 # A hook function to support read-only-rootfs IMAGE_FEATURES
 webos_read_only_rootfs_hook () {
+    set -x
     # Tweak the mount option and fs_passno for rootfs in fstab
     sed -i -e '/^[#[:space:]]*\/dev\/root/{s/rw/ro/;s/\([[:space:]]*[[:digit:]]\)\([[:space:]]*\)[[:digit:]]$/\1\20/}' ${IMAGE_ROOTFS}/etc/fstab
 
     # Change the value of ROOTFS_READ_ONLY in /etc/default/rcS to yes
     if [ -e ${IMAGE_ROOTFS}/etc/default/rcS ]; then
          sed -i 's/ROOTFS_READ_ONLY=no/ROOTFS_READ_ONLY=yes/' ${IMAGE_ROOTFS}/etc/default/rcS
-    fi
-
-    # Change the value of ROOTFS_READ_ONLY in /etc/init/SetInitEnv.conf to yes
-    if [ -e ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf ]; then
-         sed -i 's/ROOTFS_READ_ONLY="*no"*/ROOTFS_READ_ONLY=yes/' ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf
-    fi
-
-    # If both /etc/default/rcS and /etc/init/SetInitEnv.conf are not found,
-    # then ROOTFS_READ_ONLY will not be properly passed to the init process,
-    # and therefore this class file must be modified to remedy that issue.
-    if [ ! -e ${IMAGE_ROOTFS}/etc/default/rcS -a ! -e ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf ]; then
-         bberror "Both ${IMAGE_ROOTFS}/etc/default/rcS and ${IMAGE_ROOTFS}/etc/init/SetInitEnv.conf are not found -- unable to correct the ROOTFS_READ_ONLY environment variable."
-         exit 1
+         verifystring=`grep ROOTFS_READ_ONLY ${IMAGE_ROOTFS}/etc/default/rcS | sed -e 's:^[ \t]*::' | sed -e 's:[ \t].*$::' `
+         if [ "X$verifystring" != "XROOTFS_READ_ONLY=yes" ]; then
+             bbfatal "Failed to change ROOTFS_READ_ONLY settings in ${IMAGE_ROOTFS}/etc/default/rcS"
+         fi
     fi
 }
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "read-only-rootfs", "webos_read_only_rootfs_hook ; ", "", d)}'

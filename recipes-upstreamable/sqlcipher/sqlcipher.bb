@@ -13,10 +13,8 @@ inherit autotools
 
 SRCREV = "c7986f290533bfe5b6984cad20cfec40571ce0da"
 SRC_URI = "git://github.com/sqlcipher/sqlcipher.git;protocol=git"
+
 EXTRA_OECONF = "CFLAGS=-DSQLITE_HAS_CODEC"
+EXTRA_OEMAKE='"LIBTOOL=${STAGING_BINDIR_CROSS}/${HOST_SYS}-libtool"'
 
 S = "${WORKDIR}/git"
-
-do_configure_append() {
-    mv arm-starfish-linux-gnueabi-libtool libtool
-}

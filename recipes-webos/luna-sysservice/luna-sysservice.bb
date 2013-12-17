@@ -10,7 +10,7 @@ DEPENDS = "luna-service2 libpbnjson qt4-webos uriparser libxml2 sqlite3 pmloglib
 
 RDEPENDS_${PN} = "sntp"
 
-WEBOS_VERSION = "2.0.1-28_13fbbfdbbba83a27ddd9e10c8ca8f5d419d4d9a5"
+WEBOS_VERSION = "2.0.1-29_e950983ea5fca43a62716f0a7b7f9bb343a7996b"
 PR = "r0"
 
 inherit webos_component

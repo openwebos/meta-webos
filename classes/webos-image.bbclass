@@ -76,16 +76,17 @@ webos_read_only_rootfs_hook () {
 }
 ROOTFS_POSTPROCESS_COMMAND += '${@base_contains("IMAGE_FEATURES", "read-only-rootfs", "webos_read_only_rootfs_hook ; ", "", d)}'
 
-# Luna-service services should be executable only by user and group,
-# because it'd be possible to hijack them with LD_PRELOAD and
+# Luna-service2 services should be executable only by user and group,
+# otherwise it is possible to hijack them with LD_PRELOAD and
 # fool the hub daemon to raise own LS2-security permissions.
 luna_service2_check_permissions () {
     # Look for exeName in LS2 roles files, extract paths to service binaries
+    # Those in ${sbindir} can be ignored as they are protected by the directory's permissions.
     dirs='${IMAGE_ROOTFS}${webos_sysbus_prvrolesdir} ${IMAGE_ROOTFS}${webos_sysbus_pubrolesdir}'
     services=`find $dirs -name '*.json' | \
               xargs grep exeName | \
               sed -n -r 's/^.*"exeName"\s*:\s*"([^"]+)".*$/\1/p' | \
-              sort | uniq`
+              grep -v ${sbindir} | sort -u`
     for f in $services
     do
         # js is a special service

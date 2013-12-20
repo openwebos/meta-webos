@@ -1,6 +1,7 @@
 # Copyright (c) 2012-2013 LG Electronics, Inc.
 
 SUMMARY = "Open webOS Luna System Bus library, daemon, and utilities"
+AUTHOR = "Keith Derrick <keith.derrick@lge.com>"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
@@ -10,7 +11,7 @@ VIRTUAL-RUNTIME_cpushareholder ?= "cpushareholder-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_cpushareholder} ${VIRTUAL-RUNTIME_rdx-utils}"
 
-WEBOS_VERSION = "3.5.3-169_2584a03d16ff814a9f0702bdd52030fa528b7eed"
+WEBOS_VERSION = "3.5.3-170_3a4aad34469d8b7602aebfc9185fd6eb78fc57b4"
 PR = "r15"
 
 WEBOS_DISTRO_PRERELEASE ??= ""

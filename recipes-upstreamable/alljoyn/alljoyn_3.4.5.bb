@@ -1,26 +1,28 @@
 # Copyright (c) 2013 LG Electronics, Inc.
 
-SUMMARY = "AllJoyn Open Source Project"
-DESCRIPTION = "open-source software framework developed by Qualcomm Innovation Center to enable peer-to-peer communication"
+SUMMARY = "AllSeen Alliance Open Source Project"
+DESCRIPTION = "The AllSeen Alliance framework is initially based on the AllJoyn™ open source project, and will be expanded with contributions from member companies and the open source community"
 SECTION = "libs/network"
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://alljoyn_core/NOTICE.txt;md5=c80318e464aeed6671097df52cae13eb"
+LICENSE = "ISC"
+LIC_FILES_CHKSUM = "file://alljoyn_c/src/AuthListener.cc;beginline=7;endline=21;md5=92223cc8faae258e0802873e2cf5f579"
 
 DEPENDS = "openssl xulrunner"
 
 PR = "r0"
 
-SRC_URI = "https://www.alljoyn.org/sites/default/files/resources/alljoyn-${PV}-src.tgz;name=alljoyncore \
+SRC_URI = "https://git.allseenalliance.org/cgit/core/alljoyn.git/snapshot/alljoyn-legacy-03.04.05-generated.tar.gz;name=alljoyncore \
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
            file://makefile-fixes-for-compiling-in-OE.patch \
-           file://fix-cpu-usage-when-there-are-many-nodes.patch"
+           file://fix-cpu-usage-when-there-are-many-nodes.patch \
+           file://reduce-traffic-and-memory-for-sessionless-signals.patch \
+           file://reduce-cpu-usage-during-stress-scenario.patch "
 
-SRC_URI[alljoyncore.md5sum] = "473af628ba8234d72d58667612a63a26"
-SRC_URI[alljoyncore.sha256sum] = "280968c0a63d916a9a1c7fd73f87c0d9ea0bfa0900ddee25af86e6438f603b3c"
+SRC_URI[alljoyncore.md5sum] = "4291df9346caf5367b6c147f62d616f2"
+SRC_URI[alljoyncore.sha256sum] = "1559d6cc99a7192ac9e228e92ffdc9fe6fbc3569ccfc68969172128551ced49c"
 
-S = "${WORKDIR}/alljoyn-${PV}-src"
+S = "${WORKDIR}/alljoyn-legacy-03.04.05-generated"
 
 export GECKO_BASE = "${STAGING_INCDIR}/xulrunner-sdk"
 

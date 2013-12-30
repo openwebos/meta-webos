@@ -1,0 +1,36 @@
+From c2acbc018269a052eb7546950088a0860e3b1545 Mon Sep 17 00:00:00 2001
+From: Wim Taymans <wim.taymans@collabora.co.uk>
+Date: Thu, 15 Nov 2012 11:37:20 +0100
+Subject: [PATCH] gsocket: fix joining/leaving multicast groups
+
+Initialize the structure passed to setsockopt to 0 to avoid random
+errors when joining or leaving a multicast group.
+
+https://bugzilla.gnome.org/show_bug.cgi?id=688378
+---
+ gio/gsocket.c |    2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/gio/gsocket.c b/gio/gsocket.c
+index 93acd61..94e16a2 100644
+--- a/gio/gsocket.c
++++ b/gio/gsocket.c
+@@ -1952,6 +1952,7 @@ g_socket_multicast_group_operation (GSocket       *socket,
+       struct ip_mreq mc_req;
+ #endif
+
++      memset (&mc_req, 0, sizeof (mc_req));
+       memcpy (&mc_req.imr_multiaddr, native_addr, sizeof (struct in_addr));
+
+ #ifdef HAVE_IP_MREQN
+@@ -1985,6 +1986,7 @@ g_socket_multicast_group_operation (GSocket       *socket,
+     {
+       struct ipv6_mreq mc_req_ipv6;
+
++      memset (&mc_req_ipv6, 0, sizeof (mc_req_ipv6));
+       memcpy (&mc_req_ipv6.ipv6mr_multiaddr, native_addr, sizeof (struct in6_addr));
+ #ifdef HAVE_IF_NAMETOINDEX
+       if (iface)
+--
+1.7.9.5
+

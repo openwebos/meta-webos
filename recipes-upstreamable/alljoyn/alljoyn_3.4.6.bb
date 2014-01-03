@@ -10,19 +10,16 @@ DEPENDS = "openssl xulrunner"
 
 PR = "r0"
 
-SRC_URI = "https://git.allseenalliance.org/cgit/core/alljoyn.git/snapshot/alljoyn-legacy-03.04.05-generated.tar.gz;name=alljoyncore \
+SRC_URI = "https://git.allseenalliance.org/cgit/core/alljoyn.git/snapshot/legacy-${PV}-generated-2.tar.gz \
            file://alljoyn.pc \
            file://alljoyn.upstart \
            file://alljoyn.conf \
-           file://makefile-fixes-for-compiling-in-OE.patch \
-           file://fix-cpu-usage-when-there-are-many-nodes.patch \
-           file://reduce-traffic-and-memory-for-sessionless-signals.patch \
-           file://reduce-cpu-usage-during-stress-scenario.patch "
+           file://makefile-fixes-for-compiling-in-OE.patch "
 
-SRC_URI[alljoyncore.md5sum] = "4291df9346caf5367b6c147f62d616f2"
-SRC_URI[alljoyncore.sha256sum] = "1559d6cc99a7192ac9e228e92ffdc9fe6fbc3569ccfc68969172128551ced49c"
+SRC_URI[md5sum] = "f89e23f643d0dd528124de91ad6b791c"
+SRC_URI[sha256sum] = "2336594867199b51adf695f386fd3cc7993ea757d6da10c6e965cf3f18b071af"
 
-S = "${WORKDIR}/alljoyn-legacy-03.04.05-generated"
+S = "${WORKDIR}/legacy-${PV}-generated-2"
 
 export GECKO_BASE = "${STAGING_INCDIR}/xulrunner-sdk"
 

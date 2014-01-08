@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Provides image manipulation, preference, timezone and ringtone services for Open webOS components"
 AUTHOR = "Keith Derrick <keith.derrick@lge.com>"
@@ -10,7 +10,7 @@ DEPENDS = "luna-service2 libpbnjson qt4-webos uriparser libxml2 sqlite3 pmloglib
 
 RDEPENDS_${PN} = "sntp"
 
-WEBOS_VERSION = "2.0.1-30_ec06ab6259b379218f46e77e79b71024309eb4f3"
+WEBOS_VERSION = "2.0.1-31_06189910d3f1661b7a28783d87b5fc8f5a833515"
 PR = "r0"
 
 inherit webos_component

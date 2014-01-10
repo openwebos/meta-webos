@@ -98,17 +98,17 @@ luna_service2_check_permissions () {
             continue
         fi
 
-        # Check file permissions of the file. We want that the file ins't
-        # accessible by others:
+        # Check file permissions of the file. We want that the file isn't
+        # executable or writable by others:
         # -rwxr-x--- (0750)
         if ! perms=`stat -L -c %a ${IMAGE_ROOTFS}$f` 2>/dev/null ; then
             bbwarn "QA Issue: Unable to check the binary $f mentioned in LS2 role files"
             continue
         fi
-        # Get the "other" part of octal permissions
+        # Get the "other" part of octal permissions, and show warning if it's more than readable
         world_bits=`echo $perms | cut -c 3-`
-        if [ $world_bits != 0 ]; then
-            bbwarn "QA Issue: LS2 service $f is accessible for the whole world"
+        if [ $world_bits != 0 -a $world_bits != 4 ]; then
+            bbwarn "QA Issue: LS2 service $f is writable or executable for the whole world"
         fi
     done
 }

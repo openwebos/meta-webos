@@ -34,6 +34,10 @@ EXPORT_WEBOS_QMAKE_TARGET[vardepvalue] = "${EXPORT_WEBOS_QMAKE_TARGET}"
 
 EXTRA_OEMAKE += "${EXPORT_WEBOS_QMAKE_TARGET}"
 
+# Add the the native tool in the paths as some project require rcc
+# to be available
+WEBOS_EXTRA_PATH .= "${OE_QMAKE_PATH_EXTERNAL_HOST_BINS}:"
+
 do_configure_prepend() {
   ${EXPORT_WEBOS_QMAKE_MACHINE}
 }

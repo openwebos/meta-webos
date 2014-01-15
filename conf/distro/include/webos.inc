@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 require conf/distro/include/webos-filesystem-paths.inc
 
@@ -11,10 +11,28 @@ require conf/distro/include/webos-toolchain.inc
 require conf/distro/include/webos-sdk.inc
 require conf/distro/include/webos-repositories.inc
 
-EXTRAOPKGCONFIG = ""
 
-WEBOS_DISTRO_RELEASE_CODENAME = "${DISTRO}-${@base_get_metadata_git_branch('.', None).strip()}"
+#
+# Form the codename of a release (WEBOS_DISTRO_RELEASE_CODENAME) from a codename
+# that represents the major set of features of the platform
+# (WEBOS_DISTRO_PLATFORM_CODENAME) and a name that represents the series of
+# builds that are done during while a particular release is being developed
+# (WEBOS_DISTRO_BUILD_CODENAME). It is expected that there will be several build
+# codenames with the same platform codename under active development at the same
+# time. They roughly correspond the the major and minor versions of
+# DISTRO_VERSION, but allow there to be a name to refer to them ahead of the
+# assignment of actual version numbers.
+#
+
+# It is expected that other distros will override these definitions.
+WEBOS_DISTRO_PLATFORM_CODENAME ?= "${DISTRO}"
+WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip()}"
+
+WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DISTRO_BUILD_CODENAME}"
+
+
 WEBOS_DISTRO_PRERELEASE ?= "devel"
+
 
 # All of the types of official build jobs should override this in the following
 # format: "[site:][prefix-]<build-number>", where the optional [site:] identifies
@@ -99,8 +117,6 @@ MACHINEOVERRIDES =. "${WEBOS_EXTRA_MACHINEOVERRIDES}"
 MACHINEOVERRIDES[vardepsexclude] += "WEBOS_EXTRA_MACHINEOVERRIDES"
 OVERRIDES[vardepsexclude] += "WEBOS_EXTRA_MACHINEOVERRIDES"
 
-OPKGLIBDIR_forcevariable := "${libdir}"
-
 INHERIT_DISTRO ?= "debian devshell sstate license webos_base buildstats-summary"
 
 # Inherit icecc here, so that all builders have the same sstate signatures
@@ -165,6 +181,9 @@ IMAGE_FSTYPES := "${@ '${IMAGE_FSTYPES} vmdk' if '${MACHINE}'.startswith('qemux8
 IMAGE_FSTYPES := "${@ ' ${IMAGE_FSTYPES} '.replace(' tar.bz2 ',' tar.gz ') }"
 
 PATH_prepend = "${WEBOS_EXTRA_PATH}"
+
+EXTRAOPKGCONFIG = ""
+OPKGLIBDIR_forcevariable := "${libdir}"
 
 # Ensure that git checkout files have the same permissions when do_unpack
 # is executed on builders with different umask.

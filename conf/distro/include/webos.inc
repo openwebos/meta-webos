@@ -34,21 +34,29 @@ WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DIST
 WEBOS_DISTRO_PRERELEASE ?= "devel"
 
 
-# All of the types of official build jobs should override this in the following
-# format: "[site:][prefix-]<build-number>", where the optional [site:] identifies
-# the build server site, and the optional [prefix-] identifies different build
-# jobs, for example engineering builds; it is left off for the official build.
-# [site>:] is dropped for the authoritative "official" build.
+#
+# All of the types of official build jobs should override WEBOS_DISTRO_BUILD_ID
+# in the following format: "[[<prefix>.]<site>-]<build-number>", where the
+# optional <site> identifies the build server site, and the optional <prefix>
+# distinguishes the different types of build jobs, for example, verification
+# builds. <prefix> is left off for the "official" build and <site> is dropped
+# for the authoritative "official" build. <build-number> is expected to be an
+# integer. Note that WEBOS_DISTRO_BUILD_CODENAME is never included in
+# WEBOS_DISTRO_BUILD_ID.
+#
 WEBOS_DISTRO_BUILD_ID ?= "unofficial"
 
 # Only suffix image names with DATETIME when the build is unofficial; otherwise,
-# use WEBOS_DISTRO_BUILD_ID.
-WEBOS_IMAGE_NAME_SUFFIX = "${@ base_conditional( \
+# use WEBOS_DISTRO_BUILD_ID. The build codename is always prepended to the suffix.
+WEBOS_IMAGE_NAME_SUFFIX = "-${WEBOS_DISTRO_BUILD_CODENAME}-${@ base_conditional( \
                                   'WEBOS_DISTRO_BUILD_ID', 'unofficial', \
                                   '${DATETIME}', '${WEBOS_DISTRO_BUILD_ID}', d) }"
-IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
-KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
-MODULE_IMAGE_BASE_NAME = "modules-${PKGE}-${PKGV}-${PKGR}-${MACHINE}-${WEBOS_IMAGE_NAME_SUFFIX}"
+
+IMAGE_NAME = "${IMAGE_BASENAME}-${MACHINE}${WEBOS_IMAGE_NAME_SUFFIX}"
+
+KERNEL_IMAGE_BASE_NAME = "${KERNEL_IMAGETYPE}-${PKGE}-${PKGV}-${PKGR}-${MACHINE}${WEBOS_IMAGE_NAME_SUFFIX}"
+MODULE_IMAGE_BASE_NAME = "modules-${PKGE}-${PKGV}-${PKGR}-${MACHINE}${WEBOS_IMAGE_NAME_SUFFIX}"
+
 # Don't rebuild the kernel (or the rootfs) images if the only thing that's changed
 # is the start time of the build or the build number.
 BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
@@ -56,6 +64,7 @@ BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 # Add WEBOS_DISTRO_RELEASE_CODENAME and WEBOS_DISTRO_BUILD_ID to what's displayed
 # as the "build configuration".
 BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
+
 
 # Apply fix from oe-core commit 89d7d46947d9bb8c7bf568c65e52d5bbe159027f
 # Drop this when upgrading oe-core to 1.6 release or newer

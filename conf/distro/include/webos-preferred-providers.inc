@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 # Place distro-wide PREFERRED_PROVIDER settings here; place MACHINE-specific
 # settings in <MACHINE>.conf .
@@ -25,3 +25,7 @@ VIRTUAL-RUNTIME_init_manager = "upstart"
 # http://lists.openembedded.org/pipermail/openembedded-core/2013-November/086901.html
 BAD_RECOMMENDATIONS += "update-rc.d"
 UPDATERCD_class-target = ""
+
+# Don't install big /boot/vmlinux* file by default in qemux86 images (included in oprofile's RRECOMMENDS)
+# Use --no-vmlinux option to opcontrol or install it manually if you need to see samples from kernel
+BAD_RECOMMENDATIONS_append_qemux86 = " kernel-vmlinux"

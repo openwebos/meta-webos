@@ -1,10 +1,6 @@
 # IceCream distributed compiling support
 #
-# Imported from oe-core 300760193c6bcfd20f1d4908f912bebd53e86281
-# with couple patches applied on top of it
-# http://lists.openembedded.org/pipermail/openembedded-core/2013-November/087044.html
-# http://lists.openembedded.org/pipermail/openembedded-core/2013-December/087249.html
-# http://lists.openembedded.org/pipermail/openembedded-core/2013-December/087250.html
+# Imported from oe-core 4659d29b1040349116549644e45035a5b37d9311
 #
 # Stages directories with symlinks from gcc/g++ to icecc, for both
 # native and cross compilers. Depending on each configure or compile,
@@ -101,36 +97,39 @@ def use_icc(bb,d):
     if icc_is_allarch(bb, d):
         return "no"
 
-    package_tmp = d.expand('${PN}')
+    pn = d.getVar('PN', True)
 
-    system_class_blacklist = [ "none" ]
+    system_class_blacklist = []
     user_class_blacklist = (d.getVar('ICECC_USER_CLASS_BL') or "none").split()
     package_class_blacklist = system_class_blacklist + user_class_blacklist
 
     for black in package_class_blacklist:
         if bb.data.inherits_class(black, d):
-            #bb.note(package_tmp, ' class ', black, ' found in blacklist, disable icecc')
+            bb.debug(1, "%s: class %s found in blacklist, disable icecc" % (pn, black))
             return "no"
 
-    #"system" package blacklist contains a list of packages that can not distribute compile tasks
-    #for one reason or the other
-    system_package_blacklist = [ "uclibc", "glibc", "gcc", "bind", "u-boot", "dhcp-forwarder", "enchant", "connman", "orbit2" ]
+    # "system" recipe blacklist contains a list of packages that can not distribute compile tasks
+    # for one reason or the other
+    # this is the old list (which doesn't seem to be valid anymore, because I was able to build
+    # all these with icecc enabled)
+    # system_package_blacklist = [ "uclibc", "glibc", "gcc", "bind", "u-boot", "dhcp-forwarder", "enchant", "connman", "orbit2" ]
+    # when adding new entry, please document why (how it failed) so that we can re-evaluate it later
+    # e.g. when there is new version
+    system_package_blacklist = []
     user_package_blacklist = (d.getVar('ICECC_USER_PACKAGE_BL') or "").split()
     user_package_whitelist = (d.getVar('ICECC_USER_PACKAGE_WL') or "").split()
     package_blacklist = system_package_blacklist + user_package_blacklist
 
-    for black in package_blacklist:
-        if black in package_tmp:
-            #bb.note(package_tmp, ' found in blacklist, disable icecc')
-            return "no"
+    if pn in package_blacklist:
+        bb.debug(1, "%s: found in blacklist, disable icecc" % pn)
+        return "no"
 
-    for white in user_package_whitelist:
-        if white in package_tmp:
-            bb.debug(1, package_tmp, " ", d.expand('${PV})'), " found in whitelist, enable icecc")
-            return "yes"
+    if pn in user_package_whitelist:
+        bb.debug(1, "%s: found in whitelist, enable icecc" % pn)
+        return "yes"
 
     if d.getVar('PARALLEL_MAKE') == "":
-        bb.debug(1, package_tmp, " ", d.expand('${PV}'), " has empty PARALLEL_MAKE, disable icecc")
+        bb.debug(1, "%s: has empty PARALLEL_MAKE, disable icecc" % pn)
         return "no"
 
     return "yes"
@@ -278,6 +277,9 @@ set_icecc_env() {
     fi
 
     ICECC_AS="`${ICECC_CC} -print-prog-name=as`"
+    # for target recipes should return something like:
+    # /OE/tmp-eglibc/sysroots/x86_64-linux/usr/libexec/arm920tt-oe-linux-gnueabi/gcc/arm-oe-linux-gnueabi/4.8.2/as
+    # and just "as" for native, if it returns "as" in current directory (for whatever reason) use "as" from PATH
     if [ "`dirname "${ICECC_AS}"`" = "." ]
     then
         ICECC_AS="${ICECC_WHICH_AS}"

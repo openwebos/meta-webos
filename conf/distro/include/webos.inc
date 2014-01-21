@@ -26,7 +26,7 @@ require conf/distro/include/webos-repositories.inc
 
 # It is expected that other distros will override these definitions.
 WEBOS_DISTRO_PLATFORM_CODENAME ?= "${DISTRO}"
-WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip()}"
+WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip().strip('()/')}"
 
 WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DISTRO_BUILD_CODENAME}"
 

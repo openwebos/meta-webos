@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Creates the database schema for Open webOS apps"
 AUTHOR = "Ludovic Legrand <ludovic.legrand@lge.com>"
@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "luna-service2 db8 cjson glib-2.0 pmloglib"
 
-WEBOS_VERSION = "3.0.0-58_87843829dfafefb8ee80db9cd672cfcc66e8e0e8"
+WEBOS_VERSION = "3.0.0-59_f2c890c3b2116f61a561c6fac2a587be35a63620"
 PR = "r3"
 
 inherit webos_component

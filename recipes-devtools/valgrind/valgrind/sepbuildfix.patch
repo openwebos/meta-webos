@@ -6,10 +6,11 @@ RP 2013/03/23
 
 Upstream-Status: Pending
 
-diff -ru trunk.org/configure.in trunk/configure.in
---- trunk.org/configure.in	2013-06-26 16:39:11.579964948 -0700
-+++ trunk/configure.in	2013-06-26 16:44:22.227954126 -0700
-@@ -321,26 +321,26 @@
+Index: valgrind-3.9.0/configure.ac
+===================================================================
+--- valgrind-3.9.0.orig/configure.ac
++++ valgrind-3.9.0/configure.ac
+@@ -325,26 +325,26 @@ case "${host_os}" in
  	     9.*)
  		  AC_MSG_RESULT([Darwin 9.x (${kernel}) / Mac OS X 10.5 Leopard])
  		  AC_DEFINE([DARWIN_VERS], DARWIN_10_5, [Darwin / Mac OS X version])
@@ -44,7 +45,7 @@ diff -ru trunk.org/configure.in trunk/configure.in
  		  ;;
               *) 
  		  AC_MSG_RESULT([unsupported (${kernel})])
-@@ -794,117 +794,117 @@
+@@ -799,124 +799,124 @@ case "${GLIBC_VERSION}" in
       2.2)
  	AC_MSG_RESULT(2.2 family)
  	AC_DEFINE([GLIBC_2_2], 1, [Define to 1 if you're using glibc 2.2.x])
@@ -197,9 +198,18 @@ diff -ru trunk.org/configure.in trunk/configure.in
 +	DEFAULT_SUPP="$srcdir/glibc-2.34567-NPTL-helgrind.supp ${DEFAULT_SUPP}"
 +	DEFAULT_SUPP="$srcdir/glibc-2.X-drd.supp ${DEFAULT_SUPP}"
  	;;
+      2.18)
+ 	AC_MSG_RESULT(2.18 family)
+ 	AC_DEFINE([GLIBC_2_18], 1, [Define to 1 if you're using glibc 2.18.x])
+ 	DEFAULT_SUPP="glibc-2.X.supp ${DEFAULT_SUPP}"
+-	DEFAULT_SUPP="glibc-2.34567-NPTL-helgrind.supp ${DEFAULT_SUPP}"
+-	DEFAULT_SUPP="glibc-2.X-drd.supp ${DEFAULT_SUPP}"
++	DEFAULT_SUPP="$srcdir/glibc-2.34567-NPTL-helgrind.supp ${DEFAULT_SUPP}"
++	DEFAULT_SUPP="$srcdir/glibc-2.X-drd.supp ${DEFAULT_SUPP}"
+ 	;;
       darwin)
  	AC_MSG_RESULT(Darwin)
-@@ -914,7 +914,7 @@
+@@ -926,7 +926,7 @@ case "${GLIBC_VERSION}" in
       bionic)
  	AC_MSG_RESULT(Bionic)
  	AC_DEFINE([BIONIC_LIBC], 1, [Define to 1 if you're using Bionic])
@@ -208,7 +218,7 @@ diff -ru trunk.org/configure.in trunk/configure.in
  	;;
  
       *)
-@@ -931,11 +931,11 @@
+@@ -943,11 +943,11 @@ AC_SUBST(GLIBC_VERSION)
  # attempt to detect whether such libraries are installed on the
  # build machine (or even if any X facilities are present); just
  # add the suppressions antidisirregardless.

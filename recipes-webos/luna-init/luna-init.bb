@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Initialization, setup, and font files used by luna-sysmgr and luna-sysservice"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-WEBOS_VERSION = "2.0.1-5_7d4b0886fb3f1eee909bf2c0645e05bc66379a97"
+WEBOS_VERSION = "2.0.1-6_1b94f1a3e903880db97287a63eb8e572e3eb42c3"
 PR = "r10"
 
 #inherit webos_component TODO

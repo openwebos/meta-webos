@@ -1,10 +1,12 @@
+# Copyright (c) 2014 LG Electronics, Inc.
+
 SUMMARY = "FUSE filesystem module to mount media player"
 DESCRIPTION = "mtpfs allows you to mount smart phone or media player"
 SECTION = "console/utils"
-LICENSE = "GPL-2.0"
+LICENSE = "GPL-3.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=d32239bcb673463ab874e80d47fae504"
 DEPENDS = "libusb libid3tag glib-2.0 libmtp fuse"
-PR = "r1"
+PR = "r2"
 
 SRC_URI = "http://www.adebenham.com/files/mtp/mtpfs-${PV}.tar.gz \
     file://subfolder_error.patch \

@@ -1,10 +1,12 @@
+# Copyright (c) 2014 LG Electronics, Inc.
+
 SUMMARY = "MTP Library"
 DESCRIPTION = "libmtp allows you to access smart phone or media player"
 SECTION = "libs"
-LICENSE = "LGPL-2.0"
+LICENSE = "LGPL-2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=0448d3676bc0de00406af227d341a4d1"
 DEPENDS = "libusb libgcrypt"
-PR = "r0"
+PR = "r1"
 
 SRC_URI = "http://sourceforge.net/projects/libmtp/files/libmtp/${PV}/libmtp-${PV}.tar.gz \
 	file://09_do_not_build_udev_and_examples.patch \

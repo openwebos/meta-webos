@@ -1,4 +1,4 @@
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 
 # LevelDB library for db8 package
 #
@@ -10,10 +10,10 @@
 SECTION = "libs"
 DESCRIPTION = "LevelDB is a fast key-value storage library that provides an ordered mapping from string keys to string values"
 HOMEPAGE = "http://leveldb.googlecode.com"
-LICENSE = "BSD-2-Clause"
+LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=92d1b128950b11ba8495b64938fc164d"
 
-PR = "r5"
+PR = "r6"
 
 SRC_URI = "http://${BPN}.googlecode.com/files/${BP}.tar.gz \
     file://explicitly.disable.tcmalloc.patch \

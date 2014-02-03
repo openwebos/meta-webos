@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Test components used in Open webOS"
 LICENSE = "Apache-2.0"
@@ -34,7 +34,6 @@ PYTHON = " \
     python-debugger \
     python-difflib \
     python-distutils \
-    python-distutils-staticdev \
     python-elementtree \
     python-email \
     python-fcntl \

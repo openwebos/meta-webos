@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Web rendering daemon for the isis-browser"
 SECTION = "webos/base"
@@ -13,7 +13,7 @@ RDEPENDS_${PN} = "ptmalloc3 ${VIRTUAL-RUNTIME_browser_fonts}"
 PE = "1"
 PV = "0.7.2"
 SRCREV = "e2506f5828457d662853e5aeec9f4f269c9a1952"
-PR = "r11"
+PR = "r12"
 
 inherit webos_public_repo
 inherit webos_daemon
@@ -23,6 +23,8 @@ inherit webos_machine_dep
 WEBOS_REPO_NAME = "BrowserServer"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
+
+WEBOS_NO_STATIC_LIBRARIES_WHITELIST = "libYap.a"
 
 PARALLEL_MAKE = ""
 

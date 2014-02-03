@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "WebKit supplemental features for Open webOS"
 SECTION = "webos/libs"
@@ -11,7 +11,7 @@ DEPENDS = "qt4-webos webkit-webos"
 PE = "1"
 PV = "0.5"
 SRCREV = "70fb05fd340ab342c5132dc8bfa174dbe6c9d330"
-PR = "r10"
+PR = "r11"
 
 inherit webos_public_repo
 inherit webos_qmake
@@ -21,6 +21,8 @@ inherit webos_machine_dep
 WEBOS_REPO_NAME = "WebKitSupplemental"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
+
+WEBOS_NO_STATIC_LIBRARIES_WHITELIST = "libWebKitMisc.a"
 
 PALM_CC_OPT = "-O2"
 WEBOS_BUILD_DIR = "build-${MACHINE}"

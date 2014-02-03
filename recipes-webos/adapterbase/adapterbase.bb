@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "A base class library for browser plugins loaded by Open webOS"
 SECTION = "webos/devel"
@@ -11,7 +11,7 @@ DEPENDS = "glib-2.0 npapi-headers"
 PE = "1"
 PV = "0.2"
 SRCREV = "8896cabe6b6f9d8e6a35e7c8899bea1ae8039487"
-PR = "r5"
+PR = "r6"
 
 inherit webos_public_repo
 inherit webos_library
@@ -19,6 +19,8 @@ inherit webos_library
 WEBOS_REPO_NAME = "AdapterBase"
 SRC_URI = "${ISIS_PROJECT_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
+
+WEBOS_NO_STATIC_LIBRARIES_WHITELIST = "AdapterBase.a"
 
 EXTRA_OEMAKE += "LUNA_STAGING=."
 

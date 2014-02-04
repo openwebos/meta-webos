@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Reference Open webOS image"
 LICENSE = "Apache-2.0"
@@ -21,7 +21,11 @@ PACKAGE_GROUP_webos-extended = "packagegroup-webos-extended"
 PACKAGE_GROUP_webos-test = "packagegroup-webos-test"
 PACKAGE_GROUP_webos-temp = "packagegroup-webos-temp"
 
-WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp ssh-server-dropbear package-management"
+WEBOS_IMAGE_DEFAULT_SSH_IMAGE_FEATURE = "ssh-server-dropbear"
+WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp package-management"
+
+WEBOS_IMAGE_DEFAULT_FEATURES_append = "${@ ' ${WEBOS_IMAGE_DEFAULT_SSH_IMAGE_FEATURE}' if d.getVar('WEBOS_DISTRO_PRERELEASE',True) != '' else ''}"
+WEBOS_IMAGE_DEFAULT_FEATURES_append_emulator = " ${WEBOS_IMAGE_DEFAULT_SSH_IMAGE_FEATURE}"
 
 WEBOS_IMAGE_BASE_INSTALL = '\
     packagegroup-core-boot \
@@ -117,4 +121,4 @@ luna_service2_check_permissions () {
 ROOTFS_POSTPROCESS_COMMAND += '${@base_conditional("WEBOS_TARGET_MACHINE_IMPL", "hardware", "luna_service2_check_permissions ; ", "", d)}'
 
 inherit core-image
-
+inherit webos_machine_impl_dep

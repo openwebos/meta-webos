@@ -9,7 +9,6 @@ require conf/distro/include/webos-preferred-versions.inc
 require conf/distro/include/webos-features.inc
 require conf/distro/include/webos-toolchain.inc
 require conf/distro/include/webos-sdk.inc
-require conf/distro/include/webos-repositories.inc
 
 
 #

@@ -27,6 +27,8 @@ WEBOS_IMAGE_DEFAULT_FEATURES = "webos-temp package-management"
 WEBOS_IMAGE_DEFAULT_FEATURES_append = "${@ ' ${WEBOS_IMAGE_DEFAULT_SSH_IMAGE_FEATURE}' if d.getVar('WEBOS_DISTRO_PRERELEASE',True) != '' else ''}"
 WEBOS_IMAGE_DEFAULT_FEATURES_append_emulator = " ${WEBOS_IMAGE_DEFAULT_SSH_IMAGE_FEATURE}"
 
+WEBOS_IMAGE_DEFAULT_FEATURES_append = "${@ ' webos-production-image' if d.getVar('WEBOS_DISTRO_PRERELEASE',True) == '' else ''}"
+
 WEBOS_IMAGE_BASE_INSTALL = '\
     packagegroup-core-boot \
     packagegroup-webos-extended \

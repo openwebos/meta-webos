@@ -1,10 +1,13 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 # The default repo name is the "base" component name (no -native, etc.)
 WEBOS_REPO_NAME ??= "${BPN}"
 
+WEBOS_GIT_PARAM_BRANCH ?= "master"
+WEBOS_GIT_BRANCH ?= ";branch=${WEBOS_GIT_PARAM_BRANCH}"
+
 OPENWEBOS_GIT_REPO ?= "git://github.com/openwebos"
-OPENWEBOS_GIT_REPO_COMPLETE ?= "${OPENWEBOS_GIT_REPO}/${WEBOS_REPO_NAME};tag=${WEBOS_GIT_PARAM_TAG}"
+OPENWEBOS_GIT_REPO_COMPLETE ?= "${OPENWEBOS_GIT_REPO}/${WEBOS_REPO_NAME};tag=${WEBOS_GIT_PARAM_TAG}${WEBOS_GIT_BRANCH}"
 
 ISIS_PROJECT_GIT_REPO ?= "git://github.com/isis-project"
 # isis-project components don't have submissions => treat like any other upstream

@@ -1,10 +1,10 @@
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 #
 # webos_version
 #
 # Functions to parse the fields of a WEBOS_VERSION, which have the following format:
 #
-#    <component-version>-<submission>[_<40-character-revision-hash>]
+#    <component-version>-<submission>[_<40-character-revision-hash>[;branch=<branch>]]
 #
 
 # PV is the first underscore-separated field in WEBOS_VERSION,
@@ -40,7 +40,22 @@ def webos_version_get_srcrev(wv):
     split_wv = wv.split('_')
     if len(split_wv) == 1:
         return None
-    srcrev = split_wv[1]
+    split_sub = split_wv[1].split(';branch=')
+    srcrev = split_sub[0]
     if (len(srcrev) != 40 or (False in [c in "abcdef0123456789" for c in srcrev])):
         return False
     return srcrev
+
+# The branch is optional parameter, last in WEBOS_VERSION after ;branch=
+# when not specified it will use first 2 dot separated parts from submission prefixed with '@'
+# in cases where submission has exactly 2 dots in it and "master" in all other cases
+def webos_version_get_branch(wv):
+    split_wv = wv.split(';branch=')
+    if len(split_wv) == 1:
+        submission = webos_version_get_submission(wv)
+        split_submission = submission.split('.')
+        if len(split_submission) == 3:
+            # Assume NN.<branch-name>.MM format
+            return "@%s.%s" % (split_submission[0],split_submission[1])
+        return "master"
+    return split_wv[1]

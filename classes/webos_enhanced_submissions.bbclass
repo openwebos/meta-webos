@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 #
 # webos_enhanced_submissions
 #
@@ -8,10 +8,10 @@
 #
 # where <enhanced-submission> is of the form:
 #
-#    <submission>_<40-character-revision-hash>
+#    <submission>_<40-character-revision-hash>[;branch=<branch>]
 #
 # setting WEBOS_COMPONENT_VERSION, WEBOS_SUBMISSION, WEBOS_GIT_PARAM_TAG,
-# WEBOS_GIT_REPO_TAG, WEBOS_SRCREV, SRCREV, and PV.
+# WEBOS_GIT_REPO_TAG, WEBOS_SRCREV, WEBOS_GIT_PARAM_BRANCH, SRCREV, and PV.
 #
 # The default tag name is the Open webOS convention for submission tags, i.e.,
 # they are of the form:
@@ -51,6 +51,7 @@ def webos_enhsub_get_srcrev(d, webos_v):
 WEBOS_SRCREV = "${@webos_enhsub_get_srcrev(d, '${WEBOS_VERSION}')}"
 SRCREV = "${WEBOS_SRCREV}"
 WEBOS_GIT_PARAM_TAG = "${SRCREV}"
+WEBOS_GIT_PARAM_BRANCH = "${@webos_version_get_branch('${WEBOS_VERSION}')}"
 
 # When WEBOS_SRCREV isn't SHA-1 show error
 do_fetch[prefuncs] += "webos_enhsub_srcrev_sanity_check"

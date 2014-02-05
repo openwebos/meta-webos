@@ -33,24 +33,18 @@ WEBOS_NO_STATIC_LIBRARIES_WHITELIST_pn-cpputest = "libCppUTestExt.a"
 
 
 # Usage: webos_no_static_libraries_find_static [<root-dir>]
-# Does nothing if no argument is supplied. This is needed so that there can be
-# a dummy invocation of this function which can be recognized by bitbake.
 webos_no_static_libraries_find_static() {
-    if [ -n "$1" ]; then (
-        # Do the cd so that we can return relative paths; the removals in
-        # sysroot_stage_libdir_append() are done in a different tree.
-        cd "$1"
+    # Do the cd so that we can return relative paths; the removals in
+    # sysroot_stage_libdir_append() are done in a different tree.
+    cd "$1"
 
-        # When WEBOS_NO_STATIC_LIBRARIES_WHITELIST is '', the egrep -v '/()$'
-        # works correctly and drops nothing because none of the paths
-        # will end with / .
-        # Need || true because if there's nothing output, the exit status will
-        # be non-zero.
-        find . -name '*.a' | \
-            egrep -v '${@ "/(" + "|".join("${WEBOS_NO_STATIC_LIBRARIES_WHITELIST}".split()).replace('.', '[.]').replace('+', '[+]') + ')$'}' || true
-    ) fi
-    # Prevent non-zero status from being returned when the if test fails
-    true
+    # When WEBOS_NO_STATIC_LIBRARIES_WHITELIST is '', the egrep -v '/()$'
+    # works correctly and drops nothing because none of the paths
+    # will end with / .
+    # Need || true because if there's nothing output, the exit status will
+    # be non-zero.
+    find . -name '*.a' | \
+        egrep -v '${@ "/(" + "|".join("${WEBOS_NO_STATIC_LIBRARIES_WHITELIST}".split()).replace('.', '[.]').replace('+', '[+]') + ')$'}' || true
 }
 
 WEBOS_NO_STATIC_LIBRARIES_WHITELIST ??= ""
@@ -59,11 +53,11 @@ WEBOS_NO_STATIC_LIBRARIES_WHITELIST_class-native = "*"
 sysroot_stage_libdir_prepend() {
     local staticlibs=""
     if [ '${WEBOS_NO_STATIC_LIBRARIES_WHITELIST}' != '*' ]; then
-        # XXX Bitbake doesn't recognize the invocation of
-        # webos_no_static_libraries_find_static if it's done inside of $( ) (or
-        # ` `) and therefore leaves its definition out of the run.* script it
-        # generates (why??) => issue a dummy invocation that it does recognize.
-        webos_no_static_libraries_find_static
+        # XXX pysh used in bitbake doesn't recognize the invocation of
+        # webos_no_static_libraries_find_static if it's done inside of $( )
+        # (or ` `) and therefore leaves its definition out of the run.* script
+        # it generates, trick pysh to think it's executed here
+        false && webos_no_static_libraries_find_static
         staticlibs=$(webos_no_static_libraries_find_static $1)
     fi
 }
@@ -90,11 +84,11 @@ webos_no_static_libraries_depopulate_staticdev() {
         local staticdevdir
         for staticdevdir in $(find ${PKGDEST} -maxdepth 1 -type d -name '*-staticdev'); do
             local staticlibs
-            # XXX Bitbake doesn't recognize the invocation of
-            # webos_no_static_libraries_find_static if it's done inside of $( ) (or
-            # ` `) and therefore leaves its definition out of the run.* script it
-            # generates (why??) => issue a dummy invocation that it does recognize.
-            webos_no_static_libraries_find_static
+            # XXX pysh used in bitbake doesn't recognize the invocation of
+            # webos_no_static_libraries_find_static if it's done inside of $( )
+            # (or ` `) and therefore leaves its definition out of the run.* script
+            # it generates, trick pysh to think it's executed here
+            false && webos_no_static_libraries_find_static
             staticlibs=$(webos_no_static_libraries_find_static $staticdevdir)
             if [ -n "$staticlibs" ]; then
                 local pkgname

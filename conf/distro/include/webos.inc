@@ -116,9 +116,6 @@ CACHE = "${TMPDIR}/cache/${TCMODE}-${TCLIBC}${@['', '/' + str(d.getVar('MACHINE'
 
 USER_CLASSES ?= ""
 
-OE_IMPORTS += " webos.sstatesig"
-BB_SIGNATURE_HANDLER = "OEBasicHashStrict"
-
 # WEBOS_EXTRA_MACHINEOVERRIDES will appear in OVERRIDES before what's added by
 # the machine architecture .inc file, which appears before MACHINE.
 # WEBOS_EXTRA_MACHINEOVERRIDES is set in webos_machine_impl_dep.bbclass . Do it

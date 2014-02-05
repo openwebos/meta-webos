@@ -15,7 +15,7 @@ checkout=.
 update=Y
 minimal_submission="1"
 minimal_version="0.1.0"
-script_version="1.0.0"
+script_version="1.0.1"
 
 usage () {
     cat << EOF
@@ -262,9 +262,7 @@ if [ -n "$version" ] ; then
 fi
 
 if [ -n "$submission" ] ; then
-    echo $submission | egrep -q "^[0123456789\.]+$" || echo_error "Submission '$submission' should contain only digits and sometimes dots"
-    echo $submission | egrep -q "^[[:digit:]]+$" || echo_warn "Submission '$submission' should contain only digits"
-    [ "$submission" -lt "$minimal_submission" ] && echo_warn "Submission '$submission' doesn't look valid, minimal submission should be '$minimal_submission'"
+    echo $submission | egrep -q "^[[:digit:]]+$" && [ "$submission" -lt "$minimal_submission" ] && echo_warn "Submission '$submission' doesn't look valid, minimal submission should be '$minimal_submission'"
 fi
 
 remote_check $remote
@@ -294,7 +292,7 @@ commit_already_tagged_check $NEW_COMMIT
 
 if [ -n "$submission" ]; then
     tag_check_doesnt_exist submissions/$submission
-    if [ "$submission" -ne "$minimal_submission" ]; then
+    if echo $submission | egrep -q "^[[:digit:]]+$" && [ "$submission" -ne "$minimal_submission" ]; then
         prev_submission=`expr $submission - 1`
         tag_check_does_exist submissions/$prev_submission
     fi

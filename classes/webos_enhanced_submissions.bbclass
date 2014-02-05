@@ -160,4 +160,26 @@ python submission_sanity_check() {
                     else:
                         msg = "The revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') doesn't match with tag '%s', which is seen as revisions:\n%s" % (webos_srcrev, pn, file, webos_git_repo_tag, '\n'.join(tag_srcrevs))
                         package_qa_handle_error("webos-enh-sub-error", msg, d)
+                # duplicates bitbake's git fetcher functionality added in
+                # http://git.openembedded.org/bitbake/commit/?id=89abfbc1953e3711d6c90aff793ee622c22609b1
+                # http://git.openembedded.org/bitbake/commit/?id=31467c0afe0346502fcd18bd376f23ea76a27d61
+                # http://git.openembedded.org/bitbake/commit/?id=f594cb9f5a18dd0ab2342f96ffc6dba697b35f65
+                if not 'nobranch' in urldata[u].parm or urldata[u].parm['nobranch'] != "1":
+                    branch_in_src_uri = urldata[u].parm['branch'] if 'branch' in urldata[u].parm else 'master'
+                    branch_in_webos_version = d.getVar('WEBOS_GIT_PARAM_BRANCH', True)
+                    if branch_in_src_uri != branch_in_webos_version:
+                        msg = "Branch is set in WEBOS_VERSION '%s' for recipe '%s' (file '%s') as well as in SRC_URI '%s' and they don't match" % (branch_in_webos_version, pn, file, branch_in_src_uri)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    cmd = "cd %s && git branch -a --contains %s --list origin/%s 2> /dev/null | wc -l" % (checkout, webos_srcrev, branch_in_webos_version)
+                    try:
+                        output = bb.fetch.runfetchcmd(cmd, d, quiet=True)
+                    except bb.fetch2.FetchError:
+                        msg = "Unable to check if revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s'" % (webos_srcrev, pn, file, branch)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    if len(output.split()) > 1:
+                        msg = "Unable to check if revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s', unexpected output from '%s': '%s'" % (webos_srcrev, pn, file, branch_in_webos_version, cmd, output)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    if output.split()[0] == "0":
+                        msg = "Revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') isn't included in branch '%s'" % (webos_srcrev, pn, file, branch_in_webos_version)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
 }

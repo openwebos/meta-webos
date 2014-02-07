@@ -1,4 +1,4 @@
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 
 SUMMARY = "A userspace service that provides access to the Open webOS database"
 SECTION = "webos/base"
@@ -11,7 +11,7 @@ PROVIDES = "mojodb"
 
 DEPENDS = "luna-service2 jemalloc icu pmloglib curl glib-2.0 leveldb boost"
 
-WEBOS_VERSION = "3.1.0-121_a9b22e92b2998c81fca0ecc5482b8a007d3d470c"
+WEBOS_VERSION = "3.2.0-123_f18be7525747bce193eca1d0f274256963c6e840"
 PR = "r18"
 
 # ensure leveldb is installed in image

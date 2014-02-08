@@ -51,11 +51,7 @@ def webos_enhsub_get_srcrev(d, webos_v):
 WEBOS_SRCREV = "${@webos_enhsub_get_srcrev(d, '${WEBOS_VERSION}')}"
 SRCREV = "${WEBOS_SRCREV}"
 WEBOS_GIT_PARAM_TAG = "${SRCREV}"
-# Don't set it in WEBOS_GIT_PARAM_BRANCH until we have fix for branches with '@'
-# in bitbake we're using:
-# http://lists.openembedded.org/pipermail/bitbake-devel/2014-January/004359.html
-# WEBOS_GIT_PARAM_BRANCH = "${@webos_version_get_branch('${WEBOS_VERSION}')}"
-WEBOS_GIT_PARAM_BRANCH_CHECK = "${@webos_version_get_branch('${WEBOS_VERSION}')}"
+WEBOS_GIT_PARAM_BRANCH = "${@webos_version_get_branch('${WEBOS_VERSION}')}"
 
 # When WEBOS_SRCREV isn't SHA-1 show error
 do_fetch[prefuncs] += "webos_enhsub_srcrev_sanity_check"
@@ -169,7 +165,11 @@ python submission_sanity_check() {
                 # http://git.openembedded.org/bitbake/commit/?id=31467c0afe0346502fcd18bd376f23ea76a27d61
                 # http://git.openembedded.org/bitbake/commit/?id=f594cb9f5a18dd0ab2342f96ffc6dba697b35f65
                 if not 'nobranch' in urldata[u].parm or urldata[u].parm['nobranch'] != "1":
-                    branch_in_webos_version = d.getVar('WEBOS_GIT_PARAM_BRANCH_CHECK', True)
+                    branch_in_src_uri = urldata[u].parm['branch'] if 'branch' in urldata[u].parm else 'master'
+                    branch_in_webos_version = d.getVar('WEBOS_GIT_PARAM_BRANCH', True)
+                    if branch_in_src_uri != branch_in_webos_version:
+                        msg = "Branch is set in WEBOS_VERSION '%s' for recipe '%s' (file '%s') as well as in SRC_URI '%s' and they don't match" % (branch_in_webos_version, pn, file, branch_in_src_uri)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
                     cmd = "cd %s && git branch -a --contains %s --list origin/%s 2> /dev/null | wc -l" % (checkout, webos_srcrev, branch_in_webos_version)
                     try:
                         output = bb.fetch.runfetchcmd(cmd, d, quiet=True)

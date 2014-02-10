@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "webOS portability layer - ${MACHINE}-specific modules"
 SECTION = "webos/base"
@@ -9,10 +9,10 @@ DEPENDS = "nyx-lib glib-2.0 luna-service2 openssl"
 
 VBOX_RDEPENDS = ""
 VBOX_RDEPENDS_qemux86 = "vboxguestdrivers"
-RDEPENDS_${PN} = "lsb ${VBOX_RDEPENDS}"
+RDEPENDS_${PN} = "lsb gzip ${VBOX_RDEPENDS}"
 
 WEBOS_VERSION = "6.0.0-92_d03ac4650579eb4590bdc35b88ae5897f5c04033"
-PR = "r10"
+PR = "r11"
 
 EXTRA_OECMAKE += "-DDISTRO_VERSION:STRING='${DISTRO_VERSION}' -DDISTRO_NAME:STRING='${DISTRO_NAME}' \
                   -DWEBOS_DISTRO_API_VERSION:STRING='${WEBOS_DISTRO_API_VERSION}' \

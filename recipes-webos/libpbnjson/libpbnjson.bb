@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Palm's Better Native JSON library"
 SECTION = "webos/libs"
@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "yajl glib-2.0 gperf-native lemon-native gmp uriparser"
 
-WEBOS_VERSION = "2.2.0-26_256560f7732ddc0e1f5963208ff76e43b291e329"
+WEBOS_VERSION = "2.3.0-27_c6093404070a6c4adab55858a36f90af4f77bb0b"
 PR = "r3"
 
 inherit webos_component

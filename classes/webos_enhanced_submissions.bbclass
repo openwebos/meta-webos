@@ -64,7 +64,7 @@ python webos_enhsub_srcrev_sanity_check() {
         pn = d.getVar('PN', True)
         file = d.getVar('FILE', True)
         msg = "WEBOS_VERSION '%s' for recipe '%s' (file '%s') contains submission 0, which indicates using AUTOREV and cannot be used in official builds." % (webos_version, pn, file)
-        package_qa_handle_error("webos-enh-sub-error", msg, d)
+        package_qa_handle_error("webos-enh-sub-autorev-error", msg, d)
     elif (len(webos_srcrev) != 40 or (False in [c in "abcdef0123456789" for c in webos_srcrev])):
         file = d.getVar('FILE', True)
         bb.error("%s: WEBOS_SRCREV needs to contain a SRCREV" % file)
@@ -114,7 +114,7 @@ python submission_sanity_check() {
             # and show non-fatal ERROR to make sure that it's not accidentally merged in master
             if webos_submission == '0':
                 msg = "WEBOS_VERSION '%s' for recipe '%s' (file '%s') contains submission 0, which indicates using AUTOREV" % (webos_version, pn, file)
-                package_qa_handle_error("webos-enh-sub-error", msg, d)
+                package_qa_handle_error("webos-enh-sub-autorev-error", msg, d)
             elif webos_git_repo_tag and webos_srcrev:
                 bb.debug(2, "sanity check for pn '%s', tag_param '%s', webos_srcrev '%s', webos_git_repo_tag '%s', checkout '%s'" % (pn, tag_param, webos_srcrev, webos_git_repo_tag, checkout))
                 cmd = "cd %s && git tag -l 2>/dev/null | grep '^%s$' | wc -l" % (checkout, webos_git_repo_tag)

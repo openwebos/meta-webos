@@ -143,6 +143,10 @@ ICECC_DISABLED ??= "1"
 WARN_QA_append = " version-going-backwards webos-enh-sub-warning"
 ERROR_QA_append = " webos-enh-sub-error"
 
+# Include webos-enh-sub-autorev-error in WARN for unofficial builds and in ERROR for official builds
+WARN_QA_append = " ${@ 'webos-enh-sub-autorev-error' if '${WEBOS_DISTRO_BUILD_ID}'.startswith('unofficial') else '' }"
+ERROR_QA_append = " ${@ '' if '${WEBOS_DISTRO_BUILD_ID}'.startswith('unofficial') else 'webos-enh-sub-autorev-error' }"
+
 QEMU_TARGETS ?= "arm i386"
 
 # Default WEBOS_TARGET_* values (see webos_cmake.bbclass)

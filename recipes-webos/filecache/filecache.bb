@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Open webOS daemon to cache filesystem requests"
 AUTHOR = "Alekseyev Oleksandr <alekseyev.oleksandr@lge.com>"
@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "jemalloc luna-service2 db8 glibmm boost libsandbox glib-2.0 libsigc++-2.0"
 
-WEBOS_VERSION = "2.0.0-62_47fd232fe9e25608a8f8ea95e83bca447a88dc85"
+WEBOS_VERSION = "2.0.0-63_a70163ed5f5bb473493daad751313bf42313607b"
 PR = "r4"
 
 inherit webos_component

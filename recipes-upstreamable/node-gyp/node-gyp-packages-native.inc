@@ -41,11 +41,11 @@ http://registry.npmjs.org/tough-cookie/-/tough-cookie-0.12.1.tgz;name=tough-cook
 http://registry.npmjs.org/punycode/-/punycode-1.2.4.tgz;name=punycode_1.2.4;unpack=yes;downloadfilename=punycode-1.2.4-tarball.tgz;subdir=${PN}/punycode_1.2.4 \
 http://registry.npmjs.org/tunnel-agent/-/tunnel-agent-0.3.0.tgz;name=tunnel-agent_0.3.0;unpack=yes;downloadfilename=tunnel-agent-0.3.0-tarball.tgz;subdir=${PN}/tunnel-agent_0.3.0 \
 http://registry.npmjs.org/rimraf/-/rimraf-2.2.6.tgz;name=rimraf_2.2.6;unpack=yes;downloadfilename=rimraf-2.2.6-tarball.tgz;subdir=${PN}/rimraf_2.2.6 \
-http://registry.npmjs.org/semver/-/semver-2.0.11.tgz;name=semver_2.0.11;unpack=yes;downloadfilename=semver-2.0.11-tarball.tgz;subdir=${PN}/semver_2.0.11 \
+http://registry.npmjs.org/semver/-/semver-2.2.1.tgz;name=semver_2.2.1;unpack=yes;downloadfilename=semver-2.2.1-tarball.tgz;subdir=${PN}/semver_2.2.1 \
 http://registry.npmjs.org/tar/-/tar-0.1.19.tgz;name=tar_0.1.19;unpack=yes;downloadfilename=tar-0.1.19-tarball.tgz;subdir=${PN}/tar_0.1.19 \
 http://registry.npmjs.org/block-stream/-/block-stream-0.0.7.tgz;name=block-stream_0.0.7;unpack=yes;downloadfilename=block-stream-0.0.7-tarball.tgz;subdir=${PN}/block-stream_0.0.7 \
 http://registry.npmjs.org/which/-/which-1.0.5.tgz;name=which_1.0.5;unpack=yes;downloadfilename=which-1.0.5-tarball.tgz;subdir=${PN}/which_1.0.5 \
- "
+"
 
 SRC_URI[fstream_0.1.25.md5sum]="81805600ac27ed20bbe21e2645021476"
 SRC_URI[fstream_0.1.25.sha256sum]="da01b58c91f9657c895f7d5dbe56e957923a2fe216e70d5beac45e5b5d8103d6"
@@ -127,8 +127,8 @@ SRC_URI[tunnel-agent_0.3.0.md5sum]="0eb0b4e46d6a4d72ccd7e5941d0fc11a"
 SRC_URI[tunnel-agent_0.3.0.sha256sum]="5b23c1d29e85143e213ba5aca118419ab42d25774da92e816074a73f423bcabd"
 SRC_URI[rimraf_2.2.6.md5sum]="12ca912d238e071737d1ffec98556e86"
 SRC_URI[rimraf_2.2.6.sha256sum]="5ecd405586cdbd8922d7793759fb4d26d1729759b98ace9f5784fe1d10cd54fd"
-SRC_URI[semver_2.0.11.md5sum]="2b3631b83e02673e7bc272855e7b7f8c"
-SRC_URI[semver_2.0.11.sha256sum]="fcc70079e8dfb52d0650087d6777f0b4e6844b1c9b8daa059121610a1b71683b"
+SRC_URI[semver_2.2.1.md5sum] = "d62b593a3837b7f8f3056a5c1c8b2759"
+SRC_URI[semver_2.2.1.sha256sum] = "aa057b1bfb7bd1ccd0a966ceb2fd549147a21c7b0292c94d6a8dc59d47df49aa"
 SRC_URI[tar_0.1.19.md5sum]="66b9f13c53386cc9c5da9b591780862e"
 SRC_URI[tar_0.1.19.sha256sum]="1566f80d655338d9770c55538725045ba776565bf4cfe5471929c9d2f66b0f21"
 SRC_URI[block-stream_0.0.7.md5sum]="c66aaa2227abec6daa6ff8a155b59294"
@@ -176,7 +176,7 @@ punycode-1.2.4 \
 qs-0.6.6 \
 request-2.34.0 \
 rimraf-2.2.6 \
-semver-2.0.11 \
+semver-2.2.1 \
 sigmund-1.0.0 \
 sntp-0.2.4 \
 tar-0.1.19 \
@@ -222,7 +222,7 @@ LICENSE_punycode-1.2.4 = "BSD & MIT"
 LICENSE_qs-0.6.6 = "MIT"
 LICENSE_request-2.34.0 = "Apache-2.0"
 LICENSE_rimraf-2.2.6 = "MIT"
-LICENSE_semver-2.0.11 = "BSD"
+LICENSE_semver-2.2.1 = "BSD"
 LICENSE_sigmund-1.0.0 = "BSD"
 LICENSE_sntp-0.2.4 = "BSD"
 LICENSE_tar-0.1.19 = "BSD"
@@ -268,7 +268,7 @@ ${LICENSE_punycode-1.2.4} & \
 ${LICENSE_qs-0.6.6} & \
 ${LICENSE_request-2.34.0} & \
 ${LICENSE_rimraf-2.2.6} & \
-${LICENSE_semver-2.0.11} & \
+${LICENSE_semver-2.2.1} & \
 ${LICENSE_sigmund-1.0.0} & \
 ${LICENSE_sntp-0.2.4} & \
 ${LICENSE_tar-0.1.19} & \
@@ -319,7 +319,7 @@ file://${WORKDIR}/${PN}/punycode_1.2.4/package/LICENSE-GPL.txt;md5=2c1778696d3ba
 file://${WORKDIR}/${PN}/qs_0.6.6/package/Readme.md;beginline=35;md5=90d7f26fbfa70f23a025e3e3502e5a5b \
 file://${WORKDIR}/${PN}/request_2.34.0/package/LICENSE;md5=f3f8ead5440d1c311b45be065d135d90 \
 file://${WORKDIR}/${PN}/rimraf_2.2.6/package/LICENSE;md5=b3245a33f2d41818f14c489bd33bc4a8 \
-file://${WORKDIR}/${PN}/semver_2.0.11/package/LICENSE;md5=8ce909f9cccb74a7c6f2720930d072c1 \
+file://${WORKDIR}/${PN}/semver_2.2.1/package/LICENSE;md5=8ce909f9cccb74a7c6f2720930d072c1 \
 file://${WORKDIR}/${PN}/sigmund_1.0.0/package/LICENSE;md5=8ce909f9cccb74a7c6f2720930d072c1 \
 file://${WORKDIR}/${PN}/sntp_0.2.4/package/LICENSE;md5=a674df8d258d4437373838e36bc960d2 \
 file://${WORKDIR}/${PN}/tar_0.1.19/package/LICENCE;md5=c695aba12d799c74e770d90e1c5d59aa \

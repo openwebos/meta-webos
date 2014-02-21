@@ -9,7 +9,6 @@ PREFERRED_VERSION_db ?= "4.8.30"
 PREFERRED_VERSION_libnih-native ?= "1.0.3"
 PREFERRED_VERSION_libsoup-2.4 ?= "2.40.3"
 PREFERRED_VERSION_linux-yocto ?= "3.4%"
-PREFERRED_VERSION_nodejs ?= "0.10.15"
 PREFERRED_VERSION_ntp ?= "4.2.6p5"
 # non-GPLv3 versions of these components
 PREFERRED_VERSION_gmp = "4.2.1"

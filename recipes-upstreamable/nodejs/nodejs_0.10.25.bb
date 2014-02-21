@@ -1,15 +1,15 @@
 DESCRIPTION = "nodeJS Evented I/O for V8 JavaScript"
 HOMEPAGE = "http://nodejs.org"
-LICENSE = "MIT & BSD"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=1b19aee7bf088151c559f3ec9f830b44"
+LICENSE = "MIT & BSD & Artistic-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=4a31e6c424761191227143b86f58a1ef"
 
 DEPENDS = "openssl"
 
-PR = "r5"
+PR = "r6"
 
 SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.gz"
-SRC_URI[md5sum] = "59f295b0a30dc8dbdb46407c2d9b2923"
-SRC_URI[sha256sum] = "87345ab3b96aa02c5250d7b5ae1d80e620e8ae2a7f509f7fa18c4aaa340953e8"
+SRC_URI[md5sum] = "153bdbf77b4473df2600b8ce123ef331"
+SRC_URI[sha256sum] = "46eef3b9d5475a2081dc2b2f7cf1f4c3a56824d1fc9b04e7ed1d7a88e8f6b36f"
 
 S = "${WORKDIR}/node-v${PV}"
 
@@ -43,7 +43,7 @@ do_install () {
 
 do_install_append_class-native() {
     # use node from PATH instead of absolute path to sysroot
-    # node-v0.10.15/tools/install.py is using:
+    # node-v0.10.25/tools/install.py is using:
     # shebang = os.path.join(node_prefix, 'bin/node')
     # update_shebang(link_path, shebang)
     # and node_prefix can be very long path to bindir in native sysroot and

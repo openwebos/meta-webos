@@ -9,8 +9,8 @@ DEPENDS = "nodejs-native node-gyp-packages-native"
 PR = "r2"
 
 SRC_URI = "https://github.com/TooTallNate/node-gyp/archive/v${PV}.tar.gz"
-SRC_URI[md5sum] = "35fbdcd6a48a20d3ba99989748743b51"
-SRC_URI[sha256sum] = "18e6e5fd0670c9ee8cf89dfa91831b5fa1abc68d92dc800a669b33c7bae260f0"
+SRC_URI[md5sum] = "bbd667edd17df54c687d6224b8619f24"
+SRC_URI[sha256sum] = "3992e62c2480552b3e847ec7ac0e03009ab5391bdecf78a25b8688cb6e159d95"
 
 S = "${WORKDIR}/node-gyp-${PV}"
 

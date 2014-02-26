@@ -1,6 +1,6 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos1"
+EXTENDPRAUTO_append = "webos2"
 
 PACKAGES = "fuser killall pstree \
             ${PN}-dbg ${PN}-staticdev ${PN} \
@@ -8,7 +8,7 @@ PACKAGES = "fuser killall pstree \
 "
 
 do_configure_prepend() {
-    sed -i '/^SUBDIRS/s/=.*$/= src/' Makefile.am
-    sed -i '/^oldfuser_/s/^/#/' src/Makefile.am
-    sed -i '/^bin_PROGRAMS/s/ oldfuser//' src/Makefile.am
+    sed -i '/^SUBDIRS/s/=.*$/= src/' ${S}/Makefile.am
+    sed -i '/^oldfuser_/s/^/#/' ${S}/src/Makefile.am
+    sed -i '/^bin_PROGRAMS/s/ oldfuser//' ${S}/src/Makefile.am
 }

@@ -1,13 +1,13 @@
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Google C++ Testing Framework"
 HOMEPAGE = "https://code.google.com/p/googletest"
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://COPYING;md5=cbbd27594afd089daa160d3a16dd515a"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=cbbd27594afd089daa160d3a16dd515a"
 
 SRC_URI = "https://googletest.googlecode.com/files/${BP}.zip"
-SRC_URI[md5sum] = "4577b49f2973c90bf9ba69aa8166b786"
-SRC_URI[sha256sum] = "5ec97df8e75b4ee796604e74716d1b50582beba22c5502edd055a7e67a3965d8"
+SRC_URI[md5sum] = "2d6ec8ccdf5c46b05ba54a9fd1d130d7"
+SRC_URI[sha256sum] = "247ca18dd83f53deb1328be17e4b1be31514cedfc1e3424f672bf11fd7e0d60d"
 
 PR = "r0"
 

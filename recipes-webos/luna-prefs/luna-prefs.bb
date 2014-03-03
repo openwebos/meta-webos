@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 DEPENDS = "luna-service2 cjson sqlite3 glib-2.0 nyx-lib"
 
 WEBOS_VERSION = "2.0.0-7_f10f70b5d198460d38024c8fd02d31614669a73b"
-PR = "r10"
+PR = "r11"
 
 #inherit webos_component
 inherit webos_public_repo
@@ -41,12 +41,6 @@ do_install_append() {
     chmod o-rwx ${D}${bindir}/lunaprop
 
     install -d ${D}${sysconfdir}/prefs/properties
-
-    # Let's not require a submission process to add to the whitelist
-    cat > ${D}${sysconfdir}/prefs/public_properties <<EOF
-com.palm.properties.nduid
-EOF
-    chmod 644 ${D}${sysconfdir}/prefs/public_properties
 
     echo -n "${PRODUCT_DEVICE_NAME}"               > ${D}${sysconfdir}/prefs/properties/deviceName
     echo -n "${PRODUCT_DEVICE_NAME_BRANDED}"       > ${D}${sysconfdir}/prefs/properties/deviceNameBranded

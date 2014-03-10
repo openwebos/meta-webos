@@ -47,8 +47,16 @@ WEBOS_DISTRO_PRERELEASE ?= "devel"
 WEBOS_DISTRO_BUILD_ID ?= "unofficial"
 
 # Only suffix image names with DATETIME when the build is unofficial; otherwise,
-# use WEBOS_DISTRO_BUILD_ID. The build codename is always prepended to the suffix.
-WEBOS_IMAGE_NAME_SUFFIX = "-${WEBOS_DISTRO_BUILD_CODENAME}-${@ base_conditional( \
+# use WEBOS_DISTRO_BUILD_ID. By default, the build codename (or, if it's defined,
+# WEBOS_DISTRO_BRANCHPOINT_MICRO_VERSION with its hyphen replaced with a period)
+# is always prepended to the suffix, but this can be overridden.
+WEBOS_IMAGE_BUILD_CODENAME ?= "${@ \
+    '-' + d.getVar('WEBOS_DISTRO_BRANCHPOINT_MICRO_VERSION', True).replace('-', '.') \
+    if d.getVar('WEBOS_DISTRO_BRANCHPOINT_MICRO_VERSION', True) else \
+    '-${WEBOS_DISTRO_BUILD_CODENAME}' \
+}"
+
+WEBOS_IMAGE_NAME_SUFFIX = "${WEBOS_IMAGE_BUILD_CODENAME}-${@ base_conditional( \
                                   'WEBOS_DISTRO_BUILD_ID', 'unofficial', \
                                   '${DATETIME}', '${WEBOS_DISTRO_BUILD_ID}', d) }"
 

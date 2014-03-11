@@ -5,8 +5,8 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-WEBOS_VERSION = "2.0.1-7_9d6e7a758329a8e0a85d742b3e0003f44a3742c5"
-PR = "r10"
+WEBOS_VERSION = "2.0.1-8_ca4107127996b184c1e79e3fd36065bd97b5cd2c"
+PR = "r11"
 
 #inherit webos_component TODO
 inherit webos_arch_indep
@@ -22,8 +22,6 @@ do_install_append() {
     if [ -e ${S}/files/conf/fonts/fonts.tgz ]; then
         install -d ${D}${datadir}/fonts
         tar xvzf ${S}/files/conf/fonts/fonts.tgz --directory=${D}${datadir}/fonts
-        # The CMakeLists.txt unintentionally installs the tarball!!
-        rm -f ${D}${datadir}/fonts/fonts.tgz
     fi
     install -d ${D}${webos_sysconfdir}
     install -v -m 644 ${S}/files/conf/locale.txt ${D}${webos_sysconfdir}

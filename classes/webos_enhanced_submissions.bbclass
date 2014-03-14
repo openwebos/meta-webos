@@ -15,13 +15,23 @@
 #
 # The default tag name is the Open webOS convention for submission tags, i.e.,
 # they are of the form:
-#    submissions/<decimal-integer>
-# or, when the component has been branched:
-#    submissions/<decimal-integer>.<decimal-integer>
-# or, when the component has been branched for some permanenet branch:
-#    submissions/@<decimal-integer>.<branch-name>.<decimal-integer>
-# where <decimal-integer> does not contain leading zeros. The default can be
-# overridden by setting WEBOS_GIT_REPO_TAG.
+#    submissions/<decimal-integer>                  (default branch: "master")
+# or, when the submission is from some permanent branch:
+#    submissions/<name>.<decimal-integer>           (default branch: "@<name>")
+# where <decimal-integer> does not contain leading zeros.
+#
+# <name> is the branch name without leading '@' and can have following forms:
+#    <decimal-integer> when the branch was created from submissions/<decimal-integer>.
+#    <decimal-integer>.<codename> when the branch was also created from
+#       submissions/<decimal-integer> tag, but for some specific <codename> release.
+#    <decimal-integer>.<codename>.<decimal-integer> is used for multiple levels of
+#       branched submissions, e.g. NN.<codename>.MM.PP is PP-th submission along the
+#       @NN.<codename>.MM branch.
+#
+# The default branch name value can be overriden by "branch" parameter in WEBOS_VERSION
+# or by setting WEBOS_GIT_PARAM_BRANCH.
+#
+# The default tag name can be overriden by setting WEBOS_GIT_PARAM_TAG.
 #
 # WEBOS_SUBMISSION '0' has special meaning to disable check
 # that selected SHA-1 is matching with submissions tag

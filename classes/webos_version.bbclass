@@ -47,15 +47,17 @@ def webos_version_get_srcrev(wv):
     return split_wv[1]
 
 # The branch is optional parameter, last in WEBOS_VERSION after ;branch=
-# when not specified it will use first 2 dot separated parts from submission prefixed with '@'
-# in cases where submission has exactly 2 dots in it and "master" in all other cases
+# when not specified it will use @<name> when WEBOS_VERSION is in
+# <name>.NN format (contains at least one dot) and "master" in all other cases.
 def webos_version_get_branch(wv):
     split_wv = wv.split(';branch=')
     if len(split_wv) == 1:
         submission = webos_version_get_submission(wv)
-        split_submission = submission.split('.')
-        if len(split_submission) == 3:
-            # Assume @NN.<branch-name>.MM format (the name of the branch is @NN.<name>)
-            return "@%s.%s" % (split_submission[0],split_submission[1])
-        return "master"
+        # Assume <name>.NN format (NN is submission number, @<name> is branch name)
+        split_submission = submission.rsplit('.', 1)
+        if len(split_submission) > 1:
+            return "@%s" % (split_submission[0])
+        else:
+            # otherwise it's simply a submission along the master branch
+            return "master"
     return split_wv[1]

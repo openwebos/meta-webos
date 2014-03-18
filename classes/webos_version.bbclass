@@ -32,19 +32,17 @@ def webos_version_get_submission(wv):
     if len(split_pv) == 1:
         # If there no hyphen, that means there's no submission
         return '0'
-    return split_pv[-1]
+    split_sub = split_pv[-1].split(';branch=')
+    return split_sub[0]
 
 # The revision-hash (SRCREV) is the second underscore-separated field in
-# WEBOS_VERSION. Returns None if the field is absent and False if it's invalid.
+# WEBOS_VERSION. Returns "INVALID" if the field is absent.
 def webos_version_get_srcrev(wv):
     split_wv = wv.split('_')
     if len(split_wv) == 1:
-        return None
+        return "INVALID" # this is default SRCREV value from bitbake.conf
     split_sub = split_wv[1].split(';branch=')
-    srcrev = split_sub[0]
-    if (len(srcrev) != 40 or (False in [c in "abcdef0123456789" for c in srcrev])):
-        return False
-    return srcrev
+    return split_sub[0]
 
 # The branch is optional parameter, last in WEBOS_VERSION after ;branch=
 # when not specified it will use first 2 dot separated parts from submission prefixed with '@'
@@ -55,7 +53,7 @@ def webos_version_get_branch(wv):
         submission = webos_version_get_submission(wv)
         split_submission = submission.split('.')
         if len(split_submission) == 3:
-            # Assume NN.<branch-name>.MM format
+            # Assume @NN.<branch-name>.MM format (the name of the branch is @NN.<name>)
             return "@%s.%s" % (split_submission[0],split_submission[1])
         return "master"
     return split_wv[1]

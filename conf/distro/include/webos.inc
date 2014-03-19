@@ -15,20 +15,25 @@ require conf/distro/include/webos-icecc-components-exclusion.inc
 #
 # Form the codename of a release (WEBOS_DISTRO_RELEASE_CODENAME) from a codename
 # that represents the major set of features of the platform
-# (WEBOS_DISTRO_PLATFORM_CODENAME) and a name that represents the series of
-# builds that are done during while a particular release is being developed
-# (WEBOS_DISTRO_BUILD_CODENAME). It is expected that there will be several build
+# (WEBOS_DISTRO_PLATFORM_CODENAME) and a codename that represents the features
+# of the particular DISTRO_VERSION being released (WEBOS_DISTRO_VERSION_CODENAME).
+# The two more or less correspond the the major and minor versions of
+# DISTRO_VERSION, but allow there to be a name for them ahead of the assignment
+# of actual version numbers. It is expected that there will be several version
 # codenames with the same platform codename under active development at the same
-# time. They roughly correspond the the major and minor versions of
-# DISTRO_VERSION, but allow there to be a name to refer to them ahead of the
-# assignment of actual version numbers.
+# time.
 #
-
-# It is expected that other distros will override these definitions.
+# It is expected that other distros will override these definitions based on
+# their codename schemes.
+#
 WEBOS_DISTRO_PLATFORM_CODENAME ?= "${DISTRO}"
-WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip().translate(None, '()/')}"
+WEBOS_DISTRO_VERSION_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip().translate(None, '()/')}"
+WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DISTRO_VERSION_CODENAME}"
 
-WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DISTRO_BUILD_CODENAME}"
+# This is the codename for the series of builds that are made from a branch.
+# It appears in the image filenames. It is expected that other distros will
+# override this based on their codename schemes.
+WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip().translate(None, '()/')}"
 
 
 WEBOS_DISTRO_PRERELEASE ?= "devel"

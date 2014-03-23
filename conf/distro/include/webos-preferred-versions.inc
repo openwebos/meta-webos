@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 #
 # NOTE: Keep the lists in alphabetical order
@@ -16,6 +16,8 @@ PREFERRED_VERSION_gmp = "4.2.1"
 PREFERRED_VERSION_gzip = "1.3.12"
 PREFERRED_VERSION_readline ?= "5.2"
 PREFERRED_VERSION_tar ?= "1.17"
+PREFERRED_VERSION_tzdata ?= "2014a"
+PREFERRED_VERSION_tzcode-native ?= "2014a"
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "182"
 PREFERRED_VERSION_upstart ?= "0.3.11"

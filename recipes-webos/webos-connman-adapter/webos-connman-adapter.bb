@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Open webOS component for managing network connections using connman"
 AUTHOR = "Sapna Todwal <sapna.todwal@lge.com>"
@@ -7,10 +7,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 SECTION = "webos/services"
 
 DEPENDS = "luna-service2 libpbnjson glib-2.0 luna-prefs openssl"
-RDEPENDS_${PN} = "connman"
+RDEPENDS_${PN} = "connman connman-client"
 
 WEBOS_VERSION = "1.0.0-10_750466b3e842e8fff0906390524b92e28b0af972"
-PR = "r2"
+PR = "r3"
 
 inherit webos_component
 inherit webos_public_repo

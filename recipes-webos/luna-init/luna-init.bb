@@ -5,14 +5,17 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-WEBOS_VERSION = "2.0.1-8_ca4107127996b184c1e79e3fd36065bd97b5cd2c"
-PR = "r11"
+DEPENDS = "tzdata python-tz-native"
+
+WEBOS_VERSION = "2.0.1-9_1e8de5fda470de4c24457225e54a861052df1ce2"
+PR = "r12"
 
 #inherit webos_component TODO
 inherit webos_arch_indep
 inherit webos_public_repo
 inherit webos_enhanced_submissions
 inherit webos_cmake
+inherit pythonnative
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

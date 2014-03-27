@@ -6,13 +6,13 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "pmloglib cjson glib-2.0"
+DEPENDS = "pmloglib cjson glib-2.0 gtest"
 VIRTUAL-RUNTIME_cpushareholder ?= "cpushareholder-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_cpushareholder} ${VIRTUAL-RUNTIME_rdx-utils}"
 
-WEBOS_VERSION = "3.7.0-178_b91c5059d1cf650a504588886aa91608064a875c"
-PR = "r15"
+WEBOS_VERSION = "3.7.0-182_cc2f970a7b686c7a9dbc4110904786b53811f5a7"
+PR = "r16"
 
 WEBOS_DISTRO_PRERELEASE ??= ""
 EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="devel"' \

@@ -1,6 +1,6 @@
 # IceCream distributed compiling support
 #
-# Imported from oe-core 4659d29b1040349116549644e45035a5b37d9311
+# Imported from oe-core c3e8bfe30685e2357a6eb3ba8f4a014c7dc9f58e
 #
 # Stages directories with symlinks from gcc/g++ to icecc, for both
 # native and cross compilers. Depending on each configure or compile,
@@ -150,6 +150,10 @@ def icc_is_native(bb, d):
 # Don't pollute allarch signatures with TARGET_FPU
 icc_version[vardepsexclude] += "TARGET_FPU"
 def icc_version(bb, d):
+    if d.getVar('ICECC_DISABLED') == "1":
+        # don't even try it, when explicitly disabled
+        return ""
+
     if use_icc(bb, d) == "no":
         return ""
 
@@ -177,6 +181,10 @@ def icc_version(bb, d):
     return tar_file
 
 def icc_path(bb,d):
+    if d.getVar('ICECC_DISABLED') == "1":
+        # don't create unnecessary directories when icecc is disabled
+        return
+
     if icc_is_kernel(bb, d):
         return create_path( [get_cross_kernel_cc(bb,d), ], bb, d)
 
@@ -240,7 +248,7 @@ def set_icecc_env():
     return
 
 set_icecc_env() {
-    if [ "x${ICECC_DISABLED}" != "x" ]
+    if [ "${ICECC_DISABLED}" = "1" ]
     then
         return
     fi

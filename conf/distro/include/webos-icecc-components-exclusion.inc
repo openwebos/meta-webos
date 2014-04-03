@@ -1,14 +1,19 @@
 # Copyright (c) 2014 LG Electronics, Inc.
 
-# Exclude these packages from ICECC build due to build failures
+# These packages fail to build when icecc is used
 
-ICECC_USER_PACKAGE_BL_append = " qt4-webos \
-                               "
+ICECC_USER_PACKAGE_BL_append = " \
+    qt4-webos \
+"
 
-ICECC_USER_PACKAGE_BL_append_arm = " busybox \
-                                     e2fsprogs \
-                                     gmp \
-                                     libcap \
-                                     libgpg-error \
-                                     ncurses \
-                                   "
+ICECC_USER_PACKAGE_BL_append_arm = " \
+    busybox \
+    e2fsprogs \
+    gcc \
+    gmp \
+    libcap \
+    libgpg-error \
+    linux-libc-headers \
+    ncurses \
+    perl \
+"

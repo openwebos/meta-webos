@@ -7,8 +7,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "yajl glib-2.0 gperf-native lemon-native gmp uriparser"
 
-WEBOS_VERSION = "2.5.0-31_f639de91a065a03569d80074732f61bdc57d03f9"
-PR = "r3"
+WEBOS_VERSION = "2.6.0-32_35580388de2225c1f7b85d38b4014ebc8324b135"
+PR = "r4"
 
 inherit webos_component
 inherit webos_public_repo
@@ -17,7 +17,7 @@ inherit webos_cmake
 inherit webos_library
 
 # These are the defaults, but explicitly specify so that readers know they exist
-EXTRA_OECMAKE += "-DWITH_DOCS:BOOL=FALSE -DWITH_TESTS:BOOL=FALSE"
+EXTRA_OECMAKE += "-DWITH_DOCS:BOOL=FALSE -DWITH_TESTS:BOOL=FALSE -DNO_LOGGING:BOOL=TRUE"
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"

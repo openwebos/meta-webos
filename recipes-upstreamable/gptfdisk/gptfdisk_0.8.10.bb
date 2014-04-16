@@ -1,4 +1,4 @@
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 
 SUMMARY = "Programs for creating and maintenance of GUID Partition Table"
 SECTION = "console/utils"
@@ -9,10 +9,10 @@ DEPENDS = "util-linux ncurses popt icu"
 PR = "r0"
 
 SRC_URI = "${SOURCEFORGE_MIRROR}/project/${PN}/${PN}/${PV}/${BP}.tar.gz \
-           file://gptfdisk-0.8.7-convenience-1.patch"
+           file://gptfdisk-0.8.10-convenience-1.patch"
 
-SRC_URI[md5sum] = "005b45c0b37c37a99024704fdb2ee610"
-SRC_URI[sha256sum] = "39e61d9f3701e95db1bcb83ce8fb211b22f33548e3c75b17f22067c6968e91e3"
+SRC_URI[md5sum] = "9cf4246c181c324bdbd553fe9b348373"
+SRC_URI[sha256sum] = "73e64151203ae0c347c488358e71ca582bb7fb7f0d66df86b71c42050390eb9b"
 
 EXTRA_OEMAKE += "POPT=yes"
 

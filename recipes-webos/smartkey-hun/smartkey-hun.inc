@@ -1,13 +1,14 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Implementation of the Open webOS SmartKey spell checking service using hunspell"
 SECTION = "webos/base"
+AUTHOR = "Igor Kuksyuk <igor.kuksiuk@lge.com>"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 DEPENDS = "libpbnjson cjson glib-2.0 luna-service2 icu hunspell luna-prefs boost"
 
-WEBOS_VERSION = "3.0.0-11_517519129add67e56e70f0389cac751aaa6bd76d"
+WEBOS_VERSION = "3.0.0-15_ad8430e61491cc4113c29e10297951ea4d235d0b"
 INC_PR = "r7"
 
 inherit webos_component

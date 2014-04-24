@@ -4,6 +4,7 @@
 
 ICECC_USER_PACKAGE_BL_append = " \
     linux-libc-headers \
+    nss \
     qt4-webos \
 "
 

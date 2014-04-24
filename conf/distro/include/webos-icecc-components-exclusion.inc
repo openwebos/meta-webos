@@ -3,6 +3,7 @@
 # These packages fail to build when icecc is used
 
 ICECC_USER_PACKAGE_BL_append = " \
+    linux-libc-headers \
     qt4-webos \
 "
 
@@ -14,7 +15,6 @@ ICECC_USER_PACKAGE_BL_append_arm = " \
     gmp \
     libcap \
     libgpg-error \
-    linux-libc-headers \
     ncurses \
     perl \
 "

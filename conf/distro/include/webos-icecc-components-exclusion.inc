@@ -7,6 +7,7 @@ ICECC_USER_PACKAGE_BL_append = " \
 "
 
 ICECC_USER_PACKAGE_BL_append_arm = " \
+    binutils \
     busybox \
     e2fsprogs \
     gcc \

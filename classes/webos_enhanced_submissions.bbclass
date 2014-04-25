@@ -109,7 +109,7 @@ python submission_sanity_check() {
     urldata = fetcher.ud
     for u in urldata:
         tag_param = urldata[u].parm['tag'] if 'tag' in urldata[u].parm else None
-        if urldata[u].type == 'git' and tag_param: # and (len(tag_param) != 40 or (False in [c in "abcdef0123456789" for c in tag_param])):
+        if urldata[u].type == 'git':
             if found_first:
                 msg = "webos_enhanced_submission bbclass doesn't support multiple git repos in SRC_URI used in recipe '%s' (file '%s')" % (pn, file)
                 package_qa_handle_error("webos-enh-sub-warning", msg, d)

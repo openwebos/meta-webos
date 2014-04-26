@@ -25,6 +25,10 @@
 #
 # WEBOS_SUBMISSION '0' has special meaning to disable check
 # that selected SHA-1 is matching with submissions tag
+#
+# There is limited support for recipes with multiple git repositories in SRC_URI.
+# Exactly one of them needs to have empty 'name' parameter or 'name' parameter with
+# value 'main' and this one will get SRCREV set and verified by this bbclass.
 
 inherit webos_submissions
 
@@ -61,6 +65,7 @@ def webos_enhsub_get_tag(d, webos_v):
 # Set WEBOS_SRCREV to value from WEBOS_VERSION.
 WEBOS_SRCREV = "${@webos_enhsub_get_srcrev(d, '${WEBOS_VERSION}')}"
 SRCREV = "${WEBOS_SRCREV}"
+SRCREV_main = "${WEBOS_SRCREV}"
 
 # append WEBOS_PV_SUFFIX to PV when you're using 0 as WEBOS_SUBMISSION to make it clear which SHA-1 was built
 WEBOS_PV_SUFFIX = "+gitr${SRCPV}"
@@ -109,9 +114,10 @@ python submission_sanity_check() {
     urldata = fetcher.ud
     for u in urldata:
         tag_param = urldata[u].parm['tag'] if 'tag' in urldata[u].parm else None
-        if urldata[u].type == 'git':
+        name_param = urldata[u].parm['name'] if 'name' in urldata[u].parm else 'main'
+        if urldata[u].type == 'git' and name_param == 'main':
             if found_first:
-                msg = "webos_enhanced_submission bbclass doesn't support multiple git repos in SRC_URI used in recipe '%s' (file '%s')" % (pn, file)
+                msg = "webos_enhanced_submission bbclass has limited support for recipes with multiple git repos in SRC_URI. They have to have different 'name' parameter and the one which points to repository with submissions tag should have 'name=main'. Recipe '%s' (file '%s') has multiple git repos with 'main' name or without names" % (pn, file)
                 package_qa_handle_error("webos-enh-sub-warning", msg, d)
                 break
             found_first = True
@@ -201,4 +207,7 @@ python submission_sanity_check() {
                 if output.split()[0] == "0":
                     msg = "Revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') isn't included in branch '%s'" % (srcrev, pn, file, branch_in_webos_version)
                     package_qa_handle_error("webos-enh-sub-error", msg, d)
+    if not found_first:
+        msg = "Recipe '%s' (file '%s') doesn't have git repository without 'name' parameter or with 'name=main' in SRC_URI, webos_enhanced_submission bbclass shouldn't be inherited here (it has nothing to do)" % (pn, file)
+        package_qa_handle_error("webos-enh-sub-warning", msg, d)
 }

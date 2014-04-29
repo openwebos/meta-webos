@@ -6,13 +6,13 @@ SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "pmloglib cjson glib-2.0 gtest boost"
+DEPENDS = "libpbnjson pmloglib glib-2.0"
 VIRTUAL-RUNTIME_cpushareholder ?= "cpushareholder-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_cpushareholder} ${VIRTUAL-RUNTIME_rdx-utils}"
 
-WEBOS_VERSION = "3.7.0-184_ade129750f8b0a8342ecb0edd747038d5e929dd2"
-PR = "r17"
+WEBOS_VERSION = "3.8.1-187_760f521a8b743bc3144a502d459486bc8d0e2b67"
+PR = "r18"
 
 WEBOS_DISTRO_PRERELEASE ??= ""
 EXTRA_OECMAKE += "${@ '-DWEBOS_DISTRO_PRERELEASE:STRING="devel"' \
@@ -33,6 +33,9 @@ inherit webos_lttng
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
+
+PACKAGECONFIG ??= ""
+PACKAGECONFIG[test] = "-DWEBOS_CONFIG_BUILD_TESTS:BOOL=True,,gtest boost,bash"
 
 # This fix-up will be removed shortly. luna-service2 headers must be included
 # using '#include <luna-service2/*.h>'

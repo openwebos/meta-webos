@@ -48,8 +48,10 @@ webos_no_static_libraries_find_static() {
 }
 
 WEBOS_NO_STATIC_LIBRARIES_WHITELIST ??= ""
-# Always install the native static libraries
+# Always install the native and nativesdk static libraries since they are never
+# used when linking target executables.
 WEBOS_NO_STATIC_LIBRARIES_WHITELIST_class-native = "*"
+WEBOS_NO_STATIC_LIBRARIES_WHITELIST_class-nativesdk = "*"
 sysroot_stage_libdir_prepend() {
     local staticlibs=""
     if [ '${WEBOS_NO_STATIC_LIBRARIES_WHITELIST}' != '*' ]; then

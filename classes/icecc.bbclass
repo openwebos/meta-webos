@@ -248,11 +248,11 @@ def set_icecc_env():
     return
 
 set_icecc_env() {
+    ICECC_VERSION="${@icc_version(bb, d)}"
     if [ "${ICECC_DISABLED}" = "1" ]
     then
         return
     fi
-    ICECC_VERSION="${@icc_version(bb, d)}"
     if [ "x${ICECC_VERSION}" = "x" ]
     then
         bbwarn "Cannot use icecc: could not get ICECC_VERSION"

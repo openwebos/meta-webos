@@ -80,8 +80,8 @@ BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
 
 
 # Apply fix from oe-core commit 89d7d46947d9bb8c7bf568c65e52d5bbe159027f
-# Drop this when upgrading oe-core to 1.6 release or newer
-DEPENDS_pn-cracklib-native_class-native = "zlib-native"
+# Drop zlib-native when upgrading oe-core to 1.6 release or newer
+DEPENDS_pn-cracklib-native_class-native = "zlib-native ${DEPENDS_GETTEXT}"
 
 # Drop virtual/kernel build-time dependency
 # Drop this when upgrading oe-core to 1.6 release or newer with this change:

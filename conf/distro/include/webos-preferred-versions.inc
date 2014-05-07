@@ -20,7 +20,7 @@ PREFERRED_VERSION_tzcode-native ?= "2014a"
 # Stick to latest udev version provided by oe-core
 PREFERRED_VERSION_udev ?= "182"
 PREFERRED_VERSION_upstart ?= "0.3.11"
-PREFERRED_VERSION_vboxguestdrivers ?= "4.2.6"
+PREFERRED_VERSION_vboxguestdrivers ?= "4.3.8"
 # Newer upstream meta-oe already has yajl 2.0.3, and we should upgrade to it soon,
 # because it's already compatible with our libpbnjson.
 PREFERRED_VERSION_yajl ?= "1.0.12"

@@ -3,6 +3,7 @@
 # These packages fail to build when icecc is used
 
 ICECC_USER_PACKAGE_BL_append = " \
+    gmp-native \
     linux-libc-headers \
     nss \
     qt4-webos \

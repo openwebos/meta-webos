@@ -14,4 +14,4 @@
 WEBOS_LTTNG_ENABLED ?= "0"
 
 DEPENDS += "${@base_contains('WEBOS_LTTNG_ENABLED', '1', 'lttng-ust', '', d)}"
-RDEPENDS_${PN} += "${@base_contains('WEBOS_LTTNG_ENABLED', '1', 'lttng-tools babeltrace', '', d)}"
+RDEPENDS_${PN} += "${@base_contains('WEBOS_LTTNG_ENABLED', '1', 'lttng-tools lttng-modules babeltrace', '', d)}"

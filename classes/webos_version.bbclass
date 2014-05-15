@@ -11,7 +11,10 @@
 # i.e., it includes the submission. If there is no WEBOS_VERSION
 # setting, '0' will be returned.
 def webos_version_get_pv(wv):
-    return wv.split('_')[0] if wv else '0'
+    if not wv:
+        return '0'
+    split_wv = wv.split(';branch=')
+    return split_wv[0].split('_')[0]
 
 # The component version is PV with the last hyphen-separated field
 # removed; i.e., it does not include the submission.
@@ -32,17 +35,16 @@ def webos_version_get_submission(wv):
     if len(split_pv) == 1:
         # If there no hyphen, that means there's no submission
         return '0'
-    split_sub = split_pv[-1].split(';branch=')
-    return split_sub[0]
+    return split_pv[-1]
 
 # The revision-hash (SRCREV) is the second underscore-separated field in
 # WEBOS_VERSION. Returns "INVALID" if the field is absent.
 def webos_version_get_srcrev(wv):
-    split_wv = wv.split('_')
+    split_wv = wv.split(';branch=')
+    split_wv = split_wv[0].split('_')
     if len(split_wv) == 1:
         return "INVALID" # this is default SRCREV value from bitbake.conf
-    split_sub = split_wv[1].split(';branch=')
-    return split_sub[0]
+    return split_wv[1]
 
 # The branch is optional parameter, last in WEBOS_VERSION after ;branch=
 # when not specified it will use first 2 dot separated parts from submission prefixed with '@'

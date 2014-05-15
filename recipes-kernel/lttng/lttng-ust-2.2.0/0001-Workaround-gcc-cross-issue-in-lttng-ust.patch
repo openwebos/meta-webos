@@ -1,0 +1,46 @@
+From f24af338fc6bc10dcadd8b6136e6efc92ffd844b Mon Sep 17 00:00:00 2001
+From: Martin Unsal <martin.unsal@lge.com>
+Date: Wed, 14 May 2014 13:19:43 -0700
+Subject: [PATCH] Workaround gcc-cross issue in lttng-ust
+
+:Release Notes:
+Workaround for issue in OpenEmbedded gcc-cross package for
+GCC 4.7.2 compiler that affects lttng-ust.
+
+:Detailed Notes:
+Declare symbols __start___tracepoints_ptrs and __stop___tracepoints_ptrs
+as hidden only rather than hidden and weak. This works around an as yet
+undiagnosed issue with the OpenEmbedded patchset for GCC 4.7.2.
+
+:Testing Performed:
+None
+
+:QA Notes:
+
+:Issues Addressed:
+[BHV-2914] lttng traces for palm bundle not working correctly
+
+Change-Id: I5846d0040ff5cbb329137654ceacf2b832b15f62
+---
+ include/lttng/tracepoint.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/lttng/tracepoint.h b/include/lttng/tracepoint.h
+index 0327c11..a724fa9 100644
+--- a/include/lttng/tracepoint.h
++++ b/include/lttng/tracepoint.h
+@@ -308,9 +308,9 @@ __tracepoints__destroy(void)
+  * (or for the whole main program).
+  */
+ extern struct tracepoint * const __start___tracepoints_ptrs[]
+-	__attribute__((weak, visibility("hidden")));
++	__attribute__((visibility("hidden")));
+ extern struct tracepoint * const __stop___tracepoints_ptrs[]
+-	__attribute__((weak, visibility("hidden")));
++	__attribute__((visibility("hidden")));
+ 
+ /*
+  * When TRACEPOINT_PROBE_DYNAMIC_LINKAGE is defined, we do not emit a
+-- 
+1.7.9.5
+

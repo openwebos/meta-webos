@@ -5,10 +5,10 @@ SECTION = "webos/libs"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-DEPENDS = "yajl glib-2.0 gperf-native lemon-native gmp uriparser"
+DEPENDS = "yajl glib-2.0 gperf-native lemon-native gmp uriparser boost"
 
-WEBOS_VERSION = "2.6.0-32_35580388de2225c1f7b85d38b4014ebc8324b135"
-PR = "r4"
+WEBOS_VERSION = "2.7.0-35_a4b9afcc169cf38146e0de10d1dba91552d776b4"
+PR = "r5"
 
 inherit webos_component
 inherit webos_public_repo

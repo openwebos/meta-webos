@@ -1,0 +1,12 @@
+Code-Review+1: Build Verification
+Code-Review+1: DCO Verification
+Code-Review+2: Joungyong Choi <joungyong.choi@lge.com>
+Verified+1: Joungyong Choi <joungyong.choi@lge.com>
+Code-Review+1: Andrii Motsok <andrii.motsok@lge.com>
+Verified+1: Andrii Motsok <andrii.motsok@lge.com>
+Build+1: Oleg Boguslavsky <oleg.boguslavsky@lge.com>
+Submitted-by: Joungyong Choi <joungyong.choi@lge.com>
+Submitted-at: Fri, 16 May 2014 19:06:23 -0700
+Reviewed-on: https://g2g.palm.com/5550
+Project: meta-webos
+Branch: refs/heads/@afro

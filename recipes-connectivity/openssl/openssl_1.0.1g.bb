@@ -13,6 +13,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=f9a8f968107345e0b75aa8c2ecaa7ec8"
 export DIRS = "crypto ssl apps engines"
 export OE_LDFLAGS="${LDFLAGS}"
 
+PR = "r2"
+
 SRC_URI += "file://configure-targets.patch \
             file://shared-libs.patch \
             file://oe-ldflags.patch \
@@ -36,6 +38,7 @@ SRC_URI += "file://configure-targets.patch \
             file://initial-aarch64-bits.patch \
             file://find.pl \
             file://openssl-fix-des.pod-error.patch \
+            file://openssl-CVE-2014-0198-fix.patch \
            "
 
 SRC_URI[md5sum] = "de62b43dfcd858e66a74bee1c834e959"

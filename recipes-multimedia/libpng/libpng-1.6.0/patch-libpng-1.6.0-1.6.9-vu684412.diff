@@ -1,0 +1,10 @@
+--- a/pngpread.c	2014-02-09 12:49:37.037470192 -0600
++++ b/pngpread.c	2014-02-22 23:02:52.213336245 -0600
+@@ -234,6 +234,7 @@
+          png_error(png_ptr, "Missing PLTE before IDAT");
+ 
+       png_ptr->mode |= PNG_HAVE_IDAT;
++      png_ptr->process_mode = PNG_READ_IDAT_MODE;
+ 
+       if (!(png_ptr->mode & PNG_HAVE_CHUNK_AFTER_IDAT))
+          if (png_ptr->push_length == 0)

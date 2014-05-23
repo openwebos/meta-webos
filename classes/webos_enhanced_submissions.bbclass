@@ -42,8 +42,9 @@ def webos_enhsub_get_srcrev(d, webos_v):
     #
     # a) and b) should be set in SRCREV
     # c) should be set in WEBOS_GIT_PARAM_TAG with WEBOS_GIT_TAG enabled and let git ls-remote resolve it
+    # Another way to handle c) is to override WEBOS_GIT_TAG directly with ";tag=<ref>"
     if webos_submission == '0':
-        # return only valid SRCREV or AUTOINC, otherwise INVALID
+        # return only valid SRCREV or "AUTOINC", otherwise "INVALID"
         if webos_srcrev == "AUTOINC" or not (len(webos_srcrev) != 40 or (False in [c in "abcdef0123456789" for c in webos_srcrev])):
             return webos_srcrev
         else:
@@ -185,28 +186,35 @@ python submission_sanity_check() {
                     else:
                         msg = "The SHA-1 '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') doesn't match with tag '%s', which is seen as SHA-1s:\n%s" % (srcrev, pn, file, webos_git_repo_tag, '\n'.join(tag_srcrevs))
                         package_qa_handle_error("webos-enh-sub-error", msg, d)
-            # duplicates bitbake's git fetcher functionality added in
-            # http://git.openembedded.org/bitbake/commit/?id=89abfbc1953e3711d6c90aff793ee622c22609b1
-            # http://git.openembedded.org/bitbake/commit/?id=31467c0afe0346502fcd18bd376f23ea76a27d61
-            # http://git.openembedded.org/bitbake/commit/?id=f594cb9f5a18dd0ab2342f96ffc6dba697b35f65
-            if not 'nobranch' in urldata[u].parm or urldata[u].parm['nobranch'] != "1":
-                branch_in_src_uri = urldata[u].parm['branch'] if 'branch' in urldata[u].parm else 'master'
-                branch_in_webos_version = d.getVar('WEBOS_GIT_PARAM_BRANCH', True)
-                if branch_in_src_uri != branch_in_webos_version:
-                    msg = "Branch is set in WEBOS_VERSION '%s' for recipe '%s' (file '%s') as well as in SRC_URI '%s' and they don't match" % (branch_in_webos_version, pn, file, branch_in_src_uri)
-                    package_qa_handle_error("webos-enh-sub-error", msg, d)
-                cmd = "cd %s && git branch -a --contains %s --list origin/%s 2> /dev/null | wc -l" % (checkout, srcrev, branch_in_webos_version)
-                try:
-                    output = bb.fetch.runfetchcmd(cmd, d, quiet=True)
-                except bb.fetch2.FetchError:
-                    msg = "Unable to check if SHA-1 '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s'" % (srcrev, pn, file, branch)
-                    package_qa_handle_error("webos-enh-sub-error", msg, d)
-                if len(output.split()) > 1:
-                    msg = "Unable to check if SHA-1 '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s', unexpected output from '%s': '%s'" % (srcrev, pn, file, branch_in_webos_version, cmd, output)
-                    package_qa_handle_error("webos-enh-sub-error", msg, d)
-                if output.split()[0] == "0":
-                    msg = "Revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') isn't included in branch '%s'" % (srcrev, pn, file, branch_in_webos_version)
-                    package_qa_handle_error("webos-enh-sub-error", msg, d)
+
+            # The branch check is skipped the AUTOINC case because it isn't needed.
+            # (AUTOINC means take the HEAD commit of the branch that's been specified or [master] if none.)
+            # The branch check is skipped for the INVALID case because specifying "nobranch=1"
+            # (via WEBOS_GIT_BRANCH), although encouraged, isn't actually required until we migrate to
+            # the Yocto 1.6 version of bitbake.
+            if srcrev != 'AUTOINC' and srcrev != 'INVALID':
+                # Duplicates bitbake's git fetcher functionality added in
+                # http://git.openembedded.org/bitbake/commit/?id=89abfbc1953e3711d6c90aff793ee622c22609b1
+                # http://git.openembedded.org/bitbake/commit/?id=31467c0afe0346502fcd18bd376f23ea76a27d61
+                # http://git.openembedded.org/bitbake/commit/?id=f594cb9f5a18dd0ab2342f96ffc6dba697b35f65
+                if not 'nobranch' in urldata[u].parm or urldata[u].parm['nobranch'] != "1" :
+                    branch_in_src_uri = urldata[u].parm['branch'] if 'branch' in urldata[u].parm else 'master'
+                    branch_in_webos_version = d.getVar('WEBOS_GIT_PARAM_BRANCH', True)
+                    if branch_in_src_uri != branch_in_webos_version:
+                        msg = "Branch is set in WEBOS_VERSION '%s' for recipe '%s' (file '%s') as well as in SRC_URI '%s' and they don't match" % (branch_in_webos_version, pn, file, branch_in_src_uri)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    cmd = "cd %s && git branch -a --contains %s --list origin/%s 2> /dev/null | wc -l" % (checkout, srcrev, branch_in_webos_version)
+                    try:
+                        output = bb.fetch.runfetchcmd(cmd, d, quiet=True)
+                    except bb.fetch2.FetchError:
+                        msg = "Unable to check if SHA-1 '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s'" % (srcrev, pn, file, branch)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    if len(output.split()) > 1:
+                        msg = "Unable to check if SHA-1 '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') is included in branch '%s', unexpected output from '%s': '%s'" % (srcrev, pn, file, branch_in_webos_version, cmd, output)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
+                    if output.split()[0] == "0":
+                        msg = "Revision '%s' defined in WEBOS_VERSION for recipe '%s' (file '%s') isn't included in branch '%s'" % (srcrev, pn, file, branch_in_webos_version)
+                        package_qa_handle_error("webos-enh-sub-error", msg, d)
     if not found_first:
         msg = "Recipe '%s' (file '%s') doesn't have git repository without 'name' parameter or with 'name=main' in SRC_URI, webos_enhanced_submission bbclass shouldn't be inherited here (it has nothing to do)" % (pn, file)
         package_qa_handle_error("webos-enh-sub-warning", msg, d)

@@ -11,7 +11,7 @@ VIRTUAL-RUNTIME_cpushareholder ?= "cpushareholder-stub"
 VIRTUAL-RUNTIME_rdx-utils ?= "rdx-utils-stub"
 RDEPENDS_${PN} = "${VIRTUAL-RUNTIME_cpushareholder} ${VIRTUAL-RUNTIME_rdx-utils}"
 
-WEBOS_VERSION = "3.9.0-191_e04dafa3c6bad5556faaec79b776eafb4e92c4af"
+WEBOS_VERSION = "3.8.2-190_1046967e813663542e49086a17c8bf1689f9de90"
 PR = "r18"
 
 WEBOS_DISTRO_PRERELEASE ??= ""

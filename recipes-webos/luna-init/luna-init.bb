@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "tzdata python-tz-native"
 
-WEBOS_VERSION = "2.0.1-9_1e8de5fda470de4c24457225e54a861052df1ce2"
+WEBOS_VERSION = "2.0.1-10_6ad92a6963f2af7ab347a52e3b1bfa248c2edd03"
 PR = "r12"
 
 #inherit webos_component TODO

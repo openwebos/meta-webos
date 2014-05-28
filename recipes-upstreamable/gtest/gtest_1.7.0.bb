@@ -9,7 +9,11 @@ SRC_URI = "https://googletest.googlecode.com/files/${BP}.zip"
 SRC_URI[md5sum] = "2d6ec8ccdf5c46b05ba54a9fd1d130d7"
 SRC_URI[sha256sum] = "247ca18dd83f53deb1328be17e4b1be31514cedfc1e3424f672bf11fd7e0d60d"
 
-PR = "r0"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BP}:"
+
+SRC_URI += "file://0001-explicit-bool-cast.patch"
+
+PR = "r1"
 
 # GTest developers recommend to use source code instead of linking
 # against a prebuilt library.

@@ -7,6 +7,9 @@
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
+# This line is required until all of the references to libjson are changed in metadata to json-c.
+PREFERRED_PROVIDER_libjson = "json-c"
+
 # Just for documentation; these values are the defaults set in the recipes that
 # use them.
 VIRTUAL-RUNTIME_cpushareholder = "cpushareholder-stub"

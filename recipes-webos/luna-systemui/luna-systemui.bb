@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "WebOS user interface support module"
 SECTION = "webos/base"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-WEBOS_VERSION = "2.0.0-1.02_e525675c52066682c491e0e928cce7be5cab39e0"
+WEBOS_VERSION = "2.0.0-2_182a4568b13bbb359b8392593c3b139609d89eca"
 PR = "r8"
 
 inherit webos_enhanced_submissions

@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 SUMMARY = "Open webOS Just Type daemon"
 SECTION = "webos/base"
@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "libxml2 luna-service2 glib-2.0 cjson sqlite3 "
 
-WEBOS_VERSION = "2.0.0-1.00_adff49ab3b074c825e6d035f38ba65f048e5c01e"
+WEBOS_VERSION = "2.0.0-1_718edcb850c05fe61d50e1fb2c2272696cca171b"
 PR = "r6"
 
 inherit webos_component

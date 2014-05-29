@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Public headers for multiprocess support in LunaSysMgr"
 LICENSE = "Apache-2.0"
@@ -7,7 +7,7 @@ SECTION = "webos/devel"
 
 DEPENDS = "luna-sysmgr-ipc luna-webkit-api"
 
-WEBOS_VERSION = "2.0.0-1.02_af410472bb3f0db11fc87ec1962ef4e3c8d82aa3"
+WEBOS_VERSION = "2.0.0-1_26ccf5166b228b18298d0ae068fcaf858eed59dc"
 PR = "r4"
 
 inherit webos_component

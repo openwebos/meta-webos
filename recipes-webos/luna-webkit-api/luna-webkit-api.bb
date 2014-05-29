@@ -1,11 +1,11 @@
-# Copyright (c) 2012-2013 LG Electronics, Inc.
+# Copyright (c) 2012-2014 LG Electronics, Inc.
 
 DESCRIPTION = "Public APIs for keyboard and field functionality in WebKit and LunaSysMgr"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 SECTION = "webos/devel"
 
-WEBOS_VERSION = "2.0.0-1.01_5d72a1f9394ce8c510a6deb5c583afc535b44716"
+WEBOS_VERSION = "2.0.0-1_db0b374eca2d986876b354fc38062abfe473c69d"
 PR = "r3"
 
 inherit webos_component

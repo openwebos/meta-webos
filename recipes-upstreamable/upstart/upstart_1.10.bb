@@ -9,12 +9,12 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=751419260aa954499f7abaabaa882bbe"
 inherit autotools pkgconfig update-alternatives
 inherit gettext
 
-DEPENDS = "cjson dbus libnih udev"
+DEPENDS = "json-c dbus libnih udev"
 
 # initctl-set-env.patch extends the initctl set-env command => mark its package version
 # to indicate that it's a webOS edition
 PKGV .= "-0webos1"
-PR = "r0"
+PR = "r1"
 
 SRC_URI[md5sum] = "1401e7fe811bb76ebbbde8a117026b80"
 SRC_URI[sha256sum] = "a217d3cc31ff0708e568b1cb5d53144ad8bf00b3885dcd37c00ad5a17dbf1c46"
@@ -26,7 +26,6 @@ SRC_URI += "file://initctl-set-env.patch"
 SRC_URI += "file://init-no-log.patch"
 SRC_URI += "file://no-icons.patch"
 SRC_URI += "file://remove-legacy-jobs.patch"
-SRC_URI += "file://use-our-cjson.patch"
 
 inherit autotools pkgconfig update-alternatives
 inherit gettext

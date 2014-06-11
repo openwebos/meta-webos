@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
 DEPENDS = "alsa-lib"
 
-PR = "r2"
+PR = "r3"
 
 SRC_URI = "ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-${PV}.tar.bz2"
 SRC_URI[md5sum] = "4facd408326ef5567a7d4ceb6589e6b0"
@@ -21,6 +21,7 @@ PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio
 PACKAGECONFIG[pulseaudio] = "--enable-pulse,--disable-pulse,pulseaudio"
 PACKAGECONFIG[libav] = "--enable-avcodec,--disable-avcodec,libav"
 PACKAGECONFIG[jack] = "--enable-jack,--disable-jack,jack"
+PACKAGECONFIG[libsamplerate] = "--enable-samplerate,--disable-samplerate,libsamplerate0"
 
 PACKAGES_DYNAMIC = "^libasound-module-.*"
 

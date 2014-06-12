@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=4a31e6c424761191227143b86f58a1ef"
 
 DEPENDS = "openssl"
 
-PR = "r6"
+PR = "r7"
 
 SRC_URI = "http://nodejs.org/dist/v${PV}/node-v${PV}.tar.gz"
 SRC_URI[md5sum] = "153bdbf77b4473df2600b8ce123ef331"
@@ -60,8 +60,14 @@ do_install_append_class-target() {
     sed "1s^.*^#\!${bindir}/env node^g" -i ${D}${libdir}/node_modules/npm/bin/npm-cli.js
 }
 
-RDEPENDS_${PN} = "curl python-shell python-datetime python-subprocess python-textutils"
+RDEPENDS_${PN} = "curl"
 RDEPENDS_${PN}_class-native = ""
 
-FILES_${PN} += "${libdir}/node_modules ${libdir}/dtrace"
+PACKAGES =+ "${PN}-npm"
+FILES_${PN}-npm = "${libdir}/node_modules ${bindir}/npm"
+RDEPENDS_${PN}-npm = "python-shell python-datetime python-subprocess python-textutils"
+
+PACKAGES =+ "${PN}-dtrace"
+FILES_${PN}-dtrace = "${libdir}/dtrace"
+
 BBCLASSEXTEND = "native"

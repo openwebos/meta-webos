@@ -106,6 +106,7 @@ RDEPENDS_${PN} = "\
     iftop \
     libpcap \
     ltp \
+    nodejs-dtrace \
     nmon \
     ${PYTHON} \
     sp-memusage \

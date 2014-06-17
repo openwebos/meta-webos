@@ -78,6 +78,9 @@ BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 # as the "build configuration".
 BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
 
+# Add build timestamp to what's displayed in build-id.txt for use in pruning script
+
+BUILDCFG_VARS += "DATETIME"
 
 # Apply fix from oe-core commit 89d7d46947d9bb8c7bf568c65e52d5bbe159027f
 # Drop zlib-native when upgrading oe-core to 1.6 release or newer

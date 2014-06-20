@@ -35,7 +35,6 @@ WEBOS_DISTRO_RELEASE_CODENAME ?= "${WEBOS_DISTRO_PLATFORM_CODENAME}-${WEBOS_DIST
 # override this based on their codename schemes.
 WEBOS_DISTRO_BUILD_CODENAME ?= "${@base_get_metadata_git_branch('.', None).strip().translate(None, '()/')}"
 
-
 WEBOS_DISTRO_PRERELEASE ?= "devel"
 
 
@@ -78,8 +77,14 @@ BB_HASHBASE_WHITELIST_append = " WEBOS_IMAGE_NAME_SUFFIX"
 # as the "build configuration".
 BUILDCFG_VARS += "WEBOS_DISTRO_RELEASE_CODENAME WEBOS_DISTRO_BUILD_ID"
 
-# Add build timestamp to what's displayed in build-id.txt for use in pruning script
+# Branch, revision and description of TOPDIR (build-* repository)
+WEBOS_DISTRO_TOPDIR_BRANCH ?= "${@base_get_metadata_git_branch('${TOPDIR}', None).strip()}"
+WEBOS_DISTRO_TOPDIR_REVISION ?= "${@base_get_metadata_git_revision('${TOPDIR}', None).strip()}"
+WEBOS_DISTRO_TOPDIR_DESCRIBE ?= "${@webos_base_get_metadata_git_describe('${TOPDIR}', None).strip()}"
+# Don't add WEBOS_DISTRO_TOPDIR_BRANCH, because in many cases it can be "(nobranch)"
+BUILDCFG_VARS += "WEBOS_DISTRO_TOPDIR_REVISION WEBOS_DISTRO_TOPDIR_DESCRIBE"
 
+# Add build timestamp to what's displayed in build-id.txt for use in pruning script
 BUILDCFG_VARS += "DATETIME"
 
 # Apply fix from oe-core commit 89d7d46947d9bb8c7bf568c65e52d5bbe159027f

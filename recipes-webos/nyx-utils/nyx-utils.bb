@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "nyx-lib"
 
-WEBOS_VERSION = "1.1.1-16_b0ad0b100bee773da32599211a669fe80c2a37d2"
+WEBOS_VERSION = "1.1.0-15_89b9e3ea24ec14e374d34fc54917fedf3cbe8f8a"
 PR = "r0"
 
 inherit webos_component

@@ -50,6 +50,10 @@ WEBOS_DISTRO_PRERELEASE ?= "devel"
 #
 WEBOS_DISTRO_BUILD_ID ?= "unofficial"
 
+# newer oe-core is using MACHINE subdirectory in DEPLOY_DIR_IMAGE:
+# http://git.openembedded.org/openembedded-core/commit?id=7e90261aec61f79680b5eaeaf5b18c7b795412a4
+DEPLOY_DIR_IMAGE = "${DEPLOY_DIR}/images/${MACHINE}"
+
 # Only suffix image names with DATETIME when the build is unofficial; otherwise,
 # use WEBOS_DISTRO_BUILD_ID. By default, the build codename (or, if it's defined,
 # WEBOS_DISTRO_BRANCHPOINT_MICRO_VERSION with its hyphen replaced with a period)

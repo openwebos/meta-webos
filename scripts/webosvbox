@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2013 LG Electronics, Inc.
+# Copyright (c) 2013-2014 LG Electronics, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -192,7 +192,7 @@ function checkVmState {
 
 # Make sure we're in a build-webos style directory
 function checkInBuildWebos {
-    if [ -d meta-webos -a -e Makefile.in -a -x mcf -a -d bitbake ]
+    if [ -d oe-core -a -e Makefile.in -a -x mcf -a -d bitbake ]
     then
         # Highly probable we're in the right place. Use a null-if
         # to avoid negating all those tests above

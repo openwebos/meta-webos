@@ -32,3 +32,23 @@ UPDATERCD_class-target = ""
 # Don't install big /boot/vmlinux* file by default in qemux86 images (included in oprofile's RRECOMMENDS)
 # Use --no-vmlinux option to opcontrol or install it manually if you need to see samples from kernel
 BAD_RECOMMENDATIONS_append_qemux86 = " kernel-vmlinux"
+
+# Define which modules should be built by nyx-modules. As it is the base version
+# for all module providers, nyx-modules interprets an empty list as "give me 
+# everything". Any distribution which needs to specify other module providers
+# must therefore override this variable and explicitly state which ones nyx
+# modules should provide.
+#
+# Available options are:
+#
+# NYXMOD_OW_BATTERY    - Battery Status
+# NYXMOD_OW_CHARGER    - Charger Control and Status
+# NYXMOD_OW_DEVICEINFO - Device Information
+# NYXMOD_OW_DISPLAY    - Display information
+# NYXMOD_OW_KEYS       - Key (button) management
+# NYXMOD_OW_OSINFO     - OS Version information
+# NYXMOD_OW_SECURITY   - Security module
+# NYXMOD_OW_SYSTEM     - System control and shutdown
+# NYXMOD_OW_TOUCHPANEL - Touchpanel
+NYX_MODULES_REQUIRED ?= ""
+

@@ -12,7 +12,7 @@ VBOX_RDEPENDS_qemux86 = "vboxguestdrivers"
 RDEPENDS_${PN} = "lsb gzip ${VBOX_RDEPENDS}"
 
 WEBOS_VERSION = "6.1.0-94_6b9b8f002c2454e475d699064a118d5c50a79f48"
-PR = "r11"
+PR = "r12"
 
 EXTRA_OECMAKE += "-DDISTRO_VERSION:STRING='${DISTRO_VERSION}' -DDISTRO_NAME:STRING='${DISTRO_NAME}' \
                   -DWEBOS_DISTRO_API_VERSION:STRING='${WEBOS_DISTRO_API_VERSION}' \
@@ -43,9 +43,7 @@ inherit webos_machine_dep
 inherit webos_machine_impl_dep
 inherit webos_prerelease_dep
 inherit webos_core_os_dep
+inherit webos_nyx_module_provider
 
 SRC_URI = "${OPENWEBOS_GIT_REPO_COMPLETE}"
 S = "${WORKDIR}/git"
-
-FILES_${PN} += "${libdir}/nyx/modules/*"
-FILES_${PN}-dbg += "${libdir}/nyx/modules/.debug/*"

@@ -1,3 +1,5 @@
+# Copyright (c) 2013-2014 LG Electronics, Inc.
+
 # Recipe is from:
 #  https://github.com/Guacamayo/meta-guacamayo/blob/master/meta-guacamayo/recipes-multimedia/alsa/alsa-plugins_1.0.26.bb
 
@@ -9,13 +11,13 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=7fbc338309ac38fefcd64b04bb903e34"
 
 DEPENDS = "alsa-lib"
 
-PR = "r3"
+PR = "r4"
 
 SRC_URI = "ftp://ftp.alsa-project.org/pub/plugins/alsa-plugins-${PV}.tar.bz2"
 SRC_URI[md5sum] = "4facd408326ef5567a7d4ceb6589e6b0"
 SRC_URI[sha256sum] = "03515134d2009db4dfb2769e0ab0e1fb517c8140ffdfd64a984be968e81c9f1f"
 
-inherit autotools
+inherit autotools pkgconfig
 
 PACKAGECONFIG ??= "${@base_contains('DISTRO_FEATURES', 'pulseaudio', 'pulseaudio', '', d)}"
 PACKAGECONFIG[pulseaudio] = "--enable-pulse,--disable-pulse,pulseaudio"

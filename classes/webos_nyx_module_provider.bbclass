@@ -23,7 +23,7 @@ CLEAN_MODULE_LIST = "${@ webos_clean_nyxrequired('${NYX_MODULES_REQUIRED}')}"
 EXTRA_OECMAKE += "-DNYX_MODULES_REQUIRED:STRING='${CLEAN_MODULE_LIST}'"
 
 # Ensure any nyx-module provider cites a dependency on nyx-lib
-DEPENDS_${PN} += "${@ '' if 'nyx-lib' in d.getvar('DEPENDS_${PN}', True) else 'nyx-lib'}"
+DEPENDS += "nyx-lib"
 
 # Add any built modules are installed
 FILES_${PN} += "${libdir}/nyx/modules/*"

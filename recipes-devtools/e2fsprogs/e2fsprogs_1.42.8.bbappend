@@ -1,7 +1,7 @@
 # Copyright (c) 2012-2014 LG Electronics, Inc.
 
-EXTENDPRAUTO_append = "webos1"
-FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}"
+EXTENDPRAUTO_append = "webos2"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${BPN}:"
 
 SRC_URI += "file://e2fsck.conf"
 

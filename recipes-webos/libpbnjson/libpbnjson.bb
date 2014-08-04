@@ -7,7 +7,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 
 DEPENDS = "yajl glib-2.0 gperf-native lemon-native gmp uriparser boost"
 
-WEBOS_VERSION = "2.9.0-38_5ffe5674feabf4f5a36ad168230c567933cf6586"
+WEBOS_VERSION = "2.9.1-39_027996eb8a4d1d16ca308f5acc647d0065101ae9"
 PR = "r5"
 
 inherit webos_component

@@ -5,7 +5,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 # You don't need to change this value when you're changing just RDEPENDS_${PN} variable.
-PR = "r12"
+PR = "r13"
 
 inherit packagegroup
 
@@ -86,11 +86,6 @@ PYTHON = " \
     python-xmlrpc \
     python-zlib \
 "
-
-# to replace task-webos-test by packagegroup-webos-test during upgrade on target
-RPROVIDES_${PN} = "task-webos-test"
-RREPLACES_${PN} = "task-webos-test"
-RCONFLICTS_${PN} = "task-webos-test"
 
 VALGRIND = "valgrind"
 # only armv7a is supported

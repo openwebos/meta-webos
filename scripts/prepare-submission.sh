@@ -15,7 +15,7 @@ checkout=.
 update=Y
 minimal_submission="1"
 minimal_version="0.1.0"
-script_version="1.0.1"
+script_version="1.0.2"
 
 usage () {
     cat << EOF
@@ -44,7 +44,7 @@ DESCRIPTION:
     This script checks for issues listed above, creates correct tags,
     pushes tags and allows automatic update of WEBOS_VERSION in recipe
     when -r parameter is used. It will also show how commit subject and
-    git log --oneline in ":Detailed Notes:" should look.
+    git log --oneline --no-merges in ":Detailed Notes:" should look.
 
 OPTIONS:
   -h
@@ -355,7 +355,7 @@ if [ -n "$recipe" ] ; then
     fi
 
     if [ -n "${OLD_SUBMISSION}" ] ; then
-        LOG=`(cd $checkout && git log --oneline submissions/${OLD_SUBMISSION}..submissions/${SUBMISSION})`
+        LOG=`(cd $checkout && git log --no-merges --oneline submissions/${OLD_SUBMISSION}..submissions/${SUBMISSION})`
     fi
 
     if [ "$OLD_COMMIT" = "$NEW_COMMIT_FROM_REF" ]; then
